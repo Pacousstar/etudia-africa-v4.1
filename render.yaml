@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: etudia-v4-revolutionary
+    env: node
+    plan: free
+    region: frankfurt  # Plus proche de l'Afrique
+    buildCommand: npm install --production
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+    scaling:
+      minInstances: 1
+      maxInstances: 1
