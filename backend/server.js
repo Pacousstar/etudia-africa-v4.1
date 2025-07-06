@@ -2,6 +2,7 @@
 // 🚀 ÉTUDIA V4.1 OPENROUTER - SERVER.JS 
 // Backend Node.js optimisé pour Render
 // Créé par @Pacousstar - Made with ❤️ in Côte d'Ivoire 🇨🇮
+// Migré vers OpenRouter DeepSeek R1 par MonAP
 // ===================================================================
 
 const express = require('express');
@@ -38,38 +39,9 @@ const limiter = rateLimit({
 });
 
 // ===================================================================
-// 🔧 CONFIGURATIONS
+// 🔧 CONFIGURATIONS OPENROUTER DEEPSEEK R1
 // ===================================================================
 
-// Configuration Cloudinary
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
-});
-
-// Configuration Multer optimisée
-const upload = multer({ 
-  dest: '/tmp/uploads/',
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
-  fileFilter: (req, file, cb) => {
-    const allowedTypes = [
-      'image/jpeg', 'image/png', 'image/jpg', 'image/webp',
-      'application/pdf', 'text/plain',
-      'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    ];
-    cb(null, allowedTypes.includes(file.mimetype));
-  }
-});
-
-// Supabase
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY
-);
-
-// 🔧 CONFIGURATION OPENROUTER DEEPSEEK R1 - ÉtudIA V4.1
 const OPENROUTER_CONFIG = {
   // 🔑 Clé API OpenRouter (à configurer dans variables d'environnement)
   apiKey: process.env.OPENROUTER_API_KEY,
@@ -103,6 +75,63 @@ console.log('- Environment:', process.env.NODE_ENV);
 console.log('- OpenRouter API:', OPENROUTER_CONFIG.apiKey ? '✅ Configuré' : '❌ Manquant');
 console.log('- DeepSeek Free Model:', OPENROUTER_CONFIG.models.free);
 console.log('- DeepSeek Paid Model:', OPENROUTER_CONFIG.models.paid);
+
+// ===================================================================
+// 🤖 SERVICE OPENROUTER DEEPSEEK
+// ===================================================================
+
+class OpenRouterDeepSeekService {
+  constructor() {
+    this.config = OPENROUTER_CONFIG;
+    console.log('🤖 Service OpenRouter DeepSeek initialisé');
+  }
+
+  async chat(messages, options = {}) {
+    try {
+      const {
+        mode = 'normal',
+        useFreeModel = true,
+        max_tokens = null,
+        temperature = null
+      } = options;
+
+      const model = useFreeModel ? this.config.models.free : this.config.models.paid;
+      const finalMaxTokens = max_tokens || this.config.maxTokens[mode] || 250;
+      const finalTemperature = temperature || this.config.temperature[mode] || 0.15;
+
+      const response = await axios.post(
+        `${this.config.baseURL}/chat/completions`,
+        {
+          model,
+          messages,
+          max_tokens: finalMaxTokens,
+          temperature: finalTemperature
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${this.config.apiKey}`,
+            'HTTP-Referer': 'https://etudia-africa.vercel.app',
+            'X-Title': 'ÉtudIA V4.1'
+          }
+        }
+      );
+
+      return {
+        success: true,
+        content: response.data.choices[0].message.content,
+        usage: response.data.usage
+      };
+    } catch (error) {
+      console.error('❌ Erreur OpenRouter:', error.response?.data || error.message);
+      return {
+        success: false,
+        error: error.message
+      };
+    }
+  }
+}
+
+const deepseek = new OpenRouterDeepSeekService();
 
 // ===================================================================
 // 🧠 GESTION MÉMOIRE IA RÉVOLUTIONNAIRE - VERSION CORRIGÉE LLAMA
@@ -537,23 +566,21 @@ async function extractTextFromFile(filePath, mimeType, originalName) {
 
 async function analyzeDocumentWithIA(extractedText, fileName) {
   try {
-    const completion = await groq.chat.completions.create({
-      messages: [{
-        role: "system",
-        content: "Expert pédagogique. Réponds UNIQUEMENT avec du JSON valide."
-      }, {
-        role: "user",
-        content: `Analyse: ${extractedText.substring(0, 2000)}
+    const completion = await deepseek.chat([{
+      role: "system",
+      content: "Expert pédagogique. Réponds UNIQUEMENT avec du JSON valide."
+    }, {
+      role: "user",
+      content: `Analyse: ${extractedText.substring(0, 2000)}
 JSON requis:
 {"subject": "matière", "summary": "résumé", "exercise_count": nombre_exercices}`
-      }],
-      model: "llama-3.3-70b-versatile",
-      temperature: 0.3,
+    }], {
+      mode: 'direct_solution',
       max_tokens: 300
     });
     
     try {
-      return JSON.parse(completion.choices[0].message.content.trim());
+      return JSON.parse(completion.content);
     } catch {
       return { subject: "Document", summary: "Document analysé", exercise_count: 1 };
     }
@@ -689,7 +716,14 @@ app.get('/debug', (req, res) => {
 
 app.get('/health', async (req, res) => {
   try {
-    console.log('🏥 Route /health appelée depuis:', req.get('origin') || 'Direct');
+     // Test OpenRouter
+    const deepseekStatus = await deepseek.chat([{
+      role: 'user',
+      content: 'Test de connexion. Réponds juste "OK"'
+    }], {
+      mode: 'normal',
+      max_tokens: 10
+    });
     
     // Test rapide Supabase
     let supabaseStatus = '✅ Connecté';
@@ -741,38 +775,14 @@ app.get('/health', async (req, res) => {
         completed: true,
         date: new Date().toISOString().split('T')[0]      // Date du jour
       }
-      tokens_status: {
-        used_today: 0,
-        remaining: 95000,
-        last_reset: new Date().toISOString(),
-        status: '🟢 Optimal'
-      },
-      render_info: {
-        service_url: 'https://etudia-v4-revolutionary.onrender.com',
-        deployment_time: new Date().toISOString(),
-        memory_usage: process.memoryUsage().heapUsed / 1024 / 1024 + ' MB'
-      }
     };
     
     console.log('✅ Health check réussi:', healthData.message);
-    res.json(healthData);
-    
+   res.json(healthData);
   } catch (error) {
-    console.error('❌ Erreur health check:', error.message);
-    
-    // RÉPONSE MÊME EN CAS D'ERREUR (pour éviter status maintenance)
-    res.status(200).json({
-      status: 'degraded',
-      message: '⚠️ ÉtudIA fonctionne en mode dégradé',
-      version: '4.0.0-render',
-      timestamp: new Date().toISOString(),
-      error: error.message,
-      platform: 'Render.com',
-      services: {
-        server: '✅ Opérationnel',
-        database: '❓ À vérifier',
-        ai: '❓ À vérifier'
-      }
+    res.status(500).json({
+      status: 'error',
+      error: error.message
     });
   }
 });
@@ -1412,7 +1422,7 @@ ${documentInfo}
     console.log('💬 Mode actuel:', mode);
     console.log('📄 Document:', documentName, `(${documentLength} chars)`);
 
-   // 🧠 RÉCUPÉRATION CONTEXTE CONVERSATION AMÉLIORÉ  
+
 // 🧠 RÉCUPÉRATION CONTEXTE CONVERSATION CORRIGÉ !
 let conversationContext;
 try {
@@ -1764,7 +1774,7 @@ ${finalDocumentContext ?
     };
 
     console.log('🎉 =============== ÉTUDIA MÉMOIRE SUCCÈS ===============\n');
-    res.json(responseData);
+       res.json(responseData);
 
   } catch (error) {
     console.error('💥 Erreur chat avancé:', error.message);
