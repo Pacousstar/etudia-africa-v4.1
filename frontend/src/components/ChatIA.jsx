@@ -11,6 +11,8 @@ const ChatIA = ({
   setChatHistory,
   chatTokensUsed = 0,
   setChatTokensUsed,
+   openRouterService,           // 🆕 NOUVEAU SERVICE
+  currentModel = 'free',       // 🆕 MODÈLE SÉLECTIONNÉ (free/paid)
   onStatsUpdate
 }) => {
   const [messages, setMessages] = useState(chatHistory || []);
@@ -20,6 +22,15 @@ const ChatIA = ({
   const [totalTokens, setTotalTokens] = useState(chatTokensUsed || 0);
   const [welcomeMessageSent, setWelcomeMessageSent] = useState(false);
   const [learningProfile, setLearningProfile] = useState(null);
+
+  // 🤖 NOUVEAUX ÉTATS OPENROUTER DEEPSEEK R1 - ÉtudIA V4.1
+  const [deepSeekStats, setDeepSeekStats] = useState({     // 📊 Stats locales DeepSeek
+    total_conversations: 0,
+    free_tier_used: 0,
+    paid_tier_used: 0,
+    tokens_consumed: 0,
+    average_response_time: 0
+  });
   
   // 🎯 ÉTATS RÉVOLUTIONNAIRES
   const [chatMode, setChatMode] = useState('normal');
@@ -883,6 +894,27 @@ Pose-moi tes questions, je ferai de mon mieux ! ✨
     }
   }, [isLoading]);
 
+// 📊 MISE À JOUR STATS LOCALES - ÉtudIA V4.1
+const updateLocalStats = (response) => {
+  console.log('📊 Mise à jour stats DeepSeek R1:', response);
+  
+  // 🔢 Mise à jour compteurs locaux
+  setDeepSeekStats(prev => ({
+    ...prev,
+    total_conversations: prev.total_conversations + 1,
+    free_tier_used: response.free_tier_used ? prev.free_tier_used + 1 : prev.free_tier_used,
+    paid_tier_used: !response.free_tier_used ? prev.paid_tier_used + 1 : prev.paid_tier_used,
+    tokens_consumed: prev.tokens_consumed + (response.tokens_used || 0)
+  }));
+
+  // 🔄 Callback vers App.js pour mise à jour globale
+  if (onStatsUpdate) {
+    const updatedStats = openRouterService.getUsageStats();
+    onStatsUpdate(updatedStats);
+    console.log('📈 Stats globales mises à jour');
+  }
+};
+  
   // 🔧 FONCTION ENVOI MESSAGE COMPLÈTE
   const handleSendMessage = async (messageText = inputMessage, mode = chatMode) => {
   if (!messageText.trim() || isLoading) return;
