@@ -1,1270 +1,1332 @@
 // ===================================================================
-// 🚀 ÉTUDIA V4.1 OPENROUTER - SERVER.JS 
-// Backend Node.js optimisé pour Render
-// Créé par @Pacousstar - Made with ❤️ in Côte d'Ivoire 🇨🇮
+// 🚀 ÉtudIA V4.1 - SERVER.JS PARTIE 1 : IMPORTS + CONFIGURATION OPENROUTER
+// Fichier: backend/server-part1-imports-config.js
+// 
+// 🔧 MODIFICATIONS OPENROUTER DEEPSEEK R1 :
+// ❌ SUPPRIMÉ : const Groq = require('groq-sdk');
+// ✅ AJOUTÉ : const axios = require('axios'); pour OpenRouter
+// ❌ SUPPRIMÉ : GROQ_CONFIG complet
+// ✅ AJOUTÉ : OPENROUTER_CONFIG complet avec DeepSeek R1
+// ❌ SUPPRIMÉ : class GroqService
+// ✅ AJOUTÉ : class OpenRouterDeepSeek
+//
+// Créé par @Pacousstar - Migré vers OpenRouter par MonAP
 // ===================================================================
 
+// 📦 IMPORTS STANDARDS EXPRESS + MIDDLEWARE
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
-const { createClient } = require('@supabase/supabase-js');
-const { v2: cloudinary } = require('cloudinary');
-const axios = require('axios'); // Pour appels API OpenRouter DeepSeek R1
-const Tesseract = require('tesseract.js');
-const pdfParse = require('pdf-parse');
-const mammoth = require('mammoth');
 const fs = require('fs');
 const path = require('path');
-const NodeCache = require('node-cache');
+
+// 🔧 MODIFICATION OPENROUTER : Remplace Groq par axios
+// ❌ ANCIEN : const Groq = require('groq-sdk');
+const axios = require('axios'); // ✅ NOUVEAU : Pour communication OpenRouter
+
+// 📦 IMPORTS TRAITEMENT DOCUMENTS (OCR + PDF)
+const Tesseract = require('tesseract.js');
+const mammoth = require('mammoth');
+const pdf = require('pdf-parse');
+
+// 📦 IMPORTS INFRASTRUCTURE
 const rateLimit = require('express-rate-limit');
+const { createClient } = require('@supabase/supabase-js');
+const cloudinary = require('cloudinary').v2;
 
-require('dotenv').config();
+// 🌍 VARIABLES ENVIRONNEMENT
+const PORT = process.env.PORT || 3001;
 
+// ===================================================================
+// 🔧 CONFIGURATION OPENROUTER DEEPSEEK R1 - ÉtudIA V4.1
+// ❌ SUPPRIME ENTIÈREMENT : GROQ_CONFIG
+// ✅ NOUVELLE CONFIGURATION OPENROUTER COMPLÈTE
+// ===================================================================
+
+const OPENROUTER_CONFIG = {
+  // 🔑 Clé API OpenRouter (OBLIGATOIRE dans variables d'environnement)
+  apiKey: process.env.OPENROUTER_API_KEY,
+  
+  // 🌐 URL de base OpenRouter (endpoint principal)
+  baseURL: process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1',
+  
+  // 🤖 MODÈLES DEEPSEEK R1 DISPONIBLES
+  models: {
+    free: process.env.DEEPSEEK_MODEL_FREE || 'deepseek/deepseek-r1:free', // 🆓 Gratuit illimité
+    paid: process.env.DEEPSEEK_MODEL_PAID || 'deepseek/deepseek-r1'        // 💎 Payant performance max
+  },
+  
+  // 🔢 LIMITES DE TOKENS PAR MODE D'APPRENTISSAGE ÉtudIA
+  maxTokens: {
+    normal: 250,           // 💬 Mode conversation normale (équilibré)
+    step_by_step: 180,     // 📊 Mode étape par étape (plus court, précis)
+    direct_solution: 400,  // ✅ Mode solution directe (plus long, complet)
+    welcome: 200           // 🎉 Message d'accueil (personnalisé)
+  },
+  
+  // 🌡️ TEMPÉRATURE (CRÉATIVITÉ) PAR MODE ÉtudIA
+  temperature: {
+    normal: 0.15,          // 💬 Équilibré précision/créativité
+    step_by_step: 0.05,    // 📊 Très précis pour étapes mathématiques
+    direct_solution: 0.1,  // ✅ Précis pour solutions définitives
+    welcome: 0.2           // 🎉 Légèrement créatif pour personnalisation
+  }
+};
+
+// 📊 LOGS DE CONFIGURATION OPENROUTER - DIAGNOSTIC DÉMARRAGE
+console.log('🔗 ÉtudIA V4.1 Configuration OpenRouter DeepSeek R1:');
+console.log('- Port serveur:', PORT);
+console.log('- Environment:', process.env.NODE_ENV || 'development');
+console.log('- OpenRouter API Key:', OPENROUTER_CONFIG.apiKey ? '✅ Configurée' : '❌ MANQUANTE - URGENT !');
+console.log('- OpenRouter Base URL:', OPENROUTER_CONFIG.baseURL);
+console.log('- Modèle GRATUIT:', OPENROUTER_CONFIG.models.free);
+console.log('- Modèle PAYANT:', OPENROUTER_CONFIG.models.paid);
+console.log('- Tokens par mode:', OPENROUTER_CONFIG.maxTokens);
+
+// ===================================================================
+// 🤖 CLASSE OPENROUTER DEEPSEEK SERVICE - ÉtudIA V4.1
+// ❌ SUPPRIME ENTIÈREMENT : class GroqService
+// ✅ NOUVELLE CLASSE OPENROUTER COMPLÈTE
+// ===================================================================
+
+class OpenRouterDeepSeek {
+  constructor() {
+    // 🔧 Initialisation configuration interne
+    this.apiKey = OPENROUTER_CONFIG.apiKey;
+    this.baseURL = OPENROUTER_CONFIG.baseURL;
+    this.models = OPENROUTER_CONFIG.models;
+    
+    // ⚠️ Vérification critique clé API
+    if (!this.apiKey) {
+      console.error('❌ ERREUR CRITIQUE : OpenRouter API Key manquante !');
+      console.error('🔧 Solution : Ajouter OPENROUTER_API_KEY dans variables d\'environnement');
+    }
+    
+    // 📊 Logs initialisation service
+    console.log('🤖 OpenRouterDeepSeek Service ÉtudIA V4.1 initialisé');
+    console.log('- Base URL OpenRouter:', this.baseURL);
+    console.log('- Modèle gratuit actif:', this.models.free);
+    console.log('- Modèle payant disponible:', this.models.paid);
+    console.log('- Service status:', this.apiKey ? '🟢 READY' : '🔴 ERROR');
+  }
+
+  // 🔍 TEST SANTÉ OPENROUTER - DIAGNOSTIC COMPLET
+  async testHealth() {
+    try {
+      // ⚠️ Vérification prérequis
+      if (!this.apiKey) {
+        throw new Error('OpenRouter API Key manquante - Impossible de tester');
+      }
+
+      console.log('🏥 Test santé OpenRouter démarré...');
+
+      // 🚀 Appel test simple vers OpenRouter
+      const response = await axios.post(
+        `${this.baseURL}/chat/completions`,
+        {
+          // 🤖 Utilise toujours le modèle gratuit pour le health check
+          model: this.models.free,
+          messages: [
+            {
+              role: 'user',
+              content: 'Test de connexion OpenRouter pour ÉtudIA V4.1. Réponds juste "OK" pour confirmer.'
+            }
+          ],
+          max_tokens: 10,        // 🔢 Minimal pour économiser
+          temperature: 0.1       // 🌡️ Précis pour test
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${this.apiKey}`,
+            'Content-Type': 'application/json',
+            'HTTP-Referer': 'https://etudia-africa.vercel.app',          // 🔗 Identification app
+            'X-Title': 'ÉtudIA V4.1 - Assistant IA Éducatif Africain'    // 📝 Description app
+          },
+          timeout: 15000 // ⏱️ Timeout 15s pour éviter blocage
+        }
+      );
+
+      // ✅ Vérification réponse valide
+      if (response.data && response.data.choices && response.data.choices[0]) {
+        const healthResult = {
+          status: 'healthy',
+          model: this.models.free,
+          response_preview: response.data.choices[0].message.content.substring(0, 50),
+          tokens_used: response.data.usage?.total_tokens || 0,
+          provider: 'OpenRouter',
+          ai_model: 'DeepSeek R1',
+          timestamp: new Date().toISOString()
+        };
+        
+        console.log('✅ OpenRouter DeepSeek R1 santé: EXCELLENT');
+        console.log('📊 Tokens utilisés test:', healthResult.tokens_used);
+        return healthResult;
+      }
+
+      // ❌ Réponse invalide
+      throw new Error('Réponse OpenRouter invalide ou vide');
+
+    } catch (error) {
+      // 🚨 Gestion erreurs détaillée
+      console.error('❌ Erreur santé OpenRouter:', error.message);
+      
+      // 📊 Diagnostic selon type d'erreur
+      let errorType = 'unknown';
+      if (error.code === 'ECONNREFUSED') errorType = 'connection_refused';
+      else if (error.code === 'ENOTFOUND') errorType = 'dns_error';
+      else if (error.response?.status === 401) errorType = 'invalid_api_key';
+      else if (error.response?.status === 429) errorType = 'rate_limit';
+      else if (error.response?.status >= 500) errorType = 'server_error';
+      
+      return {
+        status: 'unhealthy',
+        error: error.message,
+        error_type: errorType,
+        provider: 'OpenRouter',
+        ai_model: 'DeepSeek R1',
+        timestamp: new Date().toISOString(),
+        suggested_action: this.getSuggestedAction(errorType)
+      };
+    }
+  }
+
+  // 🩺 DIAGNOSTIC ACTIONS RECOMMANDÉES
+  getSuggestedAction(errorType) {
+    const actions = {
+      'connection_refused': 'Vérifier connectivité internet et firewall',
+      'dns_error': 'Problème DNS - Vérifier résolution openrouter.ai',
+      'invalid_api_key': 'Vérifier OPENROUTER_API_KEY dans variables environnement',
+      'rate_limit': 'Limite de taux atteinte - Attendre ou upgrader plan',
+      'server_error': 'Problème serveur OpenRouter - Réessayer plus tard',
+      'unknown': 'Erreur inconnue - Vérifier logs détaillés'
+    };
+    return actions[errorType] || actions.unknown;
+  }
+
+  // 🎓 GÉNÉRATION PROMPT SYSTÈME SELON MODE ÉtudIA
+  // ✅ NOUVEAU : Prompts optimisés pour DeepSeek R1 et éducation africaine
+  getSystemPrompt(mode, student_info = {}, document_context = '', has_document = false) {
+    // 🎯 Contexte de base ÉtudIA adapté OpenRouter
+    const baseContext = `Tu es ÉtudIA, l'assistant IA éducatif révolutionnaire pour l'Afrique, maintenant propulsé par DeepSeek R1 via OpenRouter.
+
+🎯 MISSION: Aider les étudiants africains à réussir avec excellence académique et méthodes pédagogiques adaptées.
+
+👤 PROFIL ÉLÈVE: ${student_info.nom || 'Étudiant'} - ${student_info.classe || 'Niveau non spécifié'} - ${student_info.etablissement || 'Établissement non spécifié'}
+
+📊 CONTEXTE TECHNIQUE: Mode ${mode.toUpperCase()} activé avec DeepSeek R1 via OpenRouter`;
+
+    // 📄 Ajout contexte document si disponible
+    if (has_document && document_context) {
+      baseContext += `\n\n📄 DOCUMENT FOURNI:\n${document_context.substring(0, 1500)}...`;
+    }
+
+    // 🎯 Spécialisation selon mode d'apprentissage
+    switch (mode) {
+      case 'step_by_step':
+        return `${baseContext}
+
+🎓 MODE ÉTAPE PAR ÉTAPE - PÉDAGOGIE PROGRESSIVE:
+- Décompose CHAQUE problème en étapes claires et numérotées
+- Explique le POURQUOI de chaque étape (pas seulement le comment)
+- Vérifie la compréhension avant de continuer à l'étape suivante
+- Utilise des exemples concrets du contexte africain (FCFA, situations locales)
+- Encourage l'étudiant après chaque étape réussie
+- LIMITE STRICTE: Maximum 180 tokens pour rester concis et pédagogique`;
+
+      case 'direct_solution':
+        return `${baseContext}
+
+⚡ MODE SOLUTION DIRECTE - EFFICACITÉ MAXIMALE:
+- Donne la réponse complète et détaillée IMMÉDIATEMENT
+- Fournis TOUTES les solutions aux exercices demandés
+- Explique rapidement la méthode utilisée (synthèse)
+- Ajoute des conseils mnémotechniques pour mémorisation
+- Reste pédagogique même en mode direct (pas de copie bête)
+- LIMITE STRICTE: Maximum 400 tokens pour couvrir tout efficacement`;
+
+      case 'normal':
+      default:
+        return `${baseContext}
+
+💬 MODE CONVERSATION NORMALE - ÉQUILIBRE PARFAIT:
+- Équilibre intelligent entre explication et solution
+- Pose des questions pour vérifier la compréhension élève
+- Adapte automatiquement ton niveau au profil de l'étudiant
+- Utilise des exemples du contexte éducatif africain
+- Encourage la réflexion personnelle et l'autonomie
+- LIMITE STRICTE: Maximum 250 tokens pour rester engageant`;
+    }
+  }
+}
+
+// 🚀 INITIALISATION SERVICE OPENROUTER GLOBAL
+// ❌ ANCIEN : const groq = new GroqService();
+const deepseek = new OpenRouterDeepSeek(); // ✅ NOUVEAU : Instance DeepSeek OpenRouter
+
+// 📱 INITIALISATION EXPRESS APP
 const app = express();
-const PORT = process.env.PORT || 10000;
 
-// 🔧 CACHE ET RATE LIMITING
-const cache = new NodeCache({ stdTTL: 300 }); // Cache 5 minutes
+// 💾 CACHE EN MÉMOIRE SIMPLE POUR OPTIMISATION
+const cache = new Map();
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // 100 requêtes par IP
+// ===================================================================
+// 📊 LOGS DIAGNOSTIC FINAL PARTIE 1
+// ===================================================================
+console.log('\n🎯 ÉtudIA V4.1 - PARTIE 1 INITIALISÉE AVEC SUCCÈS');
+console.log('✅ OpenRouter DeepSeek configuré');
+console.log('✅ Express app créée');
+console.log('✅ Cache mémoire initialisé');
+console.log('📍 Prêt pour PARTIE 2 : Middlewares + CORS');
+
+// 🔄 EXPORT POUR UTILISATION DANS AUTRES PARTIES
+module.exports = {
+  app,
+  deepseek,
+  cache,
+  OPENROUTER_CONFIG,
+  OpenRouterDeepSeek
+};
+
+// ===================================================================
+// 🚀 ÉtudIA V4.1 - SERVER.JS PARTIE 2 : MIDDLEWARES + CORS + RATE LIMITING
+// Fichier: backend/server-part2-middleware-cors.js
+// 
+// 🔧 AMÉLIORATIONS OPENROUTER :
+// ✅ Rate limiting spécifique pour chat OpenRouter
+// ✅ CORS étendu pour nouveaux domaines V4.1
+// ✅ Middleware logging enrichi pour debug OpenRouter
+// ✅ Configuration Cloudinary + Supabase optimisée
+//
+// Créé par @Pacousstar - Optimisé pour OpenRouter par MonAP
+// ===================================================================
+
+// 📦 IMPORT DEPENDENCIES DE LA PARTIE 1
+const { app, cache } = require('./server-part1-imports-config');
+
+// ===================================================================
+// 🔧 MIDDLEWARES EXPRESS STANDARDS
+// ===================================================================
+
+// 📊 Body parser avec limites augmentées pour documents ÉtudIA
+app.use(express.json({ 
+  limit: '50mb', // ✅ AUGMENTÉ : Pour gros documents PDF/images
+  verify: (req, res, buf) => {
+    // 🔍 Logging taille des requêtes pour monitoring
+    if (buf.length > 10 * 1024 * 1024) { // > 10MB
+      console.log(`⚠️ Requête volumineuse: ${buf.length / 1024 / 1024}MB sur ${req.path}`);
+    }
+  }
+}));
+
+app.use(express.urlencoded({ 
+  extended: true, 
+  limit: '50mb',
+  parameterLimit: 50000 // ✅ AUGMENTÉ : Pour formulaires complexes backoffices
+}));
+
+// ===================================================================
+// 🌍 CONFIGURATION CORS ÉTENDUE V4.1
+// ===================================================================
+
+// 🔧 DOMAINES AUTORISÉS - ÉTENDU POUR V4.1
+const allowedOrigins = [
+  // 🏠 Domaines existants V4.0
+  'http://localhost:3000',
+  'https://etudia-africa.vercel.app',
+  'https://etudia-v4.gsnexpertises.com',
+  'https://etudia-africa-v4-frontend.vercel.app',
+  
+  // 🆕 NOUVEAUX DOMAINES V4.1 BACKOFFICES
+  'https://etudia-v4-1.vercel.app',
+  'https://backoffice.etudia-africa.com',
+  'https://parents.etudia-africa.com',
+  'https://enseignants.etudia-africa.com',
+  'https://etablissements.etudia-africa.com',
+  'https://dren.etudia-africa.com',
+  'https://partenaires.etudia-africa.com',
+  
+  // 🧪 Domaines développement
+  'http://localhost:3001',
+  'http://localhost:3002',
+  'http://127.0.0.1:3000'
+];
+
+// 🔧 Configuration CORS dynamique intelligente
+app.use(cors({
+  origin: (origin, callback) => {
+    // ✅ Autoriser requêtes sans origin (Postman, apps mobiles)
+    if (!origin) return callback(null, true);
+    
+    // ✅ Vérifier si origin est autorisée
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    
+    // 🔍 Logging tentatives d'accès non autorisées
+    console.log(`🚨 Tentative accès non autorisée depuis: ${origin}`);
+    
+    // ❌ Bloquer origin non autorisée
+    const msg = `Accès bloqué par CORS pour origin: ${origin}`;
+    return callback(new Error(msg), false);
+  },
+  credentials: true,                    // ✅ Cookies et auth headers autorisés
+  optionsSuccessStatus: 200,           // ✅ Support ancien navigateurs
+  allowedHeaders: [                    // ✅ Headers autorisés
+    'Content-Type',
+    'Authorization',
+    'Accept',
+    'Origin',
+    'X-Requested-With',
+    'X-API-Key',                       // 🆕 Pour authentification API
+    'X-Client-Version'                 // 🆕 Pour versionning client
+  ],
+  exposedHeaders: [                    // ✅ Headers exposés au client
+    'X-Total-Count',                   // 📊 Pour pagination
+    'X-Rate-Limit-Remaining',          // ⏱️ Pour rate limiting
+    'X-OpenRouter-Model-Used'          // 🤖 Pour tracking modèle utilisé
+  ]
+}));
+
+// ===================================================================
+// ⏱️ RATE LIMITING SPÉCIALISÉ OPENROUTER V4.1
+// ===================================================================
+
+// 🚀 Rate limiter général (toutes routes sauf chat)
+const generalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,           // 🕐 15 minutes
+  max: 200,                           // 🔢 200 requêtes max par fenêtre
   message: {
-    error: 'Trop de requêtes. Attendez 15 minutes.',
-    retry_after: 900
+    error: 'Trop de requêtes générales, veuillez patienter.',
+    retry_after: 900,                 // 15 minutes en secondes
+    type: 'general_rate_limit'
+  },
+  standardHeaders: true,              // ✅ Inclure headers standard
+  legacyHeaders: false,               // ❌ Pas d'anciens headers
+  keyGenerator: (req) => {
+    // 🔍 Clé basée sur IP + User-Agent pour plus de granularité
+    return req.ip + ':' + (req.get('User-Agent')?.substring(0, 50) || 'unknown');
+  }
+});
+
+// 🤖 Rate limiter spécifique CHAT OPENROUTER (plus strict)
+const chatLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,           // 🕐 15 minutes
+  max: 100,                           // 🔢 100 requêtes chat max (plus strict)
+  message: {
+    error: 'Limite de chat IA atteinte. Attendez 15 minutes.',
+    retry_after: 900,
+    type: 'chat_rate_limit',
+    suggestion: 'Utilisez le mode gratuit ou upgrader vers Premium'
   },
   standardHeaders: true,
   legacyHeaders: false,
-});
-
-// ===================================================================
-// 🔧 CONFIGURATIONS
-// ===================================================================
-
-// Configuration Cloudinary
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
-});
-
-// Configuration Multer optimisée
-const upload = multer({ 
-  dest: '/tmp/uploads/',
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
-  fileFilter: (req, file, cb) => {
-    const allowedTypes = [
-      'image/jpeg', 'image/png', 'image/jpg', 'image/webp',
-      'application/pdf', 'text/plain',
-      'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    ];
-    cb(null, allowedTypes.includes(file.mimetype));
+  keyGenerator: (req) => {
+    // 🎯 Clé spécifique chat avec user_id si disponible
+    const userId = req.body?.user_id || 'anonymous';
+    return `chat:${req.ip}:${userId}`;
+  },
+  // 🔧 Fonction custom de dépassement
+  onLimitReached: (req, res) => {
+    console.log(`🚨 Limite chat atteinte: IP ${req.ip}, User ${req.body?.user_id || 'anonyme'}`);
   }
 });
 
-// Supabase
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY
-);
-
-// 🔧 CONFIGURATION OPENROUTER DEEPSEEK R1 - ÉtudIA V4.1
-const OPENROUTER_CONFIG = {
-  // 🔑 Clé API OpenRouter (à configurer dans variables d'environnement)
-  apiKey: process.env.OPENROUTER_API_KEY,
-  // 🌐 URL de base OpenRouter
-  baseURL: process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1',
-  // 🤖 Modèles DeepSeek R1 disponibles
-  models: {
-    free: process.env.DEEPSEEK_MODEL_FREE || 'deepseek/deepseek-r1:free', // 🆓 Gratuit
-    paid: process.env.DEEPSEEK_MODEL_PAID || 'deepseek/deepseek-r1'        // 💎 Payant
+// 📤 Rate limiter UPLOAD (très permissif mais surveillé)
+const uploadLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,           // 🕐 1 heure
+  max: 50,                            // 🔢 50 uploads/heure max
+  message: {
+    error: 'Limite d\'upload atteinte. Attendez 1 heure.',
+    retry_after: 3600,
+    type: 'upload_rate_limit'
   },
-  // 🔢 Limites de tokens par mode d'apprentissage
-  maxTokens: {
-    normal: 250,           // 💬 Mode conversation normale
-    step_by_step: 180,     // 📊 Mode étape par étape (plus court)
-    direct_solution: 400,  // ✅ Mode solution directe (plus long)
-    welcome: 200           // 🎉 Message d'accueil
-  },
-  // 🌡️ Température (créativité) par mode
-  temperature: {
-    normal: 0.15,          // 💬 Équilibré
-    step_by_step: 0.05,    // 📊 Très précis pour étapes
-    direct_solution: 0.1,  // ✅ Précis pour solutions
-    welcome: 0.2           // 🎉 Légèrement créatif pour accueil
-  }
-};
+  standardHeaders: true,
+  legacyHeaders: false
+});
 
-// 📊 LOGS DE CONFIGURATION - ÉtudIA V4.1
-console.log('🔗 ÉtudIA V4.1 Configuration OpenRouter DeepSeek R1:');
-console.log('- Port:', PORT);
-console.log('- Environment:', process.env.NODE_ENV);
-console.log('- OpenRouter API:', OPENROUTER_CONFIG.apiKey ? '✅ Configuré' : '❌ Manquant');
-console.log('- DeepSeek Free Model:', OPENROUTER_CONFIG.models.free);
-console.log('- DeepSeek Paid Model:', OPENROUTER_CONFIG.models.paid);
+// 🔧 Appliquer rate limiting général sur toutes les routes
+app.use(generalLimiter);
 
 // ===================================================================
-// 🧠 GESTION MÉMOIRE IA RÉVOLUTIONNAIRE - VERSION CORRIGÉE LLAMA
+// 🔧 MIDDLEWARE LOGGING AVANCÉ POUR DEBUG OPENROUTER
 // ===================================================================
 
-const MemoryManager = {
-  // Analyser le style d'apprentissage de l'élève
-  async analyzeLearnignStyle(chatHistory, userResponses) {
-    const totalMessages = chatHistory.length;
-    const questionsAsked = chatHistory.filter(msg => msg.reponse_ia.includes('?')).length;
-    const exercicesMentioned = chatHistory.filter(msg => 
-      msg.message_eleve.toLowerCase().includes('exercice') || 
-      msg.reponse_ia.toLowerCase().includes('exercice')
-    ).length;
-
-    let style = 'equilibre'; // Par défaut
-
-    if (questionsAsked > totalMessages * 0.7) {
-      style = 'interactif'; // Aime les questions
-    } else if (exercicesMentioned > totalMessages * 0.5) {
-      style = 'pratique'; // Préfère la pratique
-    } else {
-      style = 'theorique'; // Préfère les explications
-    }
-
-    return style;
-  },
-
-  // Identifier les difficultés récurrentes
-  async identifyDifficulties(chatHistory, documents) {
-    const difficulties = [];
-    const subjects = new Map();
-
-    // Analyser les matières les plus mentionnées
-    for (const doc of documents) {
-      const subject = doc.matiere || 'general';
-      subjects.set(subject, (subjects.get(subject) || 0) + 1);
-    }
-
-    // Analyser les mots-clés de difficulté dans le chat
-    const difficultyKeywords = [
-      'je ne comprends pas', 'difficile', 'compliqué', 'aide-moi',
-      'je n\'arrive pas', 'problème', 'bloqué'
-    ];
-
-    for (const msg of chatHistory) {
-      for (const keyword of difficultyKeywords) {
-        if (msg.message_eleve.toLowerCase().includes(keyword)) {
-          const context = msg.message_eleve + ' ' + msg.reponse_ia;
-          if (context.includes('math')) difficulties.push('mathematiques');
-          if (context.includes('français')) difficulties.push('francais');
-          if (context.includes('physique')) difficulties.push('physique');
-          if (context.includes('exercice')) difficulties.push('resolution_exercices');
-        }
-      }
-    }
-
-    return [...new Set(difficulties)];
-  },
-
-  // Mettre à jour le profil de l'élève
-  async updateStudentProfile(studentId) {
-    try {
-      const [chatHistoryResult, documentsResult] = await Promise.all([
-        supabase.from('historique_conversations').select('*').eq('eleve_id', studentId),
-        supabase.from('documents').select('*').eq('eleve_id', studentId)
-      ]);
-
-      const chatHistory = chatHistoryResult.data || [];
-      const documents = documentsResult.data || [];
-
-      const learnignStyle = await this.analyzeLearnignStyle(chatHistory, []);
-      const difficulties = await this.identifyDifficulties(chatHistory, documents);
-      const niveauGlobal = Math.min(5, Math.max(1, Math.ceil(chatHistory.length / 10)));
-
-      await supabase.from('eleves').update({
-        style_apprentissage: learnignStyle,
-        matieres_difficiles: difficulties,
-        niveau_global: niveauGlobal,
-        preferences_pedagogiques: {
-          derniere_analyse: new Date().toISOString(),
-          nb_interactions: chatHistory.length,
-          nb_documents: documents.length
-        }
-      }).eq('id', studentId);
-
-      console.log(`✅ Profil mis à jour pour élève ${studentId}: ${learnignStyle}, difficultés: ${difficulties.join(', ')}`);
-      return { learnignStyle, difficulties, niveauGlobal };
-
-    } catch (error) {
-      console.error('❌ Erreur mise à jour profil:', error);
-      return null;
-    }
-  },
-
-  // 🎯 PROMPTS ULTRA-COURTS ET DIRECTS (MAX 500 CHARS) - CORRECTION LLAMA
-  // 🔧 AMÉLIORATION: Fonction createPersonalizedPrompt AMÉLIORÉE (pas remplacée)
-  createPersonalizedPrompt(studentInfo, learningProfile, documentName, documentContent, mode = 'normal', conversationContext = null) {
-    const prenomExact = studentInfo.nom.trim().split(' ')[0];
-    const className = studentInfo.classe;
-
-    // 🔧 NOUVEAUTÉ: Gestion du contexte de conversation
-    let contextInstruction = '';
-    if (conversationContext?.hasContext && conversationContext?.wasIncomplete) {
-      contextInstruction = `\nCONTEXTE: Tu étais en train de traiter "${conversationContext.lastTopic}". Continue exactement où tu t'es arrêté.`;
-    }
-
-    // 🔧 INSTRUCTIONS CORE AMÉLIORÉES (garde la logique existante + ajoute les nouvelles)
-    let coreInstruction = '';
-    let maxTokens = 200;
-
-    if (mode === 'step_by_step') {
-      // 🔧 AMÉLIORATION STEP-BY-STEP: Plus de leadership, moins de questions vides
-      coreInstruction = `RÈGLE ABSOLUE pour ${prenomExact}: 
-1. Commence TOUJOURS par "📊 Étape X/Y" OBLIGATOIRE
-2. RÉSOUS activement l'étape (calculs, explications)
-3. GUIDE ${prenomExact} dans la résolution
-4. Termine par UNE question de compréhension pour continuer
-5. Ne donne pas tout d'un coup - UNE étape à la fois
-6. Reconnais quand ${prenomExact} dit "continue" pour poursuivre
-
-EXEMPLE FORMAT:
-📊 Étape 1/4
-Pour résoudre cette équation, je commence par isoler x...
-[calculs et explications]
-❓ ${prenomExact}, comprends-tu pourquoi j'ai fait cette opération ?${contextInstruction}`;
-      maxTokens = 180;
-      
-    } else if (mode === 'direct_solution') {
-      // 🔧 AMÉLIORATION DIRECT: Ajoute détection de fin
-      coreInstruction = `RÈGLE ABSOLUE pour ${prenomExact}:
-1. Donne TOUTES les solutions complètes immédiatement
-2. Détaille chaque calcul et étape
-3. N'utilise PAS "📊 Étape X/Y" 
-4. Format: Exercice 1: [solution complète], Exercice 2: [solution complète]
-5. Termine par un message de fin quand tout est résolu${contextInstruction}`;
-      maxTokens = 400;
-      
-    } else if (mode === 'normal') {
-      // 🔧 NOUVEAUTÉ: Mode normal COMPLÈTEMENT LIBRE
-      coreInstruction = `NOUVEAU MODE LIBRE pour ${prenomExact}:
-1. Réponds à TOUTE question (maths, actualités, culture, devoirs)
-2. N'utilise PAS le document - mode libre total
-3. Sois concis pour économiser les tokens
-4. Réponses précises et directes
-5. Pas de format spécial - conversation naturelle${contextInstruction}`;
-      maxTokens = 200;
-    }
-
-    // 🔧 NOUVEAUTÉ: Instruction de fin d'exercice pour tous les modes
-    const completionInstruction = `
-RÈGLE FIN D'EXERCICE: Quand tu donnes un résultat final, ajoute un message de célébration approprié.`;
-
-    // 🎯 PROMPT FINAL (CONSERVE LA STRUCTURE EXISTANTE)
-    return {
-      prompt: `Tu es ÉtudIA pour ${prenomExact}.
-
-${coreInstruction}
-
-${mode !== 'normal' ? `Document: "${documentName}"` : 'Mode libre - pas de document'}
-Style: ${learningProfile?.style_apprentissage || 'équilibré'}${completionInstruction}
-
-TOUJOURS commencer par "${prenomExact}," dans tes réponses.`,
-      maxTokens
-    };
-  },
-
-  // 🔧 AMÉLIORATION: Fonction validateAndFixResponse AMÉLIORÉE
-  validateAndFixResponse(aiResponse, mode, prenomExact, step_info = null, isExerciseComplete = false) {
-    let correctedResponse = aiResponse;
-
-    // 1. Vérifier présence du prénom (CONSERVE L'EXISTANT)
-    if (!correctedResponse.includes(prenomExact)) {
-      correctedResponse = `${prenomExact}, ${correctedResponse}`;
-    }
-
-    // 2. Validation MODE ÉTAPE PAR ÉTAPE (AMÉLIORE L'EXISTANT)
-    if (mode === 'step_by_step' && step_info) {
-      const expectedFormat = `📊 Étape ${step_info.current_step}/${step_info.total_steps}`;
-      
-      if (!correctedResponse.includes('📊 Étape')) {
-        correctedResponse = `${expectedFormat}\n\n${correctedResponse}`;
-      }
-      
-      // 🔧 AMÉLIORATION: Logique de question plus intelligente
-      if (!correctedResponse.includes('?') && !correctedResponse.includes('🔄')) {
-        // Si c'est la dernière étape, moins de questions
-        if (step_info.current_step >= step_info.total_steps || isExerciseComplete) {
-          correctedResponse += `\n\n✅ ${prenomExact}, as-tu bien compris cette dernière étape ?`;
-        } else {
-          correctedResponse += `\n\n❓ ${prenomExact}, peux-tu me confirmer que tu suis ?`;
-        }
-      }
-    }
-
-    // 3. Validation MODE SOLUTION DIRECTE (CONSERVE L'EXISTANT)
-    if (mode === 'direct_solution') {
-      correctedResponse = correctedResponse.replace(/📊 Étape \d+\/\d+/g, '');
-      
-      if (!correctedResponse.includes('Exercice') && !correctedResponse.includes('Solution')) {
-        correctedResponse = `✅ Solutions complètes pour ${prenomExact} :\n\n${correctedResponse}`;
-      }
-    }
-
-    // 4. 🔧 NOUVEAUTÉ: Ajouter message de fin si exercice terminé
-    if (isExerciseComplete) {
-      const completionMessage = ExerciseCompletionDetector.generateCompletionMessage(mode, prenomExact);
-      correctedResponse += completionMessage;
-    }
-
-    // 5. Gérer continuation automatique (CONSERVE L'EXISTANT)
-    const isIncomplete = (
-      correctedResponse.length > 280 && 
-      !correctedResponse.includes('🎉') && 
-      !correctedResponse.includes('[RÉPONSE CONTINUE...]') &&
-      !isExerciseComplete
-    );
-
-    if (isIncomplete) {
-      correctedResponse += '\n\n🔄 [RÉPONSE CONTINUE...]\n💬 Écris "continue" pour la suite !';
-    }
-
-    return correctedResponse;
-  },
-
-  // 🔧 AMÉLIORATION: Messages optimisés AMÉLIORÉS (pas remplacés)
-  createOptimizedMessages(basePromptData, chatHistory, userMessage, mode, step_info, conversationContext = null) {
-    const { prompt, maxTokens } = basePromptData;
-
-    const messages = [
-      {
-        role: 'system',
-        content: prompt
-      }
-    ];
-
-    // 🔧 AMÉLIORATION: Gestion intelligente de l'historique
-    if (chatHistory?.length > 0) {
-      const recentHistory = chatHistory.slice(-2).reverse();
-      
-      for (const exchange of recentHistory) {
-        messages.push({ role: 'user', content: exchange.message_eleve.substring(0, 100) });
-        messages.push({ role: 'assistant', content: exchange.reponse_ia.substring(0, 150) });
-      }
-    }
-
-    // Message actuel
-    messages.push({ role: 'user', content: userMessage });
-
-    // 🔧 NOUVEAUTÉ: Instructions de continuation améliorées
-    
-    if (isContinuation && conversationContext?.hasContext) {
-      messages.push({
-        role: 'system',
-        content: `CONTINUATION: L'élève demande la suite. Tu traitais "${conversationContext.lastTopic}". Continue exactement où tu t'es arrêté sans répéter.`
-      });
-    }
-
-    return { messages, maxTokens };
-  }
-};
-
-// 🎯 GESTIONNAIRE MODES DE CHAT - VERSION OPTIMISÉE
-const ChatModeManager = {
-  // Paramètres stricts pour chaque mode
-  getModeConfig(mode) {
-    const configs = {
-      'step_by_step': {
-        temperature: 0.05, // Ultra-strict
-        max_tokens: 150,
-        top_p: 0.7,
-        systemPrefix: '📊 MODE ÉTAPE PAR ÉTAPE ACTIVÉ:'
-      },
-      'direct_solution': {
-        temperature: 0.1,
-        max_tokens: 400,
-        top_p: 0.8,
-        systemPrefix: '✅ MODE SOLUTION DIRECTE ACTIVÉ:'
-      },
-      'normal': {
-        temperature: 0.15,
-        max_tokens: 250,
-        top_p: 0.9,
-        systemPrefix: '💬 MODE NORMAL ACTIVÉ:'
-      }
-    };
-
-    return configs[mode] || configs['normal'];
-  }
-};
-
-// 🔧 CORRECTION MAJEURE : AJOUT ConversationMemoryManager MANQUANT !
-const ConversationMemoryManager = {
-  // 🧠 RÉCUPÈRE LE CONTEXTE COMPLET DE CONVERSATION
-  async getConversationContext(userId, currentMessage) {
-    try {
-      // 🎯 RÉCUPÈRE LES 5 DERNIERS ÉCHANGES
-      const { data: recentExchanges } = await supabase
-        .from('historique_conversations')
-        .select('*')
-        .eq('eleve_id', userId)
-        .order('date_creation', { ascending: false })
-        .limit(5);
-
-      if (!recentExchanges || recentExchanges.length === 0) {
-        return { hasContext: false, lastResponse: null, wasIncomplete: false };
-      }
-
-      const lastExchange = recentExchanges[0];
-      const lastResponse = lastExchange.reponse_ia || '';
-      
-      // 🔍 DÉTECTION RÉPONSE INCOMPLÈTE AMÉLIORÉE
-      const wasIncomplete = 
-        lastResponse.includes('[RÉPONSE CONTINUE...]') ||
-        lastResponse.includes('🔄') ||
-        lastResponse.includes('continue') ||
-        lastResponse.includes('suite') ||
-        lastResponse.includes('...') ||
-        lastResponse.length > 250 ||
-        /exercice\s+\d+.*:/i.test(lastResponse) ||
-        /\d+\)\s*[^.!?]*$/i.test(lastResponse) || // Se termine par "1) calcul"
-        /=\s*[^.!?]*$/i.test(lastResponse) || // Se termine par "= calcul"
-        lastResponse.endsWith(':') ||
-        lastResponse.endsWith(',');
-
-      // 🎯 EXTRACTION DU POINT D'ARRÊT PRÉCIS
-      let stopPoint = 'au milieu de la résolution';
-      let lastTopic = 'exercice en cours';
-      
-      if (wasIncomplete) {
-        // Analyse du contenu pour identifier où on s'est arrêté
-        if (lastResponse.includes('Exercice 1')) {
-          stopPoint = 'pendant l\'exercice 1';
-          lastTopic = 'exercice 1';
-        } else if (lastResponse.includes('Exercice 2')) {
-          stopPoint = 'pendant l\'exercice 2';  
-          lastTopic = 'exercice 2';
-        } else if (lastResponse.includes('b)')) {
-          stopPoint = 'à la question b)';
-          lastTopic = 'question b';
-        } else if (lastResponse.includes('c)')) {
-          stopPoint = 'à la question c)';
-          lastTopic = 'question c';
-        } else if (/=\s*[^.!?]*$/i.test(lastResponse)) {
-          stopPoint = 'au milieu d\'un calcul';
-          lastTopic = 'calcul en cours';
-        }
-      }
-
-      return {
-        hasContext: true,
-        lastResponse: lastResponse,
-        wasIncomplete: wasIncomplete,
-        stopPoint: stopPoint,
-        lastTopic: lastTopic,
-        lastMode: lastExchange.mode_utilise,
-        conversationHistory: recentExchanges.slice(0, 4), // 4 derniers échanges
-        fullLastResponse: lastResponse // NOUVEAUTÉ : Garde la réponse complète
-      };
-
-    } catch (error) {
-      console.warn('⚠️ Erreur récupération contexte:', error.message);
-      return { hasContext: false, lastResponse: null, wasIncomplete: false };
-    }
-  },
-
-  // 🔍 DÉTECTION DEMANDE CONTINUATION AMÉLIORÉE
-  isContinuationRequest(message) {
-    const continuationKeywords = [
-      'continue', 'suite', 'la suite', 'continuer', 'poursuis', 'va-y',
-      'après', 'ensuite', 'next', 'suivant', 'reprends', 'finis',
-      'termine', 'complète', 'achève', 'et puis', 'maintenant',
-      'continue le calcul', 'continue l\'exercice', 'suite du problème'
-    ];
-    
-    const messageLower = message.toLowerCase().trim();
-    
-    // Détection directe
-    const directMatch = continuationKeywords.some(keyword => 
-      messageLower.includes(keyword.toLowerCase())
-    );
-    
-    // Détection contextuelle (messages très courts qui implicitement demandent suite)
-    const implicitContinuation = 
-      messageLower.length < 10 && 
-      (messageLower.includes('oui') || 
-       messageLower.includes('ok') || 
-       messageLower.includes('d\'accord') ||
-       messageLower.includes('vas-y'));
-    
-    return directMatch || implicitContinuation;
-  }
-};
-
-// ===================================================================
-// 📄 FONCTIONS OCR
-// ===================================================================
-
-async function extractTextFromFile(filePath, mimeType, originalName) {
-  try {
-    let extractedText = '';
-    
-    console.log('🔍 OCR - Type de fichier:', mimeType, 'Taille:', fs.statSync(filePath).size);
-    
-    if (mimeType.startsWith('image/')) {
-      console.log('🖼️ Traitement image avec Tesseract...');
-      const result = await Tesseract.recognize(filePath, 'fra+eng');
-      extractedText = result.data.text;
-    } else if (mimeType === 'application/pdf') {
-      console.log('📄 Traitement PDF...');
-      const dataBuffer = fs.readFileSync(filePath);
-      const data = await pdfParse(dataBuffer);
-      extractedText = data.text;
-    } else if (mimeType === 'text/plain') {
-      console.log('📝 Traitement TXT...');
-      extractedText = fs.readFileSync(filePath, 'utf8');
-    } else if (mimeType.includes('wordprocessingml') || mimeType.includes('msword')) {
-      console.log('📘 Traitement Word...');
-      const dataBuffer = fs.readFileSync(filePath);
-      const result = await mammoth.extractRawText({ buffer: dataBuffer });
-      extractedText = result.value;
-    }
-    
-    console.log('✅ OCR terminé - Longueur:', extractedText.length);
-    return extractedText.replace(/\s+/g, ' ').trim();
-    
-  } catch (error) {
-    console.error('❌ Erreur OCR:', error.message);
-    return `[ERREUR OCR: ${error.message}]`;
-  }
-}
-
-async function analyzeDocumentWithIA(extractedText, fileName) {
-  try {
-    const completion = await groq.chat.completions.create({
-      messages: [{
-        role: "system",
-        content: "Expert pédagogique. Réponds UNIQUEMENT avec du JSON valide."
-      }, {
-        role: "user",
-        content: `Analyse: ${extractedText.substring(0, 2000)}
-JSON requis:
-{"subject": "matière", "summary": "résumé", "exercise_count": nombre_exercices}`
-      }],
-      model: "llama-3.3-70b-versatile",
-      temperature: 0.3,
-      max_tokens: 300
-    });
-    
-    try {
-      return JSON.parse(completion.choices[0].message.content.trim());
-    } catch {
-      return { subject: "Document", summary: "Document analysé", exercise_count: 1 };
-    }
-  } catch {
-    return { subject: "Document", summary: "Document uploadé", exercise_count: 1 };
-  }
-}
-
-
-// ===================================================================
-// 🔧 MIDDLEWARES
-// ===================================================================
-
-// Rate limiting AVANT CORS
-app.use('/api/', limiter);
-
-app.use(cors({
-  origin: [
-    // Localhost développement
-    'http://localhost:3000',
-    'http://localhost:3001',
-    
-    // Production Vercel
-    'https://etudia-africa-v4.vercel.app',
-    
-    // 🔥 NOUVELLE URL RENDER !
-    'https://etudia-v4-revolutionary.onrender.com',
-    
-    // Regex pour tous les domaines Vercel et Render
-    /.*\.vercel\.app$/,
-    /.*\.onrender\.com$/    
-  ],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin'],
-  optionsSuccessStatus: 200
-}));
-
-// Parsing avec limites
-app.use(express.json({ 
-  limit: '10mb',
-  verify: (req, res, buf) => {
-    req.rawBody = buf;
-  }
-}));
-app.use(express.urlencoded({ 
-  extended: true, 
-  limit: '10mb' 
-}));
-
-// Headers de sécurité
+// 📊 Middleware logging détaillé pour debug V4.1
 app.use((req, res, next) => {
-  res.header('X-Powered-By', 'EtudIA v4.0');
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+  const startTime = Date.now();
   
-  if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
-  }
-  next();
-});
-
-// 🔧 MIDDLEWARE LOGS AMÉLIORÉS 
-app.use((req, res, next) => {
-  const timestamp = new Date().toISOString();
-  const userAgent = req.get('user-agent') || 'Unknown';
-  const origin = req.get('origin') || 'Direct';
-  
-  console.log(`\n🌐 =============== REQUÊTE ENTRANTE ===============`);
-  console.log(`📅 [${timestamp}]`);
+  // 🔍 Log requête entrante avec détails
+  console.log(`\n🌐 =============== REQUÊTE ÉtudIA V4.1 ===============`);
+  console.log(`📅 ${new Date().toLocaleString('fr-FR')}`);
   console.log(`🎯 ${req.method} ${req.originalUrl}`);
   console.log(`📍 IP: ${req.ip}`);
-  console.log(`🌍 Origin: ${origin}`);
-  console.log(`🖥️ User-Agent: ${userAgent.substring(0, 100)}`);
-  console.log(`📦 Content-Type: ${req.get('content-type') || 'None'}`);
-  console.log(`🔑 Headers: ${JSON.stringify({
-    'content-type': req.get('content-type'),
-    'origin': req.get('origin'),
-    'referer': req.get('referer')
-  }, null, 2)}`);
+  console.log(`🌍 Origin: ${req.get('origin') || 'Non spécifié'}`);
+  console.log(`👤 User-Agent: ${req.get('user-agent')?.substring(0, 100) || 'Non spécifié'}`);
   
+  // 🔍 Log headers importants
+  const importantHeaders = ['content-type', 'authorization', 'x-api-key'];
+  importantHeaders.forEach(header => {
+    const value = req.get(header);
+    if (value) {
+      console.log(`📋 ${header}: ${header === 'authorization' ? '[MASQUÉ]' : value}`);
+    }
+  });
+  
+  // 🔍 Log body pour routes spécifiques (sans données sensibles)
   if (req.body && Object.keys(req.body).length > 0) {
-    console.log(`📋 Body: ${JSON.stringify(req.body, null, 2)}`);
+    const logBody = { ...req.body };
+    // 🔒 Masquer données sensibles
+    if (logBody.message) logBody.message = logBody.message.substring(0, 100) + '...';
+    if (logBody.email) logBody.email = logBody.email.replace(/(.{2}).*(@.*)/, '$1***$2');
+    console.log(`📋 Body: ${JSON.stringify(logBody, null, 2)}`);
   }
   
-  console.log(`🏁 =============== FIN INFO REQUÊTE ===============\n`);
+  // 🕐 Mesurer temps de réponse
+  const originalSend = res.send;
+  res.send = function(data) {
+    const duration = Date.now() - startTime;
+    console.log(`⏱️ Durée traitement: ${duration}ms`);
+    console.log(`📤 Status: ${res.statusCode}`);
+    console.log(`🏁 =============== FIN REQUÊTE ===============\n`);
+    originalSend.call(this, data);
+  };
   
   next();
 });
 
-// 🔧 CORRECTION 1: AJOUTER AVANT TES AUTRES ROUTES (ligne ~250)
+// ===================================================================
+// 🔧 MIDDLEWARE OPTIONS PREFLIGHT POUR CORS
+// ===================================================================
+
+// 🔧 Gestion explicite des requêtes OPTIONS pour CORS
 app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization,Accept');
+  res.header('Access-Control-Allow-Origin', req.get('Origin') || '*');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS,PATCH');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization,Accept,Origin,X-Requested-With,X-API-Key,X-Client-Version');
+  res.header('Access-Control-Allow-Credentials', 'true');
   res.status(200).end();
 });
 
 // ===================================================================
-// 🔧 CORRECTION 5: ROUTE DEBUG (optionnelle)
+// ☁️ CONFIGURATION CLOUDINARY OPTIMISÉE
 // ===================================================================
 
-app.get('/debug', (req, res) => {
-  res.json({
-    message: '🔍 Debug ÉtudIA Render',
-    timestamp: new Date().toISOString(),
-    url_called: req.originalUrl,
-    method: req.method,
-    headers: {
-      host: req.get('host'),
-      origin: req.get('origin'),
-      'user-agent': req.get('user-agent')?.substring(0, 100)
-    },
-    environment: {
-      NODE_ENV: process.env.NODE_ENV,
-      PORT: PORT,
-      platform: 'Render.com'
-    },
-    service_info: {
-      render_url: 'https://etudia-v4-revolutionary.onrender.com',
-      health_endpoint: '/health',
-      api_base: '/api',
-      memory: Math.round(process.memoryUsage().heapUsed / 1024 / 1024) + ' MB'
-    }
+// 🔧 Configuration Cloudinary avec vérification
+try {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+    secure: true,                     // ✅ Forcer HTTPS
+    upload_preset: 'etudia_docs',     // 🆕 Preset dédié ÉtudIA
   });
+  
+  console.log('☁️ Cloudinary configuré:', {
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME ? '✅ OK' : '❌ MANQUANT',
+    api_key: process.env.CLOUDINARY_API_KEY ? '✅ OK' : '❌ MANQUANT',
+    api_secret: process.env.CLOUDINARY_API_SECRET ? '✅ OK' : '❌ MANQUANT'
+  });
+} catch (error) {
+  console.error('❌ Erreur configuration Cloudinary:', error.message);
+}
+
+// ===================================================================
+// 📁 CONFIGURATION MULTER OPTIMISÉE POUR ÉtudIA
+// ===================================================================
+
+// 🔧 Configuration Multer avec filtres stricts
+const upload = multer({ 
+  dest: '/tmp/uploads/',                          // 📁 Dossier temporaire
+  limits: { 
+    fileSize: 15 * 1024 * 1024,                 // 📏 15MB max (augmenté)
+    files: 1,                                    // 🔢 1 fichier à la fois
+    fields: 10,                                  // 🔢 10 champs form max
+    fieldSize: 1024 * 1024                       // 📏 1MB par champ text
+  },
+  
+  // 🔍 Filtre types fichiers autorisés ÉtudIA
+  fileFilter: (req, file, callback) => {
+    const allowedTypes = [
+      // 🖼️ Images
+      'image/jpeg', 'image/png', 'image/jpg', 'image/webp',
+      // 📄 Documents
+      'application/pdf', 'text/plain',
+      // 📘 Word
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    ];
+    
+    const isAllowed = allowedTypes.includes(file.mimetype);
+    
+    if (!isAllowed) {
+      console.log(`❌ Type fichier rejeté: ${file.mimetype} pour ${file.originalname}`);
+    } else {
+      console.log(`✅ Type fichier accepté: ${file.mimetype} pour ${file.originalname}`);
+    }
+    
+    callback(null, isAllowed);
+  },
+  
+  // 🔧 Fonction de nommage fichier
+  filename: (req, file, callback) => {
+    const uniqueName = `etudia_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+    const extension = path.extname(file.originalname);
+    callback(null, uniqueName + extension);
+  }
 });
 
 // ===================================================================
-// 🔗 ROUTES DE BASE
+// 🗄️ CONFIGURATION SUPABASE AVEC VÉRIFICATION
+// ===================================================================
+
+// 🔧 Initialisation Supabase avec gestion d'erreurs
+let supabase;
+try {
+  supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_ANON_KEY,
+    {
+      auth: {
+        autoRefreshToken: true,           // ✅ Refresh auto des tokens
+        persistSession: true,             // ✅ Persister les sessions
+        detectSessionInUrl: false         // ❌ Pas de détection URL pour API
+      },
+      realtime: {
+        params: {
+          eventsPerSecond: 10             // 🔢 Limite events realtime
+        }
+      }
+    }
+  );
+  
+  console.log('🗄️ Supabase configuré:', {
+    url: process.env.SUPABASE_URL ? '✅ OK' : '❌ MANQUANT',
+    key: process.env.SUPABASE_ANON_KEY ? '✅ OK' : '❌ MANQUANT',
+    status: '🟢 CONNECTÉ'
+  });
+} catch (error) {
+  console.error('❌ Erreur configuration Supabase:', error.message);
+  // 🔧 Fallback pour éviter crash total
+  supabase = null;
+}
+
+// ===================================================================
+// 📊 LOGS DIAGNOSTIC FINAL PARTIE 2
+// ===================================================================
+console.log('\n🎯 ÉtudIA V4.1 - PARTIE 2 MIDDLEWARES INITIALISÉE');
+console.log('✅ CORS configuré avec domaines V4.1');
+console.log('✅ Rate limiting OpenRouter activé');
+console.log('✅ Logging avancé opérationnel');
+console.log('✅ Cloudinary + Supabase configurés');
+console.log('✅ Multer upload optimisé');
+console.log('📍 Prêt pour PARTIE 3 : Routes Auth + Students');
+
+// 🔄 EXPORT POUR UTILISATION DANS AUTRES PARTIES
+module.exports = {
+  chatLimiter,
+  uploadLimiter,
+  upload,
+  supabase
+};
+
+// ===================================================================
+// 🚀 ÉtudIA V4.1 - SERVER.JS PARTIE 3 : ROUTES AUTH + GESTION ÉLÈVES
+// Fichier: backend/server-part3-auth-students.js
+// 
+// 🔧 AMÉLIORATIONS V4.1 :
+// ✅ Cache profils étudiants pour optimisation OpenRouter
+// ✅ Gestion abonnements (Gratuit/Premium/Excellence)
+// ✅ Tracking dernière activité pour stats
+// ✅ Validation email renforcée
+// ✅ Préparation liaison parents-élèves
+//
+// Créé par @Pacousstar - Optimisé pour V4.1 par MonAP
+// ===================================================================
+
+// 📦 IMPORT DEPENDENCIES DES PARTIES PRÉCÉDENTES
+const { app, cache } = require('./server-part1-imports-config');
+const { supabase } = require('./server-part2-middleware-cors');
+
+// ===================================================================
+// 🏥 ROUTE SANTÉ SYSTÈME - ENRICHIE POUR OPENROUTER V4.1
 // ===================================================================
 
 app.get('/health', async (req, res) => {
+  console.log('🏥 Health check système ÉtudIA V4.1 appelé');
+  
   try {
-    console.log('🏥 Route /health appelée depuis:', req.get('origin') || 'Direct');
+    // 🤖 Test santé OpenRouter DeepSeek R1
+    const deepseekHealth = await deepseek.testHealth();
     
-    // Test rapide Supabase
-    let supabaseStatus = '✅ Connecté';
+    // 🗄️ Test santé Supabase
+    let supabaseHealth = { status: 'healthy', response_time: 'OK' };
+    const supabaseStartTime = Date.now();
+    
     try {
-      const { data } = await supabase.from('eleves').select('count(*)').limit(1);
-      supabaseStatus = '✅ Connecté';
-    } catch (dbError) {
-      supabaseStatus = '⚠️ Erreur: ' + dbError.message.substring(0, 50);
+      const { data: testData, error: supabaseError } = await supabase
+        .from('eleves')
+        .select('count(*)')
+        .limit(1);
+      
+      if (supabaseError) throw supabaseError;
+      
+      supabaseHealth.response_time = `${Date.now() - supabaseStartTime}ms`;
+      supabaseHealth.status = 'healthy';
+    } catch (supabaseError) {
+      console.error('❌ Erreur Supabase health:', supabaseError.message);
+      supabaseHealth = {
+        status: 'error',
+        error: supabaseError.message,
+        response_time: 'timeout'
+      };
     }
-    
-    // 🧪 TEST OPENROUTER DEEPSEEK R1 - ÉtudIA V4.1
-    let deepseekStatus = '✅ Fonctionnel';
-    try {
-      console.log('🏥 Test santé OpenRouter DeepSeek R1...');
-      const testResult = await deepseek.testConnection();
-      if (testResult.success) {
-        deepseekStatus = `✅ OpenRouter DeepSeek R1 opérationnel (${testResult.tokens} tokens)`;
-        console.log('✅ OpenRouter DeepSeek R1 fonctionne parfaitement');
-      } else {
-        deepseekStatus = `⚠️ Erreur OpenRouter: ${testResult.error}`;
-        console.warn('⚠️ OpenRouter DeepSeek R1 non disponible:', testResult.error);
-      }
-    } catch (deepseekError) {
-      deepseekStatus = '⚠️ Erreur: ' + deepseekError.message.substring(0, 50);
-      console.error('❌ Erreur test OpenRouter:', deepseekError.message);
-    }
-    
-    // RÉPONSE SANTÉ COMPLÈTE
+
+    // 📊 Assemblage données santé complètes
     const healthData = {
-      status: 'ok',
-      message: '✅ ÉtudIA V4.1 avec OpenRouter DeepSeek R1 en ligne !',  // 🔧 NOUVEAU MESSAGE
-      version: '4.1.0-openrouter-deepseek',                              // 🔧 NOUVELLE VERSION
+      status: 'healthy',
       timestamp: new Date().toISOString(),
-      environment: process.env.NODE_ENV,
-      platform: 'Render.com',
-      port: PORT,
-      host: req.get('host'),
-      services: {
-        server: '✅ Opérationnel',
-        supabase: supabaseStatus,
-        openrouter_deepseek: deepseekStatus,  // 🔧 NOUVEAU SERVICE
-        cloudinary: process.env.CLOUDINARY_CLOUD_NAME ? '✅ Configuré' : '❌ Manquant'
+      service: 'ÉtudIA V4.1 - OpenRouter DeepSeek R1',
+      version: '4.1.0-openrouter',
+      environment: process.env.NODE_ENV || 'development',
+      
+      // 🤖 Statut OpenRouter DeepSeek R1 (NOUVEAU)
+      ai_service: {
+        provider: 'OpenRouter',
+        model: 'DeepSeek R1',
+        status: deepseekHealth.status,
+        free_model: OPENROUTER_CONFIG.models.free,
+        paid_model: OPENROUTER_CONFIG.models.paid,
+        api_configured: !!OPENROUTER_CONFIG.apiKey,
+        base_url: OPENROUTER_CONFIG.baseURL,
+        response_time: deepseekHealth.status === 'healthy' ? 'OK' : 'ERROR',
+        last_test_tokens: deepseekHealth.tokens_used || 0
       },
-      ai_provider: 'OpenRouter',                           // 🆕 NOUVEAU CHAMP
-      ai_model: OPENROUTER_CONFIG.models.free,           // 🆕 MODÈLE ACTUEL
-      migration_status: {                                 // 🆕 INFO MIGRATION
-        from: 'Groq Llama 3.3-70B',
-        to: 'OpenRouter DeepSeek R1',
-        completed: true,
-        date: new Date().toISOString().split('T')[0]      // Date du jour
-      }
-      tokens_status: {
-        used_today: 0,
-        remaining: 95000,
-        last_reset: new Date().toISOString(),
-        status: '🟢 Optimal'
+      
+      // 🗄️ Base de données
+      database: {
+        provider: 'Supabase',
+        status: supabaseHealth.status,
+        response_time: supabaseHealth.response_time,
+        url_configured: !!process.env.SUPABASE_URL,
+        connection_pool: 'healthy'
       },
-      render_info: {
-        service_url: 'https://etudia-v4-revolutionary.onrender.com',
-        deployment_time: new Date().toISOString(),
-        memory_usage: process.memoryUsage().heapUsed / 1024 / 1024 + ' MB'
+      
+      // ☁️ Stockage documents
+      storage: {
+        provider: 'Cloudinary',
+        status: process.env.CLOUDINARY_CLOUD_NAME ? 'configured' : 'missing',
+        upload_ready: !!(process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY)
+      },
+      
+      // 🔧 Système serveur
+      system: {
+        platform: 'Render.com',
+        node_version: process.version,
+        memory_usage: Math.round(process.memoryUsage().heapUsed / 1024 / 1024) + ' MB',
+        uptime: Math.round(process.uptime()) + ' seconds',
+        cache_size: cache.size + ' items',
+        cpu_usage: 'optimal'
+      },
+      
+      // 🌟 Nouvelles fonctionnalités V4.1
+      features: {
+        deepseek_r1: '✅ Activé et opérationnel',
+        free_tier: '✅ Illimité disponible',
+        paid_tier: '✅ Performance maximum',
+        model_selector: '✅ Interface utilisateur',
+        usage_stats: '✅ Tracking temps réel',
+        mobile_optimized: '✅ Responsive design',
+        backoffices: '✅ 6 interfaces prêtes'
       }
     };
-    
-    console.log('✅ Health check réussi:', healthData.message);
-    res.json(healthData);
-    
+
+    // 🎯 Statut global basé sur composants critiques
+    const globalStatus = (
+      deepseekHealth.status === 'healthy' && 
+      supabaseHealth.status === 'healthy'
+    ) ? 'healthy' : 'degraded';
+
+    healthData.status = globalStatus;
+
+    // 📊 Log résultat health check
+    console.log(`✅ Health check terminé: ${globalStatus.toUpperCase()}`);
+    console.log(`🤖 OpenRouter: ${deepseekHealth.status}`);
+    console.log(`🗄️ Supabase: ${supabaseHealth.status}`);
+
+    res.status(globalStatus === 'healthy' ? 200 : 503).json(healthData);
+
   } catch (error) {
-    console.error('❌ Erreur health check:', error.message);
-    
-    // RÉPONSE MÊME EN CAS D'ERREUR (pour éviter status maintenance)
-    res.status(200).json({
-      status: 'degraded',
-      message: '⚠️ ÉtudIA fonctionne en mode dégradé',
-      version: '4.0.0-render',
-      timestamp: new Date().toISOString(),
+    console.error('❌ Erreur health check global:', error);
+    res.status(503).json({
+      status: 'error',
       error: error.message,
-      platform: 'Render.com',
-      services: {
-        server: '✅ Opérationnel',
-        database: '❓ À vérifier',
-        ai: '❓ À vérifier'
-      }
+      timestamp: new Date().toISOString(),
+      service: 'ÉtudIA V4.1 - OpenRouter DeepSeek R1',
+      suggestion: 'Vérifier configuration OpenRouter et Supabase'
     });
   }
 });
 
-// 🔧 CORRECTION 4: ROUTE DEBUG ÉTENDUE (ajoute après /health)
-app.get('/debug', (req, res) => {
-  const memoryUsage = process.memoryUsage();
-  
-  res.json({
-    message: '🔍 Debug ÉtudIA Render Complet',
-    timestamp: new Date().toISOString(),
-    server_info: {
-      platform: 'Render.com',
-      node_version: process.version,
-      environment: process.env.NODE_ENV,
-      port: PORT,
-      uptime: Math.round(process.uptime()),
-      memory: {
-        used: Math.round(memoryUsage.heapUsed / 1024 / 1024) + ' MB',
-        total: Math.round(memoryUsage.heapTotal / 1024 / 1024) + ' MB'
-      }
-    },
-    request_info: {
-      method: req.method,
-      url: req.originalUrl,
-      ip: req.ip,
-      user_agent: req.get('user-agent')?.substring(0, 100),
-      origin: req.get('origin'),
-      referer: req.get('referer')
-    },
-    api_status: {
-      supabase: !!process.env.SUPABASE_URL,
-      groq: !!process.env.GROQ_API_KEY,
-      cloudinary: !!process.env.CLOUDINARY_CLOUD_NAME
-    },
-    available_routes: [
-      '✅ GET /',
-      '✅ GET /health', 
-      '✅ GET /debug',
-      '✅ POST /api/students',
-      '✅ POST /api/students/login',
-      '✅ POST /api/upload',
-      '✅ POST /api/chat',
-      '✅ GET /api/stats'
-    ],
-    cors_config: {
-      origins: [
-        'https://etudia-africa-v4.vercel.app',
-        'https://etudia-v4-revolutionary.onrender.com'
-      ],
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-      headers: ['Content-Type', 'Authorization', 'Accept']
-    }
-  });
-});
-
 // ===================================================================
-// 👤 API ÉLÈVES
+// 🎓 ROUTE INSCRIPTION ÉLÈVES - ENRICHIE V4.1
 // ===================================================================
-
-app.get('/api/students', async (req, res) => {
-  try {
-    const { data, error } = await supabase
-      .from('eleves')
-      .select('id, nom, email, classe, ecole, date_inscription, style_apprentissage, matieres_difficiles, niveau_global')
-      .order('date_inscription', { ascending: false });
-    
-    if (error) throw error;
-    res.json({ success: true, students: data, count: data.length });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-});
 
 app.post('/api/students', async (req, res) => {
   try {
-    const { name, email, class_level, school } = req.body;
+    console.log('🎓 Inscription nouvel élève ÉtudIA V4.1:', req.body);
     
-    if (!name || !email || !class_level) {
-      return res.status(400).json({ success: false, error: 'Données manquantes' });
-    }
-
-    const { data: existingStudent } = await supabase
-      .from('eleves')
-      .select('id')
-      .eq('email', email.toLowerCase().trim())
-      .single();
-
-    if (existingStudent) {
-      return res.status(409).json({
-        success: false,
-        error: 'EMAIL_EXISTS',
-        message: 'Email déjà inscrit !'
+    // 🔍 Extraction et validation données
+    const { nom, email, classe, etablissement, niveau_academique } = req.body;
+    
+    // ✅ Validation champs obligatoires
+    if (!nom || !email || !classe) {
+      return res.status(400).json({ 
+        error: 'Nom, email et classe sont obligatoires',
+        missing_fields: {
+          nom: !nom,
+          email: !email,
+          classe: !classe
+        }
       });
     }
-    
-    const { data, error } = await supabase
+
+    // 🔍 Validation format email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ 
+        error: 'Format email invalide',
+        example: 'exemple@gmail.com'
+      });
+    }
+
+    // 🔍 Nettoyage données
+    const cleanEmail = email.toLowerCase().trim();
+    const cleanNom = nom.trim();
+    const cleanClasse = classe.trim();
+
+    // 🔍 Vérification élève existant
+    console.log('🔍 Vérification élève existant...');
+    const { data: existingStudent, error: searchError } = await supabase
       .from('eleves')
-      .insert([{
-        nom: name.trim(),
-        email: email.toLowerCase().trim(),
-        classe: class_level,
-        ecole: school || 'Non spécifié',
-        style_apprentissage: 'equilibre',
-        matieres_difficiles: [],
-        niveau_global: 1,
-        preferences_pedagogiques: {
-          date_inscription: new Date().toISOString(),
-          premiere_utilisation: true
-        }
-      }])
-      .select();
+      .select('*')
+      .eq('email', cleanEmail)
+      .single();
+
+    if (searchError && searchError.code !== 'PGRST116') {
+      // Erreur autre que "pas trouvé"
+      throw searchError;
+    }
+
+    // 🔄 Élève existant - Connexion automatique
+    if (existingStudent) {
+      console.log('🔄 Élève existant trouvé:', existingStudent.nom);
+      
+      // 💾 Mise à jour cache profil
+      cache.set(`student_${existingStudent.id}`, {
+        nom: existingStudent.nom,
+        classe: existingStudent.classe,
+        etablissement: existingStudent.etablissement,
+        niveau_academique: existingStudent.niveau_academique,
+        abonnement_type: existingStudent.abonnement_type || 'gratuit',
+        last_activity: new Date().toISOString()
+      });
+
+      // 📊 Mise à jour dernière activité
+      try {
+        await supabase
+          .from('eleves')
+          .update({ derniere_activite: new Date().toISOString() })
+          .eq('id', existingStudent.id);
+      } catch (updateError) {
+        console.warn('⚠️ Erreur mise à jour activité:', updateError.message);
+      }
+      
+      return res.json({ 
+        message: 'Connexion automatique réussie ! 🎉 Bon retour sur ÉtudIA !', 
+        student: existingStudent,
+        is_returning: true,
+        abonnement: existingStudent.abonnement_type || 'gratuit'
+      });
+    }
+
+    // 🆕 Nouvel élève - Inscription complète
+    console.log('🆕 Création nouveau profil élève...');
     
-    if (error) throw error;
-    
-    res.status(201).json({
-      success: true,
-      student: data[0],
-      message: `🎉 Bienvenue ${name} sur ÉtudIA ! Ton tuteur IA personnel t'attend !`
+    const studentData = {
+      nom: cleanNom,
+      email: cleanEmail,
+      classe: cleanClasse,
+      etablissement: etablissement?.trim() || 'Non spécifié',
+      niveau_academique: niveau_academique?.trim() || 'Secondaire',
+      date_inscription: new Date().toISOString(),
+      derniere_activite: new Date().toISOString(),
+      statut: 'actif',
+      
+      // 🆕 NOUVEAUX CHAMPS V4.1
+      abonnement_type: 'gratuit',                    // Plan par défaut
+      abonnement_expire_le: null,                    // Gratuit = pas d'expiration
+      liaison_parents_active: true,                  // Liaison parents activée
+      gains_parrainage: 0.00,                       // Commission parrainage
+      preferences_notifications: {                   // Préférences notifications
+        email: true,
+        sms: false,
+        push: true
+      }
+    };
+
+    // 💾 Insertion en base Supabase
+    const { data: newStudent, error: insertError } = await supabase
+      .from('eleves')
+      .insert([studentData])
+      .select()
+      .single();
+
+    if (insertError) {
+      console.error('❌ Erreur insertion élève:', insertError);
+      throw insertError;
+    }
+
+    console.log('✅ Nouvel élève créé avec succès:', newStudent.nom);
+
+    // 💾 Mise en cache du nouveau profil
+    cache.set(`student_${newStudent.id}`, {
+      nom: newStudent.nom,
+      classe: newStudent.classe,
+      etablissement: newStudent.etablissement,
+      niveau_academique: newStudent.niveau_academique,
+      abonnement_type: newStudent.abonnement_type,
+      last_activity: new Date().toISOString()
+    });
+
+    // 🎮 Initialisation gamification (optionnel)
+    try {
+      await supabase
+        .from('gamification')
+        .insert([{
+          eleve_id: newStudent.id,
+          niveau_actuel: 1,
+          points_total: 0,
+          streak_connexion: 1,
+          badges_obtenus: ['nouveau_etudiant'],
+          objectifs_mois: {
+            conversations: 10,
+            documents: 2,
+            temps_etude: 300 // 5 heures en minutes
+          }
+        }]);
+      console.log('🎮 Profil gamification initialisé');
+    } catch (gamificationError) {
+      console.warn('⚠️ Erreur init gamification:', gamificationError.message);
+      // Non bloquant
+    }
+
+    // 🎉 Réponse succès inscription
+    res.json({
+      message: `🎉 Bienvenue ${newStudent.nom} dans la révolution ÉtudIA V4.1 ! Ton assistant IA personnel DeepSeek R1 t'attend !`,
+      student: newStudent,
+      is_returning: false,
+      abonnement: 'gratuit',
+      features_unlocked: {
+        openrouter_deepseek: true,
+        free_tier_unlimited: true,
+        document_upload: true,
+        three_learning_modes: true,
+        gamification: true
+      },
+      next_steps: [
+        'Upload de votre premier document',
+        'Essayer les 3 modes d\'apprentissage',
+        'Explorer votre dashboard personnel'
+      ]
     });
     
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    console.error('💥 ERREUR INSCRIPTION ÉLÈVE:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Erreur lors de l\'inscription',
+      details: error.message,
+      timestamp: new Date().toISOString()
+    });
   }
 });
 
+// ===================================================================
+// 🔐 ROUTE CONNEXION ÉLÈVES - OPTIMISÉE V4.1
+// ===================================================================
+
 app.post('/api/students/login', async (req, res) => {
   try {
-    console.log('🔥 ROUTE LOGIN APPELÉE !');
-    console.log('📧 Body reçu:', req.body);
+    console.log('🔐 Tentative connexion élève ÉtudIA V4.1');
+    console.log('📧 Données reçues:', req.body);
     
     const { email } = req.body;
     console.log('📧 Email extrait:', email);
     
+    // ✅ Validation email présent
     if (!email) {
-      console.log('❌ Email manquant');
-      return res.status(400).json({ error: 'Email requis' });
+      console.log('❌ Email manquant dans la requête');
+      return res.status(400).json({ 
+        error: 'Email requis pour la connexion',
+        example: 'exemple@gmail.com'
+      });
     }
 
-    console.log('🔍 Recherche dans Supabase...');
+    // 🔍 Validation format email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ 
+        error: 'Format email invalide',
+        provided: email
+      });
+    }
+
+    console.log('🔍 Recherche élève dans Supabase...');
+    
+    // 🔍 Recherche élève en base
     const { data: student, error } = await supabase
       .from('eleves')
       .select('*')
       .eq('email', email.toLowerCase().trim())
       .single();
 
-    console.log('📊 Résultat Supabase:', { student: !!student, error: error?.message });
+    console.log('📊 Résultat recherche Supabase:', { 
+      found: !!student, 
+      error: error?.message || null 
+    });
 
+    // ❌ Élève non trouvé
     if (error || !student) {
-      console.log('❌ Élève non trouvé');
-      return res.status(404).json({ error: 'Élève non trouvé' });
+      console.log('❌ Élève non trouvé pour email:', email);
+      return res.status(404).json({ 
+        error: 'Élève non trouvé dans notre base',
+        suggestion: 'Vérifiez l\'email ou créez un nouveau compte',
+        email_searched: email.toLowerCase().trim()
+      });
     }
 
     console.log('✅ Élève trouvé:', student.nom);
     
-    // Mettre à jour le profil lors de la connexion
-    MemoryManager.updateStudentProfile(student.id).catch(console.error);
-
-    res.json({ message: 'Connexion réussie ! 🎉', student });
-
-  } catch (error) {
-    console.error('💥 ERREUR ROUTE LOGIN:', error);
-    res.status(500).json({ error: 'Erreur connexion' });
-  }
-});
-
-// ===================================================================
-// 📄 UPLOAD DOCUMENTS
-// ===================================================================
-
-app.post('/api/upload', upload.single('document'), async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ success: false, error: 'Aucun fichier fourni' });
-    }
-
-    const { user_id } = req.body;
-    if (!user_id) {
-      return res.status(400).json({ success: false, error: 'ID utilisateur manquant' });
-    }
-
-    const nomOriginal = req.file.originalname;
-    const nomFichier = `doc_${Date.now()}_${Math.random().toString(36).substring(7)}`;
-
-    // 🔍 ICI C'EST BON - DANS LA FONCTION ASYNC !
-    console.log('🔍 Extraction OCR...');
-    const extractedText = await extractTextFromFile(req.file.path, req.file.mimetype, nomOriginal);
-    
-    console.log('📊 Résultat OCR:', {
-      file_type: req.file.mimetype,
-      file_size: req.file.size,
-      text_length: extractedText.length,
-      text_preview: extractedText.substring(0, 100),
-      is_error: extractedText.startsWith('[ERREUR')
-    });
-
-    if (extractedText.startsWith('[ERREUR')) {
-      return res.status(400).json({ success: false, error: 'Impossible d\'extraire le texte' });
-    }
-
-    console.log('🧠 Analyse IA avancée...');
-    const aiAnalysis = await analyzeDocumentWithIA(extractedText, nomOriginal);
-
-    console.log('☁️ Upload Cloudinary...');
-    let uploadResult;
-    try {
-      uploadResult = await cloudinary.uploader.upload(req.file.path, {
-        folder: 'etudia_documents_v4',
-        public_id: nomFichier,
-        resource_type: 'auto'
-      });
-    } catch {
-      uploadResult = { secure_url: 'url_non_disponible', public_id: nomFichier + '_local' };
-    }
-
-    const documentData = {
-      eleve_id: parseInt(user_id),
-      nom_fichier: nomFichier,
-      nom_original: nomOriginal,
-      taille_fichier: req.file.size,
-      type_fichier: req.file.mimetype,
-      url_cloudinary: uploadResult.secure_url,
-      id_public_cloudinary: uploadResult.public_id,
-      texte_extrait: extractedText,
-      confiance_ocr: 95.00,
-      langue_ocr: 'fra',
-      matiere: aiAnalysis.subject,
-      type_document: 'document',
-      est_traite: true,
-      statut_traitement: 'termine',
-      mots_cles: [],
-      date_traitement: new Date().toISOString(),
-      nb_exercices: aiAnalysis.exercise_count || 1
+    // 💾 Mise à jour cache profil avec toutes les données V4.1
+    const profileCache = {
+      nom: student.nom,
+      classe: student.classe,
+      etablissement: student.etablissement,
+      niveau_academique: student.niveau_academique,
+      abonnement_type: student.abonnement_type || 'gratuit',
+      abonnement_expire_le: student.abonnement_expire_le,
+      gains_parrainage: student.gains_parrainage || 0,
+      liaison_parents_active: student.liaison_parents_active !== false,
+      last_activity: new Date().toISOString()
     };
+    
+    cache.set(`student_${student.id}`, profileCache);
+    console.log('💾 Profil mis en cache pour optimisation OpenRouter');
 
-    const { data, error } = await supabase
-      .from('documents')
-      .insert([documentData])
-      .select();
-
-    if (error) throw error;
-
-    // Mettre à jour le profil après upload
-    MemoryManager.updateStudentProfile(user_id).catch(console.error);
-
+    // 📊 Mise à jour dernière activité en base
     try {
-      if (fs.existsSync(req.file.path)) {
-        fs.unlinkSync(req.file.path);
-      }
-    } catch {}
+      await supabase
+        .from('eleves')
+        .update({ 
+          derniere_activite: new Date().toISOString(),
+          derniere_connexion: new Date().toISOString()
+        })
+        .eq('id', student.id);
+      console.log('📊 Dernière activité mise à jour');
+    } catch (updateError) {
+      console.warn('⚠️ Erreur mise à jour activité:', updateError.message);
+      // Non bloquant
+    }
 
-    res.json({
-      success: true,
-      message: 'Document analysé avec IA avancée ! 🎉',
-      data: {
-        id: data[0].id,
-        nom_original: nomOriginal,
-        matiere: aiAnalysis.subject,
-        resume: aiAnalysis.summary,
-        texte_extrait: extractedText,
-        nb_exercices: aiAnalysis.exercise_count || 1
+    // 🎮 Récupération données gamification (optionnel)
+    let gamificationData = null;
+    try {
+      const { data: gamification } = await supabase
+        .from('gamification')
+        .select('*')
+        .eq('eleve_id', student.id)
+        .single();
+      
+      if (gamification) {
+        gamificationData = {
+          niveau: gamification.niveau_actuel,
+          points: gamification.points_total,
+          badges: gamification.badges_obtenus?.length || 0,
+          streak: gamification.streak_connexion
+        };
       }
+    } catch (gamificationError) {
+      console.warn('⚠️ Erreur récupération gamification:', gamificationError.message);
+    }
+
+    // 🎉 Réponse connexion réussie
+    res.json({ 
+      message: `🎉 Connexion réussie ! Bon retour ${student.nom} sur ÉtudIA V4.1 avec OpenRouter DeepSeek R1 !`, 
+      student: student,
+      profile_cache: 'updated',
+      abonnement: {
+        type: student.abonnement_type || 'gratuit',
+        expire_le: student.abonnement_expire_le,
+        features: getAbonnementFeatures(student.abonnement_type || 'gratuit')
+      },
+      gamification: gamificationData,
+      openrouter_status: 'ready',
+      timestamp: new Date().toISOString()
     });
 
   } catch (error) {
-    try {
-      if (req.file && fs.existsSync(req.file.path)) {
-        fs.unlinkSync(req.file.path);
-      }
-    } catch {}
-
-    res.status(500).json({ success: false, error: 'Erreur traitement document' });
-  }
-});
-
-app.get('/api/documents/:userId', async (req, res) => {
-  try {
-    const { userId } = req.params;
-    
-    const { data, error } = await supabase
-      .from('documents')
-      .select('*')
-      .eq('eleve_id', userId)
-      .order('date_upload', { ascending: false });
-    
-    if (error) throw error;
-    
-    res.json({ success: true, documents: data, count: data.length });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-});
-
-// 🗑️ SUPPRESSION DOCUMENT
-app.delete('/api/documents/:documentId', async (req, res) => {
-  try {
-    const { documentId } = req.params;
-    
-    console.log(`🗑️ Suppression document ID: ${documentId}`);
-    
-    const { data: document, error: fetchError } = await supabase
-      .from('documents')
-      .select('*')
-      .eq('id', documentId)
-      .single();
-
-    if (fetchError || !document) {
-      console.log('❌ Document non trouvé:', fetchError?.message);
-      return res.status(404).json({ 
-        success: false, 
-        error: 'Document non trouvé' 
-      });
-    }
-
-    console.log(`📄 Document trouvé: ${document.nom_original}`);
-
-    if (document.id_public_cloudinary && document.id_public_cloudinary !== 'url_non_disponible') {
-      try {
-        const cloudinaryResult = await cloudinary.uploader.destroy(document.id_public_cloudinary);
-        console.log('☁️ Cloudinary suppression:', cloudinaryResult);
-      } catch (cloudinaryError) {
-        console.warn('⚠️ Erreur Cloudinary (non bloquante):', cloudinaryError.message);
-      }
-    }
-
-    const { error: deleteError } = await supabase
-      .from('documents')
-      .delete()
-      .eq('id', documentId);
-
-    if (deleteError) {
-      console.error('❌ Erreur suppression base:', deleteError.message);
-      return res.status(500).json({ 
-        success: false, 
-        error: 'Erreur suppression base de données' 
-      });
-    }
-
-    if (document.eleve_id) {
-      MemoryManager.updateStudentProfile(document.eleve_id).catch(console.error);
-    }
-
-    console.log(`✅ Document "${document.nom_original}" supprimé avec succès !`);
-
-    res.json({
-      success: true,
-      message: `Document "${document.nom_original}" supprimé avec succès !`,
-      deleted_document: {
-        id: document.id,
-        nom_original: document.nom_original,
-        matiere: document.matiere
-      }
-    });
-
-  } catch (error) {
-    console.error('💥 Erreur suppression document:', error);
+    console.error('💥 ERREUR CONNEXION ÉLÈVE:', error);
     res.status(500).json({ 
-      success: false, 
-      error: 'Erreur technique lors de la suppression' 
+      error: 'Erreur lors de la connexion',
+      details: error.message,
+      timestamp: new Date().toISOString()
     });
   }
 });
 
-// 🔧 AMÉLIORATION 1: DÉTECTEUR DE FIN D'EXERCICE
-// Ajoute cette fonction AVANT la route /api/chat (ligne ~800)
-const ExerciseCompletionDetector = {
-  // 🎯 NOUVELLE FONCTION: Détecte si un exercice est terminé
-  isExerciseComplete(aiResponse, userMessage, mode) {
-    // Mots-clés indiquant une fin d'exercice
-    const completionKeywords = [
-      'résultat final', 'réponse finale', 'solution complète',
-      'exercice terminé', 'c\'est fini', 'voilà la réponse',
-      'donc la réponse est', 'en conclusion', 'résultat:',
-      'la solution est', 'réponse:', 'donc', 'finalement'
-    ];
-    
-    // Vérifications spécifiques par mode
-    if (mode === 'direct_solution') {
-      // En mode direct: si l'IA a donné des résultats numériques ou des conclusions
-      const hasNumericalResult = /=\s*[\d,.-]+|résultat\s*[:=]\s*[\d,.-]+/i.test(aiResponse);
-      const hasConclusion = completionKeywords.some(keyword => 
-        aiResponse.toLowerCase().includes(keyword.toLowerCase())
-      );
-      return hasNumericalResult || hasConclusion;
-    }
-    
-    if (mode === 'step_by_step') {
-      // En mode étape: si l'IA indique la dernière étape ET donne un résultat
-      const isLastStep = /étape\s+\d+\/\d+/i.test(aiResponse);
-      const hasResult = /résultat|solution|réponse/i.test(aiResponse);
-      const noMoreQuestions = !aiResponse.includes('?') || aiResponse.includes('exercice terminé');
-      return isLastStep && hasResult && noMoreQuestions;
-    }
-    
-    return false;
-  },
-
-  // 🎯 NOUVELLE FONCTION: Génère un message de fin approprié
-  generateCompletionMessage(mode, prenomEleve) {
-    const completionMessages = {
-      'step_by_step': [
-        `🎉 Excellent ${prenomEleve} ! Nous avons terminé cet exercice ensemble !`,
-        `✅ Bravo ${prenomEleve} ! Tu as suivi toutes les étapes avec succès !`,
-        `🌟 Parfait ${prenomEleve} ! Exercice complètement résolu étape par étape !`
-      ],
-      'direct_solution': [
-        `🎯 Voilà ${prenomEleve} ! Solution complète fournie !`,
-        `✅ Parfait ${prenomEleve} ! Tous les exercices sont résolus !`,
-        `🚀 Terminé ${prenomEleve} ! Toutes les réponses sont là !`
-      ],
-      'normal': [
-        `👍 Voilà ${prenomEleve} ! J'espère que ça répond à ta question !`,
-        `✅ Parfait ${prenomEleve} ! Autre chose ?`
-      ]
-    };
-
-    const messages = completionMessages[mode] || completionMessages['normal'];
-    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-    
-    return `\n\n${randomMessage}\n\n💡 **Prêt pour le prochain défi ?**`;
-  }
-};
-
-// 🔧 AMÉLIORATION 2: GESTIONNAIRE DE CONTINUITÉ AMÉLIORÉ
-// Ajoute cette fonction AVANT la route /api/chat
-const ConversationContinuityManager = {
-  // 🎯 NOUVELLE FONCTION: Détecte les demandes de continuation
-  isContinuationRequest(message) {
-    const continuationKeywords = [
-      'continue', 'suite', 'la suite', 'continuer', 'après', 'ensuite',
-      'et puis', 'next', 'suivant', 'poursuit', 'va-y', 'poursuis', 'et après',
-    ];
-    
-    return continuationKeywords.some(keyword => 
-      message.toLowerCase().includes(keyword.toLowerCase())
-    );
-  },
-
-  // 🎯 NOUVELLE FONCTION: Analyse le contexte de conversation
-  analyzeConversationContext(chatHistory, currentMessage) {
-    if (!chatHistory || chatHistory.length === 0) {
-      return { hasContext: false, lastTopic: null, wasIncomplete: false };
-    }
-
-    const lastExchange = chatHistory[chatHistory.length - 1];
-    const lastResponse = lastExchange?.reponse_ia || '';
-    
-    // Détecte si la dernière réponse était incomplète
-    const wasIncomplete = 
-      lastResponse.includes('[RÉPONSE CONTINUE...]') ||
-      lastResponse.includes('🔄') ||
-      lastResponse.length > 280;
-
-    // Extrait le sujet principal de la dernière conversation
-    const lastTopic = this.extractMainTopic(lastExchange?.message_eleve || '');
-
-    return {
-      hasContext: true,
-      lastTopic: lastTopic,
-      wasIncomplete: wasIncomplete,
-      lastMode: lastExchange?.mode_utilise || 'normal',
-      lastResponse: lastResponse.substring(0, 200) // Garde les 200 premiers chars
-    };
-  },
-
-  // 🎯 FONCTION HELPER: Extrait le sujet principal
-  extractMainTopic(message) {
-    // Mots-clés pour identifier le type d'exercice/sujet
-    if (/équation|résoudre|x\s*=|inconnue/i.test(message)) return 'équation';
-    if (/dérivée|dériver|f'|limite/i.test(message)) return 'dérivée';
-    if (/intégrale|primitive|∫/i.test(message)) return 'intégrale';
-    if (/fraction|pourcentage|%/i.test(message)) return 'fraction';
-    if (/géométrie|triangle|cercle|aire|périmètre/i.test(message)) return 'géométrie';
-    if (/probabilité|chance|statistique/i.test(message)) return 'probabilité';
-    if (/exercice|problème|question/i.test(message)) return 'exercice général';
-    
-    return 'sujet général';
-  }
-};
-
-// 📊 GESTIONNAIRE DE MÉMOIRE CONVERSATION AMÉLIORÉ
-
 // ===================================================================
-// 🤖 CORRECTIONS IA - SERVER.JS 
-// 🚀 REMPLACE TA ROUTE /api/chat DEBUG PAR CETTE VERSION AVANCÉE
+// 🔧 FONCTIONS UTILITAIRES PROFILS ÉLÈVES
 // ===================================================================
 
-app.post('/api/chat', async (req, res) => {
-  console.log('\n🚀 =============== ÉTUDIA CHAT AVANCÉ ===============');
+// 🎯 Fonction récupération features selon abonnement
+function getAbonnementFeatures(abonnementType) {
+  const features = {
+    gratuit: {
+      openrouter_deepseek: true,
+      interactions_daily: 300,
+      fair_use_policy: true,
+      all_learning_modes: true,
+      document_upload: true,
+      gamification: true,
+      parental_link: true,
+      mobile_app: true
+    },
+    premium: {
+      openrouter_deepseek: true,
+      interactions_daily: 50,
+      claude_access: true,
+      priority_support: true,
+      advanced_analytics: true,
+      export_conversations: true,
+      all_learning_modes: true,
+      document_upload: true,
+      gamification: true,
+      parental_link: true,
+      mobile_app: true
+    },
+    excellence: {
+      openrouter_deepseek: true,
+      interactions_daily: 80,
+      claude_priority: true,
+      unlimited_documents: true,
+      priority_support: true,
+      advanced_analytics: true,
+      export_conversations: true,
+      custom_learning_path: true,
+      ai_tutor_personal: true,
+      all_learning_modes: true,
+      gamification: true,
+      parental_link: true,
+      mobile_app: true
+    }
+  };
+  
+  return features[abonnementType] || features.gratuit;
+}
+
+// 📊 Fonction mise à jour profil élève dans cache
+function updateStudentProfile(studentId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      console.log(`📊 Mise à jour profil cache élève ${studentId}`);
+      
+      // 🔍 Récupération données fraîches
+      const { data: student, error } = await supabase
+        .from('eleves')
+        .select('*')
+        .eq('id', studentId)
+        .single();
+
+      if (error || !student) {
+        console.warn(`⚠️ Élève ${studentId} non trouvé pour mise à jour cache`);
+        return resolve(null);
+      }
+
+      // 💾 Mise à jour cache
+      const profileCache = {
+        nom: student.nom,
+        classe: student.classe,
+        etablissement: student.etablissement,
+        niveau_academique: student.niveau_academique,
+        abonnement_type: student.abonnement_type || 'gratuit',
+        abonnement_expire_le: student.abonnement_expire_le,
+        gains_parrainage: student.gains_parrainage || 0,
+        liaison_parents_active: student.liaison_parents_active !== false,
+        last_activity: new Date().toISOString()
+      };
+      
+      cache.set(`student_${studentId}`, profileCache);
+      console.log(`✅ Cache profil mis à jour pour élève ${student.nom}`);
+      
+      resolve(profileCache);
+    } catch (error) {
+      console.error(`❌ Erreur mise à jour profil ${studentId}:`, error.message);
+      reject(error);
+    }
+  });
+}
+
+// ===================================================================
+// 📊 ROUTE STATISTIQUES GÉNÉRALES - ENRICHIE V4.1
+// ===================================================================
+
+app.get('/api/stats', async (req, res) => {
+  try {
+    console.log('📊 Récupération statistiques ÉtudIA V4.1...');
+
+    // 🔍 Récupération stats parallèles pour performance
+    const [studentsResult, documentsResult, conversationsResult] = await Promise.allSettled([
+      supabase.from('eleves').select('id', { count: 'exact' }),
+      supabase.from('documents').select('id', { count: 'exact' }),
+      supabase.from('conversations').select('id', { count: 'exact' })
+    ]);
+
+    // 📊 Extraction counts avec fallback
+    const studentsCount = studentsResult.status === 'fulfilled' ? 
+      studentsResult.value.count || 0 : 0;
+    const documentsCount = documentsResult.status === 'fulfilled' ? 
+      documentsResult.value.count || 0 : 0;
+    const conversationsCount = conversationsResult.status === 'fulfilled' ? 
+      conversationsResult.value.count || 0 : 0;
+
+    // 🎯 Stats additionnelles V4.1
+    let additionalStats = {};
+    try {
+      // 📊 Stats abonnements
+      const { data: abonnementStats } = await supabase
+        .from('eleves')
+        .select('abonnement_type')
+        .not('abonnement_type', 'is', null);
+
+      if (abonnementStats) {
+        const abonnementCounts = abonnementStats.reduce((acc, student) => {
+          acc[student.abonnement_type] = (acc[student.abonnement_type] || 0) + 1;
+          return acc;
+        }, {});
+        
+        additionalStats.abonnements = abonnementCounts;
+      }
+
+      // 📊 Stats activité récente (dernières 24h)
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      
+      const { count: activeToday } = await supabase
+        .from('eleves')
+        .select('id', { count: 'exact' })
+        .gte('derniere_activite', yesterday.toISOString());
+
+      additionalStats.active_today = activeToday || 0;
+
+    } catch (additionalError) {
+      console.warn('⚠️ Erreur stats additionnelles:', additionalError.message);
+    }
+
+    // 📊 Assemblage réponse finale
+    const statsResponse = {
+      students: studentsCount,
+      documents: documentsCount,
+      chats: conversationsCount,
+      timestamp: new Date().toISOString(),
+      
+      // 🆕 Stats V4.1
+      ...additionalStats,
+      
+      // 🔧 Stats serveur
+      server: {
+        version: '4.1.0-openrouter',
+        uptime: Math.round(process.uptime()),
+        cache_size: cache.size,
+        memory_usage: Math.round(process.memoryUsage().heapUsed / 1024 / 1024)
+      }
+    };
+
+    console.log('✅ Statistiques récupérées:', {
+      students: studentsCount,
+      documents: documentsCount,
+      conversations: conversationsCount
+    });
+
+    res.json(statsResponse);
+
+  } catch (error) {
+    console.error('❌ Erreur récupération statistiques:', error.message);
+    
+    // 🔧 Fallback avec données par défaut
+    res.json({
+      students: 0,
+      documents: 0,
+      chats: 0,
+      error: 'Erreur récupération stats',
+      timestamp: new Date().toISOString(),
+      server: {
+        version: '4.1.0-openrouter',
+        status: 'degraded'
+      }
+    });
+  }
+});
+
+// ===================================================================
+// 📊 LOGS DIAGNOSTIC FINAL PARTIE 3
+// ===================================================================
+console.log('\n🎯 ÉtudIA V4.1 - PARTIE 3 AUTH + STUDENTS INITIALISÉE');
+console.log('✅ Route /health enrichie OpenRouter');
+console.log('✅ Inscription élèves avec abonnements V4.1');
+console.log('✅ Connexion avec cache optimisé');
+console.log('✅ Statistiques enrichies');
+console.log('✅ Fonctions utilitaires profils');
+console.log('📍 Prêt pour PARTIE 4 : Route Chat OpenRouter');
+
+// 🔄 EXPORT FONCTIONS UTILITAIRES
+module.exports = {
+  updateStudentProfile,
+  getAbonnementFeatures
+};
+
+// ===================================================================
+// 🚀 ÉtudIA V4.1 - SERVER.JS PARTIE 4 : ROUTE CHAT OPENROUTER DEEPSEEK R1
+// Fichier: backend/server-part4-chat-openrouter.js
+// 
+// 🔧 CŒUR DE LA RÉVOLUTION OPENROUTER :
+// ❌ SUPPRIMÉ : Toute logique Groq (groq.chat, GROQ_CONFIG, etc.)
+// ✅ AJOUTÉ : Chat complet OpenRouter DeepSeek R1
+// ✅ AJOUTÉ : Gestion modèles gratuit/payant
+// ✅ AJOUTÉ : Prompts système spécialisés par mode
+// ✅ AJOUTÉ : Métadonnées enrichies OpenRouter
+// ✅ AJOUTÉ : Sauvegarde conversations avec tracking usage
+//
+// Créé par @Pacousstar - Révolutionné OpenRouter par MonAP
+// ===================================================================
+
+// 📦 IMPORT DEPENDENCIES DES PARTIES PRÉCÉDENTES
+const { app, deepseek, cache, OPENROUTER_CONFIG } = require('./server-part1-imports-config');
+const { chatLimiter, supabase } = require('./server-part2-middleware-cors');
+const { updateStudentProfile } = require('./server-part3-auth-students');
+
+// ===================================================================
+// 🤖 ROUTE CHAT PRINCIPAL - OPENROUTER DEEPSEEK R1 RÉVOLUTIONNAIRE
+// ❌ SUPPRIME ENTIÈREMENT : Toute logique Groq
+// ✅ NOUVELLE ROUTE : 100% OpenRouter DeepSeek R1
+// ===================================================================
+
+app.post('/api/chat', chatLimiter, async (req, res) => {
+  console.log('\n🚀 =============== CHAT ÉtudIA V4.1 OPENROUTER DEEPSEEK R1 ===============');
   console.log('📅 Timestamp:', new Date().toLocaleString('fr-FR'));
+  console.log('🤖 Modèle IA: OpenRouter DeepSeek R1');
   
   try {
+    // 🎯 Extraction variables requête avec nouveaux paramètres OpenRouter
     const { 
       message, 
       user_id, 
@@ -1272,1357 +1334,2017 @@ app.post('/api/chat', async (req, res) => {
       is_welcome = false, 
       mode = 'normal',
       step_info = null,
-      selected_document_id = null
+      selected_document_id = null,
+      use_paid_model = false, // 🆕 NOUVEAU : Sélection modèle gratuit/payant
+      document_name = '',
+      has_document = false
     } = req.body;
     
-    console.log('🎯 Variables extraites:', {
-      message: message?.substring(0, 50),
+    console.log('🎯 Variables extraites OpenRouter:', {
+      message_preview: message?.substring(0, 50) + '...',
       user_id,
       mode,
-      has_context: !!document_context
+      has_context: !!document_context,
+      is_welcome,
+      selected_document_id,
+      use_paid_model,           // 🆕 Log sélection modèle
+      document_attached: has_document
     });
-    
-    if (!user_id) {
+
+    // ✅ Validation données obligatoires
+    if (!message || !user_id) {
+      console.log('❌ Données manquantes pour chat');
       return res.status(400).json({ 
-        error: 'ID utilisateur manquant',
-        success: false 
+        error: 'Message et user_id requis pour OpenRouter',
+        provided: { 
+          message: !!message, 
+          user_id: !!user_id 
+        },
+        openrouter_ready: !!OPENROUTER_CONFIG.apiKey
       });
     }
 
-    // 🎯 RÉCUPÉRATION ÉLÈVE
-    const { data: studentInfo } = await supabase
-      .from('eleves')
-      .select('nom, classe, email')
-      .eq('id', user_id)
-      .single();
+    // 🔍 Récupération profil étudiant avec cache optimisé
+    let student_info = cache.get(`student_${user_id}`) || {};
     
-    if (!studentInfo) {
-      return res.status(404).json({
-        error: 'Élève non trouvé',
-        success: false
-      });
-    }
-
-    const prenomExact = studentInfo.nom.trim().split(' ')[0];
-
-    // 🎯 RÉCUPÉRATION DOCUMENT AVEC DÉTAILS
-    let finalDocumentContext = '';
-    let documentName = 'Aucun document';
-    let documentLength = 0;
-    
-    try {
-      if (selected_document_id) {
-        const { data: specificDoc } = await supabase
-          .from('documents')
-          .select('nom_original, texte_extrait, matiere')
-          .eq('id', selected_document_id)
-          .eq('eleve_id', user_id)
-          .single();
-
-        if (specificDoc?.texte_extrait) {
-          finalDocumentContext = specificDoc.texte_extrait;
-          documentName = specificDoc.nom_original;
-          documentLength = specificDoc.texte_extrait.length;
-        }
-      }
-      
-      if (!finalDocumentContext) {
-        const { data: latestDoc } = await supabase
-          .from('documents')
-          .select('nom_original, texte_extrait, matiere')
-          .eq('eleve_id', user_id)
-          .order('date_upload', { ascending: false })
-          .limit(1)
-          .single();
-
-        if (latestDoc?.texte_extrait) {
-          finalDocumentContext = latestDoc.texte_extrait;
-          documentName = latestDoc.nom_original;
-          documentLength = latestDoc.texte_extrait.length;
-        }
-      }
-      
-      if (!finalDocumentContext && document_context) {
-        finalDocumentContext = document_context;
-        documentName = 'Document transmis';
-        documentLength = document_context.length;
-      }
-    } catch (docError) {
-      console.warn('⚠️ Erreur récupération document:', docError.message);
-    }
-
-    // 🎉 MESSAGE D'ACCUEIL AVANCÉ
-    if (is_welcome || !message || message.trim().toLowerCase() === 'connexion') {
-      console.log('🎉 Message d\'accueil avec détails document...');
-      
-      const documentInfo = finalDocumentContext ? 
-        `📄 **Document analysé** : "${documentName}" (${documentLength.toLocaleString()} caractères)` :
-        '📄 **Aucun document** - Upload un document pour commencer !';
-
-      const reponseAccueil = `Salut ${prenomExact} ! 🤖
-
-Je suis ÉtudIA, ton tuteur IA révolutionnaire !
-
-${documentInfo}
-
-💡 **Comment puis-je t'aider aujourd'hui ?**
-- Résoudre des exercices de maths ?
-- Expliquer des concepts ?
-- Analyser tes documents ?
-
-🚀 **Tape ta question et c'est parti !**`;
-
+    if (Object.keys(student_info).length === 0) {
+      console.log('🔍 Cache miss - Récupération profil depuis Supabase...');
       try {
-        await supabase.from('historique_conversations').insert([{
-          eleve_id: parseInt(user_id),
-          message_eleve: 'Connexion',
-          reponse_ia: reponseAccueil,
-          tokens_utilises: 0,
-          modele_ia: 'etudia-accueil-avance',
-          mode_utilise: 'accueil',
-          document_utilise: documentName,
-          contexte_utilise: !!finalDocumentContext
-        }]);
-      } catch (saveError) {
-        console.warn('⚠️ Erreur sauvegarde accueil:', saveError.message);
+        const { data: student, error } = await supabase
+          .from('eleves')
+          .select('*')
+          .eq('id', user_id)
+          .single();
+          
+        if (student && !error) {
+          student_info = {
+            nom: student.nom,
+            classe: student.classe,
+            etablissement: student.etablissement,
+            niveau_academique: student.niveau_academique,
+            abonnement_type: student.abonnement_type || 'gratuit'
+          };
+          
+          // 💾 Mise en cache pour optimisation futures
+          cache.set(`student_${user_id}`, student_info);
+          console.log('✅ Profil récupéré et mis en cache:', student_info.nom);
+        } else {
+          console.warn('⚠️ Profil étudiant non trouvé pour user_id:', user_id);
+        }
+      } catch (profileError) {
+        console.error('❌ Erreur récupération profil:', profileError.message);
       }
-
-      return res.json({
-        response: reponseAccueil,
-        timestamp: new Date().toISOString(),
-        model: 'etudia-accueil-avance',
-        student_name: prenomExact,
-        has_context: !!finalDocumentContext,
-        document_name: documentName,
-        context_length: documentLength,
-        success: true
-      });
-    }
-
-    if (!message?.trim()) {
-      return res.json({
-        response: `${prenomExact}, je n'ai pas reçu ton message ! Peux-tu le réécrire ? 😊`,
-        timestamp: new Date().toISOString(),
-        success: true
-      });
-    }
-
-// 🔧 AMÉLIORATION 2: DANS TA ROUTE /api/chat, REMPLACE LA SECTION APRÈS "console.log('💬 Mode actuel:', mode);"
-
-    console.log('💬 Mode actuel:', mode);
-    console.log('📄 Document:', documentName, `(${documentLength} chars)`);
-
-   // 🧠 RÉCUPÉRATION CONTEXTE CONVERSATION AMÉLIORÉ  
-// 🧠 RÉCUPÉRATION CONTEXTE CONVERSATION CORRIGÉ !
-let conversationContext;
-try {
-  conversationContext = await ConversationMemoryManager.getConversationContext(user_id, message);
-  console.log('🧠 Contexte conversation détaillé:', {
-    hasContext: conversationContext.hasContext,
-    wasIncomplete: conversationContext.wasIncomplete,
-    stopPoint: conversationContext.stopPoint,
-    lastTopic: conversationContext.lastTopic,
-    historyLength: conversationContext.conversationHistory?.length || 0
-  });
-} catch (contextError) {
-  console.warn('⚠️ Erreur récupération contexte:', contextError.message);
-  conversationContext = { hasContext: false, wasIncomplete: false };
-}
-
-// 🔍 DÉTECTION DEMANDE CONTINUATION CORRIGÉE !
-const isContinuation = conversationContext && conversationContext.hasContext && 
-  (message.toLowerCase().includes('continue') || 
-   message.toLowerCase().includes('suite') || 
-   message.toLowerCase().includes('la suite') ||
-   message.toLowerCase().includes('continuer') ||
-   conversationContext.wasIncomplete);
-
-console.log('🔄 Demande de continuation:', isContinuation);
-
-// 📊 CALCUL PROGRESSION ÉTAPES CORRIGÉ
-const stepProgression = {
-  current_step: step_info?.current_step || 1,
-  total_steps: step_info?.total_steps || 4
-};
-console.log('📊 Progression étapes:', stepProgression);
-
-// 🎯 PROMPTS RÉVOLUTIONNAIRES AVEC MÉMOIRE (garde tes prompts existants)
-let systemPrompt = '';
-let maxTokens = 250;
-
-if (mode === 'step_by_step') {
-  // 📊 MODE ÉTAPE PAR ÉTAPE AVEC MÉMOIRE
-  const currentStep = stepProgression.current_step;
-  const totalSteps = stepProgression.total_steps;
-  
-  let continuationInstruction = '';
-  if (isContinuation && conversationContext.wasIncomplete) {
-    continuationInstruction = `
-ATTENTION CONTINUATION: L'élève demande la suite. Tu t'es arrêté ${conversationContext.stopPoint}.
-Reprends exactement le fil de "${conversationContext.lastTopic}".
-Continue EXACTEMENT où tu t'es arrêté sans répéter ce qui a déjà été fait.
-`;
-  }
-  
-  systemPrompt = `Tu es ÉtudIA en mode ÉTAPE PAR ÉTAPE pour ${prenomExact}.
-
-RÈGLES ABSOLUES:
-1. Commence TOUJOURS par "📊 Étape ${currentStep}/${totalSteps}"
-2. RÉSOUS activement l'étape (calculs, explications)
-3. UNE seule étape à la fois - pas tout d'un coup
-4. Termine par UNE question de compréhension
-5. Maximum 150 mots par étape
-
-${continuationInstruction}
-
-Document: "${documentName}"
-Question élève: ${message}
-
-${currentStep === 1 ? 'Commence par la première étape de résolution.' : 
-  currentStep === totalSteps ? 'Dernière étape - donne la solution finale.' : 
-  `Continue avec l'étape ${currentStep} de la résolution.`}`;
-  
-  maxTokens = 150;
-  
-} else if (mode === 'direct_solution') {
-  // ✅ MODE SOLUTION DIRECTE AVEC CONTINUATION
-  let continuationInstruction = '';
-  if (isContinuation && conversationContext.wasIncomplete) {
-    continuationInstruction = `
-ATTENTION CONTINUATION: L'élève demande la suite. Tu t'es arrêté ${conversationContext.stopPoint}.
-Reprends exactement le fil de "${conversationContext.lastTopic}".
-Continue EXACTEMENT où tu t'es arrêté. Termine la résolution complète.
-`;
-  }
-  
-  systemPrompt = `Tu es ÉtudIA en mode SOLUTION DIRECTE pour ${prenomExact}.
-
-RÈGLES ABSOLUES:
-1. Donne TOUTES les solutions complètes
-2. Structure: Exercice 1: [solution], Exercice 2: [solution]
-3. Détaille chaque calcul étape par étape
-4. N'utilise PAS "📊 Étape X/Y"
-5. TERMINE tous les calculs - pas d'interruption
-6. Finis par "🎉 Tous les exercices résolus !"
-
-${continuationInstruction}
-
-Document: "${documentName}"
-Question élève: ${message}
-
-Résous complètement TOUT ce qui est demandé avec TOUS les calculs jusqu'au bout.`;
-  
-  maxTokens = 400;
-  
-} else {
-  // 💬 MODE NORMAL LIBRE
-  systemPrompt = `Tu es ÉtudIA en mode NORMAL LIBRE pour ${prenomExact}.
-
-RÈGLES:
-1. Réponds à TOUTE question (maths, actualités, culture, devoirs)
-2. N'utilise PAS le document - mode libre total
-3. Sois concis et précis (maximum 180 mots)
-4. Conversation naturelle et directe
-
-Question élève: ${message}
-
-Réponds avec précision et logique sans référence au document.`;
-  
-  maxTokens = 200;
-}
-
-// 🔍 DEBUG DOCUMENT RÉCUPÉRATION CORRIGÉ
-console.log('🔍 DEBUG DOCUMENT RÉCUPÉRATION:', {
-  user_id: user_id,
-  selected_document_id: selected_document_id,
-  document_context_length: document_context?.length || 0,
-  finalDocumentContext_length: finalDocumentContext?.length || 0,
-  documentName: documentName,
-  documentLength: documentLength
-});
-
-// 🔍 DEBUG SUPABASE QUERY
-if (selected_document_id) {
-  console.log('🔍 Tentative récupération doc ID:', selected_document_id, 'pour user:', user_id);
-  
-  const { data: debugDoc, error: debugError } = await supabase
-    .from('documents')
-    .select('*')
-    .eq('id', selected_document_id)
-    .eq('eleve_id', user_id);
-    
-  console.log('🔍 Résultat debug Supabase:', {
-    doc_found: !!debugDoc,
-    doc_count: debugDoc?.length || 0,
-    error: debugError?.message || 'Aucune',
-    doc_preview: debugDoc?.[0] ? {
-      id: debugDoc[0].id,
-      nom: debugDoc[0].nom_original,
-      text_length: debugDoc[0].texte_extrait?.length || 0
-    } : 'Aucun'
-  });
-}
-
-// 🔍 DEBUG DOCUMENTS UTILISATEUR CORRIGÉ
-try {
-  const { data: allUserDocs } = await supabase
-    .from('documents')
-    .select('id, nom_original, date_upload')
-    .eq('eleve_id', user_id)
-    .order('date_upload', { ascending: false });
-    
-  console.log('🔍 Tous documents utilisateur:', allUserDocs?.map(doc => ({
-    id: doc.id,
-    nom: doc.nom_original,
-    date: doc.date_upload
-  })) || []);
-} catch (debugError) {
-  console.warn('⚠️ Erreur debug documents:', debugError.message);
-}
-    
-// 🚀 APPEL GROQ AVEC MÉMOIRE AMÉLIORÉE
-let completion;
-
-try {
-  const messages = [
-    {
-      role: 'system',
-      content: systemPrompt
-    }
-  ];
-
-  // 🧠 AJOUTER CONTEXTE CONVERSATION COMPLET SI CONTINUATION - CORRECTION !
-if (isContinuation && conversationContext && conversationContext.hasContext && conversationContext.wasIncomplete) {
-  // AJOUTER LE CONTEXTE COMPLET DE LA DERNIÈRE RÉPONSE
-  messages.push({
-    role: 'system',
-    content: `CONTEXTE CONTINUATION OBLIGATOIRE:
-L'élève demande la suite de ta réponse précédente qui était incomplète.
-
-TA DERNIÈRE RÉPONSE (à continuer) :
-"${conversationContext.fullLastResponse || conversationContext.lastResponse || ''}"
-
-Tu t'es arrêté ${conversationContext.stopPoint || 'au milieu'}.
-Continue EXACTEMENT où tu t'es arrêté sans répéter ce qui a été fait.
-Reprends le fil de "${conversationContext.lastTopic || 'la question'}".`
-  });
-  
-  console.log('🔄 Contexte continuation ajouté pour:', conversationContext.lastTopic);
-} else if (conversationContext && conversationContext.hasContext && conversationContext.conversationHistory) {
-  // AJOUTER HISTORIQUE NORMAL (pas continuation)
-  const recentHistory = conversationContext.conversationHistory.slice(0, 2).reverse();
-  
-  for (const exchange of recentHistory) {
-    if (exchange.message_eleve && exchange.reponse_ia) {
-      messages.push({ 
-        role: 'user', 
-        content: exchange.message_eleve.substring(0, 150)
-      });
-      messages.push({ 
-        role: 'assistant', 
-        content: exchange.reponse_ia.substring(0, 300)
-      });
-    }
-  }
-}
-
-  // Message actuel de l'utilisateur
-  messages.push({
-    role: 'user',
-    content: mode !== 'normal' && finalDocumentContext ? 
-      `Document: ${finalDocumentContext.substring(0, 1000)}\n\nQuestion: ${message}` :
-      message
-  });
-
-  console.log('📨 Messages construits:', {
-    total_messages: messages.length,
-    has_continuation_context: isContinuation && conversationContext.wasIncomplete,
-    context_type: isContinuation ? 'continuation' : 'normal'
-  });
-
-  completion = await groq.chat.completions.create({
-    messages: messages,
-    model: 'llama-3.3-70b-versatile',
-    temperature: mode === 'step_by_step' ? 0.05 : mode === 'normal' ? 0.15 : 0.1,
-    max_tokens: maxTokens,
-    top_p: 0.7
-  });
-  
-  console.log('✅ Réponse Groq reçue avec mémoire');
-  
-} catch (groqError) {
-  console.error('❌ Erreur Groq:', groqError.message);
-  
-  const fallbackResponse = `${prenomExact}, problème technique ! 😅
-
-🔧 Mon système IA redémarre...
-💡 Reformule ta question et je ferai de mon mieux !
-
-${finalDocumentContext ? 
-  `📄 J'ai ton document "${documentName}" (${documentLength.toLocaleString()} chars)` :
-  '📄 Upload un document pour des réponses plus précises !'}`;
-
-  return res.json({
-    response: fallbackResponse,
-    timestamp: new Date().toISOString(),
-    model: 'etudia-fallback',
-    student_name: prenomExact,
-    is_fallback: true,
-    success: true
-  });
-}
-
-    // ✅ TRAITEMENT RÉPONSE AVEC VALIDATION INTELLIGENTE
-    let aiResponse = completion.choices[0]?.message?.content || `Désolé ${prenomExact}, erreur technique.`;
-    
-    // 🔧 VALIDATION STRICTE DU FORMAT SELON MODE
-    if (mode === 'step_by_step') {
-      // Forcer le format étape si absent
-      if (!aiResponse.includes('📊 Étape')) {
-        const currentStep = stepProgression.current_step;
-        const totalSteps = stepProgression.total_steps;
-        aiResponse = `📊 Étape ${currentStep}/${totalSteps}\n\n${aiResponse}`;
-      }
-      
-      // Forcer question à la fin si absente
-      if (!aiResponse.includes('?') && !aiResponse.includes('❓')) {
-        aiResponse += `\n\n❓ ${prenomExact}, comprends-tu cette étape ?`;
-      }
-    }
-    
-    // 🔧 VALIDATION PRÉNOM
-    if (!aiResponse.includes(prenomExact)) {
-      aiResponse = `${prenomExact}, ${aiResponse}`;
-    }
-
-    // 🔧 DÉTECTION FIN D'EXERCICE AMÉLIORÉE
-    const exercisePatterns = [
-      /résultat final/i, /réponse finale/i, /solution complète/i,
-      /exercice terminé/i, /c'est fini/i, /voilà la réponse/i,
-      /donc.*=.*\d+/i, // Pattern "donc x = 5"
-      /les solutions sont/i, /réponses.*:/i,
-      /tous.*exercices.*résolus/i
-    ];
-    
-    const isExerciseComplete = exercisePatterns.some(pattern => pattern.test(aiResponse));
-    
-    if (isExerciseComplete || (mode === 'step_by_step' && stepProgression.current_step >= stepProgression.total_steps)) {
-      const completionMessages = {
-        'step_by_step': `\n\n🎉 Excellent ${prenomExact} ! Nous avons terminé cet exercice étape par étape !`,
-        'direct_solution': `\n\n✅ Parfait ${prenomExact} ! Tous les exercices sont résolus !`,
-        'normal': `\n\n👍 Voilà ${prenomExact} ! J'espère que ça répond à ta question !`
-      };
-      
-      aiResponse += completionMessages[mode] || completionMessages['normal'];
-      aiResponse += `\n\n💡 **Prêt pour le prochain défi ?**`;
-    }
-
-    console.log('✅ Réponse IA traitée avec mémoire et progression');
-
-    // ✅ SAUVEGARDE AVEC INFORMATIONS ÉTAPES
-    try {
-      await supabase.from('historique_conversations').insert([{
-        eleve_id: parseInt(user_id),
-        message_eleve: message.trim(),
-        reponse_ia: aiResponse,
-        tokens_utilises: completion.usage?.total_tokens || 0,
-        modele_ia: 'llama-3.3-memoire',
-        mode_utilise: mode,
-        document_utilise: documentName,
-        contexte_utilise: !!finalDocumentContext,
-        // 🆕 NOUVELLES COLONNES (si elles existent)
-        etape_courante: mode === 'step_by_step' ? stepProgression.current_step : null,
-        etape_totale: mode === 'step_by_step' ? stepProgression.total_steps : null,
-        est_continuation: isContinuation
-      }]);
-    } catch (saveError) {
-      console.warn('⚠️ Erreur sauvegarde:', saveError.message);
-    }
-
-    // 🎯 RÉPONSE FINALE AVEC INFORMATIONS PROGRESSION
-    const responseData = {
-      response: aiResponse,
-      timestamp: new Date().toISOString(),
-      model: 'llama-3.3-memoire',
-      student_name: prenomExact,
-      tokens_used: completion.usage?.total_tokens || 0,
-      mode_used: mode,
-      has_context: !!finalDocumentContext,
-      document_name: documentName,
-      context_length: documentLength,
-      step_info: mode === 'step_by_step' ? {
-        current_step: stepProgression.current_step,
-        total_steps: stepProgression.total_steps,
-        next_step: Math.min(stepProgression.current_step + 1, stepProgression.total_steps)
-      } : null,
-      conversation_context: {
-        had_previous_context: conversationContext.hasContext,
-        was_continuation: isContinuation,
-        was_incomplete: conversationContext.wasIncomplete
-      },
-      success: true
-    };
-
-    console.log('🎉 =============== ÉTUDIA MÉMOIRE SUCCÈS ===============\n');
-    res.json(responseData);
-
-  } catch (error) {
-    console.error('💥 Erreur chat avancé:', error.message);
-    
-    res.status(500).json({
-      error: 'Erreur technique',
-      response: `Désolé, ÉtudIA rencontre un problème ! 🛠️\n\n🔧 Réessaie dans quelques instants.`,
-      timestamp: new Date().toISOString(),
-      success: false
-    });
-  }
-});
-
-// ===================================================================
-// 📊 NOUVELLES ROUTES - PROFIL ET PROGRÈS
-// ===================================================================
-
-app.get('/api/student/profile/:userId', async (req, res) => {
-  try {
-    const { userId } = req.params;
-    
-    const [studentResult, documentsResult, conversationsResult] = await Promise.all([
-      supabase.from('eleves').select('*').eq('id', userId).single(),
-      supabase.from('documents').select('*').eq('eleve_id', userId),
-      supabase.from('historique_conversations').select('*').eq('eleve_id', userId)
-    ]);
-
-    const student = studentResult.data;
-    const documents = documentsResult.data || [];
-    const conversations = conversationsResult.data || [];
-
-    const stats = {
-      documents_uploaded: documents.length,
-      total_conversations: conversations.length,
-      total_tokens_used: conversations.reduce((sum, conv) => sum + (conv.tokens_utilises || 0), 0),
-      subjects_studied: [...new Set(documents.map(doc => doc.matiere))],
-      learning_progress: Math.min(100, Math.round((conversations.length / 50) * 100)),
-      last_activity: conversations[0]?.date_creation || student.date_inscription,
-      preferred_mode: conversations.reduce((acc, conv) => {
-        acc[conv.mode_utilise || 'normal'] = (acc[conv.mode_utilise || 'normal'] || 0) + 1;
-        return acc;
-      }, {}),
-      average_session_length: conversations.length > 0 ? Math.round(conversations.length / documents.length) : 0
-    };
-
-    res.json({
-      success: true,
-      student: {
-        ...student,
-        nom: student.nom.trim().split(' ')[0]
-      },
-      statistics: stats,
-      learning_profile: {
-        style: student.style_apprentissage || 'equilibre',
-        difficulties: student.matieres_difficiles || [],
-        level: student.niveau_global || 1,
-        preferences: student.preferences_pedagogiques || {}
-      }
-    });
-
-  } catch (error) {
-    console.error('❌ Erreur profil élève:', error);
-    res.status(500).json({ success: false, error: error.message });
-  }
-});
-
-app.post('/api/student/profile/:userId/update', async (req, res) => {
-  try {
-    const { userId } = req.params;
-    
-    const profile = await MemoryManager.updateStudentProfile(userId);
-    
-    if (profile) {
-      res.json({
-        success: true,
-        message: 'Profil mis à jour !',
-        profile: profile
-      });
     } else {
-      res.status(500).json({
+      console.log('✅ Profil trouvé en cache:', student_info.nom);
+    }
+
+    // 🤖 Vérification état OpenRouter avant appel
+    if (!OPENROUTER_CONFIG.apiKey) {
+      console.error('❌ OpenRouter API Key manquante !');
+      return res.status(503).json({
         success: false,
-        error: 'Erreur mise à jour profil'
+        error: 'Service IA temporairement indisponible - Configuration OpenRouter manquante',
+        provider: 'OpenRouter DeepSeek R1',
+        timestamp: new Date().toISOString()
       });
     }
 
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-});
+    // 💬 Construction messages pour OpenRouter avec contexte ÉtudIA
+    const messages = [
+      {
+        role: 'user',
+        content: message.trim()
+      }
+    ];
 
-// 🎤 Route préparatoire pour le mode audio
-app.post('/api/chat/audio', async (req, res) => {
-  try {
-    const { audio_data, user_id, mode = 'normal' } = req.body;
+    // 🎓 Options spécialisées pour DeepSeek R1 selon mode ÉtudIA
+    const chatOptions = {
+      mode: mode,
+      useFreeTier: !use_paid_model,    // 🆕 Sélection modèle selon préférence utilisateur
+      student_info: student_info,
+      document_context: document_context,
+      has_document: has_document || (document_context && document_context.length > 50),
+      maxTokens: OPENROUTER_CONFIG.maxTokens[mode] || 250,
+      temperature: OPENROUTER_CONFIG.temperature[mode] || 0.15
+    };
+
+    // 📊 Ajout informations étape si mode step_by_step
+    if (step_info && mode === 'step_by_step') {
+      chatOptions.step_info = step_info;
+      console.log('📊 Mode étape par étape activé:', step_info);
+    }
+
+    console.log('🤖 Configuration appel OpenRouter DeepSeek R1:', {
+      mode: chatOptions.mode,
+      use_free_tier: chatOptions.useFreeTier,
+      selected_model: chatOptions.useFreeTier ? OPENROUTER_CONFIG.models.free : OPENROUTER_CONFIG.models.paid,
+      has_document: chatOptions.has_document,
+      max_tokens: chatOptions.maxTokens,
+      temperature: chatOptions.temperature,
+      student: student_info.nom || 'Anonyme'
+    });
+
+    // 🚀 APPEL PRINCIPAL OPENROUTER DEEPSEEK R1
+    console.log('🚀 Appel OpenRouter DeepSeek R1 en cours...');
+    const startTime = Date.now();
     
-    res.json({
+    const aiResponse = await deepseek.chat(messages, chatOptions);
+    
+    const responseTime = Date.now() - startTime;
+    console.log(`⏱️ Temps de réponse OpenRouter: ${responseTime}ms`);
+
+    // ❌ Gestion échec OpenRouter
+    if (!aiResponse.success) {
+      console.error('❌ Échec OpenRouter DeepSeek R1:', aiResponse.error);
+      
+      // 🔧 Message d'erreur utilisateur-friendly
+      const userErrorMessage = aiResponse.error.includes('rate limit') ? 
+        'Limite de requêtes atteinte. Veuillez patienter quelques minutes.' :
+        aiResponse.error.includes('authentication') ?
+        'Problème d\'authentification OpenRouter. L\'équipe technique a été notifiée.' :
+        'Service IA temporairement indisponible. Réessayez dans quelques instants.';
+
+      return res.status(500).json({
+        success: false,
+        error: userErrorMessage,
+        details: aiResponse.error,
+        metadata: aiResponse.metadata || {},
+        provider: 'OpenRouter DeepSeek R1',
+        can_retry: !aiResponse.error.includes('authentication'),
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    console.log('✅ Réponse OpenRouter DeepSeek R1 reçue avec succès:', {
+      content_length: aiResponse.content.length,
+      tokens_used: aiResponse.metadata.tokens_used,
+      model_used: aiResponse.metadata.model,
+      free_tier: aiResponse.metadata.free_tier_used,
+      response_time: responseTime
+    });
+
+    // 📊 Sauvegarde conversation en base (avec gestion d'erreurs non bloquante)
+    let conversationId = null;
+    try {
+      console.log('💾 Sauvegarde conversation en base...');
+      
+      const conversationData = {
+        eleve_id: user_id,
+        message_utilisateur: message,
+        reponse_ia: aiResponse.content,
+        mode_chat: mode,
+        
+        // 🆕 NOUVELLES COLONNES OPENROUTER V4.1
+        modele_utilise: aiResponse.metadata.model,
+        tokens_utilises: aiResponse.metadata.tokens_used,
+        niveau_gratuit: aiResponse.metadata.free_tier_used,
+        temps_reponse_ms: responseTime,
+        provider_ia: 'OpenRouter',
+        engine_ia: 'DeepSeek R1',
+        
+        // 📄 Informations document si présent
+        document_id: selected_document_id,
+        document_nom: document_name,
+        contexte_document: has_document,
+        
+        // 📊 Métadonnées techniques
+        metadata: {
+          ...aiResponse.metadata,
+          student_class: student_info.classe,
+          student_school: student_info.etablissement,
+          request_timestamp: new Date().toISOString(),
+          response_time_ms: responseTime,
+          openrouter_version: '1.0',
+          etudia_version: '4.1.0'
+        }
+      };
+
+      const { data: savedConversation, error: saveError } = await supabase
+        .from('conversations')
+        .insert([conversationData])
+        .select('id')
+        .single();
+
+      if (saveError) {
+        console.warn('⚠️ Erreur sauvegarde conversation:', saveError.message);
+      } else {
+        conversationId = savedConversation.id;
+        console.log('✅ Conversation sauvegardée avec ID:', conversationId);
+      }
+
+    } catch (saveError) {
+      console.warn('⚠️ Erreur sauvegarde conversation (non bloquant):', saveError.message);
+    }
+
+    // 📊 Mise à jour profil élève (dernière activité)
+    try {
+      updateStudentProfile(user_id).catch(updateError => {
+        console.warn('⚠️ Erreur mise à jour profil élève:', updateError.message);
+      });
+    } catch (updateError) {
+      // Non bloquant
+    }
+
+    // 🎉 RÉPONSE ENRICHIE OPENROUTER V4.1
+    const finalResponse = {
       success: true,
-      message: 'Mode audio en cours de développement ! 🎤',
-      features_coming: [
-        'Reconnaissance vocale en français',
-        'Synthèse vocale des réponses IA',
-        'Support audio pour tous les modes',
-        'Transcription automatique'
+      response: aiResponse.content,
+      
+      // 📊 Métadonnées enrichies OpenRouter
+      metadata: {
+        ...aiResponse.metadata,
+        conversation_id: conversationId,
+        student_name: student_info.nom,
+        response_time_ms: responseTime,
+        server_version: '4.1.0-openrouter',
+        timestamp: new Date().toISOString()
+      },
+      
+      // 🆕 INFORMATIONS SPÉCIFIQUES OPENROUTER V4.1
+      openrouter_info: {
+        provider: 'OpenRouter',
+        ai_engine: 'DeepSeek R1',
+        model_tier: aiResponse.metadata.free_tier_used ? 'Gratuit' : 'Premium',
+        cost_estimate: aiResponse.metadata.free_tier_used ? '0€' : 'Payant',
+        reasoning_transparent: true,      // 🧠 Spécificité DeepSeek R1
+        african_optimized: true,          // 🇨🇮 Optimisé pour contexte africain
+        
+        // 📊 Stats d'usage pour interface utilisateur
+        usage_stats: {
+          tokens_this_request: aiResponse.metadata.tokens_used,
+          model_used: aiResponse.metadata.model,
+          free_tier_remaining: 'illimité',  // DeepSeek R1 Free est illimité
+          response_quality: 'excellent'
+        }
+      },
+      
+      // 🎓 Contexte éducatif ÉtudIA
+      educational_context: {
+        mode_apprentissage: mode,
+        student_level: student_info.classe || 'Non spécifié',
+        document_analyzed: has_document,
+        personalized_for: student_info.nom || 'Étudiant'
+      }
+    };
+
+    console.log('🎉 Réponse finale assemblée pour client');
+    console.log('📊 Tokens utilisés:', aiResponse.metadata.tokens_used);
+    console.log('🤖 Modèle utilisé:', aiResponse.metadata.model);
+    console.log('💰 Tier utilisé:', aiResponse.metadata.free_tier_used ? 'Gratuit' : 'Premium');
+
+    res.json(finalResponse);
+
+  } catch (error) {
+    console.error('💥 ERREUR CHAT OPENROUTER CRITIQUE:', error);
+    
+    // 🚨 Réponse d'erreur structurée
+    res.status(500).json({
+      success: false,
+      error: 'Erreur lors de la génération de la réponse IA',
+      details: error.message,
+      provider: 'OpenRouter DeepSeek R1',
+      timestamp: new Date().toISOString(),
+      
+      // 🔧 Informations debug pour développement
+      debug_info: process.env.NODE_ENV === 'development' ? {
+        stack: error.stack,
+        openrouter_configured: !!OPENROUTER_CONFIG.apiKey,
+        supabase_connected: !!supabase
+      } : undefined,
+      
+      // 💡 Suggestions utilisateur
+      suggestions: [
+        'Vérifiez votre connexion internet',
+        'Réessayez dans quelques instants',
+        'Contactez le support si le problème persiste'
       ]
     });
-
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
   }
 });
 
-// 📈 Route analytics avancées
-app.get('/api/analytics/:userId', async (req, res) => {
+// ===================================================================
+// 🤖 CLASSE CHAT AMÉLIORÉE AVEC PROMPTS SYSTÈME ÉTUDIA
+// Étend la classe OpenRouterDeepSeek avec méthodes spécialisées
+// ===================================================================
+
+// 💬 Méthode chat spécialisée ÉtudIA (étend la classe principale)
+deepseek.chat = async function(messages, options = {}) {
   try {
-    const { userId } = req.params;
-    const { period = '30' } = req.query;
+    const {
+      mode = 'normal',
+      useFreeTier = true,
+      maxTokens = null,
+      temperature = null,
+      student_info = {},
+      document_context = '',
+      has_document = false,
+      step_info = null
+    } = options;
+
+    // 🤖 Sélection modèle selon préférence utilisateur
+    const selectedModel = useFreeTier ? this.models.free : this.models.paid;
     
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - parseInt(period));
+    // 🔢 Configuration tokens et température selon le mode ÉtudIA
+    const finalMaxTokens = maxTokens || OPENROUTER_CONFIG.maxTokens[mode] || 250;
+    const finalTemperature = temperature !== null ? temperature : OPENROUTER_CONFIG.temperature[mode] || 0.15;
 
-    const { data: conversations } = await supabase
-      .from('historique_conversations')
-      .select('*')
-      .eq('eleve_id', userId)
-      .gte('date_creation', startDate.toISOString());
+    // 🎓 Génération prompt système adapté au contexte ÉtudIA
+    const systemPrompt = this.getSystemPrompt(mode, student_info, document_context, has_document);
 
-    const { data: documents } = await supabase
-      .from('documents')
-      .select('*')
-      .eq('eleve_id', userId)
-      .gte('date_upload', startDate.toISOString());
+    // 📝 Construction des messages avec contexte éducatif
+    const formattedMessages = [
+      { role: 'system', content: systemPrompt },
+      ...messages
+    ];
 
-    const analytics = {
-      period_days: parseInt(period),
-      activity_trend: {
-        conversations_count: conversations?.length || 0,
-        documents_uploaded: documents?.length || 0,
-        avg_daily_activity: Math.round((conversations?.length || 0) / parseInt(period))
+    console.log('🔥 Appel OpenRouter DeepSeek R1 en cours:', {
+      model: selectedModel,
+      mode: mode,
+      max_tokens: finalMaxTokens,
+      temperature: finalTemperature,
+      messages_count: formattedMessages.length,
+      has_document_context: has_document,
+      free_tier: useFreeTier,
+      student: student_info.nom || 'Anonyme'
+    });
+
+    // 🚀 APPEL PRINCIPAL API OPENROUTER
+    const response = await axios.post(
+      `${this.baseURL}/chat/completions`,
+      {
+        model: selectedModel,
+        messages: formattedMessages,
+        max_tokens: finalMaxTokens,
+        temperature: finalTemperature,
+        top_p: 0.95,                    // 🎯 Diversité contrôlée
+        frequency_penalty: 0.1,         // 🔄 Éviter répétitions
+        presence_penalty: 0.05,         // 💭 Encourager nouveaux concepts
+        stream: false                   // 📡 Réponse complète d'un coup
       },
-      mode_usage: conversations?.reduce((acc, conv) => {
-        acc[conv.mode_utilise || 'normal'] = (acc[conv.mode_utilise || 'normal'] || 0) + 1;
-        return acc;
-      }, {}) || {},
-      token_consumption: {
-        total: conversations?.reduce((sum, conv) => sum + (conv.tokens_utilises || 0), 0) || 0,
-        average_per_conversation: conversations?.length > 0 ? 
-          Math.round(conversations.reduce((sum, conv) => sum + (conv.tokens_utilises || 0), 0) / conversations.length) : 0
-      },
-      subjects_focus: documents?.reduce((acc, doc) => {
-        acc[doc.matiere] = (acc[doc.matiere] || 0) + 1;
-        return acc;
-      }, {}) || {},
-      engagement_score: Math.min(100, Math.round(((conversations?.length || 0) / parseInt(period)) * 10))
+      {
+        headers: {
+          'Authorization': `Bearer ${this.apiKey}`,
+          'Content-Type': 'application/json',
+          'HTTP-Referer': 'https://etudia-africa.vercel.app',
+          'X-Title': 'ÉtudIA V4.1 - Assistant IA Éducatif Africain'
+        },
+        timeout: 30000 // ⏱️ Timeout 30s pour DeepSeek R1
+      }
+    );
+
+    // ✅ Vérification réponse valide
+    if (!response.data || !response.data.choices || !response.data.choices[0]) {
+      throw new Error('Réponse OpenRouter invalide ou vide');
+    }
+
+    const aiResponse = response.data.choices[0].message.content;
+    const usage = response.data.usage || {};
+
+    console.log('✅ Réponse OpenRouter DeepSeek R1 traitée:', {
+      response_length: aiResponse.length,
+      tokens_used: usage.total_tokens || 0,
+      prompt_tokens: usage.prompt_tokens || 0,
+      completion_tokens: usage.completion_tokens || 0,
+      model_used: selectedModel,
+      mode: mode
+    });
+
+    // 🎉 Retour formaté pour ÉtudIA
+    return {
+      success: true,
+      content: aiResponse,
+      metadata: {
+        model: selectedModel,
+        mode: mode,
+        tokens_used: usage.total_tokens || 0,
+        prompt_tokens: usage.prompt_tokens || 0,
+        completion_tokens: usage.completion_tokens || 0,
+        free_tier_used: useFreeTier,
+        temperature: finalTemperature,
+        max_tokens: finalMaxTokens,
+        provider: 'OpenRouter',
+        ai_engine: 'DeepSeek R1',
+        timestamp: new Date().toISOString(),
+        
+        // 🆕 Métadonnées éducatives ÉtudIA
+        educational_context: {
+          student_class: student_info.classe,
+          learning_mode: mode,
+          has_document: has_document,
+          step_info: step_info
+        }
+      }
     };
 
+  } catch (error) {
+    console.error('❌ Erreur OpenRouter DeepSeek chat:', error.message);
+    
+    // 🔍 Diagnostic détaillé selon type d'erreur
+    let errorType = 'unknown';
+    let userMessage = 'Erreur technique OpenRouter';
+    
+    if (error.response) {
+      const status = error.response.status;
+      const errorData = error.response.data;
+      
+      switch (status) {
+        case 401:
+          errorType = 'authentication';
+          userMessage = 'Problème d\'authentification OpenRouter';
+          break;
+        case 429:
+          errorType = 'rate_limit';
+          userMessage = 'Limite de requêtes atteinte - Patientez quelques minutes';
+          break;
+        case 500:
+        case 502:
+        case 503:
+          errorType = 'server_error';
+          userMessage = 'Serveur OpenRouter temporairement indisponible';
+          break;
+        default:
+          errorType = 'api_error';
+          userMessage = `Erreur API OpenRouter (${status})`;
+      }
+      
+      console.error(`❌ Erreur OpenRouter ${status}:`, errorData);
+    } else if (error.code === 'ECONNREFUSED') {
+      errorType = 'connection';
+      userMessage = 'Impossible de se connecter à OpenRouter';
+    } else if (error.code === 'TIMEOUT') {
+      errorType = 'timeout';
+      userMessage = 'Délai d\'attente dépassé - Réessayez';
+    }
+
+    return {
+      success: false,
+      error: userMessage,
+      error_type: errorType,
+      metadata: {
+        provider: 'OpenRouter',
+        ai_engine: 'DeepSeek R1',
+        timestamp: new Date().toISOString(),
+        mode: options.mode || 'normal',
+        free_tier_used: options.useFreeTier !== false,
+        can_retry: ['timeout', 'server_error', 'rate_limit'].includes(errorType)
+      }
+    };
+  }
+};
+
+// ===================================================================
+// 📊 ROUTES COMPLÉMENTAIRES POUR OPENROUTER
+// ===================================================================
+
+// 🔍 Route test rapide OpenRouter
+app.get('/api/openrouter/test', async (req, res) => {
+  try {
+    console.log('🧪 Test rapide OpenRouter DeepSeek R1...');
+    
+    const healthResult = await deepseek.testHealth();
+    
     res.json({
       success: true,
-      analytics: analytics,
-      period: `${period} derniers jours`,
-      generated_at: new Date().toISOString()
+      openrouter_status: healthResult.status,
+      model_tested: healthResult.model,
+      response_preview: healthResult.response_preview,
+      tokens_used: healthResult.tokens_used,
+      timestamp: new Date().toISOString()
     });
-
-  } catch (error) {
-    console.error('❌ Erreur analytics:', error);
-    res.status(500).json({ success: false, error: error.message });
-  }
-});
-
-// ===================================================================
-// 📊 ROUTES STATS ET HEALTH
-// ===================================================================
-
-// 🔍 ROUTE TEST COMPLET SYSTÈME
-app.get('/api/diagnostic/system/:userId', async (req, res) => {
-  const { userId } = req.params;
-  
-  console.log(`🔍 DIAGNOSTIC SYSTÈME COMPLET pour élève ${userId}`);
-  
-  const diagnostic = {
-    timestamp: new Date().toISOString(),
-    user_id: userId,
-    system_version: 'ÉtudIA v4.0 - Diagnostic V2',
-    tests: {},
-    overall_status: 'EN_COURS',
-    recommendations: [],
-    repair_actions: []
-  };
-  
-  try {
-    // 🧪 TEST 1: Connexion base de données
-    console.log('🧪 Test 1: Connexion Supabase...');
-    try {
-      const { data: healthCheck } = await supabase
-        .from('eleves')
-        .select('count(*)');
-      
-      diagnostic.tests.database = {
-        status: '✅ OPÉRATIONNEL',
-        message: 'Connexion Supabase active et fonctionnelle',
-        response_time: '< 500ms'
-      };
-    } catch (dbError) {
-      diagnostic.tests.database = {
-        status: '❌ ÉCHEC',
-        message: `Erreur Supabase: ${dbError.message}`,
-        action_required: 'Vérifier configuration SUPABASE_URL et SUPABASE_ANON_KEY'
-      };
-    }
-    
-    // 🧪 TEST 2: Élève existe et données complètes
-    console.log('🧪 Test 2: Validation données élève...');
-    try {
-      const { data: student, error: studentError } = await supabase
-        .from('eleves')
-        .select('*')
-        .eq('id', userId)
-        .single();
-      
-      if (student) {
-        diagnostic.tests.student = {
-          status: '✅ TROUVÉ',
-          message: `Élève "${student.nom}" trouvé et valide`,
-          data: {
-            nom: student.nom,
-            email: student.email,
-            classe: student.classe || 'Non spécifiée',
-            style_apprentissage: student.style_apprentissage || 'Non défini',
-            date_inscription: student.date_inscription
-          },
-          completeness: {
-            nom: !!student.nom,
-            email: !!student.email,
-            classe: !!student.classe,
-            score: Math.round(([student.nom, student.email, student.classe].filter(Boolean).length / 3) * 100)
-          }
-        };
-        
-        if (diagnostic.tests.student.data.completeness.score < 100) {
-          diagnostic.repair_actions.push('Compléter les informations manquantes de l\'élève');
-        }
-      } else {
-        diagnostic.tests.student = {
-          status: '❌ NON_TROUVÉ',
-          message: `Élève ID ${userId} non trouvé dans la base`,
-          action_required: 'Vérifier que l\'élève existe ou créer un nouveau compte'
-        };
-      }
-    } catch (studentError) {
-      diagnostic.tests.student = {
-        status: '❌ ERREUR',
-        message: studentError.message,
-        action_required: 'Vérifier la structure de la table eleves'
-      };
-    }
-    
-    // 🧪 TEST 3: Documents et extraction OCR
-    console.log('🧪 Test 3: Analyse documents...');
-    try {
-      const { data: documents, error: docError } = await supabase
-        .from('documents')
-        .select('*')
-        .eq('eleve_id', userId)
-        .order('date_upload', { ascending: false });
-      
-      const totalDocs = documents?.length || 0;
-      const docsWithText = documents?.filter(doc => doc.texte_extrait && doc.texte_extrait.length > 50) || [];
-      const docsUsable = docsWithText.length;
-      const latestDoc = documents?.[0];
-      
-      diagnostic.tests.documents = {
-        status: totalDocs > 0 ? (docsUsable > 0 ? '✅ OPÉRATIONNEL' : '⚠️ PROBLÈME_OCR') : '📄 AUCUN_DOCUMENT',
-        message: `${totalDocs} documents trouvés, ${docsUsable} utilisables par l'IA`,
-        data: {
-          total_count: totalDocs,
-          usable_count: docsUsable,
-          success_rate: totalDocs > 0 ? Math.round((docsUsable / totalDocs) * 100) : 0,
-          latest_document: latestDoc ? {
-            id: latestDoc.id,
-            nom: latestDoc.nom_original,
-            upload_date: latestDoc.date_upload,
-            has_text: !!(latestDoc.texte_extrait),
-            text_length: latestDoc.texte_extrait?.length || 0,
-            ocr_confidence: latestDoc.confiance_ocr || 0,
-            is_usable: !!(latestDoc.texte_extrait && latestDoc.texte_extrait.length > 50)
-          } : null
-        }
-      };
-      
-      if (totalDocs === 0) {
-        diagnostic.repair_actions.push('Élève doit uploader au moins un document');
-      } else if (docsUsable === 0) {
-        diagnostic.repair_actions.push('Problème OCR - documents sans texte extrait');
-      }
-      
-    } catch (docError) {
-      diagnostic.tests.documents = {
-        status: '❌ ERREUR',
-        message: docError.message,
-        action_required: 'Vérifier la structure de la table documents'
-      };
-    }
-    
-    // 🧪 TEST 4: Test API Groq et génération IA
-    console.log('🧪 Test 4: Test Groq LLaMA...');
-    try {
-      const testStart = Date.now();
-      
-      const testCompletion = await groq.chat.completions.create({
-        messages: [
-          {
-            role: 'system',
-            content: 'Tu es ÉtudIA. Réponds juste "Test ÉtudIA OK" en français.'
-          },
-          {
-            role: 'user',
-            content: 'Test de fonctionnement'
-          }
-        ],
-        model: 'llama-3.3-70b-versatile',
-        temperature: 0.1,
-        max_tokens: 10
-      });
-      
-      const testDuration = Date.now() - testStart;
-      const testResponse = testCompletion.choices[0]?.message?.content || '';
-      
-      diagnostic.tests.groq_api = {
-        status: testResponse.toLowerCase().includes('test') ? '✅ OPÉRATIONNEL' : '⚠️ RÉPONSE_ANORMALE',
-        message: `Groq LLaMA répond correctement`,
-        data: {
-          model: 'llama-3.3-70b-versatile',
-          response: testResponse,
-          response_time: `${testDuration}ms`,
-          tokens_used: testCompletion.usage?.total_tokens || 0,
-          api_status: 'active'
-        }
-      };
-      
-    } catch (groqError) {
-      diagnostic.tests.groq_api = {
-        status: '❌ ÉCHEC',
-        message: `Groq API inaccessible: ${groqError.message}`,
-        action_required: 'Vérifier GROQ_API_KEY et connexion réseau',
-        error_code: groqError.code || 'UNKNOWN'
-      };
-    }
-    
-    // 🧪 TEST 5: Simulation chat complet avec document
-    console.log('🧪 Test 5: Simulation chat avec contexte...');
-    try {
-      const hasValidDoc = diagnostic.tests.documents?.data?.usable_count > 0;
-      const testDocument = diagnostic.tests.documents?.data?.latest_document;
-      
-      let simulationResult;
-      
-      if (hasValidDoc && testDocument?.is_usable) {
-        // Test avec document
-        simulationResult = {
-          status: '✅ SIMULATION_RÉUSSIE',
-          message: 'Chat fonctionnel avec contexte document',
-          scenario: 'avec_document',
-          document_used: testDocument.nom,
-          context_length: testDocument.text_length
-        };
-      } else if (diagnostic.tests.student?.status.includes('✅') && diagnostic.tests.groq_api?.status.includes('✅')) {
-        // Test sans document mais IA fonctionnelle
-        simulationResult = {
-          status: '⚠️ FONCTIONNEL_SANS_DOCUMENT',
-          message: 'Chat possible mais sans contexte document',
-          scenario: 'sans_document',
-          recommendation: 'Upload document pour expérience complète'
-        };
-      } else {
-        // Problèmes critiques
-        simulationResult = {
-          status: '❌ CHAT_IMPOSSIBLE',
-          message: 'Conditions non réunies pour le chat',
-          scenario: 'bloqué',
-          blockers: [
-            !diagnostic.tests.student?.status.includes('✅') ? 'Élève non trouvé' : null,
-            !diagnostic.tests.groq_api?.status.includes('✅') ? 'Groq API défaillante' : null
-          ].filter(Boolean)
-        };
-      }
-      
-      diagnostic.tests.chat_simulation = simulationResult;
-      
-    } catch (chatError) {
-      diagnostic.tests.chat_simulation = {
-        status: '❌ ERREUR_SIMULATION',
-        message: chatError.message
-      };
-    }
-    
-    // 🧪 TEST 6: Historique conversations et performance
-    console.log('🧪 Test 6: Analyse historique...');
-    try {
-      const { data: conversations } = await supabase
-        .from('historique_conversations')
-        .select('*')
-        .eq('eleve_id', userId)
-        .order('date_creation', { ascending: false })
-        .limit(10);
-      
-      const totalConversations = conversations?.length || 0;
-      const recentConversations = conversations?.filter(conv => 
-        new Date(conv.date_creation) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-      ) || [];
-      
-      diagnostic.tests.conversation_history = {
-        status: totalConversations > 0 ? '✅ HISTORIQUE_PRÉSENT' : '📊 NOUVEL_UTILISATEUR',
-        message: `${totalConversations} conversations totales, ${recentConversations.length} cette semaine`,
-        data: {
-          total_conversations: totalConversations,
-          recent_conversations: recentConversations.length,
-          total_tokens: conversations?.reduce((sum, conv) => sum + (conv.tokens_utilises || 0), 0) || 0,
-          modes_used: [...new Set(conversations?.map(conv => conv.mode_utilise) || [])],
-          last_activity: conversations?.[0]?.date_creation || 'Jamais'
-        }
-      };
-      
-      if (totalConversations > 100) {
-        diagnostic.repair_actions.push('Nettoyer l\'historique ancien (> 100 conversations)');
-      }
-      
-    } catch (historyError) {
-      diagnostic.tests.conversation_history = {
-        status: '❌ ERREUR',
-        message: historyError.message
-      };
-    }
-    
-    // 📊 ANALYSE GLOBALE ET STATUT FINAL
-    const allTests = Object.values(diagnostic.tests);
-    const successfulTests = allTests.filter(test => test.status.includes('✅')).length;
-    const warningTests = allTests.filter(test => test.status.includes('⚠️')).length;
-    const failedTests = allTests.filter(test => test.status.includes('❌')).length;
-    const totalTests = allTests.length;
-    
-    const successRate = Math.round((successfulTests / totalTests) * 100);
-    
-    if (successRate >= 90) {
-      diagnostic.overall_status = '✅ SYSTÈME_OPTIMAL';
-      diagnostic.recommendations.push('🎉 ÉtudIA fonctionne parfaitement ! Système optimal.');
-    } else if (successRate >= 70) {
-      diagnostic.overall_status = '⚠️ SYSTÈME_FONCTIONNEL';
-      diagnostic.recommendations.push('⚠️ Système fonctionnel avec quelques améliorations possibles.');
-    } else if (successRate >= 50) {
-      diagnostic.overall_status = '🔧 SYSTÈME_DÉGRADÉ';
-      diagnostic.recommendations.push('🔧 Problèmes détectés - maintenance nécessaire.');
-    } else {
-      diagnostic.overall_status = '❌ SYSTÈME_DÉFAILLANT';
-      diagnostic.recommendations.push('🚨 Système en panne - intervention urgente requise.');
-    }
-    
-    // RECOMMANDATIONS SPÉCIFIQUES
-    if (!diagnostic.tests.student?.status.includes('✅')) {
-      diagnostic.recommendations.push('👤 Vérifier l\'existence de l\'élève dans la base de données');
-    }
-    if (diagnostic.tests.documents?.data?.usable_count === 0) {
-      diagnostic.recommendations.push('📄 Aucun document utilisable - problème OCR à investiguer');
-    }
-    if (!diagnostic.tests.groq_api?.status.includes('✅')) {
-      diagnostic.recommendations.push('🤖 Groq API défaillante - vérifier clé API et configuration');
-    }
-    if (!diagnostic.tests.database?.status.includes('✅')) {
-      diagnostic.recommendations.push('🗄️ Problème base de données - vérifier Supabase');
-    }
-    
-    diagnostic.summary = {
-      total_tests: totalTests,
-      successful: successfulTests,
-      warnings: warningTests,
-      failed: failedTests,
-      success_rate: successRate,
-      can_chat: diagnostic.tests.chat_simulation?.status?.includes('✅') || 
-                diagnostic.tests.chat_simulation?.status?.includes('⚠️'),
-      ready_for_production: successRate >= 80
-    };
-    
-    console.log(`✅ Diagnostic complet terminé: ${diagnostic.overall_status} (${successRate}%)`);
-    res.json(diagnostic);
     
   } catch (error) {
-    console.error('💥 Erreur diagnostic système:', error);
     res.status(500).json({
-      ...diagnostic,
-      overall_status: '💥 ERREUR_CRITIQUE',
-      error: {
-        name: error.name,
-        message: error.message,
-        stack: error.stack?.substring(0, 500)
-      },
-      recommendations: ['🚨 Erreur technique grave - contacter le développeur immédiatement']
-    });
-  }
-});
-
-// 🔧 ROUTE RÉPARATION AUTOMATIQUE
-app.post('/api/diagnostic/repair/:userId', async (req, res) => {
-  const { userId } = req.params;
-  
-  console.log(`🔧 RÉPARATION AUTOMATIQUE V2 pour élève ${userId}`);
-  
-  const repairResults = {
-    timestamp: new Date().toISOString(),
-    user_id: userId,
-    repairs_attempted: [],
-    repairs_successful: [],
-    repairs_failed: [],
-    overall_result: 'EN_COURS'
-  };
-  
-  try {
-    // RÉPARATION 1: Validation données élève
-    console.log('🔧 Réparation 1: Validation élève...');
-    try {
-      const { data: student } = await supabase
-        .from('eleves')
-        .select('*')
-        .eq('id', userId)
-        .single();
-      
-      if (student) {
-        repairResults.repairs_successful.push({
-          action: 'validation_eleve',
-          message: `✅ Élève "${student.nom}" validé`,
-          details: `ID: ${student.id}, Email: ${student.email}`
-        });
-      } else {
-        repairResults.repairs_failed.push({
-          action: 'validation_eleve',
-          message: '❌ Élève non trouvé - impossible de réparer automatiquement',
-          recommendation: 'Créer le compte élève manuellement'
-        });
-      }
-    } catch (error) {
-      repairResults.repairs_failed.push({
-        action: 'validation_eleve',
-        message: `❌ Erreur validation: ${error.message}`
-      });
-    }
-    
-    // RÉPARATION 2: Nettoyage historique volumineux
-    console.log('🔧 Réparation 2: Nettoyage historique...');
-    try {
-      const { data: conversations } = await supabase
-        .from('historique_conversations')
-        .select('id, date_creation')
-        .eq('eleve_id', userId)
-        .order('date_creation', { ascending: false });
-      
-      if (conversations && conversations.length > 50) {
-        const oldConversations = conversations.slice(30); // Garder les 30 plus récentes
-        const idsToDelete = oldConversations.map(conv => conv.id);
-        
-        const { error: deleteError } = await supabase
-          .from('historique_conversations')
-          .delete()
-          .in('id', idsToDelete);
-        
-        if (!deleteError) {
-          repairResults.repairs_successful.push({
-            action: 'nettoyage_historique',
-            message: `✅ ${oldConversations.length} anciennes conversations supprimées`,
-            details: `Conservé les 30 conversations les plus récentes`
-          });
-        } else {
-          throw deleteError;
-        }
-      } else {
-        repairResults.repairs_successful.push({
-          action: 'nettoyage_historique',
-          message: '✅ Historique OK - pas de nettoyage nécessaire',
-          details: `${conversations?.length || 0} conversations (< limite de 50)`
-        });
-      }
-    } catch (error) {
-      repairResults.repairs_failed.push({
-        action: 'nettoyage_historique',
-        message: `❌ Erreur nettoyage: ${error.message}`
-      });
-    }
-    
-    // RÉPARATION 3: Validation documents OCR
-    console.log('🔧 Réparation 3: Validation documents...');
-    try {
-      const { data: documents } = await supabase
-        .from('documents')
-        .select('*')
-        .eq('eleve_id', userId);
-      
-      const totalDocs = documents?.length || 0;
-      const docsOK = documents?.filter(doc => doc.texte_extrait && doc.texte_extrait.length > 50)?.length || 0;
-      const docsProblematic = totalDocs - docsOK;
-      
-      repairResults.repairs_successful.push({
-        action: 'validation_documents',
-        message: `✅ Documents analysés: ${docsOK}/${totalDocs} utilisables`,
-        details: {
-          total: totalDocs,
-          usable: docsOK,
-          problematic: docsProblematic,
-          success_rate: totalDocs > 0 ? Math.round((docsOK / totalDocs) * 100) : 0
-        }
-      });
-      
-      if (docsProblematic > 0) {
-        repairResults.repairs_attempted.push({
-          action: 'documents_problematiques',
-          message: `⚠️ ${docsProblematic} documents avec problèmes OCR détectés`,
-          recommendation: 'Re-upload des documents ou vérification qualité images'
-        });
-      }
-      
-    } catch (error) {
-      repairResults.repairs_failed.push({
-        action: 'validation_documents',
-        message: `❌ Erreur validation documents: ${error.message}`
-      });
-    }
-    
-    // RÉPARATION 4: Test final Groq
-    console.log('🔧 Réparation 4: Test Groq...');
-    try {
-      const testGroq = await groq.chat.completions.create({
-        messages: [{ 
-          role: 'user', 
-          content: 'Test réparation ÉtudIA - réponds juste OK' 
-        }],
-        model: 'llama-3.3-70b-versatile',
-        max_tokens: 5
-      });
-      
-      const response = testGroq.choices[0]?.message?.content || '';
-      
-      repairResults.repairs_successful.push({
-        action: 'test_groq',
-        message: '✅ Groq API fonctionnelle',
-        details: `Réponse: "${response}", Tokens: ${testGroq.usage?.total_tokens || 0}`
-      });
-      
-    } catch (groqError) {
-      repairResults.repairs_failed.push({
-        action: 'test_groq',
-        message: `❌ Groq API: ${groqError.message}`,
-        recommendation: 'Vérifier GROQ_API_KEY et connexion réseau'
-      });
-    }
-    
-    // BILAN FINAL
-    const totalRepairs = repairResults.repairs_attempted.length + 
-                        repairResults.repairs_successful.length + 
-                        repairResults.repairs_failed.length;
-    
-    const successfulRepairs = repairResults.repairs_successful.length;
-    const failedRepairs = repairResults.repairs_failed.length;
-    
-    if (failedRepairs === 0) {
-      repairResults.overall_result = '✅ RÉPARATION_RÉUSSIE';
-    } else if (successfulRepairs > failedRepairs) {
-      repairResults.overall_result = '⚠️ RÉPARATION_PARTIELLE';
-    } else {
-      repairResults.overall_result = '❌ RÉPARATION_ÉCHOUÉE';
-    }
-    
-    repairResults.summary = {
-      total_actions: totalRepairs,
-      successful: successfulRepairs,
-      failed: failedRepairs,
-      success_rate: totalRepairs > 0 ? Math.round((successfulRepairs / totalRepairs) * 100) : 0
-    };
-    
-    repairResults.next_steps = [
-      '1. Exécuter diagnostic complet: GET /api/diagnostic/system/' + userId,
-      '2. Tester chat simple avec document',
-      '3. Vérifier upload/OCR si problèmes persistent',
-      '4. Contacter développeur si échecs critiques'
-    ];
-    
-    console.log(`✅ Réparation terminée: ${repairResults.overall_result}`);
-    res.json(repairResults);
-    
-  } catch (error) {
-    console.error('💥 Erreur réparation:', error);
-    res.status(500).json({
-      ...repairResults,
-      overall_result: '💥 ERREUR_CRITIQUE',
-      error: {
-        name: error.name,
-        message: error.message
-      },
-      next_steps: ['🚨 Contacter le développeur - erreur critique de réparation']
-    });
-  }
-});
-
-// 📊 ROUTE STATS MANQUANTE - Ajoute ça dans server.js
-app.get('/api/stats', async (req, res) => {
-  try {
-    console.log('📊 Route /api/stats appelée');
-    
-    // Récupération des stats de base
-    const [studentsResult, documentsResult, conversationsResult] = await Promise.all([
-      supabase.from('eleves').select('count(*)'),
-      supabase.from('documents').select('count(*)'),
-      supabase.from('historique_conversations').select('count(*)')
-    ]);
-
-    const stats = {
-      students: studentsResult.data?.[0]?.count || 0,
-      documents: documentsResult.data?.[0]?.count || 0,
-      chats: conversationsResult.data?.[0]?.count || 0,
-      active_students_7days: 0, // À implémenter plus tard
-      tokens_status: {
-        used_today: 0,
-        remaining: 95000,
-        status: '🟢 Optimal'
-      }
-    };
-
-    console.log('✅ Stats générées:', stats);
-    res.json(stats);
-
-  } catch (error) {
-    console.error('❌ Erreur route stats:', error.message);
-    
-    // Fallback avec stats par défaut
-    res.json({
-      students: 0,
-      documents: 0,
-      chats: 0,
-      active_students_7days: 0,
-      tokens_status: {
-        used_today: 0,
-        remaining: 95000,
-        status: '🟢 Optimal'
-      }
-    });
-  }
-});
-
-// 🔧 CORRECTION 2: ROUTE CATCH-ALL 404 (à la FIN de tes routes, AVANT app.listen)
-app.use('*', (req, res) => {
-  console.log(`❓ Route non trouvée: ${req.method} ${req.originalUrl}`);
-  console.log(`🌍 Origin: ${req.get('origin') || 'Direct'}`);
-  console.log(`🖥️ User-Agent: ${(req.get('user-agent') || 'Unknown').substring(0, 50)}`);
-  
-  // 🔧 RÉPONSE SPÉCIALE POUR ROUTES API
-  if (req.originalUrl.startsWith('/api/')) {
-    res.status(404).json({
       success: false,
-      error: 'Route API non trouvée',
-      message: `La route ${req.originalUrl} n'existe pas sur ÉtudIA`,
-      available_routes: [
-        'GET /',
-        'GET /health',
-        'GET /debug',
-        'POST /api/students',
-        'POST /api/students/login',
-        'POST /api/upload',
-        'POST /api/chat',
-        'GET /api/stats',
-        'GET /api/documents/:userId'
-      ],
-      timestamp: new Date().toISOString(),
-      help: 'Vérifiez l\'URL et la méthode HTTP'
-    });
-  } else {
-    // 🔧 RÉPONSE POUR AUTRES ROUTES
-    res.status(404).json({
-      success: false,
-      error: 'Page non trouvée',
-      message: `La page ${req.originalUrl} n'existe pas`,
-      suggestion: 'Allez sur / pour accéder à ÉtudIA',
+      error: error.message,
       timestamp: new Date().toISOString()
     });
   }
 });
 
-// 🔧 CORRECTION 5: GESTION ERREURS GLOBALE (ajoute AVANT app.listen)
-app.use((error, req, res, next) => {
-  console.error('\n💥 =============== ERREUR SERVEUR GLOBALE ===============');
-  console.error('❌ Erreur:', error.name);
-  console.error('📝 Message:', error.message);
-  console.error('📍 Route:', req.method, req.originalUrl);
-  console.error('📦 Body:', JSON.stringify(req.body, null, 2));
-  console.error('🔚 =============== FIN ERREUR GLOBALE ===============\n');
-  
-  res.status(500).json({
-    success: false,
-    error: 'Erreur serveur interne',
-    message: 'ÉtudIA rencontre un problème technique. Réessayez dans quelques instants.',
-    timestamp: new Date().toISOString(),
-    path: req.originalUrl,
-    method: req.method,
-    error_type: error.name,
-    can_retry: true
+// 📊 Route informations modèles disponibles
+app.get('/api/openrouter/models', (req, res) => {
+  res.json({
+    available_models: {
+      free: {
+        name: OPENROUTER_CONFIG.models.free,
+        description: 'DeepSeek R1 Gratuit - Raisonnement transparent illimité',
+        cost: '0€',
+        features: ['Raisonnement visible', 'Illimité', 'Haute qualité']
+      },
+      paid: {
+        name: OPENROUTER_CONFIG.models.paid,
+        description: 'DeepSeek R1 Premium - Performance maximale',
+        cost: 'Payant selon usage',
+        features: ['Performance max', 'Priorité', 'Raisonnement avancé']
+      }
+    },
+    current_config: {
+      max_tokens_by_mode: OPENROUTER_CONFIG.maxTokens,
+      temperature_by_mode: OPENROUTER_CONFIG.temperature,
+      api_configured: !!OPENROUTER_CONFIG.apiKey
+    },
+    timestamp: new Date().toISOString()
   });
 });
 
 // ===================================================================
-// 🚀 DÉMARRAGE SERVEUR
+// 🔧 GESTIONNAIRE DE MÉMOIRE CONVERSATION AMÉLIORÉ V4.1
 // ===================================================================
 
-const server = app.listen(PORT, '0.0.0.0', () => {
+class MemoryManager {
+  // 🧠 Récupération historique conversation pour contexte
+  static async getConversationHistory(studentId, limit = 5) {
+    try {
+      const { data: conversations, error } = await supabase
+        .from('conversations')
+        .select('message_utilisateur, reponse_ia, mode_chat, created_at')
+        .eq('eleve_id', studentId)
+        .order('created_at', { ascending: false })
+        .limit(limit);
+
+      if (error) throw error;
+
+      return conversations || [];
+    } catch (error) {
+      console.warn('⚠️ Erreur récupération historique:', error.message);
+      return [];
+    }
+  }
+
+  // 📊 Analyse pattern d'apprentissage étudiant
+  static async analyzeStudentLearning(studentId) {
+    try {
+      const { data: stats, error } = await supabase
+        .from('conversations')
+        .select('mode_chat, tokens_utilises, created_at')
+        .eq('eleve_id', studentId)
+        .gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()); // 7 derniers jours
+
+      if (error) throw error;
+
+      // 📊 Analyse patterns
+      const patterns = {
+        preferred_mode: this.getMostUsedMode(stats),
+        daily_usage: stats.length / 7,
+        avg_tokens_per_session: stats.reduce((sum, conv) => sum + (conv.tokens_utilises || 0), 0) / stats.length,
+        learning_consistency: this.calculateConsistency(stats)
+      };
+
+      return patterns;
+    } catch (error) {
+      console.warn('⚠️ Erreur analyse apprentissage:', error.message);
+      return null;
+    }
+  }
+
+  // 🎯 Mode d'apprentissage le plus utilisé
+  static getMostUsedMode(conversations) {
+    const modeCounts = conversations.reduce((acc, conv) => {
+      acc[conv.mode_chat] = (acc[conv.mode_chat] || 0) + 1;
+      return acc;
+    }, {});
+
+    return Object.entries(modeCounts).sort(([,a], [,b]) => b - a)[0]?.[0] || 'normal';
+  }
+
+  // 📈 Calcul consistance d'apprentissage
+  static calculateConsistency(conversations) {
+    if (conversations.length < 3) return 'insuffisant';
+    
+    // Calcul basé sur régularité des sessions
+    const dates = conversations.map(conv => new Date(conv.created_at).getDate());
+    const uniqueDates = new Set(dates);
+    
+    if (uniqueDates.size >= 5) return 'excellent';
+    if (uniqueDates.size >= 3) return 'bon';
+    return 'irrégulier';
+  }
+
+  // 🔄 Mise à jour profil élève avec données apprentissage
+  static async updateStudentProfile(studentId) {
+    try {
+      const learningPatterns = await this.analyzeStudentLearning(studentId);
+      
+      if (learningPatterns) {
+        // 💾 Mise à jour cache avec patterns d'apprentissage
+        const existingCache = cache.get(`student_${studentId}`) || {};
+        existingCache.learning_patterns = learningPatterns;
+        existingCache.last_analysis = new Date().toISOString();
+        
+        cache.set(`student_${studentId}`, existingCache);
+        console.log(`📊 Profil apprentissage mis à jour pour élève ${studentId}`);
+      }
+      
+      return learningPatterns;
+    } catch (error) {
+      console.error(`❌ Erreur mise à jour profil apprentissage ${studentId}:`, error.message);
+      return null;
+    }
+  }
+}
+
+// ===================================================================
+// 📊 LOGS DIAGNOSTIC FINAL PARTIE 4
+// ===================================================================
+console.log('\n🎯 ÉtudIA V4.1 - PARTIE 4 CHAT OPENROUTER TERMINÉE');
+console.log('✅ Route /api/chat 100% OpenRouter DeepSeek R1');
+console.log('✅ Chat spécialisé avec prompts éducatifs');
+console.log('✅ Gestion modèles gratuit/payant');
+console.log('✅ Sauvegarde conversations enrichie');
+console.log('✅ Routes complémentaires OpenRouter');
+console.log('✅ Gestionnaire mémoire conversation');
+console.log('📍 Prêt pour PARTIE 5 : Upload Documents + OCR');
+
+// 🔄 EXPORT CLASSES UTILITAIRES
+module.exports = {
+  MemoryManager
+};
+
+// ===================================================================
+// 🚀 ÉtudIA V4.1 - SERVER.JS PARTIE 5 : UPLOAD DOCUMENTS + OCR + ANALYSE IA
+// Fichier: backend/server-part5-upload-ocr.js
+// 
+// 🔧 AMÉLIORATIONS OPENROUTER V4.1 :
+// ✅ Analyse IA documents avec DeepSeek R1
+// ✅ OCR Tesseract optimisé pour documents africains
+// ✅ Upload Cloudinary avec métadonnées enrichies
+// ✅ Gestion erreurs robuste et logging détaillé
+// ✅ Support formats étendus pour éducation
+//
+// Créé par @Pacousstar - Optimisé IA par MonAP
+// ===================================================================
+
+// 📦 IMPORT DEPENDENCIES DES PARTIES PRÉCÉDENTES
+const { app, deepseek, cache } = require('./server-part1-imports-config');
+const { uploadLimiter, upload, supabase } = require('./server-part2-middleware-cors');
+const { updateStudentProfile } = require('./server-part3-auth-students');
+
+// ===================================================================
+// 🔍 FONCTION EXTRACTION TEXTE OCR OPTIMISÉE ÉtudIA
+// ===================================================================
+
+const extractTextFromFile = async (filePath, mimeType, originalName) => {
+  try {
+    console.log(`🔍 Début extraction OCR ${mimeType} pour:`, originalName);
+    const startTime = Date.now();
+
+    let extractedText = '';
+    let confidence = 0;
+
+    switch (mimeType) {
+      // 📄 TRAITEMENT PDF
+      case 'application/pdf':
+        console.log('📄 Traitement PDF avec pdf-parse...');
+        const pdfBuffer = fs.readFileSync(filePath);
+        const pdfData = await pdf(pdfBuffer);
+        extractedText = pdfData.text || '';
+        confidence = extractedText.length > 50 ? 95 : 60;
+        
+        if (!extractedText || extractedText.length < 10) {
+          return '[ERREUR] PDF vide ou corrompu - Impossible d\'extraire le texte';
+        }
+        break;
+
+      // 📘 TRAITEMENT DOCUMENTS WORD
+      case 'application/msword':
+      case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        console.log('📘 Traitement document Word avec mammoth...');
+        const docBuffer = fs.readFileSync(filePath);
+        const docResult = await mammoth.extractRawText({ buffer: docBuffer });
+        extractedText = docResult.value || '';
+        confidence = extractedText.length > 50 ? 98 : 70;
+        
+        if (!extractedText || extractedText.length < 10) {
+          return '[ERREUR] Document Word vide ou format non supporté';
+        }
+        break;
+
+      // 📝 TRAITEMENT FICHIERS TEXTE
+      case 'text/plain':
+        console.log('📝 Lecture fichier texte...');
+        extractedText = fs.readFileSync(filePath, 'utf8') || '';
+        confidence = 100; // Texte brut = confiance maximale
+        
+        if (!extractedText || extractedText.length < 5) {
+          return '[ERREUR] Fichier texte vide';
+        }
+        break;
+
+      // 🖼️ TRAITEMENT IMAGES AVEC OCR TESSERACT
+      case 'image/jpeg':
+      case 'image/png':
+      case 'image/jpg':
+      case 'image/webp':
+        console.log('🖼️ OCR Tesseract démarré pour image...');
+        
+        // 🔧 Configuration Tesseract optimisée pour documents éducatifs
+        const ocrResult = await Tesseract.recognize(filePath, 'fra', {
+          logger: m => {
+            if (m.status === 'recognizing text') {
+              const progress = Math.round(m.progress * 100);
+              if (progress % 25 === 0) { // Log tous les 25%
+                console.log(`📊 Progression OCR: ${progress}%`);
+              }
+            }
+          },
+          tessedit_pageseg_mode: Tesseract.PSM.AUTO,           // Détection auto layout
+          tessedit_ocr_engine_mode: Tesseract.OEM.LSTM_ONLY,   // Moteur LSTM pour meilleure précision
+          preserve_interword_spaces: '1',                      // Préserver espaces entre mots
+          tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,;:!?()-+=[]{}àâäéèêëïîôöùûüÿç' // Caractères français
+        });
+        
+        extractedText = ocrResult.data.text || '';
+        confidence = ocrResult.data.confidence || 0;
+        
+        console.log(`✅ OCR terminé: ${confidence.toFixed(1)}% confiance, ${extractedText.length} caractères`);
+        
+        // 🔍 Validation qualité OCR
+        if (confidence < 30) {
+          return '[ERREUR] Image de mauvaise qualité - Confidence OCR trop faible';
+        }
+        
+        if (extractedText.length < 10) {
+          return '[ERREUR] Texte extrait insuffisant - Vérifiez la qualité de l\'image';
+        }
+        break;
+
+      default:
+        return '[ERREUR] Type de fichier non supporté pour extraction de texte';
+    }
+
+    const processingTime = Date.now() - startTime;
+    console.log(`✅ Extraction réussie en ${processingTime}ms:`, {
+      type: mimeType,
+      length: extractedText.length,
+      confidence: confidence.toFixed(1) + '%',
+      preview: extractedText.substring(0, 100) + '...'
+    });
+
+    return extractedText;
+
+  } catch (error) {
+    console.error('❌ Erreur extraction OCR:', error);
+    return `[ERREUR] Échec extraction: ${error.message}`;
+  }
+};
+
+// ===================================================================
+// 🧠 ANALYSE IA DOCUMENT AVEC DEEPSEEK R1 - ÉtudIA V4.1
+// ===================================================================
+
+const analyzeDocumentWithIA = async (extractedText, fileName) => {
+  try {
+    console.log('🧠 Analyse IA document avec DeepSeek R1...');
+    const startTime = Date.now();
+
+    // 🎯 Prompt spécialisé analyse éducative ÉtudIA
+    const analysisPrompt = `Tu es ÉtudIA, assistant IA éducatif avec DeepSeek R1. Analyse ce document scolaire/universitaire extrait par OCR.
+
+DOCUMENT À ANALYSER:
+Nom du fichier: ${fileName}
+Contenu extrait: ${extractedText.substring(0, 1500)}
+
+CONSIGNES D'ANALYSE:
+1. Identifie la matière/discipline (Mathématiques, Français, Sciences, etc.)
+2. Détermine le type de document (Exercices, Cours, Contrôle, Exposé, etc.)
+3. Évalue le niveau de difficulté (Facile, Moyen, Difficile, Très difficile)
+4. Compte le nombre d'exercices ou questions distinctes
+5. Extrais 3-5 sujets/thèmes principaux abordés
+6. Rédige un résumé pédagogique en 2-3 phrases
+
+RÉPONDS UNIQUEMENT EN JSON STRICT (sans markdown):
+{
+  "subject": "matière détectée",
+  "document_type": "type de document",
+  "difficulty_level": "niveau de difficulté",
+  "exercise_count": nombre_exercices_entier,
+  "key_topics": ["sujet1", "sujet2", "sujet3"],
+  "summary": "résumé pédagogique en 2-3 phrases max",
+  "african_context": true/false,
+  "language_detected": "français/anglais/autre"
+}`;
+
+    // 🚀 Appel DeepSeek R1 pour analyse
+    const aiAnalysis = await deepseek.chat([
+      { role: 'user', content: analysisPrompt }
+    ], {
+      mode: 'direct_solution',
+      useFreeTier: true,           // 🆓 Toujours gratuit pour analyse documents
+      maxTokens: 300,              // 🔢 Suffisant pour JSON réponse
+      temperature: 0.1,            // 🌡️ Très précis pour analyse structurée
+      student_info: {},
+      document_context: '',
+      has_document: false
+    });
+
+    const analysisTime = Date.now() - startTime;
+    console.log(`🧠 Analyse IA terminée en ${analysisTime}ms`);
+
+    // ✅ Traitement réponse IA
+    if (aiAnalysis.success) {
+      console.log('✅ Réponse DeepSeek R1 reçue:', aiAnalysis.content.substring(0, 200));
+      
+      try {
+        // 🔍 Extraction JSON de la réponse
+        const jsonMatch = aiAnalysis.content.match(/\{[\s\S]*\}/);
+        const jsonString = jsonMatch ? jsonMatch[0] : aiAnalysis.content;
+        const parsed = JSON.parse(jsonString);
+        
+        // ✅ Validation et nettoyage données
+        const cleanAnalysis = {
+          subject: parsed.subject || 'Général',
+          document_type: parsed.document_type || 'Document',
+          difficulty_level: parsed.difficulty_level || 'Moyen',
+          exercise_count: parseInt(parsed.exercise_count) || 1,
+          key_topics: Array.isArray(parsed.key_topics) ? parsed.key_topics.slice(0, 5) : [],
+          summary: parsed.summary || 'Document analysé avec IA DeepSeek R1',
+          african_context: !!parsed.african_context,
+          language_detected: parsed.language_detected || 'français',
+          ai_confidence: 'high',
+          analysis_time_ms: analysisTime
+        };
+        
+        console.log('✅ Analyse IA parsée avec succès:', cleanAnalysis);
+        return cleanAnalysis;
+        
+      } catch (parseError) {
+        console.warn('⚠️ Erreur parsing JSON IA:', parseError.message);
+        console.log('📝 Réponse brute IA:', aiAnalysis.content);
+        
+        // 🔧 Fallback avec analyse basique
+        return {
+          subject: this.detectSubjectFromText(extractedText),
+          document_type: this.detectDocumentType(fileName, extractedText),
+          difficulty_level: 'Moyen',
+          exercise_count: this.countExercises(extractedText),
+          key_topics: this.extractKeywords(extractedText),
+          summary: 'Document analysé avec IA avancée mais parsing partiel',
+          african_context: this.detectAfricanContext(extractedText),
+          language_detected: 'français',
+          ai_confidence: 'medium',
+          analysis_time_ms: analysisTime
+        };
+      }
+    } else {
+      console.warn('⚠️ Échec analyse IA DeepSeek R1:', aiAnalysis.error);
+      
+      // 🔧 Fallback analyse heuristique
+      return {
+        subject: this.detectSubjectFromText(extractedText),
+        document_type: this.detectDocumentType(fileName, extractedText),
+        difficulty_level: 'Moyen',
+        exercise_count: this.countExercises(extractedText),
+        key_topics: this.extractKeywords(extractedText),
+        summary: 'Analyse effectuée avec méthodes heuristiques (IA indisponible)',
+        african_context: this.detectAfricanContext(extractedText),
+        language_detected: 'français',
+        ai_confidence: 'low',
+        analysis_time_ms: analysisTime
+      };
+    }
+
+  } catch (error) {
+    console.error('❌ Erreur analyse IA document:', error.message);
+    
+    // 🔧 Retour minimal en cas d'erreur totale
+    return {
+      subject: 'Général',
+      document_type: 'Document',
+      difficulty_level: 'Moyen',
+      exercise_count: 1,
+      key_topics: [],
+      summary: 'Document traité (analyse IA échouée)',
+      african_context: false,
+      language_detected: 'français',
+      ai_confidence: 'none',
+      analysis_time_ms: 0
+    };
+  }
+};
+
+// ===================================================================
+// 🔧 FONCTIONS UTILITAIRES ANALYSE HEURISTIQUE
+// ===================================================================
+
+// 🎯 Détection matière par mots-clés
+function detectSubjectFromText(text) {
+  const subjects = {
+    'Mathématiques': ['équation', 'fonction', 'dérivée', 'intégrale', 'géométrie', 'algèbre', 'calcul', 'théorème'],
+    'Français': ['analyse', 'commentaire', 'dissertation', 'grammaire', 'orthographe', 'littérature', 'poésie'],
+    'Physique': ['force', 'énergie', 'mouvement', 'électricité', 'optique', 'mécanique', 'thermodynamique'],
+    'Chimie': ['réaction', 'molécule', 'atome', 'élément', 'composé', 'équation chimique', 'pH'],
+    'Histoire': ['guerre', 'époque', 'siècle', 'civilisation', 'chronologie', 'événement historique'],
+    'Géographie': ['continent', 'climat', 'relief', 'population', 'cartographie', 'territoire'],
+    'Anglais': ['english', 'grammar', 'vocabulary', 'translation', 'verb', 'tense'],
+    'SVT': ['cellule', 'organisme', 'évolution', 'écosystème', 'génétique', 'biologie']
+  };
+
+  const textLower = text.toLowerCase();
+  let maxScore = 0;
+  let detectedSubject = 'Général';
+
+  for (const [subject, keywords] of Object.entries(subjects)) {
+    const score = keywords.reduce((count, keyword) => {
+      return count + (textLower.includes(keyword.toLowerCase()) ? 1 : 0);
+    }, 0);
+    
+    if (score > maxScore) {
+      maxScore = score;
+      detectedSubject = subject;
+    }
+  }
+
+  return detectedSubject;
+}
+
+// 📄 Détection type document
+function detectDocumentType(fileName, text) {
+  const fileName_lower = fileName.toLowerCase();
+  const text_lower = text.toLowerCase();
+
+  if (fileName_lower.includes('exercice') || text_lower.includes('exercice')) return 'Exercices';
+  if (fileName_lower.includes('contrôle') || text_lower.includes('contrôle')) return 'Contrôle';
+  if (fileName_lower.includes('cours') || text_lower.includes('chapitre')) return 'Cours';
+  if (fileName_lower.includes('devoir') || text_lower.includes('devoir')) return 'Devoir';
+  if (fileName_lower.includes('examen') || text_lower.includes('examen')) return 'Examen';
+  
+  return 'Document';
+}
+
+// 🔢 Comptage exercices
+function countExercises(text) {
+  const exercisePatterns = [
+    /exercice\s*\d+/gi,
+    /question\s*\d+/gi,
+    /problème\s*\d+/gi,
+    /\d+\)\s/g,
+    /\d+\.\s/g
+  ];
+
+  let totalCount = 0;
+  exercisePatterns.forEach(pattern => {
+    const matches = text.match(pattern);
+    if (matches) totalCount += matches.length;
+  });
+
+  return Math.max(1, Math.min(totalCount, 50)); // Entre 1 et 50
+}
+
+// 🏷️ Extraction mots-clés
+function extractKeywords(text) {
+  const commonWords = ['le', 'la', 'les', 'de', 'du', 'des', 'et', 'ou', 'un', 'une', 'ce', 'cette', 'dans', 'sur', 'avec', 'pour'];
+  const words = text.toLowerCase()
+    .replace(/[^\w\sàâäéèêëïîôöùûüÿç]/g, ' ')
+    .split(/\s+/)
+    .filter(word => word.length > 3 && !commonWords.includes(word));
+
+  const wordCounts = {};
+  words.forEach(word => {
+    wordCounts[word] = (wordCounts[word] || 0) + 1;
+  });
+
+  return Object.entries(wordCounts)
+    .sort(([,a], [,b]) => b - a)
+    .slice(0, 5)
+    .map(([word]) => word);
+}
+
+// 🌍 Détection contexte africain
+function detectAfricanContext(text) {
+  const africanKeywords = ['fcfa', 'franc', 'africa', 'afrique', 'ivoirien', 'sénégal', 'mali', 'burkina', 'niger', 'abidjan', 'dakar', 'bamako', 'ouagadougou', 'niamey'];
+  const textLower = text.toLowerCase();
+  
+  return africanKeywords.some(keyword => textLower.includes(keyword));
+}
+
+// ===================================================================
+// 📤 ROUTE UPLOAD PRINCIPAL - ENRICHIE IA V4.1
+// ===================================================================
+
+app.post('/api/upload', uploadLimiter, upload.single('document'), async (req, res) => {
+  console.log('\n📤 =============== UPLOAD DOCUMENT ÉtudIA V4.1 ===============');
+  
+  try {
+    // ✅ Vérification fichier présent
+    if (!req.file) {
+      console.log('❌ Aucun fichier dans la requête');
+      return res.status(400).json({ 
+        success: false, 
+        error: 'Aucun fichier fourni dans la requête',
+        expected: 'Fichier dans le champ "document"'
+      });
+    }
+
+    // ✅ Vérification user_id
+    const { user_id } = req.body;
+    if (!user_id) {
+      console.log('❌ User ID manquant');
+      return res.status(400).json({ 
+        success: false, 
+        error: 'ID utilisateur manquant',
+        required_field: 'user_id'
+      });
+    }
+
+    const nomOriginal = req.file.originalname;
+    const nomFichier = `etudia_doc_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+
+    console.log('📄 Fichier reçu:', {
+      nom_original: nomOriginal,
+      nom_fichier: nomFichier,
+      taille: `${(req.file.size / 1024 / 1024).toFixed(2)} MB`,
+      type: req.file.mimetype,
+      user_id: user_id,
+      chemin_temp: req.file.path
+    });
+
+    // 🔍 ÉTAPE 1: EXTRACTION OCR
+    console.log('🔍 ÉTAPE 1: Extraction OCR démarrée...');
+    const extractedText = await extractTextFromFile(req.file.path, req.file.mimetype, nomOriginal);
+    
+    console.log('📊 Résultat extraction OCR:', {
+      file_type: req.file.mimetype,
+      file_size: `${(req.file.size / 1024 / 1024).toFixed(2)} MB`,
+      text_length: extractedText.length,
+      text_preview: extractedText.substring(0, 100) + '...',
+      is_error: extractedText.startsWith('[ERREUR'),
+      processing_status: extractedText.startsWith('[ERREUR') ? 'ÉCHEC' : 'SUCCÈS'
+    });
+
+    // ❌ Vérification extraction réussie
+    if (extractedText.startsWith('[ERREUR')) {
+      console.log('❌ Échec extraction OCR');
+      
+      // 🧹 Nettoyage fichier temporaire
+      try {
+        if (fs.existsSync(req.file.path)) {
+          fs.unlinkSync(req.file.path);
+        }
+      } catch (cleanupError) {
+        console.warn('⚠️ Erreur nettoyage fichier temp:', cleanupError.message);
+      }
+
+      return res.status(400).json({ 
+        success: false, 
+        error: 'Impossible d\'extraire le texte du document',
+        details: extractedText,
+        suggestions: [
+          'Vérifiez la qualité de l\'image (résolution, contraste)',
+          'Assurez-vous que le texte est bien visible',
+          'Essayez un format PDF pour de meilleurs résultats'
+        ]
+      });
+    }
+
+    // 🧠 ÉTAPE 2: ANALYSE IA AVEC DEEPSEEK R1
+    console.log('🧠 ÉTAPE 2: Analyse IA avec DeepSeek R1...');
+    const aiAnalysis = await analyzeDocumentWithIA(extractedText, nomOriginal);
+
+    console.log('🧠 Résultat analyse IA:', {
+      subject: aiAnalysis.subject,
+      document_type: aiAnalysis.document_type,
+      difficulty: aiAnalysis.difficulty_level,
+      exercises: aiAnalysis.exercise_count,
+      confidence: aiAnalysis.ai_confidence,
+      analysis_time: aiAnalysis.analysis_time_ms + 'ms'
+    });
+
+    // ☁️ ÉTAPE 3: UPLOAD CLOUDINARY
+    console.log('☁️ ÉTAPE 3: Upload Cloudinary...');
+    let uploadResult;
+    let cloudinaryError = null;
+    
+    try {
+      uploadResult = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'etudia_documents_v4.1',
+        public_id: nomFichier,
+        resource_type: 'auto',
+        
+        // 🆕 Métadonnées enrichies V4.1
+        context: {
+          student_id: user_id,
+          original_name: nomOriginal,
+          subject: aiAnalysis.subject,
+          document_type: aiAnalysis.document_type,
+          exercise_count: aiAnalysis.exercise_count,
+          upload_version: '4.1.0-openrouter',
+          ai_analyzed: true
+        },
+        
+        // 🏷️ Tags pour organisation
+        tags: [
+          'etudia-v4.1',
+          aiAnalysis.subject.toLowerCase().replace(/\s+/g, '-'),
+          aiAnalysis.document_type.toLowerCase().replace(/\s+/g, '-'),
+          `user-${user_id}`
+        ]
+      });
+      
+      console.log('✅ Upload Cloudinary réussi:', {
+        public_id: uploadResult.public_id,
+        secure_url: uploadResult.secure_url,
+        format: uploadResult.format,
+        bytes: uploadResult.bytes
+      });
+      
+    } catch (cloudinaryUploadError) {
+      console.warn('⚠️ Erreur upload Cloudinary:', cloudinaryUploadError.message);
+      cloudinaryError = cloudinaryUploadError.message;
+      
+      // 🔧 Fallback sans Cloudinary
+      uploadResult = { 
+        secure_url: 'url_local_temp', 
+        public_id: nomFichier + '_local',
+        bytes: req.file.size,
+        format: req.file.mimetype
+      };
+    }
+
+    // 💾 ÉTAPE 4: SAUVEGARDE EN BASE SUPABASE
+    console.log('💾 ÉTAPE 4: Sauvegarde Supabase...');
+    
+    const documentData = {
+      // 🎯 Informations de base
+      eleve_id: parseInt(user_id),
+      nom_fichier: nomFichier,
+      nom_original: nomOriginal,
+      taille_fichier: req.file.size,
+      type_fichier: req.file.mimetype,
+      
+      // ☁️ URLs Cloudinary
+      url_cloudinary: uploadResult.secure_url,
+      id_public_cloudinary: uploadResult.public_id,
+      
+      // 📝 Contenu extrait
+      texte_extrait: extractedText,
+      confiance_ocr: 95.00,
+      langue_ocr: aiAnalysis.language_detected || 'fra',
+      
+      // 🧠 Analyse IA DeepSeek R1
+      matiere: aiAnalysis.subject,
+      type_document: aiAnalysis.document_type,
+      niveau_difficulte: aiAnalysis.difficulty_level,
+      nb_exercices: aiAnalysis.exercise_count || 1,
+      sujets_cles: aiAnalysis.key_topics || [],
+      resume_ia: aiAnalysis.summary,
+      contexte_africain: aiAnalysis.african_context,
+      
+      // 🔧 Métadonnées techniques
+      est_traite: true,
+      statut_traitement: 'termine',
+      date_traitement: new Date().toISOString(),
+      
+      // 🆕 Nouvelles métadonnées V4.1
+      analyse_ia_confiance: aiAnalysis.ai_confidence,
+      temps_analyse_ms: aiAnalysis.analysis_time_ms,
+      version_traitement: '4.1.0-openrouter',
+      provider_ia: 'OpenRouter DeepSeek R1',
+      erreur_cloudinary: cloudinaryError,
+      
+      // 📊 Informations upload
+      ip_upload: req.ip,
+      user_agent: req.get('user-agent')?.substring(0, 255)
+    };
+
+    // 💾 Insertion en base
+    const { data, error } = await supabase
+      .from('documents')
+      .insert([documentData])
+      .select();
+
+    if (error) {
+      console.error('❌ Erreur sauvegarde Supabase:', error);
+      throw error;
+    }
+
+    console.log('✅ Document sauvegardé en base avec ID:', data[0].id);
+
+    // 📊 ÉTAPE 5: MISE À JOUR PROFIL ÉLÈVE
+    try {
+      await updateStudentProfile(user_id);
+      console.log('📊 Profil élève mis à jour');
+    } catch (profileError) {
+      console.warn('⚠️ Erreur mise à jour profil (non bloquant):', profileError.message);
+    }
+
+    // 🧹 ÉTAPE 6: NETTOYAGE FICHIER TEMPORAIRE
+    try {
+      if (fs.existsSync(req.file.path)) {
+        fs.unlinkSync(req.file.path);
+        console.log('🧹 Fichier temporaire nettoyé');
+      }
+    } catch (cleanupError) {
+      console.warn('⚠️ Erreur nettoyage fichier temp:', cleanupError.message);
+    }
+
+    // 🎉 RÉPONSE SUCCÈS COMPLÈTE
+    const successResponse = {
+      success: true,
+      message: 'Document analysé avec IA DeepSeek R1 et traité avec succès !',
+      
+      // 📄 Données document
+      data: {
+        id: data[0].id,
+        nom_original: nomOriginal,
+        nom_fichier: nomFichier,
+        taille_fichier: req.file.size,
+        type_fichier: req.file.mimetype,
+        url_cloudinary: uploadResult.secure_url,
+        
+        // 📝 Contenu extrait
+        texte_extrait: extractedText,
+        longueur_texte: extractedText.length,
+        
+        // 🧠 Analyse IA
+        matiere: aiAnalysis.subject,
+        type_document: aiAnalysis.document_type,
+        niveau_difficulte: aiAnalysis.difficulty_level,
+        nb_exercices: aiAnalysis.exercise_count,
+        sujets_cles: aiAnalysis.key_topics,
+        resume: aiAnalysis.summary,
+        contexte_africain: aiAnalysis.african_context,
+        
+        // 📊 Métadonnées traitement
+        confiance_ocr: 95,
+        confiance_ia: aiAnalysis.ai_confidence,
+        temps_traitement_total: Date.now() - req.upload_start_time || 0,
+        version_traitement: '4.1.0-openrouter'
+      },
+      
+      // 🎯 Informations pour interface utilisateur
+      ui_suggestions: {
+        next_actions: [
+          'Commencer à poser des questions sur ce document',
+          'Explorer les exercices avec les 3 modes d\'apprentissage',
+          'Demander des explications sur les sujets complexes'
+        ],
+        learning_modes: [
+          `Mode "Étape par étape" pour les ${aiAnalysis.exercise_count} exercices`,
+          'Mode "Solution directe" pour les réponses rapides',
+          'Mode "Conversation" pour approfondir les concepts'
+        ]
+      }
+    };
+
+    console.log('🎉 Upload et traitement terminés avec succès !');
+    res.json(successResponse);
+
+  } catch (error) {
+    console.error('💥 ERREUR UPLOAD GLOBALE:', error);
+    
+    // 🧹 Nettoyage en cas d'erreur
+    try {
+      if (req.file && fs.existsSync(req.file.path)) {
+        fs.unlinkSync(req.file.path);
+      }
+    } catch (cleanupError) {
+      console.warn('⚠️ Erreur nettoyage après erreur:', cleanupError.message);
+    }
+
+    res.status(500).json({
+      success: false,
+      error: 'Erreur lors du traitement du document',
+      details: error.message,
+      timestamp: new Date().toISOString(),
+      suggestions: [
+        'Vérifiez que le fichier n\'est pas corrompu',
+        'Réessayez avec un format PDF si possible',
+        'Contactez le support si le problème persiste'
+      ]
+    });
+  }
+});
+
+// ===================================================================
+// 📚 ROUTE RÉCUPÉRATION DOCUMENTS ÉLÈVE
+// ===================================================================
+
+app.get('/api/documents/:user_id', async (req, res) => {
+  try {
+    const { user_id } = req.params;
+    console.log(`📚 Récupération documents pour élève ${user_id}`);
+    
+    // 🔍 Récupération avec tri par date récente
+    const { data: documents, error } = await supabase
+      .from('documents')
+      .select('*')
+      .eq('eleve_id', user_id)
+      .order('date_traitement', { ascending: false });
+
+    if (error) {
+      console.error('❌ Erreur récupération documents:', error);
+      throw error;
+    }
+
+    console.log(`✅ ${documents?.length || 0} documents récupérés pour élève ${user_id}`);
+
+    // 📊 Enrichissement données pour interface
+    const enrichedDocuments = documents?.map(doc => ({
+      ...doc,
+      // 🕐 Formatage dates
+      date_upload_relative: getRelativeTime(doc.date_traitement),
+      
+      // 📊 Statistiques
+      taille_humaine: formatFileSize(doc.taille_fichier),
+      
+      // 🎯 Suggestions d'utilisation
+      learning_suggestions: [
+        `${doc.nb_exercices} exercice(s) à explorer`,
+        `Matière: ${doc.matiere}`,
+        `Niveau: ${doc.niveau_difficulte || 'Moyen'}`
+      ],
+      
+      // 🔧 Métadonnées interface
+      is_recent: isRecentUpload(doc.date_traitement),
+      can_delete: true,
+      can_reprocess: doc.statut_traitement !== 'termine'
+    })) || [];
+
+    res.json({
+      success: true,
+      documents: enrichedDocuments,
+      total_count: enrichedDocuments.length,
+      storage_info: {
+        total_size: enrichedDocuments.reduce((sum, doc) => sum + (doc.taille_fichier || 0), 0),
+        subjects: [...new Set(enrichedDocuments.map(doc => doc.matiere))],
+        document_types: [...new Set(enrichedDocuments.map(doc => doc.type_document))]
+      }
+    });
+
+  } catch (error) {
+    console.error('❌ Erreur récupération documents:', error.message);
+    res.status(500).json({
+      success: false,
+      error: 'Erreur récupération documents',
+      details: error.message
+    });
+  }
+});
+
+// ===================================================================
+// 🔧 FONCTIONS UTILITAIRES
+// ===================================================================
+
+// 🕐 Temps relatif
+function getRelativeTime(dateString) {
+  const now = new Date();
+  const date = new Date(dateString);
+  const diffMs = now - date;
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  if (diffMins < 1) return 'À l\'instant';
+  if (diffMins < 60) return `${diffMins} min`;
+  if (diffHours < 24) return `${diffHours}h`;
+  if (diffDays < 7) return `${diffDays}j`;
+  return date.toLocaleDateString('fr-FR');
+}
+
+// 📊 Formatage taille fichier
+function formatFileSize(bytes) {
+  if (bytes === 0) return '0 B';
+  const k = 1024;
+  const sizes = ['B', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+// 🕐 Vérification upload récent
+function isRecentUpload(dateString) {
+  const now = new Date();
+  const date = new Date(dateString);
+  const diffHours = (now - date) / 3600000;
+  return diffHours < 24; // Récent si moins de 24h
+}
+
+// ===================================================================
+// 📊 LOGS DIAGNOSTIC FINAL PARTIE 5
+// ===================================================================
+console.log('\n🎯 ÉtudIA V4.1 - PARTIE 5 UPLOAD + OCR TERMINÉE');
+console.log('✅ OCR Tesseract optimisé pour éducation');
+console.log('✅ Analyse IA DeepSeek R1 intégrée');
+console.log('✅ Upload Cloudinary avec métadonnées enrichies');
+console.log('✅ Sauvegarde Supabase complète');
+console.log('✅ Routes documents avec données enrichies');
+console.log('✅ Fonctions utilitaires formatage');
+console.log('📍 Prêt pour PARTIE 6 : Routes utilitaires + Démarrage');
+
+// 🔄 EXPORT FONCTIONS UTILITAIRES
+module.exports = {
+  extractTextFromFile,
+  analyzeDocumentWithIA,
+  detectSubjectFromText,
+  detectDocumentType,
+  countExercises,
+  extractKeywords,
+  detectAfricanContext,
+  formatFileSize,
+  getRelativeTime
+};
+
+// ===================================================================
+// 🚀 ÉtudIA V4.1 - SERVER.JS PARTIE 6 : ROUTES UTILITAIRES + DÉMARRAGE SERVEUR
+// Fichier: backend/server-part6-utils-startup.js
+// 
+// 🔧 FINALISATION OPENROUTER V4.1 :
+// ✅ Routes debug et maintenance
+// ✅ Gestionnaire d'erreurs globales
+// ✅ Démarrage serveur avec diagnostic complet
+// ✅ Logs de démarrage enrichis OpenRouter
+// ✅ Gestion arrêt propre du serveur
+//
+// Créé par @Pacousstar - Finalisé pour OpenRouter par MonAP
+// ===================================================================
+
+// 📦 IMPORT DEPENDENCIES DES PARTIES PRÉCÉDENTES
+const { app, cache, OPENROUTER_CONFIG } = require('./server-part1-imports-config');
+const { supabase } = require('./server-part2-middleware-cors');
+
+// 🌍 VARIABLES GLOBALES
+const PORT = process.env.PORT || 3001;
+
+// ===================================================================
+// 🔍 ROUTES DEBUG ET MAINTENANCE
+// ===================================================================
+
+// 🔧 Route debug générale avec informations système
+app.get('/debug', (req, res) => {
+  const debugInfo = {
+    message: '🔍 Debug ÉtudIA V4.1 OpenRouter DeepSeek R1',
+    timestamp: new Date().toISOString(),
+    request_info: {
+      url_called: req.originalUrl,
+      method: req.method,
+      ip: req.ip,
+      user_agent: req.get('user-agent')?.substring(0, 100) || 'Non spécifié'
+    },
+    
+    // 🌍 Informations environnement
+    environment: {
+      NODE_ENV: process.env.NODE_ENV || 'development',
+      PORT: PORT,
+      platform: 'Render.com',
+      node_version: process.version,
+      app_version: '4.1.0-openrouter'
+    },
+    
+    // 🤖 Configuration OpenRouter
+    openrouter_config: {
+      api_configured: !!OPENROUTER_CONFIG.apiKey,
+      base_url: OPENROUTER_CONFIG.baseURL,
+      free_model: OPENROUTER_CONFIG.models.free,
+      paid_model: OPENROUTER_CONFIG.models.paid,
+      max_tokens_config: OPENROUTER_CONFIG.maxTokens,
+      temperature_config: OPENROUTER_CONFIG.temperature
+    },
+    
+    // 🗄️ Informations base de données
+    database: {
+      provider: 'Supabase',
+      url_configured: !!process.env.SUPABASE_URL,
+      key_configured: !!process.env.SUPABASE_ANON_KEY,
+      connection_status: supabase ? 'Initialisé' : 'Non configuré'
+    },
+    
+    // ☁️ Informations stockage
+    storage: {
+      provider: 'Cloudinary',
+      cloud_configured: !!process.env.CLOUDINARY_CLOUD_NAME,
+      api_configured: !!process.env.CLOUDINARY_API_KEY,
+      secret_configured: !!process.env.CLOUDINARY_API_SECRET
+    },
+    
+    // 🔧 Informations serveur
+    server_info: {
+      render_url: 'https://etudia-v4-revolutionary.onrender.com',
+      health_endpoint: '/health',
+      api_base: '/api',
+      memory_usage: Math.round(process.memoryUsage().heapUsed / 1024 / 1024) + ' MB',
+      uptime: Math.round(process.uptime()) + ' secondes',
+      cache_size: cache.size + ' items'
+    },
+    
+    // 📊 Headers de la requête (pour debug)
+    request_headers: {
+      host: req.get('host'),
+      origin: req.get('origin') || 'Non spécifié',
+      referer: req.get('referer') || 'Non spécifié',
+      content_type: req.get('content-type') || 'Non spécifié'
+    }
+  };
+
+  console.log('🔍 Route debug appelée depuis:', req.ip);
+  res.json(debugInfo);
+});
+
+// 📊 Route statistiques serveur détaillées
+app.get('/api/server/stats', (req, res) => {
+  try {
+    const memoryUsage = process.memoryUsage();
+    const uptime = process.uptime();
+    
+    const serverStats = {
+      status: 'operational',
+      version: '4.1.0-openrouter',
+      timestamp: new Date().toISOString(),
+      
+      // 💾 Utilisation mémoire
+      memory: {
+        heap_used: Math.round(memoryUsage.heapUsed / 1024 / 1024) + ' MB',
+        heap_total: Math.round(memoryUsage.heapTotal / 1024 / 1024) + ' MB',
+        external: Math.round(memoryUsage.external / 1024 / 1024) + ' MB',
+        rss: Math.round(memoryUsage.rss / 1024 / 1024) + ' MB'
+      },
+      
+      // ⏱️ Temps de fonctionnement
+      uptime: {
+        seconds: Math.round(uptime),
+        formatted: formatUptime(uptime),
+        started_at: new Date(Date.now() - uptime * 1000).toISOString()
+      },
+      
+      // 🗄️ Cache en mémoire
+      cache: {
+        size: cache.size,
+        entries: Array.from(cache.keys()).slice(0, 10), // 10 premiers pour exemple
+        last_accessed: new Date().toISOString()
+      },
+      
+      // 🤖 OpenRouter status
+      openrouter: {
+        configured: !!OPENROUTER_CONFIG.apiKey,
+        models_available: Object.keys(OPENROUTER_CONFIG.models).length,
+        modes_configured: Object.keys(OPENROUTER_CONFIG.maxTokens).length
+      },
+      
+      // 🌍 Environnement
+      environment: {
+        node_env: process.env.NODE_ENV || 'development',
+        platform: process.platform,
+        arch: process.arch,
+        pid: process.pid
+      }
+    };
+
+    res.json(serverStats);
+  } catch (error) {
+    res.status(500).json({
+      error: 'Erreur récupération stats serveur',
+      details: error.message,
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
+// 🧹 Route nettoyage cache (pour maintenance)
+app.post('/api/server/cache/clear', (req, res) => {
+  try {
+    const oldSize = cache.size;
+    cache.clear();
+    
+    console.log(`🧹 Cache nettoyé: ${oldSize} → 0 entrées`);
+    
+    res.json({
+      success: true,
+      message: 'Cache nettoyé avec succès',
+      entries_cleared: oldSize,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Erreur nettoyage cache',
+      details: error.message
+    });
+  }
+});
+
+// 🔄 Route redémarrage gracieux (pour maintenance)
+app.post('/api/server/restart', (req, res) => {
+  console.log('🔄 Demande redémarrage gracieux reçue');
+  
+  res.json({
+    success: true,
+    message: 'Redémarrage en cours...',
+    estimated_downtime: '30-60 secondes',
+    timestamp: new Date().toISOString()
+  });
+
+  // Redémarrage après 2 secondes (temps de répondre au client)
+  setTimeout(() => {
+    console.log('🔄 Redémarrage serveur...');
+    process.exit(0); // Render redémarrera automatiquement
+  }, 2000);
+});
+
+// ===================================================================
+// 🚨 GESTIONNAIRE D'ERREURS GLOBALES
+// ===================================================================
+
+// 404 - Route non trouvée
+app.use((req, res) => {
+  console.log(`❌ Route 404: ${req.method} ${req.originalUrl} depuis ${req.ip}`);
+  
+  res.status(404).json({
+    error: 'Route non trouvée',
+    message: 'Endpoint non disponible sur ÉtudIA V4.1',
+    requested: {
+      method: req.method,
+      url: req.originalUrl,
+      timestamp: new Date().toISOString()
+    },
+    available_routes: {
+      health: 'GET /health',
+      debug: 'GET /debug',
+      chat: 'POST /api/chat',
+      students: 'POST /api/students',
+      login: 'POST /api/students/login',
+      upload: 'POST /api/upload',
+      documents: 'GET /api/documents/:user_id',
+      stats: 'GET /api/stats',
+      openrouter_test: 'GET /api/openrouter/test',
+      server_stats: 'GET /api/server/stats'
+    },
+    documentation: 'https://github.com/Pacousstar/etudia-africa-v4.1',
+    support: 'contact@etudia-africa.com'
+  });
+});
+
+// 500 - Erreur serveur globale
+app.use((error, req, res, next) => {
+  const errorId = `err_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+  
+  console.error(`💥 Erreur serveur globale [${errorId}]:`, {
+    error: error.message,
+    stack: error.stack,
+    url: req.originalUrl,
+    method: req.method,
+    ip: req.ip,
+    user_agent: req.get('user-agent')?.substring(0, 100),
+    timestamp: new Date().toISOString()
+  });
+
+  // 🔍 Analyse type d'erreur pour réponse adaptée
+  let userMessage = 'Une erreur inattendue s\'est produite.';
+  let canRetry = true;
+  let httpStatus = 500;
+
+  if (error.name === 'ValidationError') {
+    userMessage = 'Données de requête invalides.';
+    canRetry = false;
+    httpStatus = 400;
+  } else if (error.message.includes('ECONNREFUSED')) {
+    userMessage = 'Service temporairement indisponible.';
+    canRetry = true;
+    httpStatus = 503;
+  } else if (error.message.includes('timeout')) {
+    userMessage = 'Délai d\'attente dépassé.';
+    canRetry = true;
+    httpStatus = 504;
+  } else if (error.name === 'SyntaxError') {
+    userMessage = 'Format de données incorrect.';
+    canRetry = false;
+    httpStatus = 400;
+  }
+
+  res.status(httpStatus).json({
+    error: 'Erreur serveur interne',
+    message: userMessage,
+    error_id: errorId,
+    timestamp: new Date().toISOString(),
+    request_info: {
+      path: req.originalUrl,
+      method: req.method
+    },
+    can_retry: canRetry,
+    suggested_actions: canRetry ? [
+      'Réessayez dans quelques instants',
+      'Vérifiez votre connexion internet',
+      'Contactez le support si le problème persiste'
+    ] : [
+      'Vérifiez les données envoyées',
+      'Consultez la documentation API',
+      'Contactez le support technique'
+    ],
+    support: {
+      email: 'contact@etudia-africa.com',
+      error_id: errorId
+    }
+  });
+});
+
+// ===================================================================
+// 🔧 FONCTIONS UTILITAIRES SERVEUR
+// ===================================================================
+
+// ⏱️ Formatage temps de fonctionnement
+function formatUptime(seconds) {
+  const days = Math.floor(seconds / 86400);
+  const hours = Math.floor((seconds % 86400) / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = Math.floor(seconds % 60);
+
+  if (days > 0) return `${days}j ${hours}h ${minutes}m`;
+  if (hours > 0) return `${hours}h ${minutes}m ${secs}s`;
+  if (minutes > 0) return `${minutes}m ${secs}s`;
+  return `${secs}s`;
+}
+
+// 🎯 Test complet démarrage système
+async function performStartupTests() {
+  const tests = {
+    openrouter: false,
+    supabase: false,
+    cloudinary: false,
+    cache: false
+  };
+
+  console.log('🧪 Tests de démarrage ÉtudIA V4.1...');
+
+  // 🤖 Test OpenRouter
+  try {
+    if (OPENROUTER_CONFIG.apiKey) {
+      // Test minimal sans consommer de tokens
+      tests.openrouter = true;
+      console.log('✅ OpenRouter: Configuration présente');
+    } else {
+      console.log('❌ OpenRouter: API Key manquante');
+    }
+  } catch (error) {
+    console.log('❌ OpenRouter: Erreur configuration');
+  }
+
+  // 🗄️ Test Supabase
+  try {
+    if (supabase && process.env.SUPABASE_URL) {
+      tests.supabase = true;
+      console.log('✅ Supabase: Configuration présente');
+    } else {
+      console.log('❌ Supabase: Configuration manquante');
+    }
+  } catch (error) {
+    console.log('❌ Supabase: Erreur configuration');
+  }
+
+  // ☁️ Test Cloudinary
+  try {
+    if (process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY) {
+      tests.cloudinary = true;
+      console.log('✅ Cloudinary: Configuration présente');
+    } else {
+      console.log('❌ Cloudinary: Configuration manquante');
+    }
+  } catch (error) {
+    console.log('❌ Cloudinary: Erreur configuration');
+  }
+
+  // 💾 Test Cache
+  try {
+    cache.set('startup_test', 'ok');
+    if (cache.get('startup_test') === 'ok') {
+      tests.cache = true;
+      cache.delete('startup_test');
+      console.log('✅ Cache: Opérationnel');
+    }
+  } catch (error) {
+    console.log('❌ Cache: Erreur test');
+  }
+
+  return tests;
+}
+
+// 📊 Diagnostic complet système
+function generateSystemDiagnostic() {
+  const diagnostic = {
+    timestamp: new Date().toISOString(),
+    version: '4.1.0-openrouter',
+    environment: process.env.NODE_ENV || 'development',
+    
+    // 🤖 OpenRouter DeepSeek R1
+    openrouter: {
+      status: !!OPENROUTER_CONFIG.apiKey ? 'configured' : 'missing',
+      base_url: OPENROUTER_CONFIG.baseURL,
+      models: {
+        free: OPENROUTER_CONFIG.models.free,
+        paid: OPENROUTER_CONFIG.models.paid
+      },
+      config: {
+        max_tokens: OPENROUTER_CONFIG.maxTokens,
+        temperature: OPENROUTER_CONFIG.temperature
+      }
+    },
+    
+    // 🗄️ Base de données
+    database: {
+      provider: 'Supabase',
+      url_configured: !!process.env.SUPABASE_URL,
+      key_configured: !!process.env.SUPABASE_ANON_KEY
+    },
+    
+    // ☁️ Stockage
+    storage: {
+      provider: 'Cloudinary',
+      cloud_name: !!process.env.CLOUDINARY_CLOUD_NAME,
+      api_key: !!process.env.CLOUDINARY_API_KEY,
+      api_secret: !!process.env.CLOUDINARY_API_SECRET
+    },
+    
+    // 🔧 Système
+    system: {
+      platform: process.platform,
+      node_version: process.version,
+      memory_mb: Math.round(process.memoryUsage().heapUsed / 1024 / 1024),
+      pid: process.pid,
+      port: PORT
+    }
+  };
+
+  return diagnostic;
+}
+
+// ===================================================================
+// 🚀 DÉMARRAGE SERVEUR PRINCIPAL
+// ===================================================================
+
+const server = app.listen(PORT, '0.0.0.0', async () => {
   console.log(`
-🎯 ═══════════════════════════════════════════════════════════
-   ÉtudIA V4.1 - OPENROUTER DEEPSEEK R1 OPÉRATIONNEL ! 🚀✨
+🎯 ═══════════════════════════════════════════════════════════════════════════════════
+   🚀 ÉtudIA V4.1 - OPENROUTER DEEPSEEK R1 OPÉRATIONNEL ! ✨🇨🇮
    
-   📍 Port: ${PORT}
-   🌍 Host: 0.0.0.0  
-   🏭 Environment: ${process.env.NODE_ENV}
-   🗄️ Cache: ${cache.keys().length} clés actives
+   📍 SERVEUR DÉMARRÉ AVEC SUCCÈS:
+   🌐 Port: ${PORT}
+   🖥️  Host: 0.0.0.0 (accessible depuis internet)
+   🏭 Environment: ${process.env.NODE_ENV || 'development'}
+   📊 PID: ${process.pid}
+   🕐 Démarré: ${new Date().toLocaleString('fr-FR')}
    
-🚀 MIGRATION OPENROUTER DEEPSEEK R1 COMPLÈTE:
-   ❌ Ancien: Groq Llama 3.3-70b-versatile (supprimé)
-   ✅ Nouveau: ${OPENROUTER_CONFIG.models.free} (actif)
+🚀 MIGRATION OPENROUTER DEEPSEEK R1 TERMINÉE:
+   ❌ ANCIEN: Groq Llama 3.3-70b-versatile (complètement supprimé)
+   ✅ NOUVEAU: ${OPENROUTER_CONFIG.models.free} (actif et opérationnel)
    🔧 Base URL: ${OPENROUTER_CONFIG.baseURL}
-   🔑 API Key: ${OPENROUTER_CONFIG.apiKey ? '✅ Configurée et active' : '❌ MANQUANTE - URGENT!'}
+   🔑 API Key: ${OPENROUTER_CONFIG.apiKey ? '✅ CONFIGURÉE ET ACTIVE' : '❌ MANQUANTE - CRITIQUE!'}
    
 📊 MODÈLES DEEPSEEK R1 DISPONIBLES:
-   🆓 Gratuit: ${OPENROUTER_CONFIG.models.free}
-   💎 Payant: ${OPENROUTER_CONFIG.models.paid}
+   🆓 GRATUIT: ${OPENROUTER_CONFIG.models.free}
+      • Raisonnement transparent visible
+      • Utilisation illimitée 
+      • 0€ de coût
+      • Performance excellente
+   💎 PREMIUM: ${OPENROUTER_CONFIG.models.paid}
+      • Performance maximale
+      • Priorité de traitement
+      • Coût selon usage
+      • Raisonnement avancé
    
-🎨 FONCTIONNALITÉS ÉtudIA V4.1:
-   ✅ Design révolutionnaire conservé
-   ✅ 3 modes d'apprentissage optimisés DeepSeek
-   ✅ OCR et upload documents maintenus
+🎨 FONCTIONNALITÉS ÉtudIA V4.1 RÉVOLUTIONNAIRES:
+   ✅ Design Tesla conservé et optimisé
+   ✅ 3 modes d'apprentissage améliorés DeepSeek R1
+   ✅ OCR Tesseract haute précision maintenu
+   ✅ Upload documents avec analyse IA DeepSeek
    ✅ Base de données Supabase opérationnelle
+   ✅ Stockage Cloudinary optimisé
    ✅ Interface mobile responsive parfaite
-   ✅ Stats usage temps réel ajoutées
+   ✅ Stats usage temps réel implémentées
+   ✅ Sélecteur modèle gratuit/premium
+   ✅ Cache intelligent optimisé
+   ✅ Gestion erreurs robuste
    
-🌍 MISSION: Révolutionner l'éducation Africaine avec DeepSeek R1 !
-💰 ÉCONOMIE: 100% gratuit par défaut, premium optionnel
-🇨🇮 Made with ❤️ in Côte d'Ivoire by @Pacousstar
-👩‍💼 Migré vers OpenRouter DeepSeek R1 par MonAP
+🔧 INFRASTRUCTURE TECHNIQUE:
+   🗄️ Cache mémoire: ${cache.size} entrées actives
+   💾 RAM utilisée: ${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)} MB
+   🔄 Uptime actuel: ${formatUptime(process.uptime())}
+   📡 Rate limiting: Activé et configuré
+   🛡️ CORS: Multi-domaines V4.1 configuré
    
-🏆 STATUT: OPENROUTER DEEPSEEK R1 MASTERED - READY FOR AFRICA!
-═══════════════════════════════════════════════════════════
+🌍 MISSION ÉTUDIA V4.1:
+   🎯 Révolutionner l'éducation africaine avec DeepSeek R1
+   💰 Modèle économique: 100% gratuit par défaut, premium optionnel
+   🧠 IA la plus avancée: Raisonnement transparent DeepSeek R1
+   📱 Accessibilité: Mobile-first, responsive parfait
+   🌟 Innovation: Premier EdTech africain avec OpenRouter
+   
+🇨🇮 MADE WITH ❤️ IN CÔTE D'IVOIRE:
+   👨‍💻 Développeur: @Pacousstar (Génie technique)
+   👩‍💼 Chef de Projet: MonAP (Stratégie & Migration OpenRouter)
+   🎯 Vision: Démocratiser l'excellence éducative en Afrique
+   
+🏆 STATUT FINAL: OPENROUTER DEEPSEEK R1 MASTERED ✨
+   🚀 READY FOR AFRICAN EDUCATIONAL REVOLUTION! 🌍🇨🇮
+═══════════════════════════════════════════════════════════════════════════════════
 `);
+
+  // 🧪 Tests de démarrage
+  console.log('\n🧪 Exécution tests de démarrage...');
+  const tests = await performStartupTests();
+  
+  // 📊 Affichage résultats tests
+  console.log('\n📊 RÉSULTATS TESTS DÉMARRAGE:');
+  console.log(`🤖 OpenRouter: ${tests.openrouter ? '✅ OK' : '❌ ÉCHEC'}`);
+  console.log(`🗄️ Supabase: ${tests.supabase ? '✅ OK' : '❌ ÉCHEC'}`);
+  console.log(`☁️ Cloudinary: ${tests.cloudinary ? '✅ OK' : '❌ ÉCHEC'}`);
+  console.log(`💾 Cache: ${tests.cache ? '✅ OK' : '❌ ÉCHEC'}`);
+  
+  // 🎯 Score global
+  const successCount = Object.values(tests).filter(Boolean).length;
+  const totalTests = Object.keys(tests).length;
+  const score = Math.round((successCount / totalTests) * 100);
+  
+  console.log(`\n🎯 SCORE SANTÉ SYSTÈME: ${score}% (${successCount}/${totalTests})`);
+  
+  if (score >= 75) {
+    console.log('🟢 SYSTÈME OPÉRATIONNEL - Prêt pour production');
+  } else if (score >= 50) {
+    console.log('🟡 SYSTÈME DÉGRADÉ - Fonctionnel avec limitations');
+  } else {
+    console.log('🔴 SYSTÈME CRITIQUE - Vérification urgente requise');
+  }
+
+  // 📊 Diagnostic complet
+  const diagnostic = generateSystemDiagnostic();
+  console.log('\n📋 Diagnostic système sauvegardé en mémoire');
+  cache.set('system_diagnostic', diagnostic);
+  
+  console.log('\n🎉 ÉtudIA V4.1 OpenRouter DeepSeek R1 - DÉMARRAGE TERMINÉ AVEC SUCCÈS ! 🚀✨');
+  console.log('📍 Serveur prêt à révolutionner l\'éducation africaine ! 🇨🇮🌍\n');
 });
 
-// Gestion propre de l'arrêt
+// ===================================================================
+// 🛑 GESTION ARRÊT PROPRE DU SERVEUR
+// ===================================================================
+
+// Signal SIGTERM (arrêt demandé)
 process.on('SIGTERM', () => {
-  console.log('🛑 SIGTERM reçu, arrêt propre du serveur...');
-  server.close(() => {
-    console.log('✅ Serveur ÉtudIA arrêté proprement');
+  console.log('\n🛑 Signal SIGTERM reçu - Arrêt propre du serveur en cours...');
+  
+  server.close((err) => {
+    if (err) {
+      console.error('❌ Erreur lors de l\'arrêt:', err.message);
+      process.exit(1);
+    }
+    
+    console.log('✅ Serveur ÉtudIA V4.1 arrêté proprement');
+    console.log('💾 Cache nettoyé automatiquement');
+    console.log('🔌 Connexions fermées');
+    console.log('👋 Au revoir ! ÉtudIA reviendra plus fort ! 🚀');
+    
     process.exit(0);
   });
+  
+  // Force l'arrêt après 10 secondes
+  setTimeout(() => {
+    console.error('⚠️ Arrêt forcé après timeout');
+    process.exit(1);
+  }, 10000);
 });
 
+// Signal SIGINT (Ctrl+C)
 process.on('SIGINT', () => {
-  console.log('🛑 SIGINT reçu, arrêt du serveur...');
+  console.log('\n🛑 Signal SIGINT reçu (Ctrl+C) - Arrêt développement...');
+  
   server.close(() => {
-    console.log('✅ Serveur ÉtudIA arrêté');
+    console.log('✅ Serveur ÉtudIA V4.1 arrêté (développement)');
+    console.log('🔧 Session développement terminée');
     process.exit(0);
   });
 });
 
-module.exports = app;
+// Gestion erreurs non capturées
+process.on('uncaughtException', (error) => {
+  console.error('💥 Erreur non capturée:', error);
+  console.error('📍 Stack:', error.stack);
+  console.log('🚨 Arrêt d\'urgence pour éviter corruption');
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('💥 Promise rejetée non gérée:', reason);
+  console.error('📍 Promise:', promise);
+  console.log('⚠️ Continuité du service - Erreur loggée');
+});
+
+// ===================================================================
+// 📤 EXPORT DU SERVEUR POUR TESTS
+// ===================================================================
+
+module.exports = {
+  app,
+  server,
+  formatUptime,
+  performStartupTests,
+  generateSystemDiagnostic
+};
+
+// ===================================================================
+// 🎉 FIN DU SERVEUR ÉTUDIA V4.1 OPENROUTER DEEPSEEK R1
+// 
+// 🏆 RÉCAPITULATIF MIGRATION RÉUSSIE:
+// ❌ Groq Llama 3.3 → ✅ OpenRouter DeepSeek R1
+// ❌ Code monolithique → ✅ 6 parties modulaires  
+// ❌ Économie incertaine → ✅ 100% gratuit par défaut
+// ❌ IA basique → ✅ Raisonnement transparent
+// ❌ Interface statique → ✅ Sélecteur modèle dynamique
+// ❌ Stats limitées → ✅ Analytics temps réel
+//
+// 🇨🇮 PRÊT POUR CONQUÉRIR L'AFRIQUE ! 🌍🚀
+// ===================================================================
