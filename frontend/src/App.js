@@ -1,17 +1,21 @@
-// App.js - VERSION UX/UI RÉVOLUTIONNAIRE AVEC RESPONSIVE PARFAIT + CORRECTIONS MonAP
+    // App.js - VERSION UX/UI RÉVOLUTIONNAIRE AVEC RESPONSIVE PARFAIT + CORRECTIONS MonAP
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import UploadDocument from './components/UploadDocument';
 import ChatIA from './components/ChatIA';
 
-// Configuration API pour Render - DÉFINITIVE !
-// ✅ REMPLACE PAR ÇA (temporaire pour débugger) :
+// 🔧 CONFIGURATION ÉtudIA V4.1 - OpenRouter DeepSeek R1
+const API_URL = process.env.REACT_APP_API_URL || 'https://etudia-v4-revolutionary.onrender.com';
+const OPENROUTER_API_KEY = process.env.REACT_APP_OPENROUTER_API_KEY;  // 🆕 NOUVEAU
+const DEEPSEEK_MODEL_FREE = process.env.REACT_APP_DEEPSEEK_MODEL_FREE || 'deepseek/deepseek-r1:free';  // 🆕
+const DEEPSEEK_MODEL_PAID = process.env.REACT_APP_DEEPSEEK_MODEL_PAID || 'deepseek/deepseek-r1';       // 🆕
 
-const API_URL = 'https://etudia-v4-revolutionary.onrender.com';
-console.log('🔗 API_URL FORCÉ RENDER:', API_URL);
-
-console.log('🎉 Hébergement: Render (Backend) + Vercel (Frontend)');
-console.log('✅ ÉtudIA v4.0 - READY TO ROCK!');
+// 📊 LOGS CONFIGURATION V4.1
+console.log('🤖 ÉtudIA V4.1 avec OpenRouter DeepSeek R1 initialisé !');
+console.log('- API URL:', API_URL);
+console.log('- OpenRouter configuré:', !!OPENROUTER_API_KEY);
+console.log('- Modèle gratuit:', DEEPSEEK_MODEL_FREE);
+console.log('- Modèle payant:', DEEPSEEK_MODEL_PAID);
 
 // 🏫 Composant des écoles - ajoute AVANT function App()
 const SchoolsScrollBanner = () => {
@@ -121,6 +125,16 @@ function App() {
   // 🔧 NOUVEAUX ÉTATS POUR CHAT FONCTIONNEL
   const [chatHistory, setChatHistory] = useState([]);
   const [chatTokensUsed, setChatTokensUsed] = useState(0);
+
+  // 🤖 NOUVEAUX ÉTATS OPENROUTER DEEPSEEK R1 - ÉtudIA V4.1
+  const [openRouterStatus, setOpenRouterStatus] = useState('checking');    // 🔍 Statut OpenRouter
+  const [currentModel, setCurrentModel] = useState('free');                // 🎯 Modèle actuel (free/paid)
+  const [usageStats, setUsageStats] = useState({                          // 📊 Stats d'usage
+    total_requests: '0',
+    free_tier_usage: '0', 
+    paid_tier_usage: '0',
+    last_request: null
+  });
 
   // Données statiques
   const schools = [
@@ -481,47 +495,27 @@ function App() {
     }
   };
 
-  // 🗑️ FONCTION SUPPRESSION DOCUMENT
-  const handleDeleteDocument = async (documentId, documentName) => {
-    if (!window.confirm(`Êtes-vous sûr de vouloir supprimer "${documentName}" ?`)) {
-      return;
-    }
-
-    try {
-      const response = await fetch(`${API_URL}/api/documents/${documentId}`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' }
-      });
-
-      if (response.ok) {
-        const newDocuments = allDocuments.filter(doc => doc.id !== documentId);
-        setAllDocuments(newDocuments);
-        saveToStorage('allDocuments', newDocuments);
-        
-        if (selectedDocumentId === documentId) {
-          if (newDocuments.length > 0) {
-            setSelectedDocumentId(newDocuments[0].id);
-            setDocumentContext(newDocuments[0].texte_extrait);
-            saveToStorage('selectedDocumentId', newDocuments[0].id);
-            saveToStorage('documentContext', newDocuments[0].texte_extrait);
-          } else {
-            setSelectedDocumentId(null);
-            setDocumentContext('');
-            localStorage.removeItem('etudia_selectedDocumentId');
-            localStorage.removeItem('etudia_documentContext');
-          }
-        }
-
-        showTemporaryMessage(`🗑️ Document "${documentName}" supprimé avec succès !`, 'success');
-      } else {
-        showTemporaryMessage('❌ Erreur lors de la suppression', 'error');
-      }
-    } catch (error) {
-      console.error('Erreur suppression:', error);
-      showTemporaryMessage('❌ Erreur technique lors de la suppression', 'error');
-    }
-  };
-
+// 🔄 GESTION CHANGEMENT DE MODÈLE - ÉtudIA V4.1 OPENROUTER
+const handleModelChange = (useFreeTier) => {
+  console.log('🎛️ Changement modèle DeepSeek R1:', useFreeTier ? 'Gratuit' : 'Payant');
+  
+  // 🎯 Mise à jour état local
+  const newModel = useFreeTier ? 'free' : 'paid';
+  setCurrentModel(newModel);
+  
+  // 💾 Sauvegarde préférence
+  openRouterService.setModelPreference(useFreeTier);
+  
+  console.log('✅ Modèle changé vers:', newModel);
+  
+  // 📊 Mise à jour stats affichées
+  const updatedStats = openRouterService.getUsageStats();
+  setUsageStats(updatedStats);
+  
+  // 🎉 Feedback utilisateur
+  console.log('🎯 Nouveau modèle actif:', useFreeTier ? 'DeepSeek R1 Gratuit' : 'DeepSeek R1 Premium');
+};
+  
   // 🔧 RESTAURATION DONNÉES AU CHARGEMENT
   useEffect(() => {
     console.log('🚀 Chargement données sauvegardées...');
@@ -651,30 +645,65 @@ function App() {
   }, [formData]);
 
   // Vérification serveur
-  useEffect(() => {
-    const checkBackend = async () => {
-      try {
-        const response = await fetch(`${API_URL}/health`);
+ useEffect(() => {
+  const checkBackendHealth = async () => {
+    try {
+      console.log('🏥 Vérification santé backend ÉtudIA V4.1...');
+      
+      // 🆕 UTILISER LE NOUVEAU SERVICE OPENROUTER
+      const healthCheck = await openRouterService.checkHealth();
+      
+      if (healthCheck.success) {
+        setBackendStatus('online');
+        // 🆕 VÉRIFIER SPÉCIFIQUEMENT OPENROUTER
+        setOpenRouterStatus(healthCheck.services?.openrouter_deepseek?.includes('✅') ? 'online' : 'warning');
         
-        if (response.ok) {
-          const data = await response.json();
-          setBackendStatus('online');
-          
-          if (data.tokens_status) {
-            setStats(prev => ({ ...prev, tokens_status: data.tokens_status }));
-          }
-        } else {
-          setBackendStatus('offline');
-        }
-      } catch (error) {
+        console.log('✅ Backend online - Version:', healthCheck.version);
+        console.log('🤖 OpenRouter DeepSeek:', healthCheck.ai_model);
+      } else {
         setBackendStatus('offline');
+        setOpenRouterStatus('offline');
+        console.error('❌ Backend hors ligne:', healthCheck.error);
       }
-    };
+      
+    } catch (error) {
+      console.error('❌ Erreur vérification santé:', error);
+      setBackendStatus('offline');
+      setOpenRouterStatus('offline');
+    }
+  };
 
-    checkBackend();
-    const interval = setInterval(checkBackend, 30000);
-    return () => clearInterval(interval);
-  }, []);
+  checkBackendHealth();
+  
+  // 🔄 Vérification périodique toutes les 30 secondes
+  const healthInterval = setInterval(checkBackendHealth, 30000);
+  
+  return () => clearInterval(healthInterval);
+}, []);
+
+  // 📊 CHARGEMENT STATISTIQUES USAGE LOCAL - ÉtudIA V4.1
+useEffect(() => {
+  const loadUsageStats = () => {
+    console.log('📊 Chargement stats usage ÉtudIA V4.1...');
+    
+    // 🔍 Récupération stats depuis localStorage  
+    const stats = openRouterService.getUsageStats();
+    setUsageStats(stats);
+    
+    // 🎯 Récupération préférence modèle
+    const preference = openRouterService.getModelPreference();
+    setCurrentModel(preference ? 'free' : 'paid');
+    
+    console.log('📈 Stats chargées:', stats);
+  };
+
+  loadUsageStats();
+  
+  // 🔄 Mise à jour périodique des stats toutes les 5 secondes
+  const statsInterval = setInterval(loadUsageStats, 5000);
+  
+  return () => clearInterval(statsInterval);
+}, []);
 
 // 🎉 MESSAGE DE VICTOIRE QUAND SERVEUR REVIENT EN LIGNE
 useEffect(() => {
@@ -873,6 +902,53 @@ const refreshStats = () => {
           </div>
         </div>
       </div>
+
+{/* 🆕 SÉLECTEUR DE MODÈLE DEEPSEEK R1 - Visible quand élève connecté */}
+{student && (
+  <div className="model-selector">
+    <h4>🤖 Sélecteur de Modèle DeepSeek R1</h4>
+    
+    <div className="model-options">
+      {/* 🆓 OPTION GRATUIT */}
+      <div 
+        className={`model-option ${currentModel === 'free' ? 'active' : ''}`}
+        onClick={() => handleModelChange(true)}
+      >
+        <div className="model-header">
+          <span className="model-icon">🆓</span>
+          <span className="model-name">DeepSeek R1 Gratuit</span>
+        </div>
+        <div className="model-details">
+          <div>💰 0$/M tokens</div>
+          <div>⏱️ Variable (3s-60s)</div>
+          <div>📊 Utilisé: {usageStats.free_tier_usage} fois</div>
+        </div>
+      </div>
+      
+      {/* 💎 OPTION PREMIUM */}
+      <div 
+        className={`model-option ${currentModel === 'paid' ? 'active' : ''}`}
+        onClick={() => handleModelChange(false)}
+      >
+        <div className="model-header">
+          <span className="model-icon">💎</span>
+          <span className="model-name">DeepSeek R1 Premium</span>
+        </div>
+        <div className="model-details">
+          <div>💰 0.55$/M input, 2.19$/M output</div>
+          <div>⏱️ Garanti (2-4s)</div>
+          <div>📊 Utilisé: {usageStats.paid_tier_usage} fois</div>
+        </div>
+      </div>
+    </div>
+
+    {/* 📈 RÉSUMÉ USAGE */}
+    <div className="usage-summary">
+      <div>📈 Total requêtes: {usageStats.total_requests}</div>
+      <div>🕒 Dernière utilisation: {usageStats.last_request ? new Date(usageStats.last_request).toLocaleString() : 'Jamais'}</div>
+    </div>
+  </div>
+)}
 
       {/* 🔧 NAVIGATION ONGLETS AVEC BOUTON DÉCONNEXION STYLÉ */}
       <nav className="tab-navigation">
@@ -1141,6 +1217,12 @@ const refreshStats = () => {
               </div>
             </div>
 
+<div className="feature-card">
+  <span className="feature-icon">🆓</span>
+  <h3>Gratuit via OpenRouter</h3>
+  <p>Accès gratuit illimité au modèle DeepSeek R1 le plus puissant</p>
+</div>
+
             {/* Section améliorations */}
             <div className="llama-improvements-section">
               <h3 className="section-title">🦙 Pourquoi ÉtudIA change tout ?</h3>
@@ -1225,6 +1307,8 @@ const refreshStats = () => {
     setChatHistory={setChatHistory}         // ✅ PROP AJOUTÉE  
     chatTokensUsed={chatTokensUsed}         // ✅ PROP AJOUTÉE
     setChatTokensUsed={setChatTokensUsed}   // ✅ PROP AJOUTÉE
+    openRouterService={openRouterService}                         {/* 🆕 NOUVEAU SERVICE */}
+    currentModel={currentModel}                                   {/* 🆕 MODÈLE SÉLECTIONNÉ */}
     onStatsUpdate={updateUserStats}         // ✅ PROP AJOUTÉE
   />
 )}
@@ -1358,7 +1442,7 @@ const refreshStats = () => {
 <footer className="app-footer">
   <div className="footer-content">
     <div className="footer-main">
-      <p>&copy; 2025 ÉtudIA v4.0 - Révolutionnons l'éducation Africaine ! 🌍</p>
+      <p>&copy; 2025 ÉtudIA v4.1 - 🤖 Assistant IA Éducatif pour l'Afrique ! 🌍</p>
       <p>Développé avec ❤️ par <strong>@Pacousstar</strong> - Côte d'Ivoire</p>
     </div>
   
@@ -1380,19 +1464,27 @@ const refreshStats = () => {
   <span>🦙 07 07 80 18 17</span>
 </div>
 
-{/* 🔍 DEBUG TEMPORAIRE - SUPPRIME APRÈS TEST */}
-{process.env.NODE_ENV === 'development' && (
-  <div style={{ fontSize: '0.8rem', color: '#666', textAlign: 'center', marginTop: '0.5rem' }}>
-    Debug: students={stats.students}, docs={stats.documents}, chats={stats.chats}, backend={backendStatus}
-  </div>
-)}
-    
-    <div className="footer-tech">
+{/* 🔧 INFO DEBUG (mode développement uniquement) */}
+    {process.env.NODE_ENV === 'development' && (
+      <div className="debug-info">
+        <details>
+          <summary>🔧 Info Debug V4.1</summary>
+          <div className="debug-content">
+            <div>Backend: {backendStatus}</div>
+            <div>OpenRouter: {openRouterStatus}</div>
+            <div>Modèle actuel: {currentModel}</div>
+            <div>API Key: {OPENROUTER_API_KEY ? '✅ Configurée' : '❌ Manquante'}</div>
+            <div>Stats usage: {JSON.stringify(usageStats, null, 2)}</div>
+          </div>
+        </details>
+      </div>
+    )}
+      <div className="footer-tech">
       <span>Status: {backendStatus === 'online' ? '🟢 En ligne' : '🔴 Maintenance'}</span>
     </div>
   </div>
 </footer>
-          
+             
     </div>
   );
 }
