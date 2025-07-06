@@ -991,11 +991,67 @@ const updateLocalStats = (response) => {
       has_context: !!payload.document_context
     });
 
-    const response = await fetch(`${apiUrl}/api/chat`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
+    console.log('💬 Envoi message à OpenRouter DeepSeek R1:', {
+        mode: chatMode,
+        model: currentModel,
+        context: !!documentContext
+      });
+
+      // 🔧 CONSTRUCTION HISTORIQUE CONVERSATION (garde ta logique existante)
+      const conversationHistory = messages.slice(-6).map(msg => ({
+        role: msg.type === 'user' ? 'user' : 'assistant',
+        content: msg.content
+      }));
+
+      // 🆕 OPTIONS POUR OPENROUTER
+      const chatOptions = {
+        student_id: student?.id,
+        conversation_history: conversationHistory,
+        mode: chatMode,                               // 🎯 Mode d'apprentissage
+        document_context: documentContext,
+        learning_profile: student,
+        use_free_tier: currentModel === 'free'        // 🆓 Utilise sélecteur de modèle
+      };
+
+      console.log('📡 Appel OpenRouter avec options:', chatOptions);
+
+      // 🚀 APPEL OPENROUTER DEEPSEEK R1
+      const response = await openRouterService.chat(inputMessage.trim(), chatOptions);
+
+      if (response.success) {
+        console.log('✅ Réponse OpenRouter reçue:', {
+          tokens: response.tokens_used,
+          model: response.model,
+          free_tier: response.free_tier_used
+        });
+
+        // 💬 MESSAGE DE RÉPONSE IA (conserve ta structure existante)
+        const aiMessage = {
+          id: Date.now() + 1,
+          type: 'ai',
+          content: response.response,
+          timestamp: response.timestamp || new Date().toISOString(),
+          tokens: response.tokens_used || 0,
+          model: response.model,                    // 🆕 Modèle DeepSeek utilisé
+          provider: response.provider,             // 🆕 OpenRouter
+          hasContext: response.has_context,
+          mode: response.mode,
+          freeTeamUsed: response.free_tier_used    // 🆕 Mode gratuit utilisé?
+        };
+
+        setMessages(prev => [...prev, aiMessage]);
+        setConversationCount(prev => prev + 1);
+        setTotalTokens(prev => prev + (response.tokens_used || 0));
+
+        // 📊 MISE À JOUR STATISTIQUES
+        openRouterService.updateUsageStats(response);
+        updateLocalStats(response);
+
+        console.log('🎉 Conversation DeepSeek R1 terminée avec succès');
+
+      } else {
+        throw new Error(response.error || 'Erreur communication OpenRouter');
+      }
 
     console.log('📡 Réponse API chat:', response.status, response.ok);
 
@@ -1439,9 +1495,28 @@ ${prenomEleve}, nous reprenons la conversation équilibrée. Tu peux à nouveau 
                 {formatMessage(message.content)}
               </div>
               <div className="message-meta">
-                <div className="message-time">
-                  {formatTime(message.timestamp)}
-                </div>
+                 <span className="message-time">
+    {new Date(message.timestamp).toLocaleTimeString()}
+  </span>
+  {/* 🆕 INFOS TOKENS */}
+  {message.tokens > 0 && (
+    <span className="message-tokens">
+      🔋 {message.tokens} tokens
+    </span>
+  )}
+  {/* 🆕 MODÈLE UTILISÉ */}
+  {message.model && (
+    <span className="message-model">
+      🤖 {message.model}
+    </span>
+  )}
+  {/* 🆕 TIER UTILISÉ (gratuit/payant) */}
+  {message.freeTeamUsed !== undefined && (
+    <span className="message-tier">
+      {message.freeTeamUsed ? '🆓 Gratuit' : '💎 Premium'}
+    </span>
+  )}
+</div>
                 <div className="message-info">
                   {message.isWelcome && (
                     <span className="message-tag welcome">🎉 Accueil</span>
@@ -1578,25 +1653,26 @@ ${prenomEleve}, nous reprenons la conversation équilibrée. Tu peux à nouveau 
             </div>
 
             <div className="input-hints enhanced">
-              {isRecording && (
-                <span className="hint recording">🎤 Parlez maintenant ! ÉtudIA vous écoute...</span>
-              )}
-              {!isRecording && chatMode === 'normal' && (
-                <span className="hint normal">💡 Conseil : Choisis un mode d'apprentissage pour une expérience optimisée</span>
-              )}
-              {!isRecording && chatMode === 'step_by_step' && (
-                <span className="hint step">📊 Mode Étape par Étape : Je te guide progressivement vers la solution</span>
-              )}
-              {!isRecording && chatMode === 'direct_solution' && (
-                <span className="hint direct">✅ Mode Solution Directe : Je résous complètement tes exercices</span>
-              )}
-              {!isRecording && isAudioMode && chatMode === 'normal' && (
-                <span className="hint audio">🎤 Mode Audio actif : Parle (🎙️) ou écris à ÉtudIA - Réponses vocales automatiques</span>
-              )}
-              {tokenUsage.used_today > 85000 && (
-                <span className="hint warning">⚠️ Attention : Limite tokens bientôt atteinte ({tokenUsage.remaining.toLocaleString('fr-FR')} restants)</span>
-              )}
-            </div>
+              <div className="input-hints">
+  {chatMode === 'normal' && (
+    <span>💡 Conseil : Choisis un mode d'apprentissage pour une expérience optimisée</span>
+  )}
+  {chatMode === 'step_by_step' && (
+    <span>📊 Mode Étape par Étape : DeepSeek R1 te guide progressivement avec raisonnement transparent</span>
+  )}
+  {chatMode === 'direct_solution' && (
+    <span>✅ Mode Solution Directe : DeepSeek R1 résout complètement tes exercices avec toute sa puissance</span>
+  )}
+  {documentContext && (
+    <span>📄 Document analysé ({documentContext.length} caractères) - DeepSeek R1 l'a lu !</span>
+  )}
+  {currentModel === 'free' && (
+    <span>🆓 Mode Gratuit actif - Illimité via OpenRouter !</span>
+  )}
+  {currentModel === 'paid' && (
+    <span>💎 Mode Premium actif - Vitesse maximale garantie !</span>
+  )}
+</div>
           </div>
         </div>
       </div>
