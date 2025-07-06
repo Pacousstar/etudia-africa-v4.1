@@ -1,5 +1,5 @@
 // ===================================================================
-// 🚀 ÉtudIA v4.0 - SERVER.JS COMPLET CORRIGÉ - INSTRUCTIONS LLAMA RESPECTÉES
+// 🚀 ÉTUDIA V4.1 OPENROUTER - SERVER.JS 
 // Backend Node.js optimisé pour Render
 // Créé par @Pacousstar - Made with ❤️ in Côte d'Ivoire 🇨🇮
 // ===================================================================
@@ -9,7 +9,7 @@ const cors = require('cors');
 const multer = require('multer');
 const { createClient } = require('@supabase/supabase-js');
 const { v2: cloudinary } = require('cloudinary');
-const Groq = require('groq-sdk');
+const axios = require('axios'); // Pour appels API OpenRouter DeepSeek R1
 const Tesseract = require('tesseract.js');
 const pdfParse = require('pdf-parse');
 const mammoth = require('mammoth');
@@ -69,17 +69,40 @@ const supabase = createClient(
   process.env.SUPABASE_ANON_KEY
 );
 
-// Groq
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY
-});
+// 🔧 CONFIGURATION OPENROUTER DEEPSEEK R1 - ÉtudIA V4.1
+const OPENROUTER_CONFIG = {
+  // 🔑 Clé API OpenRouter (à configurer dans variables d'environnement)
+  apiKey: process.env.OPENROUTER_API_KEY,
+  // 🌐 URL de base OpenRouter
+  baseURL: process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1',
+  // 🤖 Modèles DeepSeek R1 disponibles
+  models: {
+    free: process.env.DEEPSEEK_MODEL_FREE || 'deepseek/deepseek-r1:free', // 🆓 Gratuit
+    paid: process.env.DEEPSEEK_MODEL_PAID || 'deepseek/deepseek-r1'        // 💎 Payant
+  },
+  // 🔢 Limites de tokens par mode d'apprentissage
+  maxTokens: {
+    normal: 250,           // 💬 Mode conversation normale
+    step_by_step: 180,     // 📊 Mode étape par étape (plus court)
+    direct_solution: 400,  // ✅ Mode solution directe (plus long)
+    welcome: 200           // 🎉 Message d'accueil
+  },
+  // 🌡️ Température (créativité) par mode
+  temperature: {
+    normal: 0.15,          // 💬 Équilibré
+    step_by_step: 0.05,    // 📊 Très précis pour étapes
+    direct_solution: 0.1,  // ✅ Précis pour solutions
+    welcome: 0.2           // 🎉 Légèrement créatif pour accueil
+  }
+};
 
-console.log('🔗 Configuration Render:');
+// 📊 LOGS DE CONFIGURATION - ÉtudIA V4.1
+console.log('🔗 ÉtudIA V4.1 Configuration OpenRouter DeepSeek R1:');
 console.log('- Port:', PORT);
 console.log('- Environment:', process.env.NODE_ENV);
-console.log('- Supabase URL:', process.env.SUPABASE_URL ? '✅ Configuré' : '❌ Manquant');
-console.log('- Groq API:', process.env.GROQ_API_KEY ? '✅ Configuré' : '❌ Manquant');
-console.log('- Cloudinary:', process.env.CLOUDINARY_CLOUD_NAME ? '✅ Configuré' : '❌ Manquant');
+console.log('- OpenRouter API:', OPENROUTER_CONFIG.apiKey ? '✅ Configuré' : '❌ Manquant');
+console.log('- DeepSeek Free Model:', OPENROUTER_CONFIG.models.free);
+console.log('- DeepSeek Paid Model:', OPENROUTER_CONFIG.models.paid);
 
 // ===================================================================
 // 🧠 GESTION MÉMOIRE IA RÉVOLUTIONNAIRE - VERSION CORRIGÉE LLAMA
