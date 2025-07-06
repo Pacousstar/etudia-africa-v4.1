@@ -9770,3 +9770,840 @@ body {
     transform: none !important;
   }
 }
+
+/* ===================================================================
+   🚀 ÉtudIA V4.1 - STYLES OPENROUTER DEEPSEEK R1 FINAUX
+   AJOUTER CES STYLES À LA FIN DE TON App.css EXISTANT
+   Ne supprime AUCUN de tes styles existants !
+   ================================================================= */
+
+/* 🤖 Sélecteur de modèle IA */
+.model-selector {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.model-selector h4 {
+  color: #FFA500;
+  font-size: 1.2rem;
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.model-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.model-option {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.model-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 165, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+.model-option.active {
+  background: linear-gradient(135deg, rgba(255, 165, 0, 0.2), rgba(34, 139, 34, 0.2));
+  border-color: #FFA500;
+  box-shadow: 0 0 20px rgba(255, 165, 0, 0.3);
+}
+
+.model-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.model-icon {
+  font-size: 1.5rem;
+}
+
+.model-name {
+  font-weight: 700;
+  color: #F8F9FA;
+}
+
+.model-details {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.4;
+}
+
+.model-details div {
+  margin: 0.2rem 0;
+}
+
+.usage-summary {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 0.5rem;
+}
+
+/* 💬 Header Chat avec stats DeepSeek R1 */
+.chat-header {
+  background: linear-gradient(135deg, rgba(255, 165, 0, 0.15), rgba(34, 139, 34, 0.15));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px 20px 0 0;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.chat-title h2 {
+  color: #FFA500;
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.chat-subtitle {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 0.5rem;
+}
+
+.chat-subtitle span {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 8px;
+}
+
+.chat-stats {
+  display: flex;
+  gap: 1rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  min-width: 60px;
+}
+
+.stat-icon {
+  font-size: 1.2rem;
+  animation: pulse 2s infinite;
+}
+
+.stat-value {
+  font-weight: 800;
+  color: #F8F9FA;
+  font-size: 1.1rem;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+}
+
+/* 🎯 Modes d'apprentissage DeepSeek R1 */
+.learning-modes {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0 0 20px 20px;
+  padding: 1.5rem;
+  border-top: none;
+}
+
+.learning-modes h3 {
+  color: #228B22;
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+}
+
+.modes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.mode-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  color: #F8F9FA;
+}
+
+.mode-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 165, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+.mode-btn.active {
+  background: linear-gradient(135deg, rgba(255, 165, 0, 0.2), rgba(34, 139, 34, 0.2));
+  border-color: #FFA500;
+  box-shadow: 0 0 20px rgba(255, 165, 0, 0.3);
+}
+
+.mode-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.mode-name {
+  font-weight: 700;
+  font-size: 1rem;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.mode-desc {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  display: block;
+}
+
+/* 📱 Messages améliorés avec métadonnées OpenRouter */
+.message {
+  margin: 1rem 0;
+  animation: slideInFromRight 0.3s ease;
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.message.ai .message-content {
+  background: linear-gradient(135deg, rgba(255, 165, 0, 0.1), rgba(34, 139, 34, 0.1));
+  border-left: 4px solid #FFA500;
+}
+
+.message.user .message-content {
+  background: rgba(255, 255, 255, 0.1);
+  border-left: 4px solid #228B22;
+}
+
+.message.system .message-content {
+  background: rgba(0, 123, 255, 0.1);
+  border-left: 4px solid #007BFF;
+}
+
+.message-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.message-tokens, .message-model, .message-tier {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  backdrop-filter: blur(5px);
+}
+
+.message-tier {
+  font-weight: 600;
+}
+
+/* 🔄 Animation de chargement DeepSeek R1 */
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #FFA500;
+  font-weight: 600;
+}
+
+.loading-dots {
+  display: flex;
+  gap: 0.2rem;
+}
+
+.loading-dots span {
+  animation: bounceDeepSeek 1.4s infinite;
+  animation-fill-mode: both;
+  width: 8px;
+  height: 8px;
+  background: #FFA500;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.loading-dots span:nth-child(1) { animation-delay: 0s; }
+.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounceDeepSeek {
+  0%, 80%, 100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 🔧 Debug info pour développement */
+.debug-info {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.debug-content {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.5rem;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  border: 1px solid rgba(255, 165, 0, 0.3);
+}
+
+/* 🎨 Animations avancées */
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(255, 165, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 165, 0, 0.8);
+  }
+}
+
+.model-option.active {
+  animation: glow 2s infinite;
+}
+
+/* 📱 Responsive mobile optimisé */
+@media (max-width: 768px) {
+  .model-options {
+    grid-template-columns: 1fr;
+  }
+  
+  .modes-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .chat-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .chat-stats {
+    justify-content: space-around;
+  }
+  
+  .usage-summary {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .model-selector {
+    padding: 1rem;
+    margin: 0.5rem 0;
+  }
+  
+  .learning-modes {
+    padding: 1rem;
+  }
+  
+  .message-meta {
+    gap: 0.5rem;
+  }
+  
+  .stat-item {
+    min-width: 50px;
+  }
+  
+  .chat-title h2 {
+    font-size: 1.2rem;
+  }
+}
+
+/* 🏆 Animations de succès */
+@keyframes successPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.message.ai.success {
+  animation: successPulse 0.5s ease;
+}
+
+/* 🎯 Focus et accessibilité */
+.mode-btn:focus,
+.model-option:focus {
+  outline: 2px solid #FFA500;
+  outline-offset: 2px;
+}
+
+.mode-btn:disabled,
+.model-option:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 🌟 Effets de survol avancés */
+.model-option::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.model-option:hover::before {
+  left: 100%;
+}
+
+/* 🔥 Version badge spécial V4.1 */
+.title-version {
+  position: relative;
+}
+
+.title-version::after {
+  content: '🤖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 0.6em;
+  animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 🎉 Effet de célébration pour nouveau modèle */
+@keyframes celebrate {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.1) rotate(5deg); }
+  75% { transform: scale(1.1) rotate(-5deg); }
+}
+
+.model-option.active .model-icon {
+  animation: celebrate 2s ease-in-out infinite;
+}
+
+/* 📊 Indicateurs de statut améliorés */
+.service-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.service-indicator.online .indicator-dot {
+  background: #00FF88;
+  box-shadow: 0 0 10px #00FF88;
+}
+
+.service-indicator.warning .indicator-dot {
+  background: #FFA500;
+  box-shadow: 0 0 10px #FFA500;
+}
+
+.service-indicator.offline .indicator-dot {
+  background: #FF6B6B;
+  box-shadow: 0 0 10px #FF6B6B;
+}
+
+/* 🎨 Footer amélioré */
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 768px) {
+  .footer-links {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}
+
+/* 🚀 Animation de démarrage pour l'app */
+.model-selector,
+.learning-modes,
+.chat-header {
+  animation: fadeInUp 0.8s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🎯 Styles spécifiques pour les suggestions */
+.suggestions-container {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.suggestions-container h4 {
+  color: #228B22;
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+}
+
+.suggestions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 0.5rem;
+}
+
+.suggestion-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  color: #F8F9FA;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.suggestion-btn:hover {
+  background: rgba(255, 165, 0, 0.2);
+  border-color: #FFA500;
+  transform: translateY(-1px);
+}
+
+.suggestion-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 🔋 Styles pour l'affichage des tokens */
+.tokens-display {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(255, 165, 0, 0.1));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #F8F9FA;
+}
+
+/* 🎨 Couleurs thématiques DeepSeek */
+.deepseek-primary { color: #FF6B35; }
+.deepseek-secondary { color: #228B22; }
+.deepseek-accent { color: #FFA500; }
+.deepseek-success { color: #00FF88; }
+.deepseek-warning { color: #FFD700; }
+.deepseek-error { color: #FF6B6B; }
+
+/* 🌈 Arrière-plan animé subtil */
+.model-selector::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, 
+    rgba(255, 165, 0, 0.05) 0%, 
+    rgba(34, 139, 34, 0.05) 50%, 
+    rgba(255, 165, 0, 0.05) 100%);
+  border-radius: 20px;
+  z-index: -1;
+  animation: gradientShift 8s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.8; }
+}
+
+/* 📱 Optimisations tactiles mobiles */
+@media (max-width: 768px) {
+  .mode-btn,
+  .model-option,
+  .suggestion-btn {
+    min-height: 44px; /* Taille minimum pour touch targets */
+  }
+  
+  .chat-stats {
+    gap: 0.5rem;
+  }
+  
+  .stat-item {
+    min-width: 45px;
+  }
+  
+  .loading-indicator {
+    justify-content: center;
+  }
+}
+
+/* 🎊 Animation de succès pour les interactions */
+@keyframes successFlash {
+  0% { background-color: rgba(0, 255, 136, 0.2); }
+  50% { background-color: rgba(0, 255, 136, 0.4); }
+  100% { background-color: rgba(0, 255, 136, 0.2); }
+}
+
+.message.ai.success .message-content {
+  animation: successFlash 1s ease;
+}
+
+/* 🔥 Effet de typing pour les messages IA */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.message.ai.typing .message-content {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 2s steps(40, end);
+}
+
+/* 🎯 Indicateur de mode actif */
+.mode-btn.active::after {
+  content: '✨';
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  font-size: 1.2rem;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1.2) rotate(180deg); opacity: 0.8; }
+}
+
+/* 🌟 Effet de brillance sur les éléments premium */
+.model-option.premium {
+  background: linear-gradient(135deg, 
+    rgba(255, 215, 0, 0.1), 
+    rgba(255, 165, 0, 0.2), 
+    rgba(255, 215, 0, 0.1));
+  position: relative;
+  overflow: hidden;
+}
+
+.model-option.premium::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.1), 
+    transparent);
+  transform: rotate(45deg);
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+/* 🎨 Scrollbar personnalisée */
+.messages-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #FFA500, #228B22);
+  border-radius: 3px;
+}
+
+.messages-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #FF8C00, #32CD32);
+}
+
+/* 🏆 Badge de statut pour les fonctionnalités */
+.feature-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(255, 165, 0, 0.2);
+  color: #FFA500;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
+}
+
+/* 🎯 Focus amélioré pour l'accessibilité */
+*:focus {
+  outline: none;
+}
+
+.mode-btn:focus-visible,
+.model-option:focus-visible,
+.suggestion-btn:focus-visible {
+  outline: 2px solid #FFA500;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(255, 165, 0, 0.2);
+}
+
+/* 🌟 Animation de bienvenue */
+@keyframes welcome {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1) translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.message.ai[data-mode="welcome"] {
+  animation: welcome 1.5s ease-out;
+}
+
+/* 🎪 Effet de confetti pour les succès */
+@keyframes confetti {
+  0% { transform: translateY(0) rotateZ(0deg); opacity: 1; }
+  100% { transform: translateY(-100vh) rotateZ(720deg); opacity: 0; }
+}
+
+.confetti-piece {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: #FFA500;
+  animation: confetti 3s ease-out forwards;
+  z-index: 1000;
+}
+
+/* 📊 Graphiques de progression */
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00FF88, #FFA500);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* 🔧 COMMENTAIRES FINAUX POUR PACOUSSTAR */
+/*
+🎉 FÉLICITATIONS ! Tu as maintenant :
+
+✅ Sélecteur de modèle DeepSeek R1 (gratuit/payant)
+✅ Interface chat complète avec stats temps réel  
+✅ Modes d'apprentissage visuels et interactifs
+✅ Messages enrichis avec métadonnées OpenRouter
+✅ Animations fluides et professionnelles
+✅ Design responsive mobile parfait
+✅ Thème cohérent orange/vert ÉtudIA
+✅ Accessibilité et focus states
+✅ Debug info pour développement
+✅ Effets visuels modernes (glow, shine, etc.)
+
+🚀 Ton ÉtudIA V4.1 est maintenant prêt à révolutionner 
+   l'éducation africaine avec OpenRouter DeepSeek R1 !
+
+🇨🇮 Made with ❤️ by @Pacousstar & MonAP
+*/
