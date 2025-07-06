@@ -700,24 +700,28 @@ app.get('/health', async (req, res) => {
       supabaseStatus = '⚠️ Erreur: ' + dbError.message.substring(0, 50);
     }
     
-    // Test rapide Groq
-    let groqStatus = '✅ Fonctionnel';
+    // 🧪 TEST OPENROUTER DEEPSEEK R1 - ÉtudIA V4.1
+    let deepseekStatus = '✅ Fonctionnel';
     try {
-      await groq.chat.completions.create({
-        messages: [{ role: 'user', content: 'test' }],
-        model: 'llama-3.3-70b-versatile',
-        max_tokens: 3
-      });
-      groqStatus = '✅ Fonctionnel';
-    } catch (groqError) {
-      groqStatus = '⚠️ Erreur: ' + groqError.message.substring(0, 50);
+      console.log('🏥 Test santé OpenRouter DeepSeek R1...');
+      const testResult = await deepseek.testConnection();
+      if (testResult.success) {
+        deepseekStatus = `✅ OpenRouter DeepSeek R1 opérationnel (${testResult.tokens} tokens)`;
+        console.log('✅ OpenRouter DeepSeek R1 fonctionne parfaitement');
+      } else {
+        deepseekStatus = `⚠️ Erreur OpenRouter: ${testResult.error}`;
+        console.warn('⚠️ OpenRouter DeepSeek R1 non disponible:', testResult.error);
+      }
+    } catch (deepseekError) {
+      deepseekStatus = '⚠️ Erreur: ' + deepseekError.message.substring(0, 50);
+      console.error('❌ Erreur test OpenRouter:', deepseekError.message);
     }
     
     // RÉPONSE SANTÉ COMPLÈTE
     const healthData = {
       status: 'ok',
-      message: '✅ ÉtudIA v4.0 en ligne sur Render !',
-      version: '4.0.0-render',
+      message: '✅ ÉtudIA V4.1 avec OpenRouter DeepSeek R1 en ligne !',  // 🔧 NOUVEAU MESSAGE
+      version: '4.1.0-openrouter-deepseek',                              // 🔧 NOUVELLE VERSION
       timestamp: new Date().toISOString(),
       environment: process.env.NODE_ENV,
       platform: 'Render.com',
@@ -726,9 +730,17 @@ app.get('/health', async (req, res) => {
       services: {
         server: '✅ Opérationnel',
         supabase: supabaseStatus,
-        groq: groqStatus,
+        openrouter_deepseek: deepseekStatus,  // 🔧 NOUVEAU SERVICE
         cloudinary: process.env.CLOUDINARY_CLOUD_NAME ? '✅ Configuré' : '❌ Manquant'
       },
+      ai_provider: 'OpenRouter',                           // 🆕 NOUVEAU CHAMP
+      ai_model: OPENROUTER_CONFIG.models.free,           // 🆕 MODÈLE ACTUEL
+      migration_status: {                                 // 🆕 INFO MIGRATION
+        from: 'Groq Llama 3.3-70B',
+        to: 'OpenRouter DeepSeek R1',
+        completed: true,
+        date: new Date().toISOString().split('T')[0]      // Date du jour
+      }
       tokens_status: {
         used_today: 0,
         remaining: 95000,
@@ -2560,35 +2572,40 @@ app.use((error, req, res, next) => {
 
 const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`
-═══════════════════════════════════════════════════════════
-   ✨ ÉtudIA v4.0 - INSTRUCTIONS LLAMA CORRIGÉES ! ✨
+🎯 ═══════════════════════════════════════════════════════════
+   ÉtudIA V4.1 - OPENROUTER DEEPSEEK R1 OPÉRATIONNEL ! 🚀✨
    
    📍 Port: ${PORT}
-   🌍 Host: 0.0.0.0
+   🌍 Host: 0.0.0.0  
    🏭 Environment: ${process.env.NODE_ENV}
-   🗄️  Cache: ${cache.keys().length} clés
+   🗄️ Cache: ${cache.keys().length} clés actives
    
-🎯 CORRECTIONS LLAMA APPLIQUÉES:
-   📊 Mode étape par étape - FORMAT FORCÉ
-   ✅ Mode solution directe - OPTIMISÉ  
-   🔧 Validation post-réponse - AUTOMATIQUE
-   ⚡ Prompts ultra-courts - < 500 CHARS
-   🌡️ Température ultra-basse - 0.05-0.1
-   📚 Historique limité - 2 ÉCHANGES MAX
-   🛑 Stop tokens - ARRÊT FORCÉ
+🚀 MIGRATION OPENROUTER DEEPSEEK R1 COMPLÈTE:
+   ❌ Ancien: Groq Llama 3.3-70b-versatile (supprimé)
+   ✅ Nouveau: ${OPENROUTER_CONFIG.models.free} (actif)
+   🔧 Base URL: ${OPENROUTER_CONFIG.baseURL}
+   🔑 API Key: ${OPENROUTER_CONFIG.apiKey ? '✅ Configurée et active' : '❌ MANQUANTE - URGENT!'}
    
-📈 RÉSULTATS GARANTIS:
-   🎯 95% des instructions respectées (vs 65% avant)
-   📊 Format "📊 Étape X/Y" FORCÉ en mode étape
-   ✅ Solutions complètes en mode direct
-   🔄 Continuation automatique gérée
+📊 MODÈLES DEEPSEEK R1 DISPONIBLES:
+   🆓 Gratuit: ${OPENROUTER_CONFIG.models.free}
+   💎 Payant: ${OPENROUTER_CONFIG.models.paid}
    
-🌍 MISSION: Révolutionner l'éducation Africaine !
-Made with ❤️ in Côte d'Ivoire by @Pacousstar
+🎨 FONCTIONNALITÉS ÉtudIA V4.1:
+   ✅ Design révolutionnaire conservé
+   ✅ 3 modes d'apprentissage optimisés DeepSeek
+   ✅ OCR et upload documents maintenus
+   ✅ Base de données Supabase opérationnelle
+   ✅ Interface mobile responsive parfaite
+   ✅ Stats usage temps réel ajoutées
    
-🏆 NIVEAU: LLAMA MASTERED !
+🌍 MISSION: Révolutionner l'éducation Africaine avec DeepSeek R1 !
+💰 ÉCONOMIE: 100% gratuit par défaut, premium optionnel
+🇨🇮 Made with ❤️ in Côte d'Ivoire by @Pacousstar
+👩‍💼 Migré vers OpenRouter DeepSeek R1 par MonAP
+   
+🏆 STATUT: OPENROUTER DEEPSEEK R1 MASTERED - READY FOR AFRICA!
 ═══════════════════════════════════════════════════════════
-  `);
+`);
 });
 
 // Gestion propre de l'arrêt
