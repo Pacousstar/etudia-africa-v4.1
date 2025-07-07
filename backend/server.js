@@ -15,6 +15,11 @@
 
 // 📦 IMPORTS STANDARDS EXPRESS + MIDDLEWARE
 const express = require('express');
+const { createClient } = require('@supabase/supabase-js');
+const supabase = createClient(
+ process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
+);
 const cors = require('cors');
 const multer = require('multer');
 const fs = require('fs');
@@ -32,8 +37,6 @@ const pdf = require('pdf-parse');
 // 📦 IMPORTS INFRASTRUCTURE
 const rateLimit = require('express-rate-limit');
 const NodeCache = require('node-cache');
-const { createClient } = require('@supabase/supabase-js');
-const cloudinary = require('cloudinary').v2;
 
 // 🌍 VARIABLES ENVIRONNEMENT
 const PORT = process.env.PORT || 3001;
