@@ -1363,6 +1363,19 @@ module.exports = {
 // ===================================================================
 
 app.post('/api/chat', chatLimiter, async (req, res) => {
+
+// Après ton limiter existant, AJOUTE :
+const chatLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 20, // 20 requêtes par minute pour le chat
+  message: {
+    error: 'Trop de messages. Attendez 1 minute.',
+    retry_after: 60
+  },
+  standardHeaders: true,
+  legacyHeaders: false
+});
+  
   console.log('\n🚀 =============== CHAT ÉtudIA V4.1 OPENROUTER DEEPSEEK R1 ===============');
   console.log('📅 Timestamp:', new Date().toLocaleString('fr-FR'));
   console.log('🤖 Modèle IA: OpenRouter DeepSeek R1');
