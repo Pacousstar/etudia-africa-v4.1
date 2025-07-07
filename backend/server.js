@@ -31,6 +31,7 @@ const pdf = require('pdf-parse');
 
 // 📦 IMPORTS INFRASTRUCTURE
 const rateLimit = require('express-rate-limit');
+const NodeCache = require('node-cache');
 const { createClient } = require('@supabase/supabase-js');
 const cloudinary = require('cloudinary').v2;
 
