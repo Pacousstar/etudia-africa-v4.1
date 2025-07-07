@@ -2980,6 +2980,49 @@ app.post('/api/server/restart', (req, res) => {
   }, 2000);
 });
 
+// Ajoute cette route de test (temporaire)
+app.get('/test-supabase', async (req, res) => {
+  try {
+    console.log('🧪 Test connexion Supabase...');
+    console.log('📍 URL:', process.env.SUPABASE_URL);
+    console.log('🔑 Key présente:', !!process.env.SUPABASE_ANON_KEY);
+    console.log('🔑 Key début:', process.env.SUPABASE_ANON_KEY?.substring(0, 20) + '...');
+    
+    // Test simple
+    const { data, error } = await supabase
+      .from('eleves')
+      .select('count(*)')
+      .limit(1);
+    
+    if (error) {
+      throw error;
+    }
+    
+    res.json({
+      success: true,
+      message: '✅ Supabase fonctionne !',
+      url: process.env.SUPABASE_URL,
+      key_present: !!process.env.SUPABASE_ANON_KEY,
+      data: data
+    });
+    
+  } catch (error) {
+    console.error('❌ Erreur test Supabase:', error);
+    
+    res.status(500).json({
+      success: false,
+      error: error.message,
+      url: process.env.SUPABASE_URL,
+      key_present: !!process.env.SUPABASE_ANON_KEY,
+      details: {
+        name: error.name,
+        code: error.code,
+        status: error.status
+      }
+    });
+  }
+});
+
 // ===================================================================
 // 🚨 GESTIONNAIRE D'ERREURS GLOBALES
 // ===================================================================
