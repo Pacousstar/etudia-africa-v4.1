@@ -325,6 +325,12 @@ app.use(express.urlencoded({
   parameterLimit: 50000 // ✅ AUGMENTÉ : Pour formulaires complexes backoffices
 }));
 
+// Middleware de timing pour toutes les requêtes
+app.use((req, res, next) => {
+  req.startTime = Date.now();
+  next();
+});
+
 // ===================================================================
 // 🌍 CONFIGURATION CORS ÉTENDUE V4.1
 // ===================================================================
