@@ -2980,44 +2980,98 @@ app.post('/api/server/restart', (req, res) => {
   }, 2000);
 });
 
-// Ajoute cette route de test (temporaire)
-app.get('/test-supabase', async (req, res) => {
+// Route de diagnostic Supabase avancée
+app.get('/debug-supabase', async (req, res) => {
+  const startTime = Date.now();
+  
   try {
-    console.log('🧪 Test connexion Supabase...');
+    console.log('🧪 === DIAGNOSTIC SUPABASE AVANCÉ ===');
     console.log('📍 URL:', process.env.SUPABASE_URL);
-    console.log('🔑 Key présente:', !!process.env.SUPABASE_ANON_KEY);
-    console.log('🔑 Key début:', process.env.SUPABASE_ANON_KEY?.substring(0, 20) + '...');
+    console.log('🔑 Key longueur:', process.env.SUPABASE_ANON_KEY?.length);
+    console.log('🔑 Key préfixe:', process.env.SUPABASE_ANON_KEY?.substring(0, 30));
     
-    // Test simple
-    const { data, error } = await supabase
+    // Test 1: Simple ping
+    console.log('🧪 Test 1: Ping URL...');
+    const pingStart = Date.now();
+    
+    try {
+      const response = await fetch(process.env.SUPABASE_URL, {
+        method: 'HEAD',
+        timeout: 5000
+      });
+      console.log('✅ Ping réussi:', response.status, 'en', Date.now() - pingStart, 'ms');
+    } catch (pingError) {
+      console.log('❌ Ping échoué:', pingError.message);
+    }
+    
+    // Test 2: Supabase client
+    console.log('🧪 Test 2: Client Supabase...');
+    const clientStart = Date.now();
+    
+    const { data, error, status } = await supabase
       .from('eleves')
       .select('count(*)')
-      .limit(1);
+      .limit(1)
+      .timeout(10000); // 10 secondes timeout
+    
+    const responseTime = Date.now() - clientStart;
+    console.log('⏱️ Temps de réponse Supabase:', responseTime, 'ms');
     
     if (error) {
+      console.log('❌ Erreur Supabase:', error);
       throw error;
     }
     
+    console.log('✅ Supabase données:', data);
+    
     res.json({
       success: true,
-      message: '✅ Supabase fonctionne !',
-      url: process.env.SUPABASE_URL,
-      key_present: !!process.env.SUPABASE_ANON_KEY,
+      message: '✅ Supabase fonctionne parfaitement !',
+      timing: {
+        total_time: Date.now() - startTime,
+        supabase_response: responseTime
+      },
+      config: {
+        url: process.env.SUPABASE_URL,
+        key_length: process.env.SUPABASE_ANON_KEY?.length,
+        key_valid: !!process.env.SUPABASE_ANON_KEY
+      },
       data: data
     });
     
   } catch (error) {
-    console.error('❌ Erreur test Supabase:', error);
+    const responseTime = Date.now() - startTime;
+    
+    console.error('❌ === ERREUR DIAGNOSTIC SUPABASE ===');
+    console.error('Message:', error.message);
+    console.error('Code:', error.code);
+    console.error('Status:', error.status);
+    console.error('Details:', error.details);
+    console.error('Hint:', error.hint);
+    console.error('Temps écoulé:', responseTime, 'ms');
     
     res.status(500).json({
       success: false,
-      error: error.message,
-      url: process.env.SUPABASE_URL,
-      key_present: !!process.env.SUPABASE_ANON_KEY,
-      details: {
-        name: error.name,
+      error: {
+        message: error.message,
         code: error.code,
-        status: error.status
+        status: error.status,
+        details: error.details,
+        hint: error.hint
+      },
+      timing: {
+        total_time: responseTime,
+        timeout_at: '10000ms'
+      },
+      config: {
+        url: process.env.SUPABASE_URL,
+        key_length: process.env.SUPABASE_ANON_KEY?.length,
+        env: process.env.NODE_ENV
+      },
+      network: {
+        platform: 'Render.com',
+        region: 'Auto',
+        possible_firewall: true
       }
     });
   }
