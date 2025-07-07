@@ -399,7 +399,7 @@ app.use(cors({
 // ===================================================================
 
 // 🚀 Rate limiter général (toutes routes sauf chat)
-const generalLimiter = rateLimit({
+const generallimiter = rateLimit({
   windowMs: 15 * 60 * 1000,           // 🕐 15 minutes
   max: 200,                           // 🔢 200 requêtes max par fenêtre
   message: {
@@ -436,7 +436,7 @@ const limiter = rateLimit({
 });
 
 // 📤 Rate limiter UPLOAD (très permissif mais surveillé)
-const uploadLimiter = rateLimit({
+const uploadlimiter = rateLimit({
   windowMs: 60 * 60 * 1000,           // 🕐 1 heure
   max: 50,                            // 🔢 50 uploads/heure max
   message: {
@@ -449,7 +449,7 @@ const uploadLimiter = rateLimit({
 });
 
 // 🔧 Appliquer rate limiting général sur toutes les routes
-app.use(generalLimiter);
+app.use(generallimiter);
 
 // ===================================================================
 // 🔧 MIDDLEWARE LOGGING AVANCÉ POUR DEBUG OPENROUTER
@@ -624,8 +624,8 @@ console.log('📍 Prêt pour PARTIE 3 : Routes Auth + Students');
 
 // 🔄 EXPORT POUR UTILISATION DANS AUTRES PARTIES
 //module.exports = {
-  //chatLimiter,
-  //uploadLimiter,
+  //chatlimiter,
+  //uploadlimiter,
   //upload,
   //supabase
 //};
@@ -1353,7 +1353,7 @@ module.exports = {
 
 // 📦 IMPORT DEPENDENCIES DES PARTIES PRÉCÉDENTES
 //const { app, deepseek, cache, OPENROUTER_CONFIG } = require('./server-part1-imports-config');
-//const { chatLimiter, supabase } = require('./server-part2-middleware-cors');
+//const { chatlimiter, supabase } = require('./server-part2-middleware-cors');
 //const { updateStudentProfile } = require('./server-part3-auth-students');
 
 // ===================================================================
@@ -1362,7 +1362,7 @@ module.exports = {
 // ✅ NOUVELLE ROUTE : 100% OpenRouter DeepSeek R1
 // ===================================================================
 
-app.post('/api/chat', Limiter, async (req, res) => { 
+app.post('/api/chat', limiter, async (req, res) => { 
   console.log('\n🚀 =============== CHAT ÉtudIA V4.1 OPENROUTER DEEPSEEK R1 ===============');
   console.log('📅 Timestamp:', new Date().toLocaleString('fr-FR'));
   console.log('🤖 Modèle IA: OpenRouter DeepSeek R1');
@@ -2018,7 +2018,7 @@ module.exports = {
 
 // 📦 IMPORT DEPENDENCIES DES PARTIES PRÉCÉDENTES
 //const { app, deepseek, cache } = require('./server-part1-imports-config');
-//const { uploadLimiter, upload, supabase } = require('./server-part2-middleware-cors');
+//const { uploadlimiter, upload, supabase } = require('./server-part2-middleware-cors');
 //const { updateStudentProfile } = require('./server-part3-auth-students');
 
 // ===================================================================
@@ -2363,7 +2363,7 @@ function detectAfricanContext(text) {
 // 📤 ROUTE UPLOAD PRINCIPAL - ENRICHIE IA V4.1
 // ===================================================================
 
-app.post('/api/upload', uploadLimiter, upload.single('document'), async (req, res) => {
+app.post('/api/upload', uploadlimiter, upload.single('document'), async (req, res) => {
   console.log('\n📤 =============== UPLOAD DOCUMENT ÉtudIA V4.1 ===============');
   
   try {
