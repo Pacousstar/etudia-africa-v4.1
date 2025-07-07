@@ -644,8 +644,8 @@ module.exports = {
 // ===================================================================
 
 // 📦 IMPORT DEPENDENCIES DES PARTIES PRÉCÉDENTES
-const { app, cache } = require('./server-part1-imports-config');
-const { supabase } = require('./server-part2-middleware-cors');
+//const { app, cache } = require('./server-part1-imports-config');
+//const { supabase } = require('./server-part2-middleware-cors');
 
 // ===================================================================
 // 🏥 ROUTE SANTÉ SYSTÈME - ENRICHIE POUR OPENROUTER V4.1
@@ -1310,9 +1310,9 @@ module.exports = {
 // ===================================================================
 
 // 📦 IMPORT DEPENDENCIES DES PARTIES PRÉCÉDENTES
-const { app, deepseek, cache, OPENROUTER_CONFIG } = require('./server-part1-imports-config');
-const { chatLimiter, supabase } = require('./server-part2-middleware-cors');
-const { updateStudentProfile } = require('./server-part3-auth-students');
+//const { app, deepseek, cache, OPENROUTER_CONFIG } = require('./server-part1-imports-config');
+//const { chatLimiter, supabase } = require('./server-part2-middleware-cors');
+//const { updateStudentProfile } = require('./server-part3-auth-students');
 
 // ===================================================================
 // 🤖 ROUTE CHAT PRINCIPAL - OPENROUTER DEEPSEEK R1 RÉVOLUTIONNAIRE
@@ -1975,9 +1975,9 @@ module.exports = {
 // ===================================================================
 
 // 📦 IMPORT DEPENDENCIES DES PARTIES PRÉCÉDENTES
-const { app, deepseek, cache } = require('./server-part1-imports-config');
-const { uploadLimiter, upload, supabase } = require('./server-part2-middleware-cors');
-const { updateStudentProfile } = require('./server-part3-auth-students');
+//const { app, deepseek, cache } = require('./server-part1-imports-config');
+//const { uploadLimiter, upload, supabase } = require('./server-part2-middleware-cors');
+//const { updateStudentProfile } = require('./server-part3-auth-students');
 
 // ===================================================================
 // 🔍 FONCTION EXTRACTION TEXTE OCR OPTIMISÉE ÉtudIA
@@ -2758,11 +2758,11 @@ module.exports = {
 // ===================================================================
 
 // 📦 IMPORT DEPENDENCIES DES PARTIES PRÉCÉDENTES
-const { app, cache, OPENROUTER_CONFIG } = require('./server-part1-imports-config');
-const { supabase } = require('./server-part2-middleware-cors');
+//const { app, cache, OPENROUTER_CONFIG } = require('./server-part1-imports-config');
+//const { supabase } = require('./server-part2-middleware-cors');
 
 // 🌍 VARIABLES GLOBALES
-const PORT = process.env.PORT || 3001;
+//const PORT = process.env.PORT || 3001;
 
 // ===================================================================
 // 🔍 ROUTES DEBUG ET MAINTENANCE
