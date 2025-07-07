@@ -623,12 +623,12 @@ console.log('✅ Multer upload optimisé');
 console.log('📍 Prêt pour PARTIE 3 : Routes Auth + Students');
 
 // 🔄 EXPORT POUR UTILISATION DANS AUTRES PARTIES
-module.exports = {
-  chatLimiter,
-  uploadLimiter,
-  upload,
-  supabase
-};
+//module.exports = {
+  //chatLimiter,
+  //uploadLimiter,
+  //upload,
+  //supabase
+//};
 
 // ===================================================================
 // 🚀 ÉtudIA V4.1 - SERVER.JS PARTIE 3 : ROUTES AUTH + GESTION ÉLÈVES
