@@ -410,25 +410,22 @@ const generalLimiter = rateLimit({
 });
 
 // 🤖 Rate limiter spécifique CHAT OPENROUTER (plus strict)
-const chatLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,           // 🕐 15 minutes
-  max: 100,                           // 🔢 100 requêtes chat max (plus strict)
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // 100 requêtes par IP
   message: {
-    error: 'Limite de chat IA atteinte. Attendez 15 minutes.',
-    retry_after: 900,
-    type: 'chat_rate_limit',
-    suggestion: 'Utilisez le mode gratuit ou upgrader vers Premium'
+    error: 'Trop de requêtes. Attendez 15 minutes.',
+    retry_after: 900
   },
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req) => {
-    // 🎯 Clé spécifique chat avec user_id si disponible
-    const userId = req.body?.user_id || 'anonymous';
-    return `chat:${req.ip}:${userId}`;
-  },
-  // 🔧 Fonction custom de dépassement
-  onLimitReached: (req, res) => {
-    console.log(`🚨 Limite chat atteinte: IP ${req.ip}, User ${req.body?.user_id || 'anonyme'}`);
+  handler: (req, res) => {
+    console.log(`🚫 Rate limit dépassé pour IP: ${req.ip}`);
+    res.status(429).json({
+      error: 'Trop de requêtes. Attendez 15 minutes.',
+      retry_after: 900,
+      timestamp: new Date().toISOString()
+    });
   }
 });
 
@@ -580,36 +577,33 @@ const upload = multer({
 // 🗄️ CONFIGURATION SUPABASE AVEC VÉRIFICATION
 // ===================================================================
 
-// 🔧 Initialisation Supabase avec gestion d'erreurs
-let supabase;
-try {
-  supabase = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_ANON_KEY,
-    {
-      auth: {
-        autoRefreshToken: true,           // ✅ Refresh auto des tokens
-        persistSession: true,             // ✅ Persister les sessions
-        detectSessionInUrl: false         // ❌ Pas de détection URL pour API
-      },
-      realtime: {
-        params: {
-          eventsPerSecond: 10             // 🔢 Limite events realtime
-        }
-      }
-    }
-  );
+// 🔧 CORRECTION 3 : Validation Supabase améliorée
+const validateSupabaseConfig = () => {
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_ANON_KEY;
   
-  console.log('🗄️ Supabase configuré:', {
-    url: process.env.SUPABASE_URL ? '✅ OK' : '❌ MANQUANT',
-    key: process.env.SUPABASE_ANON_KEY ? '✅ OK' : '❌ MANQUANT',
-    status: '🟢 CONNECTÉ'
-  });
-} catch (error) {
-  console.error('❌ Erreur configuration Supabase:', error.message);
-  // 🔧 Fallback pour éviter crash total
-  supabase = null;
-}
+  if (!supabaseUrl || !supabaseKey) {
+    console.error('❌ ERREUR CRITIQUE: Configuration Supabase manquante !');
+    console.error('Variables requises:');
+    console.error('- SUPABASE_URL:', supabaseUrl ? '✅ Présente' : '❌ MANQUANTE');
+    console.error('- SUPABASE_ANON_KEY:', supabaseKey ? '✅ Présente' : '❌ MANQUANTE');
+    
+    return false;
+  }
+  
+  // Vérifier format URL
+  try {
+    new URL(supabaseUrl);
+    console.log('✅ URL Supabase valide:', supabaseUrl);
+    return true;
+  } catch (error) {
+    console.error('❌ URL Supabase invalide:', supabaseUrl);
+    return false;
+  }
+};
+
+// Appeler la validation
+validateSupabaseConfig();
 
 // ===================================================================
 // 📊 LOGS DIAGNOSTIC FINAL PARTIE 2
@@ -647,6 +641,47 @@ module.exports = {
 // 📦 IMPORT DEPENDENCIES DES PARTIES PRÉCÉDENTES
 //const { app, cache } = require('./server-part1-imports-config');
 //const { supabase } = require('./server-part2-middleware-cors');
+
+// 🔧 CORRECTION 2 : Route GET / (ajouter AVANT la route /health)
+app.get('/', (req, res) => {
+  console.log('🏠 Route racine appelée depuis:', req.get('origin') || 'Direct');
+  
+  res.json({
+    message: '🎓 ÉtudIA V4.1 Backend avec OpenRouter DeepSeek R1',
+    version: '4.1.0-openrouter-deepseek',
+    status: 'online',
+    timestamp: new Date().toISOString(),
+    server_info: {
+      platform: 'Render.com',
+      port: PORT,
+      environment: process.env.NODE_ENV,
+      uptime: Math.round(process.uptime()) + 's'
+    },
+    endpoints: {
+      health: '/health - Vérification santé système',
+      debug: '/debug - Informations détaillées',
+      chat: '/api/chat - Intelligence artificielle',
+      auth: '/api/auth/login - Authentification',
+      upload: '/api/upload - Téléchargement documents'
+    },
+    ai_provider: {
+      name: 'OpenRouter DeepSeek R1',
+      models: {
+        free: OPENROUTER_CONFIG.models.free,
+        paid: OPENROUTER_CONFIG.models.paid
+      },
+      status: '🟢 Opérationnel'
+    },
+    services: {
+      openrouter: '✅ Connecté',
+      cloudinary: process.env.CLOUDINARY_CLOUD_NAME ? '✅ Configuré' : '❌ Manquant',
+      supabase: process.env.SUPABASE_URL ? '✅ Configuré' : '❌ Configuration manquante'
+    },
+    made_by: '@Pacousstar - Côte d\'Ivoire 🇨🇮',
+    project_url: 'https://github.com/Pacousstar/etudia-africa-v4.1',
+    frontend_url: 'https://etudia-africa-v4.vercel.app'
+  });
+});
 
 // ===================================================================
 // 🏥 ROUTE SANTÉ SYSTÈME - ENRICHIE POUR OPENROUTER V4.1
@@ -3163,6 +3198,45 @@ function generateSystemDiagnostic() {
 
   return diagnostic;
 }
+
+
+// ===================================================================
+// 🔧 MIDDLEWARE 404 - GESTION ROUTES NON TROUVÉES
+// ===================================================================
+
+app.use('*', (req, res, next) => {
+  if (req.method === 'GET' || req.method === 'HEAD') {
+    console.log(`🌐 =============== REQUÊTE ÉtudIA V4.1 ===============`);
+    console.log(`📅 ${new Date().toLocaleString('fr-FR')}`);
+    console.log(`🎯 ${req.method} ${req.originalUrl}`);
+    console.log(`📍 IP: ${req.ip}`);
+    console.log(`🌍 Origine: ${req.get('origin') || 'Non spécifiée'}`);
+    console.log(`👤 User Agent: ${req.get('user-agent') || 'Non spécifié'}`);
+  }
+  
+  // Si aucune route trouvée
+  res.status(404).json({
+    error: 'Route non trouvée',
+    message: `La route ${req.method} ${req.originalUrl} n'existe pas`,
+    available_routes: [
+      'GET /',
+      'GET /health', 
+      'GET /debug',
+      'POST /api/chat',
+      'POST /api/auth/login',
+      'POST /api/auth/register',
+      'POST /api/upload'
+    ],
+    timestamp: new Date().toISOString(),
+    server: 'ÉtudIA V4.1 Backend'
+  });
+  
+  console.log(`❌ Route 404: ${req.method} ${req.originalUrl} depuis ${req.ip}`);
+  console.log(`⏱️ Durée du traitement: ${Date.now() - req.startTime} ms`);
+  console.log(`📤 Statut: 404`);
+  console.log(`🏁 =============== FIN REQUÊTE ===============`);
+});
+
 
 // ===================================================================
 // 🚀 DÉMARRAGE SERVEUR PRINCIPAL
