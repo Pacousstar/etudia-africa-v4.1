@@ -519,20 +519,15 @@ app.options('*', (req, res) => {
 // ===================================================================
 
 // 🔧 Configuration Cloudinary avec vérification
+// ✅ NOUVEAU (solution locale)
 try {
+  const { v2: cloudinary } = require('cloudinary');
   cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-    secure: true,                     // ✅ Forcer HTTPS
-    upload_preset: 'etudia_docs',     // 🆕 Preset dédié ÉtudIA
+    api_secret: process.env.CLOUDINARY_API_SECRET
   });
-  
-  console.log('☁️ Cloudinary configuré:', {
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME ? '✅ OK' : '❌ MANQUANT',
-    api_key: process.env.CLOUDINARY_API_KEY ? '✅ OK' : '❌ MANQUANT',
-    api_secret: process.env.CLOUDINARY_API_SECRET ? '✅ OK' : '❌ MANQUANT'
-  });
+  console.log('✅ Cloudinary configuré avec succès');
 } catch (error) {
   console.error('❌ Erreur configuration Cloudinary:', error.message);
 }
