@@ -1,1 +1,1149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ÉtudIA - Révolutionnons l'Éducation Africaine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        :root {
+            --etudia-primary: #FF6B35;
+            --etudia-success: #10B981;
+            --etudia-danger: #EF4444;
+            --etudia-info: #3B82F6;
+            --etudia-dark: #1F2937;
+            --etudia-light: #F9FAFB;
+            --etudia-white: #FFFFFF;
+            --gradient-primary: linear-gradient(135deg, #FF6B35, #EF4444);
+            --gradient-secondary: linear-gradient(135deg, #10B981, #3B82F6);
+            --glassmorphism: rgba(255, 255, 255, 0.1);
+            --glassmorphism-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1F2937, #111827);
+            color: var(--etudia-white);
+            overflow-x: hidden;
+        }
+
+        /* Navigation Tesla */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            backdrop-filter: blur(20px);
+            background: var(--glassmorphism);
+            border-bottom: 1px solid var(--glassmorphism-border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--etudia-white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--etudia-primary);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Petit Drapeau Flottant */
+        .floating-flag {
+            position: fixed;
+            top: 120px;
+            right: 30px;
+            width: 60px;
+            height: 40px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            animation: floatFlag 4s ease-in-out infinite;
+        }
+
+        .flag-mini {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .flag-mini-stripe {
+            flex: 1;
+            animation: waveFlag 2s ease-in-out infinite;
+        }
+
+        .flag-mini-orange {
+            background: #FF6B35;
+        }
+
+        .flag-mini-white {
+            background: #FFFFFF;
+        }
+
+        .flag-mini-green {
+            background: #10B981;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            padding: 6rem 2rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 107, 53, 0.1), transparent),
+                        radial-gradient(circle at 70% 80%, rgba(59, 130, 246, 0.1), transparent);
+            pointer-events: none;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--etudia-primary), var(--etudia-success));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            animation: slideInLeft 1s ease-out 0.3s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            animation: slideInLeft 1s ease-out 0.6s both;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--etudia-white);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--etudia-white);
+            padding: 1rem 2rem;
+            border: 2px solid var(--etudia-white);
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: var(--etudia-white);
+            color: var(--etudia-dark);
+            transform: translateY(-3px);
+        }
+
+        /* Carousel d'Images Hero */
+        .hero-carousel {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: slideInRight 1s ease-out;
+        }
+
+        .carousel-container {
+            width: 500%;
+            height: 100%;
+            display: flex;
+            animation: carouselSlide 15s infinite;
+        }
+
+        .carousel-slide {
+            width: 20%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        .carousel-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 107, 53, 0.3), rgba(16, 185, 129, 0.3));
+        }
+
+        .carousel-slide:nth-child(1) {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect fill="%23FF6B35" width="800" height="600"/><circle fill="%23FFFFFF" cx="400" cy="300" r="150"/><text x="400" y="320" font-family="Arial" font-size="60" fill="%23FF6B35" text-anchor="middle">IA</text></svg>');
+        }
+
+        .carousel-slide:nth-child(2) {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect fill="%2310B981" width="800" height="600"/><rect fill="%23FFFFFF" x="200" y="200" width="400" height="200" rx="20"/><text x="400" y="320" font-family="Arial" font-size="40" fill="%2310B981" text-anchor="middle">ÉTUDIER</text></svg>');
+        }
+
+        .carousel-slide:nth-child(3) {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect fill="%233B82F6" width="800" height="600"/><circle fill="%23FFFFFF" cx="300" cy="250" r="80"/><circle fill="%23FFFFFF" cx="500" cy="350" r="80"/><text x="400" y="320" font-family="Arial" font-size="35" fill="%23FFFFFF" text-anchor="middle">RÉUSSIR</text></svg>');
+        }
+
+        .carousel-slide:nth-child(4) {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect fill="%23EF4444" width="800" height="600"/><polygon fill="%23FFFFFF" points="400,150 450,250 550,250 475,325 500,425 400,375 300,425 325,325 250,250 350,250"/><text x="400" y="500" font-family="Arial" font-size="30" fill="%23FFFFFF" text-anchor="middle">EXCELLENCE</text></svg>');
+        }
+
+        .carousel-slide:nth-child(5) {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect fill="%23F59E0B" width="800" height="600"/><rect fill="%23FFFFFF" x="150" y="150" width="500" height="300" rx="30"/><text x="400" y="320" font-family="Arial" font-size="35" fill="%23F59E0B" text-anchor="middle">AFRIQUE</text></svg>');
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background: var(--etudia-white);
+            transform: scale(1.2);
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 2.5rem 2rem;
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glassmorphism-border);
+            border-bottom: 1px solid var(--glassmorphism-border);
+        }
+
+        .stats-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .stats-title {
+            font-size: 2rem;
+            font-weight: bold;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-subtitle {
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        .stats-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 1.5rem;
+            border-radius: 15px;
+            background: var(--glassmorphism);
+            border: 1px solid var(--glassmorphism-border);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: bold;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+
+        /* Acteurs Section */
+        .acteurs {
+            padding: 3rem 2rem;
+        }
+
+        .acteurs-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 2.5rem;
+        }
+
+        .acteurs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .acteur-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .acteur-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .acteur-card:hover::before {
+            left: 100%;
+        }
+
+        .acteur-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .acteur-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .acteur-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+            color: var(--etudia-primary);
+        }
+
+        .acteur-description {
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .acteur-btn {
+            background: var(--gradient-secondary);
+            color: var(--etudia-white);
+            padding: 0.7rem 1.3rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        .acteur-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--etudia-dark), #111827);
+            padding: 3rem 2rem 1.5rem;
+            border-top: 1px solid var(--glassmorphism-border);
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(255, 107, 53, 0.05), transparent),
+                        radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.05), transparent);
+            pointer-events: none;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-main {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand {
+            text-align: left;
+        }
+
+        .footer-logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .footer-tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .footer-description {
+            opacity: 0.7;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .footer-section h4 {
+            color: var(--etudia-primary);
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--etudia-white);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--etudia-primary);
+            opacity: 1;
+            transform: translateX(5px);
+        }
+
+        .footer-contact {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .footer-contact strong {
+            color: var(--etudia-success);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--glassmorphism-border);
+            padding-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copyright {
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--glassmorphism);
+            border: 1px solid var(--glassmorphism-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--etudia-white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--gradient-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes carouselSlide {
+            0%, 20% { transform: translateX(0); }
+            25%, 45% { transform: translateX(-20%); }
+            50%, 70% { transform: translateX(-40%); }
+            75%, 95% { transform: translateX(-60%); }
+            100% { transform: translateX(-80%); }
+        }
+
+        @keyframes floatFlag {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-5px) rotate(1deg);
+            }
+            50% {
+                transform: translateY(-8px) rotate(0deg);
+            }
+            75% {
+                transform: translateY(-3px) rotate(-1deg);
+            }
+        }
+
+        @keyframes waveFlag {
+            0%, 100% {
+                transform: scaleX(1);
+            }
+            50% {
+                transform: scaleX(1.02);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .footer-main {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+
+            .footer-brand {
+                grid-column: 1 / -1;
+                text-align: center;
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .stat-number {
+                font-size: 1.8rem;
+            }
+
+            .acteurs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .floating-flag {
+                top: 80px;
+                right: 15px;
+                width: 50px;
+                height: 33px;
+            }
+
+            .footer-main {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 1.5rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        /* Micro-interactions */
+        .btn-primary,
+        .btn-secondary,
+        .acteur-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before,
+        .btn-secondary::before,
+        .acteur-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover::before,
+        .btn-secondary:hover::before,
+        .acteur-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Petit Drapeau Flottant -->
+    <div class="floating-flag">
+        <div class="flag-mini">
+            <div class="flag-mini-stripe flag-mini-orange"></div>
+            <div class="flag-mini-stripe flag-mini-white"></div>
+            <div class="flag-mini-stripe flag-mini-green"></div>
+        </div>
+    </div>
+
+    <!-- Navigation Tesla -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">ÉtudIA</div>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#stats">Statistiques</a></li>
+                <li><a href="#acteurs">Nos Acteurs</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="/frontend/public/index.html">Interface V4.1</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="accueil" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Révolutionnons l'Éducation Africaine</h1>
+                <p>
+                    ÉtudIA est la première plateforme éducative IA entièrement dédiée à l'Afrique. 
+                    Accessible 24h/24, 7j/7, elle démocratise l'excellence éducative pour tous les élèves du continent.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#acteurs" class="btn-primary">Découvrir ÉtudIA</a>
+                    <a href="/backoffices/eleves/index.html" class="btn-secondary">Commencer Maintenant</a>
+                </div>
+            </div>
+            <div class="hero-carousel">
+                <div class="carousel-container">
+                    <div class="carousel-slide"></div>
+                    <div class="carousel-slide"></div>
+                    <div class="carousel-slide"></div>
+                    <div class="carousel-slide"></div>
+                    <div class="carousel-slide"></div>
+                </div>
+                <div class="carousel-indicators">
+                    <div class="indicator active"></div>
+                    <div class="indicator"></div>
+                    <div class="indicator"></div>
+                    <div class="indicator"></div>
+                    <div class="indicator"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="stats">
+        <div class="stats-header">
+            <h2 class="stats-title">ÉtudIA en Chiffres</h2>
+            <p class="stats-subtitle">Des résultats concrets qui parlent d'eux-mêmes</p>
+        </div>
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-number" data-count="289">0</div>
+                <div class="stat-label">Élèves Actifs</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="2156">0</div>
+                <div class="stat-label">Documents Analysés</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="15623">0</div>
+                <div class="stat-label">Conversations IA</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="12">0</div>
+                <div class="stat-label">Établissements</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Acteurs Section -->
+    <section id="acteurs" class="acteurs">
+        <div class="acteurs-container">
+            <h2 class="section-title">Votre Espace ÉtudIA</h2>
+            <p class="section-subtitle">Choisissez votre profil et accédez à votre backoffice personnalisé</p>
+            
+            <div class="acteurs-grid">
+                <div class="acteur-card">
+                    <span class="acteur-icon">👨‍🎓</span>
+                    <h3 class="acteur-title">Élèves</h3>
+                    <p class="acteur-description">
+                        Accédez à votre espace personnel avec IA assistant, gamification, 
+                        suivi de progression et liaison parents en temps réel.
+                    </p>
+                    <a href="/backoffices/eleves/index.html" class="acteur-btn">Accéder à Mon Espace</a>
+                </div>
+
+                <div class="acteur-card">
+                    <span class="acteur-icon">👨‍🏫</span>
+                    <h3 class="acteur-title">Enseignants</h3>
+                    <p class="acteur-description">
+                        Gérez vos classes, suivez la progression de vos élèves, 
+                        améliorez vos méthodes pédagogiques et communiquez avec les parents.
+                    </p>
+                    <a href="/backoffices/enseignants/index.html" class="acteur-btn">Gérer Mes Classes</a>
+                </div>
+
+                <div class="acteur-card">
+                    <span class="acteur-icon">👨‍👩‍👧‍👦</span>
+                    <h3 class="acteur-title">Parents</h3>
+                    <p class="acteur-description">
+                        Suivez l'activité scolaire de vos enfants en temps réel, 
+                        recevez des notifications et communiquez avec l'école.
+                    </p>
+                    <a href="/backoffices/parents/index.html" class="acteur-btn">Suivre Mes Enfants</a>
+                </div>
+
+                <div class="acteur-card">
+                    <span class="acteur-icon">🏫</span>
+                    <h3 class="acteur-title">Établissements</h3>
+                    <p class="acteur-description">
+                        Boostez vos résultats scolaires, modernisez votre pédagogie 
+                        et générez des revenus supplémentaires avec ÉtudIA.
+                    </p>
+                    <a href="/backoffices/etablissements/index.html" class="acteur-btn">Centre de Revenus</a>
+                </div>
+
+                <div class="acteur-card">
+                    <span class="acteur-icon">🏛️</span>
+                    <h3 class="acteur-title">DREN</h3>
+                    <p class="acteur-description">
+                        Supervision régionale avec cartographie adoption, 
+                        reporting Ministère et planification expansion.
+                    </p>
+                    <a href="/backoffices/dren/index.html" class="acteur-btn">Tableau de Bord Régional</a>
+                </div>
+
+                <div class="acteur-card">
+                    <span class="acteur-icon">🌟</span>
+                    <h3 class="acteur-title">Partenaires</h3>
+                    <p class="acteur-description">
+                        Rejoignez le réseau ÉtudIA avec commissions premium, 
+                        outils marketing et formation business continue.
+                    </p>
+                    <a href="/backoffices/partenaires/index.html" class="acteur-btn">Rejoindre ÉtudIA</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <div class="footer-logo">ÉtudIA</div>
+                    <p class="footer-tagline">Révolutionnons l'éducation africaine ensemble</p>
+                    <p class="footer-description">
+                        La première plateforme éducative IA entièrement conçue pour l'Afrique. 
+                        Nous croyons en l'égalité des chances éducatives pour tous les élèves du continent.
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Plateforme</h4>
+                    <ul class="footer-links">
+                        <li><a href="/pages/plans.html">Plans & Tarifs</a></li>
+                        <li><a href="/pages/about.html">À Propos</a></li>
+                        <li><a href="https://etudia-africa-v4-1.onrender.com/health">Statut API</a></li>
+                        <li><a href="/pages/support.html">Support</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Communauté</h4>
+                    <ul class="footer-links">
+                        <li><a href="/backoffices/eleves/index.html">Espace Élèves</a></li>
+                        <li><a href="/backoffices/enseignants/index.html">Espace Enseignants</a></li>
+                        <li><a href="/backoffices/parents/index.html">Espace Parents</a></li>
+                        <li><a href="/backoffices/partenaires/index.html">Devenir Partenaire</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <div class="footer-contact">
+                        <p><strong>Siège :</strong> Abidjan, Côte d'Ivoire</p>
+                        <p><strong>Email :</strong> contact@etudia-africa.com</p>
+                        <p><strong>Support :</strong> support@etudia-africa.com</p>
+                        <p><strong>Partenaires :</strong> partners@etudia-africa.com</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="copyright">
+                    © 2025 ÉtudIA - Tous droits réservés | Fièrement conçu en Côte d'Ivoire 🇨🇮
+                </div>
+                <div class="footer-socials">
+                    <a href="#" class="social-link">📧</a>
+                    <a href="#" class="social-link">📱</a>
+                    <a href="#" class="social-link">🐦</a>
+                    <a href="#" class="social-link">💼</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(31, 41, 55, 0.95)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.1)';
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Stats animation with database connection simulation
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const numbers = entry.target.querySelectorAll('.stat-number');
+                    numbers.forEach(number => {
+                        const targetValue = parseInt(number.getAttribute('data-count'));
+                        let current = 0;
+                        const increment = targetValue / 50;
+                        
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= targetValue) {
+                                number.textContent = targetValue.toLocaleString();
+                                clearInterval(timer);
+                            } else {
+                                number.textContent = Math.floor(current).toLocaleString();
+                            }
+                        }, 30);
+                    });
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stats').forEach(section => {
+            statsObserver.observe(section);
+        });
+
+        // Carousel indicators animation
+        let currentSlide = 0;
+        const indicators = document.querySelectorAll('.indicator');
+        
+        function updateIndicators() {
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % 5;
+            updateIndicators();
+        }, 3000);
+
+        // Database connection simulation for establishments count
+        async function updateEstablishmentsCount() {
+            try {
+                // Simulation d'une requête à la base de données
+                // En réalité, tu feras : fetch('https://etudia-africa-v4-1.onrender.com/api/stats/etablissements')
+                const response = await fetch('https://etudia-africa-v4-1.onrender.com/health');
+                if (response.ok) {
+                    // Pour l'instant, on utilise la valeur par défaut de 12
+                    // Quand l'API sera prête, tu remplaceras par la vraie valeur
+                    const establishmentStat = document.querySelector('[data-count="12"]');
+                    if (establishmentStat) {
+                        establishmentStat.setAttribute('data-count', '12'); // Valeur réelle de la DB
+                    }
+                }
+            } catch (error) {
+                console.log('API non disponible, utilisation des valeurs par défaut');
+            }
+        }
+
+        // Appel au chargement de la page
+        updateEstablishmentsCount();
+
+        // Acteur cards hover effects
+        document.querySelectorAll('.acteur-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-12px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Button click effects
+        document.querySelectorAll('.btn-primary, .btn-secondary, .acteur-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple');
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add ripple CSS dynamically
+        const style = document.createElement('style');
+        style.textContent = `
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.6);
+                transform: scale(0);
+                animation: ripple-animation 0.6s linear;
+                pointer-events: none;
+            }
+            
+            @keyframes ripple-animation {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
