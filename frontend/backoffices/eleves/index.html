@@ -1,1 +1,1177 @@
-backoffices/eleves/index.html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Espace ÉtudIA - Dashboard Élève</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --etudia-primary: #FF6B35;
+            --etudia-success: #10B981;
+            --etudia-danger: #EF4444;
+            --etudia-info: #3B82F6;
+            --etudia-warning: #F59E0B;
+            --etudia-dark: #1F2937;
+            --etudia-light: #F9FAFB;
+            --etudia-white: #FFFFFF;
+            --etudia-gray: #6B7280;
+            --gradient-primary: linear-gradient(135deg, #FF6B35, #EF4444);
+            --gradient-secondary: linear-gradient(135deg, #10B981, #3B82F6);
+            --glassmorphism: rgba(255, 255, 255, 0.1);
+            --glassmorphism-border: rgba(255, 255, 255, 0.2);
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --card-shadow-hover: 0 20px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1F2937, #111827);
+            color: var(--etudia-white);
+            min-height: 100vh;
+        }
+
+        /* Sidebar Tesla */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--gradient-primary);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--glassmorphism-border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid var(--glassmorphism-border);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--etudia-white);
+            margin-bottom: 0.5rem;
+        }
+
+        .user-info {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-nav {
+            padding: 2rem 0;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: var(--etudia-white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--glassmorphism);
+            border-left-color: var(--etudia-white);
+            transform: translateX(5px);
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            width: 20px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .header-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-subtitle {
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        /* Chat IA Widget */
+        .chat-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            z-index: 999;
+            transform: translateY(100%);
+        }
+
+        .chat-widget.open {
+            transform: translateY(0);
+        }
+
+        .chat-header {
+            background: var(--gradient-primary);
+            color: var(--etudia-white);
+            padding: 1rem;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: var(--etudia-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chat-close:hover {
+            transform: scale(1.2);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            max-height: 350px;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .message.user {
+            background: var(--gradient-primary);
+            color: var(--etudia-white);
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .message.ai {
+            background: var(--glassmorphism);
+            border: 1px solid var(--glassmorphism-border);
+            color: var(--etudia-white);
+        }
+
+        .chat-input-container {
+            padding: 1rem;
+            border-top: 1px solid var(--glassmorphism-border);
+        }
+
+        .chat-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 25px;
+            background: var(--glassmorphism);
+            color: var(--etudia-white);
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .chat-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .chat-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 50%;
+            color: var(--etudia-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            padding: 0.5rem;
+            border-radius: 12px;
+            background: var(--gradient-secondary);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--etudia-primary);
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Plans d'Abonnement Section */
+        .plans-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .plan-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .plan-card.featured {
+            border: 2px solid var(--etudia-primary);
+            transform: scale(1.03);
+        }
+
+        .plan-card.featured::before {
+            content: 'POPULAIRE';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-primary);
+            color: var(--etudia-white);
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .plan-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--etudia-primary);
+            margin-bottom: 0.8rem;
+        }
+
+        .plan-price {
+            font-size: 2rem;
+            font-weight: bold;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.4rem;
+        }
+
+        .plan-period {
+            opacity: 0.7;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-features li {
+            padding: 0.4rem 0;
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .plan-features li::before {
+            content: '✓';
+            color: var(--etudia-success);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .plan-btn {
+            background: var(--gradient-primary);
+            color: var(--etudia-white);
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+
+        .plan-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .plan-btn.current {
+            background: var(--etudia-success);
+        }
+
+        /* Gamification */
+        .gamification-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .level-progress {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+        }
+
+        .level-info {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .current-level {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--etudia-gray);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-secondary);
+            width: 0%;
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .badges-grid {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+        }
+
+        .badges-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+            gap: 1rem;
+        }
+
+        .badge {
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 12px;
+            background: var(--glassmorphism);
+            transition: all 0.3s ease;
+        }
+
+        .badge:hover {
+            transform: scale(1.05);
+        }
+
+        .badge-icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .badge-name {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .gamification-section {
+                grid-template-columns: 1fr;
+            }
+
+            .chat-widget {
+                width: 300px;
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+
+            .header-title {
+                font-size: 2rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .plans-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chat-widget {
+                width: 280px;
+                height: 350px;
+                bottom: 100px;
+                right: 20px;
+            }
+
+            .chat-toggle {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        /* Menu Toggle */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+            background: var(--gradient-primary);
+            color: var(--etudia-white);
+            border: none;
+            padding: 0.8rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--etudia-white);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card,
+        .plan-card,
+        .level-progress,
+        .badges-grid {
+            animation: slideIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu Toggle Mobile -->
+    <button class="menu-toggle" id="menuToggle">☰</button>
+
+    <!-- Sidebar Tesla -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">ÉtudIA</div>
+            <div class="user-info">
+                <strong>Marie Kouassi</strong><br>
+                Terminale C • Lycée Moderne
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="#dashboard" class="nav-link active">
+                    <span class="nav-icon">🏠</span>
+                    Dashboard
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#conversations" class="nav-link">
+                    <span class="nav-icon">💬</span>
+                    Chat IA
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#documents" class="nav-link">
+                    <span class="nav-icon">📄</span>
+                    Mes Documents
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#progression" class="nav-link">
+                    <span class="nav-icon">📈</span>
+                    Ma Progression
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#gamification" class="nav-link">
+                    <span class="nav-icon">🏆</span>
+                    Récompenses
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#parrainage" class="nav-link">
+                    <span class="nav-icon">💰</span>
+                    Parrainage
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#abonnement" class="nav-link">
+                    <span class="nav-icon">⭐</span>
+                    Mon Abonnement
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#parametres" class="nav-link">
+                    <span class="nav-icon">⚙️</span>
+                    Paramètres
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="../../public/index.html" class="nav-link">
+                    <span class="nav-icon">🏠</span>
+                    Retour Accueil
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Chat IA Toggle -->
+    <button class="chat-toggle" id="chatToggle">🤖</button>
+
+    <!-- Chat IA Widget -->
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-header">
+            <div class="chat-title">🤖 Assistant IA ÉtudIA</div>
+            <button class="chat-close" id="chatClose">×</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message ai">
+                👋 Salut Marie ! Je suis ton assistant IA ÉtudIA. Je peux t'aider avec tes devoirs, répondre à tes questions et t'accompagner dans tes études. Comment puis-je t'aider aujourd'hui ?
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Pose ta question ici...">
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="header-title">Bon retour Marie ! 🎓</h1>
+            <p class="header-subtitle">Prête à continuer ton aventure éducative avec ÉtudIA ? Utilise le chat IA en bas à droite !</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">📊</div>
+                    <div class="card-title">Interactions Aujourd'hui</div>
+                </div>
+                <div class="stat-number">12</div>
+                <div class="stat-label">sur 50 disponibles (Premium)</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">⏱️</div>
+                    <div class="card-title">Temps d'Étude</div>
+                </div>
+                <div class="stat-number">2h 15m</div>
+                <div class="stat-label">Cette semaine</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🎯</div>
+                    <div class="card-title">Objectifs Atteints</div>
+                </div>
+                <div class="stat-number">8/10</div>
+                <div class="stat-label">Ce mois-ci</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">📈</div>
+                    <div class="card-title">Progression Globale</div>
+                </div>
+                <div class="stat-number">+15%</div>
+                <div class="stat-label">Depuis le mois dernier</div>
+            </div>
+        </div>
+
+        <!-- Plans d'Abonnement -->
+        <section class="plans-section" id="abonnement">
+            <h2 class="section-title">📋 Mes Plans d'Abonnement</h2>
+            
+            <div class="plans-grid">
+                <div class="plan-card">
+                    <div class="plan-name">Découverte</div>
+                    <div class="plan-price">0 F</div>
+                    <div class="plan-period">3 jours gratuits</div>
+                    <ul class="plan-features">
+                        <li>4 interactions/jour</li>
+                        <li>DeepSeek R1 gratuit</li>
+                        <li>Tous modes apprentissage</li>
+                        <li>Upload documents</li>
+                    </ul>
+                    <button class="plan-btn">Terminé</button>
+                </div>
+
+                <div class="plan-card featured">
+                    <div class="plan-name">Premium</div>
+                    <div class="plan-price">6,500 F</div>
+                    <div class="plan-period">par mois</div>
+                    <ul class="plan-features">
+                        <li>50 interactions/jour</li>
+                        <li>DeepSeek R1 optimisé</li>
+                        <li>Export PDF conversations</li>
+                        <li>Analytics avancées</li>
+                    </ul>
+                    <button class="plan-btn current">Plan Actuel</button>
+                </div>
+
+                <div class="plan-card">
+                    <div class="plan-name">Excellence</div>
+                    <div class="plan-price">10,000 F</div>
+                    <div class="plan-period">par mois</div>
+                    <ul class="plan-features">
+                        <li>200 interactions/jour</li>
+                        <li>DeepSeek R1 prioritaire</li>
+                        <li>IA tuteur personnel</li>
+                        <li>Parcours personnalisé</li>
+                        <li>Support 24h/24</li>
+                    </ul>
+                    <button class="plan-btn">Upgrader</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gamification -->
+        <section class="gamification-section">
+            <div class="level-progress">
+                <h3 class="section-title">🏆 Mon Niveau</h3>
+                <div class="level-info">
+                    <div class="current-level">Niveau 7</div>
+                    <div>Apprenant Avancé</div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <div style="text-align: center; opacity: 0.8; font-size: 0.9rem;">
+                    1,250 / 2,000 XP jusqu'au niveau 8
+                </div>
+            </div>
+
+            <div class="badges-grid">
+                <h3 class="section-title">🏅 Mes Badges</h3>
+                <div class="badges-container">
+                    <div class="badge">
+                        <div class="badge-icon">🔥</div>
+                        <div class="badge-name">Série 7 jours</div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon">📚</div>
+                        <div class="badge-name">100 Documents</div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon">💡</div>
+                        <div class="badge-name">Génie Maths</div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon">⭐</div>
+                        <div class="badge-name">1ère Semaine</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Configuration API ÉtudIA V4.1
+        const ETUDIA_API_BASE = 'https://etudia-africa-v4-1.onrender.com';
+        const ETUDIA_FRONTEND = 'https://etudia-africa-v4-1.vercel.app';
+
+        // État de l'application
+        let isTyping = false;
+        let currentUser = {
+            id: 'marie_kouassi_001',
+            nom: 'Marie Kouassi',
+            classe: 'Terminale C',
+            etablissement: 'Lycée Moderne',
+            abonnement: 'premium'
+        };
+
+        // Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 1024) {
+                if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                }
+            }
+        });
+
+        // Navigation active state
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (!link.getAttribute('href').includes('.html')) {
+                    e.preventDefault();
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Chat IA Widget Management
+        const chatToggle = document.getElementById('chatToggle');
+        const chatWidget = document.getElementById('chatWidget');
+        const chatClose = document.getElementById('chatClose');
+        const chatInput = document.getElementById('chatInput');
+        const chatMessages = document.getElementById('chatMessages');
+
+        // Toggle chat widget
+        chatToggle.addEventListener('click', () => {
+            chatWidget.classList.add('open');
+            chatToggle.style.display = 'none';
+            chatInput.focus();
+        });
+
+        // Close chat widget
+        chatClose.addEventListener('click', () => {
+            chatWidget.classList.remove('open');
+            chatToggle.style.display = 'block';
+        });
+
+        // Chat input handling
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !isTyping) {
+                const message = chatInput.value.trim();
+                if (message) {
+                    sendMessageToIA(message);
+                    chatInput.value = '';
+                }
+            }
+        });
+
+        // Envoyer message à l'IA ÉtudIA V4.1
+        async function sendMessageToIA(message) {
+            if (isTyping) return;
+            
+            // Afficher le message de l'utilisateur
+            addMessage(message, 'user');
+            
+            // Afficher l'indicateur de frappe
+            isTyping = true;
+            const typingMessage = addMessage('ÉtudIA réfléchit...', 'ai');
+            typingMessage.innerHTML = '<div class="loading"></div> ÉtudIA réfléchit...';
+
+            try {
+                // Connexion à ton API V4.1 existante
+                const response = await fetch(`${ETUDIA_API_BASE}/api/chat`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        user_id: currentUser.id,
+                        student_context: {
+                            nom: currentUser.nom,
+                            classe: currentUser.classe,
+                            etablissement: currentUser.etablissement,
+                            abonnement: currentUser.abonnement
+                        },
+                        mode: 'normal', // ou 'step_by_step', 'direct_solution', 'audio'
+                        openrouter_model: 'deepseek/deepseek-r1' // Ton modèle configuré
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // Supprimer l'indicateur de frappe
+                    typingMessage.remove();
+                    
+                    // Afficher la réponse de l'IA
+                    addMessage(data.response || data.message, 'ai');
+                    
+                    // Mettre à jour les stats d'interactions
+                    updateInteractionStats();
+                    
+                } else {
+                    throw new Error('Erreur API ÉtudIA');
+                }
+                
+            } catch (error) {
+                console.error('Erreur IA:', error);
+                
+                // Supprimer l'indicateur de frappe
+                typingMessage.remove();
+                
+                // Message d'erreur sympathique
+                addMessage('Désolé, je rencontre une petite difficulté technique. Peux-tu réessayer dans quelques instants ? 🤔', 'ai');
+            }
+            
+            isTyping = false;
+        }
+
+        // Ajouter un message au chat
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            messageDiv.textContent = text;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return messageDiv;
+        }
+
+        // Mettre à jour les stats d'interactions
+        function updateInteractionStats() {
+            const interactionElement = document.querySelector('.stat-number');
+            if (interactionElement) {
+                let current = parseInt(interactionElement.textContent);
+                current += 1;
+                interactionElement.textContent = current;
+                
+                // Animation du compteur
+                interactionElement.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    interactionElement.style.transform = 'scale(1)';
+                }, 200);
+            }
+        }
+
+        // Progress bar animation
+        setTimeout(() => {
+            document.querySelector('.progress-fill').style.width = '65%';
+        }, 1000);
+
+        // Plan button interactions
+        document.querySelectorAll('.plan-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (btn.textContent === 'Upgrader') {
+                    // Redirection vers page de paiement
+                    window.open(`${ETUDIA_FRONTEND}/upgrade?plan=excellence&user=${currentUser.id}`, '_blank');
+                } else if (btn.textContent === 'Plan Actuel') {
+                    // Redirection vers gestion abonnement
+                    window.open(`${ETUDIA_FRONTEND}/account/subscription`, '_blank');
+                }
+            });
+        });
+
+        // Responsive sidebar
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 1024) {
+                sidebar.classList.remove('open');
+            }
+        });
+
+        // Chargement des données utilisateur au démarrage
+        async function loadUserData() {
+            try {
+                const response = await fetch(`${ETUDIA_API_BASE}/api/student/profile?user_id=${currentUser.id}`);
+                if (response.ok) {
+                    const userData = await response.json();
+                    
+                    // Mettre à jour les informations utilisateur
+                    if (userData.student) {
+                        document.querySelector('.user-info strong').textContent = userData.student.nom;
+                        document.querySelector('.user-info').innerHTML = 
+                            `<strong>${userData.student.nom}</strong><br>${userData.student.classe} • ${userData.student.etablissement}`;
+                    }
+                    
+                    // Mettre à jour les stats si disponibles
+                    if (userData.stats) {
+                        updateDashboardStats(userData.stats);
+                    }
+                }
+            } catch (error) {
+                console.log('Utilisation des données par défaut');
+            }
+        }
+
+        // Mettre à jour les stats du dashboard
+        function updateDashboardStats(stats) {
+            const statElements = document.querySelectorAll('.stat-number');
+            if (stats.interactions_today !== undefined) {
+                statElements[0].textContent = stats.interactions_today;
+            }
+            if (stats.study_time !== undefined) {
+                statElements[1].textContent = stats.study_time;
+            }
+            if (stats.objectives_reached !== undefined) {
+                statElements[2].textContent = stats.objectives_reached;
+            }
+            if (stats.global_progress !== undefined) {
+                statElements[3].textContent = `+${stats.global_progress}%`;
+            }
+        }
+
+        // Connexion temps réel (optionnel pour notifications)
+        function connectWebSocket() {
+            try {
+                const ws = new WebSocket(`wss://etudia-africa-v4-1.onrender.com/ws/${currentUser.id}`);
+                
+                ws.onmessage = (event) => {
+                    const data = JSON.parse(event.data);
+                    
+                    if (data.type === 'notification') {
+                        showNotification(data.message);
+                    }
+                    
+                    if (data.type === 'stats_update') {
+                        updateDashboardStats(data.stats);
+                    }
+                };
+                
+                ws.onclose = () => {
+                    // Reconnexion automatique après 5 secondes
+                    setTimeout(connectWebSocket, 5000);
+                };
+                
+            } catch (error) {
+                console.log('WebSocket non disponible');
+            }
+        }
+
+        // Afficher notification
+        function showNotification(message) {
+            // Créer une notification toast simple
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--gradient-primary);
+                color: white;
+                padding: 1rem;
+                border-radius: 10px;
+                z-index: 9999;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.style.opacity = '1', 100);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Initialisation au chargement de la page
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUserData();
+            connectWebSocket();
+            
+            // Message de bienvenue personnalisé
+            setTimeout(() => {
+                if (chatMessages.children.length === 1) {
+                    addMessage(`D'ailleurs ${currentUser.nom}, j'ai vu que tu es en ${currentUser.classe}. Je peux t'aider avec tes matières scientifiques ! 📚✨`, 'ai');
+                }
+            }, 2000);
+        });
+
+        // Raccourcis clavier
+        document.addEventListener('keydown', (e) => {
+            // Ctrl/Cmd + K pour ouvrir le chat
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                if (!chatWidget.classList.contains('open')) {
+                    chatToggle.click();
+                } else {
+                    chatInput.focus();
+                }
+            }
+            
+            // Escape pour fermer le chat
+            if (e.key === 'Escape' && chatWidget.classList.contains('open')) {
+                chatClose.click();
+            }
+        });
+    </script>
+</body>
+</html>
