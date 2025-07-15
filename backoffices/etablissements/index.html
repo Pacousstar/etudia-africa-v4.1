@@ -1,1 +1,785 @@
-etablissements/index.html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centre de Revenus ÉtudIA - Établissements</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --etudia-primary: #FF6B35;
+            --etudia-success: #10B981;
+            --etudia-danger: #EF4444;
+            --etudia-info: #3B82F6;
+            --etudia-warning: #F59E0B;
+            --etudia-dark: #1F2937;
+            --etudia-white: #FFFFFF;
+            --gradient-primary: linear-gradient(135deg, #FF6B35, #EF4444);
+            --gradient-secondary: linear-gradient(135deg, #10B981, #3B82F6);
+            --glassmorphism: rgba(255, 255, 255, 0.1);
+            --glassmorphism-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1F2937, #111827);
+            color: var(--etudia-white);
+            min-height: 100vh;
+        }
+
+        /* Sidebar Tesla */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--gradient-primary);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--glassmorphism-border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid var(--glassmorphism-border);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--etudia-white);
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-nav {
+            padding: 2rem 0;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: var(--etudia-white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--glassmorphism);
+            border-left-color: var(--etudia-white);
+            transform: translateX(5px);
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            width: 20px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .header-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-subtitle {
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        /* Revenue Cards */
+        .revenue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .revenue-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .revenue-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .revenue-card:hover::before {
+            left: 100%;
+        }
+
+        .revenue-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            padding: 0.5rem;
+            border-radius: 12px;
+            background: var(--gradient-secondary);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--etudia-primary);
+        }
+
+        .revenue-amount {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .revenue-change {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .positive {
+            color: var(--etudia-success);
+        }
+
+        .negative {
+            color: var(--etudia-danger);
+        }
+
+        /* Performance Section */
+        .performance-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .performance-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .performance-chart {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .chart-placeholder {
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--glassmorphism);
+            border-radius: 15px;
+            font-size: 1.1rem;
+            opacity: 0.7;
+        }
+
+        .rankings-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .ranking-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--glassmorphism-border);
+        }
+
+        .ranking-item:last-child {
+            border-bottom: none;
+        }
+
+        .ranking-position {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .rank-1 {
+            background: #FFD700;
+            color: #000;
+        }
+
+        .rank-2 {
+            background: #C0C0C0;
+            color: #000;
+        }
+
+        .rank-3 {
+            background: #CD7F32;
+            color: #fff;
+        }
+
+        .rank-4 {
+            background: var(--etudia-info);
+            color: #fff;
+        }
+
+        .school-name {
+            flex: 1;
+            margin-left: 1rem;
+            font-weight: 600;
+        }
+
+        .school-score {
+            font-weight: bold;
+            color: var(--etudia-success);
+        }
+
+        /* Team Section */
+        .team-section {
+            margin-bottom: 2rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .teacher-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .teacher-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .teacher-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .teacher-name {
+            font-weight: bold;
+            color: var(--etudia-primary);
+        }
+
+        .teacher-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-active {
+            background: var(--etudia-success);
+            color: var(--etudia-white);
+        }
+
+        .teacher-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .teacher-stat {
+            text-align: center;
+            padding: 0.8rem;
+            background: var(--glassmorphism);
+            border-radius: 10px;
+        }
+
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--etudia-info);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-top: 0.2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .performance-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+
+            .header-title {
+                font-size: 2rem;
+            }
+
+            .revenue-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Menu Toggle */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+            background: var(--gradient-primary);
+            color: var(--etudia-white);
+            border: none;
+            padding: 0.8rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        /* Chat Widget */
+        .chat-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 50%;
+            color: var(--etudia-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu Toggle Mobile -->
+    <button class="menu-toggle" id="menuToggle">☰</button>
+
+    <!-- Chat IA Toggle -->
+    <button class="chat-toggle" onclick="alert('Chat IA pour établissements - Bientôt disponible !')">🏫</button>
+
+    <!-- Sidebar Tesla -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">ÉtudIA</div>
+            <div class="user-info">
+                <strong>Lycée Moderne d'Abidjan</strong><br>
+                Directeur • 347 élèves
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="#dashboard" class="nav-link active">
+                    <span class="nav-icon">🏠</span>
+                    Dashboard
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#revenus" class="nav-link">
+                    <span class="nav-icon">💰</span>
+                    Centre Revenus
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#performance" class="nav-link">
+                    <span class="nav-icon">📊</span>
+                    Performance
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#equipe" class="nav-link">
+                    <span class="nav-icon">👥</span>
+                    Mon Équipe
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#eleves" class="nav-link">
+                    <span class="nav-icon">🎓</span>
+                    Mes Élèves
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#analytics" class="nav-link">
+                    <span class="nav-icon">📈</span>
+                    Analytics
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#rapports" class="nav-link">
+                    <span class="nav-icon">📋</span>
+                    Rapports
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#parametres" class="nav-link">
+                    <span class="nav-icon">⚙️</span>
+                    Paramètres
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="/index.html" class="nav-link">
+                    <span class="nav-icon">🏠</span>
+                    Retour Accueil
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="header-title">Centre de Revenus 🏫</h1>
+            <p class="header-subtitle">Optimisez vos performances avec ÉtudIA et générez des revenus durables</p>
+        </div>
+
+        <!-- Revenue Cards -->
+        <div class="revenue-grid">
+            <div class="revenue-card">
+                <div class="card-header">
+                    <div class="card-icon">💰</div>
+                    <div class="card-title">Revenus ÉtudIA</div>
+                </div>
+                <div class="revenue-amount">69,400 F</div>
+                <div class="revenue-change positive">+23% ce mois</div>
+            </div>
+
+            <div class="revenue-card">
+                <div class="card-header">
+                    <div class="card-icon">👥</div>
+                    <div class="card-title">Élèves ÉtudIA</div>
+                </div>
+                <div class="revenue-amount">347</div>
+                <div class="revenue-change positive">+18 nouveaux</div>
+            </div>
+
+            <div class="revenue-card">
+                <div class="card-header">
+                    <div class="card-icon">📊</div>
+                    <div class="card-title">Taux Adoption</div>
+                </div>
+                <div class="revenue-amount">89%</div>
+                <div class="revenue-change positive">+5% vs mois dernier</div>
+            </div>
+
+            <div class="revenue-card">
+                <div class="card-header">
+                    <div class="card-icon">🎯</div>
+                    <div class="card-title">Moyenne Générale</div>
+                </div>
+                <div class="revenue-amount">14.8</div>
+                <div class="revenue-change positive">+1.2 points</div>
+            </div>
+        </div>
+
+        <!-- Performance Section -->
+        <section class="performance-section">
+            <h2 class="section-title">📊 Performance vs Concurrence</h2>
+            
+            <div class="performance-grid">
+                <div class="performance-chart">
+                    <h3 style="margin-bottom: 1rem;">Évolution des Résultats</h3>
+                    <div class="chart-placeholder">
+                        📈 Graphique d'évolution des notes<br>
+                        (Intégration Chart.js à venir)
+                    </div>
+                </div>
+
+                <div class="rankings-card">
+                    <h3 style="margin-bottom: 1rem;">🏆 Classement Région</h3>
+                    <div class="ranking-item">
+                        <div class="ranking-position rank-1">1</div>
+                        <div class="school-name">Lycée Moderne</div>
+                        <div class="school-score">14.8</div>
+                    </div>
+                    <div class="ranking-item">
+                        <div class="ranking-position rank-2">2</div>
+                        <div class="school-name">Collège Sainte-Marie</div>
+                        <div class="school-score">14.2</div>
+                    </div>
+                    <div class="ranking-item">
+                        <div class="ranking-position rank-3">3</div>
+                        <div class="school-name">Lycée Technique</div>
+                        <div class="school-score">13.9</div>
+                    </div>
+                    <div class="ranking-item">
+                        <div class="ranking-position rank-4">4</div>
+                        <div class="school-name">Collège Notre-Dame</div>
+                        <div class="school-score">13.5</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section class="team-section">
+            <h2 class="section-title">👥 Mon Équipe Enseignante</h2>
+            
+            <div class="team-grid">
+                <div class="teacher-card">
+                    <div class="teacher-header">
+                        <div class="teacher-name">Prof. Adjoua N.</div>
+                        <div class="teacher-status status-active">Active</div>
+                    </div>
+                    <div class="teacher-stats">
+                        <div class="teacher-stat">
+                            <div class="stat-value">32</div>
+                            <div class="stat-label">Élèves</div>
+                        </div>
+                        <div class="teacher-stat">
+                            <div class="stat-value">28</div>
+                            <div class="stat-label">Avec ÉtudIA</div>
+                        </div>
+                        <div class="teacher-stat">
+                            <div class="stat-value">47,200F</div>
+                            <div class="stat-label">Gains</div>
+                        </div>
+                        <div class="teacher-stat">
+                            <div class="stat-value">95%</div>
+                            <div class="stat-label">Engagement</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="teacher-card">
+                    <div class="teacher-header">
+                        <div class="teacher-name">M. Koné B.</div>
+                        <div class="teacher-status status-active">Active</div>
+                    </div>
+                    <div class="teacher-stats">
+                        <div class="teacher-stat">
+                            <div class="stat-value">29</div>
+                            <div class="stat-label">Élèves</div>
+                        </div>
+                        <div class="teacher-stat">
+                            <div class="stat-value">25</div>
+                            <div class="stat-label">Avec ÉtudIA</div>
+                        </div>
+                        <div class="teacher-stat">
+                            <div class="stat-value">42,800F</div>
+                            <div class="stat-label">Gains</div>
+                        </div>
+                        <div class="teacher-stat">
+                            <div class="stat-value">92%</div>
+                            <div class="stat-label">Engagement</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="teacher-card">
+                    <div class="teacher-header">
+                        <div class="teacher-name">Mme Diallo A.</div>
+                        <div class="teacher-status status-active">Active</div>
+                    </div>
+                    <div class="teacher-stats">
+                        <div class="teacher-stat">
+                            <div class="stat-value">35</div>
+                            <div class="stat-label">Élèves</div>
+                        </div>
+                        <div class="teacher-stat">
+                            <div class="stat-value">31</div>
+                            <div class="stat-label">Avec ÉtudIA</div>
+                        </div>
+                        <div class="teacher-stat">
+                            <div class="stat-value">51,500F</div>
+                            <div class="stat-label">Gains</div>
+                        </div>
+                        <div class="teacher-stat">
+                            <div class="stat-value">97%</div>
+                            <div class="stat-label">Engagement</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 1024) {
+                if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                }
+            }
+        });
+
+        // Navigation active state
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (!link.getAttribute('href').includes('.html')) {
+                    e.preventDefault();
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Responsive sidebar
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 1024) {
+                sidebar.classList.remove('open');
+            }
+        });
+
+        // Animation des revenus
+        document.querySelectorAll('.revenue-amount').forEach(amount => {
+            const text = amount.textContent;
+            const numericValue = parseFloat(text.replace(/[^0-9.]/g, ''));
+            
+            if (!isNaN(numericValue)) {
+                let current = 0;
+                const increment = numericValue / 50;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= numericValue) {
+                        amount.textContent = text;
+                        clearInterval(timer);
+                    } else {
+                        if (text.includes('F')) {
+                            amount.textContent = Math.floor(current).toLocaleString() + ' F';
+                        } else if (text.includes('%')) {
+                            amount.textContent = Math.floor(current) + '%';
+                        } else {
+                            amount.textContent = Math.floor(current);
+                        }
+                    }
+                }, 30);
+            }
+        });
+
+        // Animation du classement
+        setTimeout(() => {
+            document.querySelectorAll('.ranking-item').forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateX(-20px)';
+                    setTimeout(() => {
+                        item.style.transition = 'all 0.5s ease';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateX(0)';
+                    }, 50);
+                }, index * 100);
+            });
+        }, 1000);
+    </script>
+</body>
+</html>
