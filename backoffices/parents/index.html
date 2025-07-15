@@ -1,1 +1,810 @@
-parents/index.html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suivi Familial ÉtudIA - Parents</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --etudia-primary: #FF6B35;
+            --etudia-success: #10B981;
+            --etudia-danger: #EF4444;
+            --etudia-info: #3B82F6;
+            --etudia-warning: #F59E0B;
+            --etudia-dark: #1F2937;
+            --etudia-white: #FFFFFF;
+            --gradient-primary: linear-gradient(135deg, #FF6B35, #EF4444);
+            --gradient-secondary: linear-gradient(135deg, #10B981, #3B82F6);
+            --glassmorphism: rgba(255, 255, 255, 0.1);
+            --glassmorphism-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1F2937, #111827);
+            color: var(--etudia-white);
+            min-height: 100vh;
+        }
+
+        /* Sidebar Tesla */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--gradient-primary);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--glassmorphism-border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid var(--glassmorphism-border);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--etudia-white);
+            margin-bottom: 0.5rem;
+        }
+
+        .user-info {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-nav {
+            padding: 2rem 0;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: var(--etudia-white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--glassmorphism);
+            border-left-color: var(--etudia-white);
+            transform: translateX(5px);
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            width: 20px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .header-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-subtitle {
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        /* Children Cards */
+        .children-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .children-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .child-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .child-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .child-card:hover::before {
+            left: 100%;
+        }
+
+        .child-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .child-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .child-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--etudia-primary);
+        }
+
+        .child-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-online {
+            background: var(--etudia-success);
+            color: var(--etudia-white);
+        }
+
+        .status-offline {
+            background: var(--etudia-danger);
+            color: var(--etudia-white);
+        }
+
+        .child-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--glassmorphism);
+            border-radius: 10px;
+        }
+
+        .info-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--etudia-info);
+        }
+
+        .info-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-top: 0.2rem;
+        }
+
+        .child-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.85rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--etudia-white);
+        }
+
+        .btn-secondary {
+            background: var(--gradient-secondary);
+            color: var(--etudia-white);
+        }
+
+        .btn-info {
+            background: var(--etudia-info);
+            color: var(--etudia-white);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Notifications Section */
+        .notifications-section {
+            margin-bottom: 2rem;
+        }
+
+        .notifications-list {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .notification-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--glassmorphism-border);
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        .notification-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            padding: 0.5rem;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notif-success {
+            background: var(--etudia-success);
+        }
+
+        .notif-warning {
+            background: var(--etudia-warning);
+        }
+
+        .notif-info {
+            background: var(--etudia-info);
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .notification-text {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .notification-time {
+            opacity: 0.6;
+            font-size: 0.8rem;
+            margin-left: 1rem;
+        }
+
+        /* Communication Section */
+        .communication-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .communication-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .teacher-list {
+            list-style: none;
+        }
+
+        .teacher-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--glassmorphism-border);
+        }
+
+        .teacher-item:last-child {
+            border-bottom: none;
+        }
+
+        .teacher-name {
+            font-weight: 600;
+        }
+
+        .teacher-subject {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        .contact-btn {
+            padding: 0.4rem 1rem;
+            background: var(--etudia-info);
+            color: var(--etudia-white);
+            border: none;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            background: var(--etudia-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .communication-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+
+            .header-title {
+                font-size: 2rem;
+            }
+
+            .children-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .child-actions {
+                justify-content: center;
+            }
+        }
+
+        /* Menu Toggle */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+            background: var(--gradient-primary);
+            color: var(--etudia-white);
+            border: none;
+            padding: 0.8rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        /* Chat Widget */
+        .chat-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 50%;
+            color: var(--etudia-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu Toggle Mobile -->
+    <button class="menu-toggle" id="menuToggle">☰</button>
+
+    <!-- Chat IA Toggle -->
+    <button class="chat-toggle" onclick="alert('Chat IA pour parents - Bientôt disponible !')">👨‍👩‍👧‍👦</button>
+
+    <!-- Sidebar Tesla -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">ÉtudIA</div>
+            <div class="user-info">
+                <strong>M. & Mme Bamba</strong><br>
+                Parents • 2 enfants
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="#dashboard" class="nav-link active">
+                    <span class="nav-icon">🏠</span>
+                    Dashboard
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#enfants" class="nav-link">
+                    <span class="nav-icon">👨‍👩‍👧‍👦</span>
+                    Mes Enfants
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#notifications" class="nav-link">
+                    <span class="nav-icon">🔔</span>
+                    Notifications
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#communication" class="nav-link">
+                    <span class="nav-icon">💬</span>
+                    Communication
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#rapports" class="nav-link">
+                    <span class="nav-icon">📊</span>
+                    Rapports
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#objectifs" class="nav-link">
+                    <span class="nav-icon">🎯</span>
+                    Objectifs
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#abonnements" class="nav-link">
+                    <span class="nav-icon">⭐</span>
+                    Abonnements
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#parametres" class="nav-link">
+                    <span class="nav-icon">⚙️</span>
+                    Paramètres
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="/index.html" class="nav-link">
+                    <span class="nav-icon">🏠</span>
+                    Retour Accueil
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="header-title">Suivi Familial 👨‍👩‍👧‍👦</h1>
+            <p class="header-subtitle">Surveillez la progression de vos enfants avec ÉtudIA en temps réel</p>
+        </div>
+
+        <!-- Children Section -->
+        <section class="children-section">
+            <h2 class="section-title">👨‍👩‍👧‍👦 Mes Enfants</h2>
+            
+            <div class="children-grid">
+                <div class="child-card">
+                    <div class="child-header">
+                        <div class="child-name">Marie Bamba</div>
+                        <div class="child-status status-online">En ligne</div>
+                    </div>
+                    <div class="child-info">
+                        <div class="info-item">
+                            <div class="info-value">16.2/20</div>
+                            <div class="info-label">Moyenne Générale</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-value">Terminale C</div>
+                            <div class="info-label">Classe</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-value">2h 30m</div>
+                            <div class="info-label">Temps ÉtudIA/jour</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-value">95%</div>
+                            <div class="info-label">Assiduité</div>
+                        </div>
+                    </div>
+                    <div class="child-actions">
+                        <button class="btn btn-primary">Voir Détails</button>
+                        <button class="btn btn-secondary">Conversations IA</button>
+                        <button class="btn btn-info">Contacter Profs</button>
+                    </div>
+                </div>
+
+                <div class="child-card">
+                    <div class="child-header">
+                        <div class="child-name">Yves Bamba</div>
+                        <div class="child-status status-offline">Hors ligne</div>
+                    </div>
+                    <div class="child-info">
+                        <div class="info-item">
+                            <div class="info-value">13.8/20</div>
+                            <div class="info-label">Moyenne Générale</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-value">Première D</div>
+                            <div class="info-label">Classe</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-value">1h 45m</div>
+                            <div class="info-label">Temps ÉtudIA/jour</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-value">87%</div>
+                            <div class="info-label">Assiduité</div>
+                        </div>
+                    </div>
+                    <div class="child-actions">
+                        <button class="btn btn-primary">Voir Détails</button>
+                        <button class="btn btn-secondary">Conversations IA</button>
+                        <button class="btn btn-info">Contacter Profs</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notifications Section -->
+        <section class="notifications-section">
+            <h2 class="section-title">🔔 Notifications Récentes</h2>
+            
+            <div class="notifications-list">
+                <div class="notification-item">
+                    <div class="notification-icon notif-success">✅</div>
+                    <div class="notification-content">
+                        <div class="notification-title">Marie - Excellent travail en Maths</div>
+                        <div class="notification-text">Note de 18/20 au devoir de dérivées. Félicitations !</div>
+                    </div>
+                    <div class="notification-time">Il y a 2h</div>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-icon notif-warning">⚠️</div>
+                    <div class="notification-content">
+                        <div class="notification-title">Yves - Absence en Physique</div>
+                        <div class="notification-text">Absent au cours de 14h-16h. Motif à justifier.</div>
+                    </div>
+                    <div class="notification-time">Il y a 4h</div>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-icon notif-info">📚</div>
+                    <div class="notification-content">
+                        <div class="notification-title">Marie - 50 interactions ÉtudIA atteintes</div>
+                        <div class="notification-text">Très bonne utilisation de l'assistant IA cette semaine.</div>
+                    </div>
+                    <div class="notification-time">Hier</div>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-icon notif-success">🎯</div>
+                    <div class="notification-content">
+                        <div class="notification-title">Objectif mensuel atteint</div>
+                        <div class="notification-text">Yves a atteint son objectif de progression en Chimie.</div>
+                    </div>
+                    <div class="notification-time">Il y a 2 jours</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Communication Section -->
+        <section class="communication-section">
+            <div class="communication-card">
+                <h3 class="section-title">💬 Enseignants de Marie</h3>
+                <ul class="teacher-list">
+                    <li class="teacher-item">
+                        <div>
+                            <div class="teacher-name">Prof. Adjoua N.</div>
+                            <div class="teacher-subject">Physique-Chimie</div>
+                        </div>
+                        <button class="contact-btn">Contacter</button>
+                    </li>
+                    <li class="teacher-item">
+                        <div>
+                            <div class="teacher-name">M. Koné B.</div>
+                            <div class="teacher-subject">Mathématiques</div>
+                        </div>
+                        <button class="contact-btn">Contacter</button>
+                    </li>
+                    <li class="teacher-item">
+                        <div>
+                            <div class="teacher-name">Mme Diallo A.</div>
+                            <div class="teacher-subject">Français</div>
+                        </div>
+                        <button class="contact-btn">Contacter</button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="communication-card">
+                <h3 class="section-title">💬 Enseignants d'Yves</h3>
+                <ul class="teacher-list">
+                    <li class="teacher-item">
+                        <div>
+                            <div class="teacher-name">Prof. Koffi J.</div>
+                            <div class="teacher-subject">Sciences Physiques</div>
+                        </div>
+                        <button class="contact-btn">Contacter</button>
+                    </li>
+                    <li class="teacher-item">
+                        <div>
+                            <div class="teacher-name">Mme Ouattara F.</div>
+                            <div class="teacher-subject">SVT</div>
+                        </div>
+                        <button class="contact-btn">Contacter</button>
+                    </li>
+                    <li class="teacher-item">
+                        <div>
+                            <div class="teacher-name">M. Traoré S.</div>
+                            <div class="teacher-subject">Histoire-Géo</div>
+                        </div>
+                        <button class="contact-btn">Contacter</button>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 1024) {
+                if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                }
+            }
+        });
+
+        // Navigation active state
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (!link.getAttribute('href').includes('.html')) {
+                    e.preventDefault();
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Responsive sidebar
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 1024) {
+                sidebar.classList.remove('open');
+            }
+        });
+
+        // Animation des valeurs
+        document.querySelectorAll('.info-value').forEach(value => {
+            const text = value.textContent;
+            if (text.includes('/20') || text.includes('%')) {
+                const numericValue = parseFloat(text.replace(/[^0-9.]/g, ''));
+                if (!isNaN(numericValue)) {
+                    let current = 0;
+                    const increment = numericValue / 30;
+                    
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= numericValue) {
+                            value.textContent = text;
+                            clearInterval(timer);
+                        } else {
+                            if (text.includes('/20')) {
+                                value.textContent = current.toFixed(1) + '/20';
+                            } else if (text.includes('%')) {
+                                value.textContent = Math.floor(current) + '%';
+                            }
+                        }
+                    }, 50);
+                }
+            }
+        });
+
+        // Simulation de notifications en temps réel
+        setInterval(() => {
+            const notifications = document.querySelectorAll('.notification-item');
+            notifications.forEach((notif, index) => {
+                setTimeout(() => {
+                    notif.style.opacity = '0.7';
+                    setTimeout(() => {
+                        notif.style.opacity = '1';
+                    }, 200);
+                }, index * 100);
+            });
+        }, 10000);
+    </script>
+</body>
+</html>
