@@ -1,1 +1,944 @@
-partenaires/index.html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réseau ÉtudIA - Partenaires</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --etudia-primary: #FF6B35;
+            --etudia-success: #10B981;
+            --etudia-danger: #EF4444;
+            --etudia-info: #3B82F6;
+            --etudia-warning: #F59E0B;
+            --etudia-dark: #1F2937;
+            --etudia-white: #FFFFFF;
+            --gradient-primary: linear-gradient(135deg, #FF6B35, #EF4444);
+            --gradient-secondary: linear-gradient(135deg, #10B981, #3B82F6);
+            --glassmorphism: rgba(255, 255, 255, 0.1);
+            --glassmorphism-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1F2937, #111827);
+            color: var(--etudia-white);
+            min-height: 100vh;
+        }
+
+        /* Sidebar Tesla */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--gradient-primary);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--glassmorphism-border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid var(--glassmorphism-border);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--etudia-white);
+            margin-bottom: 0.5rem;
+        }
+
+        .user-info {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-nav {
+            padding: 2rem 0;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: var(--etudia-white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--glassmorphism);
+            border-left-color: var(--etudia-white);
+            transform: translateX(5px);
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            width: 20px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .header-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-subtitle {
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        /* Partner Level */
+        .partner-level {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .level-badge {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--gradient-primary);
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .level-benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .benefit-item {
+            background: var(--glassmorphism);
+            padding: 1rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .benefit-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .benefit-text {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Earnings Dashboard */
+        .earnings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .earnings-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .earnings-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .earnings-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--etudia-success);
+        }
+
+        .earnings-amount {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .earnings-label {
+            opacity: 0.8;
+            font-size: 1rem;
+        }
+
+        .earnings-change {
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .positive {
+            color: var(--etudia-success);
+        }
+
+        /* Referrals Section */
+        .referrals-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .referrals-container {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .referral-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: var(--glassmorphism);
+            border-radius: 15px;
+        }
+
+        .referral-input {
+            flex: 1;
+            padding: 0.8rem;
+            background: var(--glassmorphism);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 10px;
+            color: var(--etudia-white);
+            font-family: monospace;
+        }
+
+        .copy-btn {
+            padding: 0.8rem 1.5rem;
+            background: var(--gradient-secondary);
+            color: var(--etudia-white);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .referral-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .referral-stat {
+            text-align: center;
+            padding: 1rem;
+            background: var(--glassmorphism);
+            border-radius: 15px;
+        }
+
+        .referral-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--etudia-info);
+        }
+
+        .referral-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        /* Marketing Tools */
+        .marketing-section {
+            margin-bottom: 2rem;
+        }
+
+        .marketing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .marketing-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .marketing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .marketing-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .marketing-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            color: var(--etudia-primary);
+        }
+
+        .marketing-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--etudia-primary);
+        }
+
+        .marketing-description {
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .marketing-btn {
+            background: var(--gradient-secondary);
+            color: var(--etudia-white);
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        .marketing-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Community Section */
+        .community-section {
+            margin-bottom: 2rem;
+        }
+
+        .community-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .community-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--glassmorphism-border);
+        }
+
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+
+        .leaderboard-rank {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-right: 1rem;
+        }
+
+        .rank-1 {
+            background: #FFD700;
+            color: #000;
+        }
+
+        .rank-2 {
+            background: #C0C0C0;
+            color: #000;
+        }
+
+        .rank-3 {
+            background: #CD7F32;
+            color: #fff;
+        }
+
+        .rank-other {
+            background: var(--etudia-info);
+            color: #fff;
+        }
+
+        .partner-name {
+            flex: 1;
+            font-weight: 600;
+        }
+
+        .partner-earnings {
+            font-weight: bold;
+            color: var(--etudia-success);
+        }
+
+        .training-item {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: var(--glassmorphism);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .training-item:hover {
+            transform: translateX(5px);
+        }
+
+        .training-title {
+            font-weight: bold;
+            color: var(--etudia-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .training-description {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .community-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+
+            .header-title {
+                font-size: 2rem;
+            }
+
+            .earnings-grid,
+            .marketing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .level-benefits {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Menu Toggle */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+            background: var(--gradient-primary);
+            color: var(--etudia-white);
+            border: none;
+            padding: 0.8rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        /* Chat Widget */
+        .chat-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 50%;
+            color: var(--etudia-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu Toggle Mobile -->
+    <button class="menu-toggle" id="menuToggle">☰</button>
+
+    <!-- Chat IA Toggle -->
+    <button class="chat-toggle" onclick="alert('Chat IA pour partenaires - Bientôt disponible !')">🌟</button>
+
+    <!-- Sidebar Tesla -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">ÉtudIA</div>
+            <div class="user-info">
+                <strong>Jean-Baptiste K.</strong><br>
+                Partenaire Premium • Niveau Gold
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="#dashboard" class="nav-link active">
+                    <span class="nav-icon">🏠</span>
+                    Dashboard
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#gains" class="nav-link">
+                    <span class="nav-icon">💰</span>
+                    Mes Gains
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#parrainage" class="nav-link">
+                    <span class="nav-icon">👥</span>
+                    Parrainage
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#marketing" class="nav-link">
+                    <span class="nav-icon">📢</span>
+                    Outils Marketing
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#analytics" class="nav-link">
+                    <span class="nav-icon">📊</span>
+                    Analytics
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#communaute" class="nav-link">
+                    <span class="nav-icon">🤝</span>
+                    Communauté
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#formations" class="nav-link">
+                    <span class="nav-icon">🎓</span>
+                    Formations
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#support" class="nav-link">
+                    <span class="nav-icon">💬</span>
+                    Support
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="/index.html" class="nav-link">
+                    <span class="nav-icon">🏠</span>
+                    Retour Accueil
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="header-title">Réseau ÉtudIA 🌟</h1>
+            <p class="header-subtitle">Développez votre activité avec les commissions les plus attractives du marché</p>
+        </div>
+
+        <!-- Partner Level -->
+        <div class="partner-level">
+            <div class="level-badge">🥇 Partenaire Gold</div>
+            <p style="opacity: 0.8; margin-bottom: 1rem;">Commission premium : 10% • Plus de 50 filleuls</p>
+            
+            <div class="level-benefits">
+                <div class="benefit-item">
+                    <div class="benefit-icon">💰</div>
+                    <div class="benefit-text">Commission 10%<br>La plus élevée</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🎯</div>
+                    <div class="benefit-text">Outils Marketing<br>Exclusifs</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">📞</div>
+                    <div class="benefit-text">Support<br>Prioritaire</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🎓</div>
+                    <div class="benefit-text">Formation<br>Continue</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings Dashboard -->
+        <div class="earnings-grid">
+            <div class="earnings-card">
+                <div class="earnings-icon">💰</div>
+                <div class="earnings-amount">184,500 F</div>
+                <div class="earnings-label">Gains Totaux</div>
+                <div class="earnings-change positive">+32% ce mois</div>
+            </div>
+
+            <div class="earnings-card">
+                <div class="earnings-icon">👥</div>
+                <div class="earnings-amount">67</div>
+                <div class="earnings-label">Filleuls Actifs</div>
+                <div class="earnings-change positive">+8 nouveaux</div>
+            </div>
+
+            <div class="earnings-card">
+                <div class="earnings-icon">📊</div>
+                <div class="earnings-amount">8.2%</div>
+                <div class="earnings-label">Taux Conversion</div>
+                <div class="earnings-change positive">+1.5% vs moyenne</div>
+            </div>
+
+            <div class="earnings-card">
+                <div class="earnings-icon">🎯</div>
+                <div class="earnings-amount">127,300 F</div>
+                <div class="earnings-label">Projection Mois</div>
+                <div class="earnings-change positive">Objectif dépassé</div>
+            </div>
+        </div>
+
+        <!-- Referrals Section -->
+        <section class="referrals-section">
+            <h2 class="section-title">👥 Mon Système de Parrainage</h2>
+            
+            <div class="referrals-container">
+                <div class="referral-link">
+                    <span style="margin-right: 1rem;">🔗 Lien de parrainage :</span>
+                    <input type="text" class="referral-input" value="https://etudia-africa.com/ref/jean-baptiste-k" readonly>
+                    <button class="copy-btn" onclick="navigator.clipboard.writeText('https://etudia-africa.com/ref/jean-baptiste-k'); alert('Lien copié!')">Copier</button>
+                </div>
+
+                <div class="referral-stats">
+                    <div class="referral-stat">
+                        <div class="referral-number">342</div>
+                        <div class="referral-label">Clics sur lien</div>
+                    </div>
+                    <div class="referral-stat">
+                        <div class="referral-number">89</div>
+                        <div class="referral-label">Inscriptions</div>
+                    </div>
+                    <div class="referral-stat">
+                        <div class="referral-number">67</div>
+                        <div class="referral-label">Conversions</div>
+                    </div>
+                    <div class="referral-stat">
+                        <div class="referral-number">19.6%</div>
+                        <div class="referral-label">Taux conversion</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Marketing Tools -->
+        <section class="marketing-section">
+            <h2 class="section-title">📢 Outils Marketing Exclusifs</h2>
+            
+            <div class="marketing-grid">
+                <div class="marketing-card">
+                    <div class="marketing-header">
+                        <div class="marketing-icon">🎨</div>
+                        <div class="marketing-title">Kit Visuel</div>
+                    </div>
+                    <div class="marketing-description">
+                        Logos, bannières, affiches et visuels ÉtudIA personnalisés 
+                        avec votre code partenaire pour maximiser l'impact.
+                    </div>
+                    <button class="marketing-btn">Télécharger Kit</button>
+                </div>
+
+                <div class="marketing-card">
+                    <div class="marketing-header">
+                        <div class="marketing-icon">📱</div>
+                        <div class="marketing-title">Réseaux Sociaux</div>
+                    </div>
+                    <div class="marketing-description">
+                        Posts pré-conçus pour Facebook, Instagram, WhatsApp et LinkedIn. 
+                        Contenu optimisé pour l'engagement et la conversion.
+                    </div>
+                    <button class="marketing-btn">Accéder aux Posts</button>
+                </div>
+
+                <div class="marketing-card">
+                    <div class="marketing-header">
+                        <div class="marketing-icon">📧</div>
+                        <div class="marketing-title">Campagnes Email</div>
+                    </div>
+                    <div class="marketing-description">
+                        Templates d'emails personnalisés pour vos prospects. 
+                        Séquences automatisées et follow-up optimisés.
+                    </div>
+                    <button class="marketing-btn">Créer Campagne</button>
+                </div>
+
+                <div class="marketing-card">
+                    <div class="marketing-header">
+                        <div class="marketing-icon">📄</div>
+                        <div class="marketing-title">Présentations</div>
+                    </div>
+                    <div class="marketing-description">
+                        Slides PowerPoint professionnels pour présenter ÉtudIA 
+                        aux écoles, parents et partenaires potentiels.
+                    </div>
+                    <button class="marketing-btn">Télécharger PPT</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Section -->
+        <section class="community-section">
+            <h2 class="section-title">🤝 Communauté Partenaires</h2>
+            
+            <div class="community-grid">
+                <div class="community-card">
+                    <h3 style="margin-bottom: 1rem;">🏆 Top Partenaires</h3>
+                    
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-rank rank-1">1</div>
+                        <div class="partner-name">Sarah M.</div>
+                        <div class="partner-earnings">247,500 F</div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-rank rank-2">2</div>
+                        <div class="partner-name">Michel D.</div>
+                        <div class="partner-earnings">198,200 F</div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-rank rank-3">3</div>
+                        <div class="partner-name">Jean-Baptiste K.</div>
+                        <div class="partner-earnings">184,500 F</div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-rank rank-other">4</div>
+                        <div class="partner-name">Aminata T.</div>
+                        <div class="partner-earnings">156,800 F</div>
+                    </div>
+                </div>
+
+                <div class="community-card">
+                    <h3 style="margin-bottom: 1rem;">🎓 Formations Disponibles</h3>
+                    
+                    <div class="training-item" onclick="alert('Formation : Techniques de vente ÉtudIA')">
+                        <div class="training-title">Techniques de Vente</div>
+                        <div class="training-description">Maîtrisez l'art de présenter ÉtudIA aux prospects</div>
+                    </div>
+
+                    <div class="training-item" onclick="alert('Formation : Marketing Digital')">
+                        <div class="training-title">Marketing Digital</div>
+                        <div class="training-description">Optimisez votre présence en ligne et vos conversions</div>
+                    </div>
+
+                    <div class="training-item" onclick="alert('Formation : Gestion Communauté')">
+                        <div class="training-title">Gestion de Communauté</div>
+                        <div class="training-description">Animez et développez votre réseau de filleuls</div>
+                    </div>
+
+                    <div class="training-item" onclick="alert('Webinaire : Stratégies 2025')">
+                        <div class="training-title">Webinaire : Stratégies 2025</div>
+                        <div class="training-description">Les nouvelles opportunités du marché EdTech</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 1024) {
+                if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                }
+            }
+        });
+
+        // Navigation active state
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (!link.getAttribute('href').includes('.html')) {
+                    e.preventDefault();
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Responsive sidebar
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 1024) {
+                sidebar.classList.remove('open');
+            }
+        });
+
+        // Animation des gains
+        document.querySelectorAll('.earnings-amount').forEach(amount => {
+            const text = amount.textContent;
+            const numericValue = parseFloat(text.replace(/[^0-9.]/g, ''));
+            
+            if (!isNaN(numericValue)) {
+                let current = 0;
+                const increment = numericValue / 50;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= numericValue) {
+                        amount.textContent = text;
+                        clearInterval(timer);
+                    } else {
+                        if (text.includes('F')) {
+                            amount.textContent = Math.floor(current).toLocaleString() + ' F';
+                        } else if (text.includes('%')) {
+                            amount.textContent = current.toFixed(1) + '%';
+                        } else {
+                            amount.textContent = Math.floor(current);
+                        }
+                    }
+                }, 30);
+            }
+        });
+
+        // Animation des stats de parrainage
+        document.querySelectorAll('.referral-number').forEach(number => {
+            const text = number.textContent;
+            const numericValue = parseFloat(text.replace(/[^0-9.]/g, ''));
+            
+            if (!isNaN(numericValue)) {
+                let current = 0;
+                const increment = numericValue / 40;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= numericValue) {
+                        number.textContent = text;
+                        clearInterval(timer);
+                    } else {
+                        if (text.includes('%')) {
+                            number.textContent = current.toFixed(1) + '%';
+                        } else {
+                            number.textContent = Math.floor(current);
+                        }
+                    }
+                }, 50);
+            }
+        });
+
+        // Animation du leaderboard
+        setTimeout(() => {
+            document.querySelectorAll('.leaderboard-item').forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.transform = 'translateX(-20px)';
+                    item.style.opacity = '0.5';
+                    setTimeout(() => {
+                        item.style.transition = 'all 0.5s ease';
+                        item.style.transform = 'translateX(0)';
+                        item.style.opacity = '1';
+                    }, 50);
+                }, index * 100);
+            });
+        }, 1000);
+    </script>
+</body>
+</html>
