@@ -1,1 +1,968 @@
-enseignants/index.html 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👨‍🏫 Centre Pédagogique ÉtudIA - Enseignants</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --etudia-primary: #FF6B35;
+            --etudia-success: #10B981;
+            --etudia-danger: #EF4444;
+            --etudia-info: #3B82F6;
+            --etudia-warning: #F59E0B;
+            --etudia-dark: #1F2937;
+            --etudia-white: #FFFFFF;
+            --gradient-primary: linear-gradient(135deg, #FF6B35, #EF4444);
+            --gradient-secondary: linear-gradient(135deg, #10B981, #3B82F6);
+            --glassmorphism: rgba(255, 255, 255, 0.1);
+            --glassmorphism-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1F2937, #111827);
+            color: var(--etudia-white);
+            min-height: 100vh;
+        }
+
+        /* Sidebar Tesla */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--gradient-primary);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--glassmorphism-border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid var(--glassmorphism-border);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--etudia-white);
+            margin-bottom: 0.5rem;
+        }
+
+        .user-info {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-nav {
+            padding: 2rem 0;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: var(--etudia-white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--glassmorphism);
+            border-left-color: var(--etudia-white);
+            transform: translateX(5px);
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            width: 20px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .header-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-subtitle {
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        /* Stats Cards */
+        .stats-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .stat-card:hover::before {
+            left: 100%;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            color: var(--etudia-primary);
+        }
+
+        .stat-trend {
+            font-size: 0.8rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            background: var(--etudia-success);
+            color: var(--etudia-white);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--etudia-info);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .content-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: var(--etudia-primary);
+        }
+
+        /* Élèves List */
+        .presence-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--etudia-white);
+        }
+
+        .btn-secondary {
+            background: var(--gradient-secondary);
+            color: var(--etudia-white);
+        }
+
+        .btn-info {
+            background: var(--etudia-info);
+            color: var(--etudia-white);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .eleves-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .eleve-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-bottom: 1px solid var(--glassmorphism-border);
+            transition: all 0.3s ease;
+        }
+
+        .eleve-item:last-child {
+            border-bottom: none;
+        }
+
+        .eleve-item:hover {
+            background: var(--glassmorphism);
+            transform: translateX(5px);
+        }
+
+        .eleve-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .eleve-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            color: var(--etudia-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .eleve-details h4 {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .eleve-details span {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-actif {
+            background: var(--etudia-success);
+            color: var(--etudia-white);
+        }
+
+        .status-inactif {
+            background: var(--etudia-danger);
+            color: var(--etudia-white);
+        }
+
+        /* Commission Summary */
+        .commission-summary {
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .commission-amount {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .commission-detail {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .commission-breakdown {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .breakdown-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--glassmorphism);
+            border-radius: 15px;
+        }
+
+        .breakdown-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--etudia-info);
+        }
+
+        .breakdown-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-top: 0.3rem;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .action-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .action-card:hover::before {
+            left: 100%;
+        }
+
+        .action-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--etudia-primary);
+        }
+
+        .action-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .action-desc {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+
+            .header-title {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Menu Toggle */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+            background: var(--gradient-primary);
+            color: var(--etudia-white);
+            border: none;
+            padding: 0.8rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        /* Chat Widget */
+        .chat-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 50%;
+            color: var(--etudia-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu Toggle Mobile -->
+    <button class="menu-toggle" id="menuToggle">☰</button>
+
+    <!-- Chat IA Toggle -->
+    <button class="chat-toggle" onclick="alert('Assistant IA pour enseignants - Bientôt disponible !')">👨‍🏫</button>
+
+    <!-- Sidebar Tesla -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">ÉtudIA</div>
+            <div class="user-info">
+                <strong>Prof. Adjoua N.</strong><br>
+                Physique-Chimie • Terminale C
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="#dashboard" class="nav-link active">
+                    <span class="nav-icon">🏠</span>
+                    Dashboard
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#classes" class="nav-link">
+                    <span class="nav-icon">👨‍🎓</span>
+                    Mes Classes
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#presences" class="nav-link">
+                    <span class="nav-icon">📋</span>
+                    Présences
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#devoirs" class="nav-link">
+                    <span class="nav-icon">📚</span>
+                    Upload Devoirs
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#analytics" class="nav-link">
+                    <span class="nav-icon">📊</span>
+                    Analytics
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#commissions" class="nav-link">
+                    <span class="nav-icon">💰</span>
+                    Commissions
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#notifications" class="nav-link">
+                    <span class="nav-icon">🔔</span>
+                    Notifications
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#formation" class="nav-link">
+                    <span class="nav-icon">🎓</span>
+                    Formation
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#parrainage" class="nav-link">
+                    <span class="nav-icon">🔗</span>
+                    Parrainage
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="/index.html" class="nav-link">
+                    <span class="nav-icon">🏠</span>
+                    Retour Accueil
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="header-title">Centre Pédagogique 👨‍🏫</h1>
+            <p class="header-subtitle">Gérez vos classes, suivez vos élèves et optimisez votre enseignement avec ÉtudIA</p>
+        </div>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <h2 class="section-title">📊 Vue d'ensemble</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">👨‍🎓</div>
+                        <div class="stat-trend">+3 cette semaine</div>
+                    </div>
+                    <div class="stat-value">25</div>
+                    <div class="stat-label">Élèves Terminale C</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-trend">+12,800F</div>
+                    </div>
+                    <div class="stat-value">47,200F</div>
+                    <div class="stat-label">Commissions ce mois</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-trend">+2.3%</div>
+                    </div>
+                    <div class="stat-value">95%</div>
+                    <div class="stat-label">Taux présence</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-trend">+1.1 pts</div>
+                    </div>
+                    <div class="stat-value">16.2/20</div>
+                    <div class="stat-label">Moyenne classe</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Grid -->
+        <div class="main-grid">
+            <!-- Liste des Élèves -->
+            <div class="content-card">
+                <h3 class="card-title">👨‍🎓 Mes Élèves - Terminale C</h3>
+                
+                <div class="presence-controls">
+                    <button class="btn btn-primary">
+                        📋 Faire l'appel
+                    </button>
+                    <button class="btn btn-secondary">
+                        📤 Notification parents
+                    </button>
+                    <button class="btn btn-info">
+                        📊 Export liste
+                    </button>
+                </div>
+                
+                <div class="eleves-list">
+                    <div class="eleve-item">
+                        <div class="eleve-info">
+                            <div class="eleve-avatar">AK</div>
+                            <div class="eleve-details">
+                                <h4>Aya Kouadio</h4>
+                                <span>Utilise ÉtudIA • 18.5/20 • Présente</span>
+                            </div>
+                        </div>
+                        <div class="status-badge status-actif">Actif ÉtudIA</div>
+                    </div>
+                    
+                    <div class="eleve-item">
+                        <div class="eleve-info">
+                            <div class="eleve-avatar">KB</div>
+                            <div class="eleve-details">
+                                <h4>Kofi Bamba</h4>
+                                <span>Utilise ÉtudIA • 16.8/20 • Présent</span>
+                            </div>
+                        </div>
+                        <div class="status-badge status-actif">Actif ÉtudIA</div>
+                    </div>
+                    
+                    <div class="eleve-item">
+                        <div class="eleve-info">
+                            <div class="eleve-avatar">MT</div>
+                            <div class="eleve-details">
+                                <h4>Marie Traoré</h4>
+                                <span>Nouvelle • 14.2/20 • Absente</span>
+                            </div>
+                        </div>
+                        <div class="status-badge status-inactif">À activer</div>
+                    </div>
+                    
+                    <div class="eleve-item">
+                        <div class="eleve-info">
+                            <div class="eleve-avatar">YD</div>
+                            <div class="eleve-details">
+                                <h4>Yves Diabaté</h4>
+                                <span>Utilise ÉtudIA • 17.1/20 • Présent</span>
+                            </div>
+                        </div>
+                        <div class="status-badge status-actif">Actif ÉtudIA</div>
+                    </div>
+                    
+                    <div class="eleve-item">
+                        <div class="eleve-info">
+                            <div class="eleve-avatar">SO</div>
+                            <div class="eleve-details">
+                                <h4>Salimata Ouattara</h4>
+                                <span>Utilise ÉtudIA • 19.3/20 • Présente</span>
+                            </div>
+                        </div>
+                        <div class="status-badge status-actif">Actif ÉtudIA</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Commissions & Gains -->
+            <div class="content-card">
+                <h3 class="card-title">💰 Gains & Commissions</h3>
+                
+                <div class="commission-summary">
+                    <div class="commission-amount">47,200F</div>
+                    <div class="commission-detail">
+                        22 élèves parrainés × 500F + bonus performance (65%)
+                    </div>
+                </div>
+                
+                <div class="commission-breakdown">
+                    <div class="breakdown-item">
+                        <div class="breakdown-value">22</div>
+                        <div class="breakdown-label">Élèves parrainés</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-value">65%</div>
+                        <div class="breakdown-label">Bonus performance</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-value">11,000F</div>
+                        <div class="breakdown-label">Commissions base</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-value">36,200F</div>
+                        <div class="breakdown-label">Avec bonus</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <div class="action-card">
+                <div class="action-icon">📚</div>
+                <div class="action-title">Upload Devoirs</div>
+                <div class="action-desc">Ajouter des exercices pour vos classes</div>
+            </div>
+            
+            <div class="action-card">
+                <div class="action-icon">🔔</div>
+                <div class="action-title">Notifier Parents</div>
+                <div class="action-desc">Envoyer des messages automatiques</div>
+            </div>
+            
+            <div class="action-card">
+                <div class="action-icon">📊</div>
+                <div class="action-title">Rapport PDF</div>
+                <div class="action-desc">Générer rapport de performance</div>
+            </div>
+            
+            <div class="action-card">
+                <div class="action-icon">🎓</div>
+                <div class="action-title">Formation ÉtudIA</div>
+                <div class="action-desc">Accéder aux ressources pédagogiques</div>
+            </div>
+            
+            <div class="action-card">
+                <div class="action-icon">🔗</div>
+                <div class="action-title">Liens Parrainage</div>
+                <div class="action-desc">Générer vos liens personnalisés</div>
+            </div>
+            
+            <div class="action-card">
+                <div class="action-icon">🎯</div>
+                <div class="action-title">Support Prioritaire</div>
+                <div class="action-desc">Assistance technique dédiée</div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 1024) {
+                if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                }
+            }
+        });
+
+        // Navigation active state
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (!link.getAttribute('href').includes('.html')) {
+                    e.preventDefault();
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Responsive sidebar
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 1024) {
+                sidebar.classList.remove('open');
+            }
+        });
+
+        // Animation des valeurs statistiques
+        document.querySelectorAll('.stat-value').forEach(stat => {
+            const text = stat.textContent;
+            if (text.includes('/20') || text.includes('%') || text.includes('F')) {
+                let numericValue;
+                if (text.includes('F')) {
+                    numericValue = parseFloat(text.replace(/[^0-9.]/g, ''));
+                } else if (text.includes('/20')) {
+                    numericValue = parseFloat(text.replace('/20', ''));
+                } else if (text.includes('%')) {
+                    numericValue = parseFloat(text.replace('%', ''));
+                } else {
+                    numericValue = parseFloat(text);
+                }
+                
+                if (!isNaN(numericValue)) {
+                    let current = 0;
+                    const increment = numericValue / 50;
+                    
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= numericValue) {
+                            current = numericValue;
+                            clearInterval(timer);
+                            stat.textContent = text;
+                        } else {
+                            if (text.includes('F')) {
+                                stat.textContent = Math.floor(current).toLocaleString() + 'F';
+                            } else if (text.includes('/20')) {
+                                stat.textContent = current.toFixed(1) + '/20';
+                            } else if (text.includes('%')) {
+                                stat.textContent = Math.floor(current) + '%';
+                            } else {
+                                stat.textContent = Math.floor(current);
+                            }
+                        }
+                    }, 30);
+                }
+            }
+        });
+
+        // Simulation de notifications temps réel pour enseignants
+        setTimeout(() => {
+            showNotification('👨‍🎓 Nouvel élève inscrit via votre lien !', 'success');
+        }, 3000);
+
+        setTimeout(() => {
+            showNotification('💰 Commission de 500F ajoutée à votre compte', 'info');
+        }, 7000);
+
+        setTimeout(() => {
+            showNotification('📊 Marie Traoré a rejoint ÉtudIA !', 'success');
+        }, 12000);
+
+        // Fonction pour afficher des notifications
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'var(--etudia-success)' : 'var(--etudia-info)'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                z-index: 1001;
+                animation: slideInRight 0.5s ease;
+                max-width: 300px;
+                backdrop-filter: blur(20px);
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.5s ease';
+                setTimeout(() => notification.remove(), 500);
+            }, 4000);
+        }
+
+        // Animation au survol des cartes d'action
+        document.querySelectorAll('.action-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95) translateY(-8px)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // Animation au survol des boutons
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+        });
+
+        // Ajouter les keyframes CSS pour les animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
