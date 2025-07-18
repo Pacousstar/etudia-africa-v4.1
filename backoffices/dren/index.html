@@ -1,1 +1,718 @@
-dren/index.html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supervision Régionale ÉtudIA - DREN</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --etudia-primary: #FF6B35;
+            --etudia-success: #10B981;
+            --etudia-danger: #EF4444;
+            --etudia-info: #3B82F6;
+            --etudia-warning: #F59E0B;
+            --etudia-dark: #1F2937;
+            --etudia-white: #FFFFFF;
+            --gradient-primary: linear-gradient(135deg, #FF6B35, #EF4444);
+            --gradient-secondary: linear-gradient(135deg, #10B981, #3B82F6);
+            --glassmorphism: rgba(255, 255, 255, 0.1);
+            --glassmorphism-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1F2937, #111827);
+            color: var(--etudia-white);
+            min-height: 100vh;
+        }
+
+        /* Sidebar Tesla */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--gradient-primary);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--glassmorphism-border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid var(--glassmorphism-border);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--etudia-white);
+            margin-bottom: 0.5rem;
+        }
+
+        .user-info {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-nav {
+            padding: 2rem 0;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: var(--etudia-white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--glassmorphism);
+            border-left-color: var(--etudia-white);
+            transform: translateX(5px);
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            width: 20px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .header-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-subtitle {
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        /* Regional Stats */
+        .regional-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            opacity: 0.8;
+            font-size: 1rem;
+        }
+
+        /* Map Section */
+        .map-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .map-container {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .map-placeholder {
+            height: 400px;
+            background: var(--glassmorphism);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            opacity: 0.7;
+        }
+
+        .schools-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .school-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: var(--glassmorphism);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .school-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .school-info h4 {
+            color: var(--etudia-primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .school-stats {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .school-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-excellent {
+            background: var(--etudia-success);
+            color: var(--etudia-white);
+        }
+
+        .status-good {
+            background: var(--etudia-info);
+            color: var(--etudia-white);
+        }
+
+        .status-average {
+            background: var(--etudia-warning);
+            color: var(--etudia-white);
+        }
+
+        /* Performance Grid */
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .performance-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .chart-placeholder {
+            height: 250px;
+            background: var(--glassmorphism);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1rem;
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+
+        /* Reports Section */
+        .reports-section {
+            margin-bottom: 2rem;
+        }
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .report-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .report-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .report-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--etudia-info);
+        }
+
+        .report-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--etudia-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .report-description {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .map-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+
+            .header-title {
+                font-size: 2rem;
+            }
+
+            .regional-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Menu Toggle */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+            background: var(--gradient-primary);
+            color: var(--etudia-white);
+            border: none;
+            padding: 0.8rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        /* Chat Widget */
+        .chat-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 50%;
+            color: var(--etudia-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu Toggle Mobile -->
+    <button class="menu-toggle" id="menuToggle">☰</button>
+
+    <!-- Chat IA Toggle -->
+    <button class="chat-toggle" onclick="alert('Chat IA pour DREN - Bientôt disponible !')">🏛️</button>
+
+    <!-- Sidebar Tesla -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">ÉtudIA</div>
+            <div class="user-info">
+                <strong>DREN Abidjan</strong><br>
+                Superviseur Régional
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="#dashboard" class="nav-link active">
+                    <span class="nav-icon">🏠</span>
+                    Dashboard
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#cartographie" class="nav-link">
+                    <span class="nav-icon">🗺️</span>
+                    Cartographie
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#etablissements" class="nav-link">
+                    <span class="nav-icon">🏫</span>
+                    Établissements
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#performance" class="nav-link">
+                    <span class="nav-icon">📊</span>
+                    Performance
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#commissions" class="nav-link">
+                    <span class="nav-icon">💰</span>
+                    Commissions
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#rapports" class="nav-link">
+                    <span class="nav-icon">📋</span>
+                    Rapports
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#expansion" class="nav-link">
+                    <span class="nav-icon">🚀</span>
+                    Expansion
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#ministere" class="nav-link">
+                    <span class="nav-icon">🏛️</span>
+                    Ministère
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="/index.html" class="nav-link">
+                    <span class="nav-icon">🏠</span>
+                    Retour Accueil
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="header-title">Supervision Régionale 🏛️</h1>
+            <p class="header-subtitle">Pilotez l'adoption d'ÉtudIA dans votre région et optimisez les performances éducatives</p>
+        </div>
+
+        <!-- Regional Stats -->
+        <div class="regional-stats">
+            <div class="stat-card">
+                <div class="stat-icon">🏫</div>
+                <div class="stat-number">12</div>
+                <div class="stat-label">Établissements Partenaires</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-number">1,247</div>
+                <div class="stat-label">Élèves ÉtudIA</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-number">249,400 F</div>
+                <div class="stat-label">Commissions Région</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">📈</div>
+                <div class="stat-number">+18%</div>
+                <div class="stat-label">Progression Moyenne</div>
+            </div>
+        </div>
+
+        <!-- Cartographie Section -->
+        <section class="map-section">
+            <h2 class="section-title">🗺️ Cartographie Régionale</h2>
+            
+            <div class="map-container">
+                <div class="map-placeholder">
+                    🗺️ Carte interactive de la région Abidjan<br>
+                    (Intégration Leaflet/Google Maps à venir)
+                </div>
+
+                <div class="schools-list">
+                    <h3 style="margin-bottom: 1rem;">Établissements Actifs</h3>
+                    
+                    <div class="school-item">
+                        <div class="school-info">
+                            <h4>Lycée Moderne d'Abidjan</h4>
+                            <div class="school-stats">347 élèves • 89% adoption</div>
+                        </div>
+                        <div class="school-status status-excellent">Excellent</div>
+                    </div>
+
+                    <div class="school-item">
+                        <div class="school-info">
+                            <h4>Collège Sainte-Marie</h4>
+                            <div class="school-stats">289 élèves • 85% adoption</div>
+                        </div>
+                        <div class="school-status status-excellent">Excellent</div>
+                    </div>
+
+                    <div class="school-item">
+                        <div class="school-info">
+                            <h4>Lycée Technique Yopougon</h4>
+                            <div class="school-stats">156 élèves • 72% adoption</div>
+                        </div>
+                        <div class="school-status status-good">Bon</div>
+                    </div>
+
+                    <div class="school-item">
+                        <div class="school-info">
+                            <h4>Collège Notre-Dame</h4>
+                            <div class="school-stats">98 élèves • 65% adoption</div>
+                        </div>
+                        <div class="school-status status-average">Moyen</div>
+                    </div>
+
+                    <div class="school-item">
+                        <div class="school-info">
+                            <h4>Lycée Cocody</h4>
+                            <div class="school-stats">201 élèves • 78% adoption</div>
+                        </div>
+                        <div class="school-status status-good">Bon</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Analytics -->
+        <section class="performance-grid">
+            <div class="performance-card">
+                <h3 style="margin-bottom: 1rem;">📊 Évolution Adoption</h3>
+                <div class="chart-placeholder">
+                    Graphique adoption mensuelle<br>
+                    par établissement
+                </div>
+            </div>
+
+            <div class="performance-card">
+                <h3 style="margin-bottom: 1rem;">📈 Progression Notes</h3>
+                <div class="chart-placeholder">
+                    Courbe amélioration<br>
+                    moyennes régionales
+                </div>
+            </div>
+
+            <div class="performance-card">
+                <h3 style="margin-bottom: 1rem;">💰 Revenus Générés</h3>
+                <div class="chart-placeholder">
+                    Evolution commissions<br>
+                    et projections
+                </div>
+            </div>
+        </section>
+
+        <!-- Reports Section -->
+        <section class="reports-section">
+            <h2 class="section-title">📋 Rapports Ministère</h2>
+            
+            <div class="reports-grid">
+                <div class="report-card" onclick="alert('Génération rapport mensuel...')">
+                    <div class="report-icon">📊</div>
+                    <div class="report-title">Rapport Mensuel</div>
+                    <div class="report-description">Synthèse performances et adoption ÉtudIA</div>
+                </div>
+
+                <div class="report-card" onclick="alert('Export données trimestrielles...')">
+                    <div class="report-icon">📈</div>
+                    <div class="report-title">Données Trimestrielles</div>
+                    <div class="report-description">Évolution et comparaisons régionales</div>
+                </div>
+
+                <div class="report-card" onclick="alert('Génération projections...')">
+                    <div class="report-icon">🎯</div>
+                    <div class="report-title">Projections 2025</div>
+                    <div class="report-description">Objectifs expansion et budget</div>
+                </div>
+
+                <div class="report-card" onclick="alert('Rapport impact pédagogique...')">
+                    <div class="report-icon">🎓</div>
+                    <div class="report-title">Impact Pédagogique</div>
+                    <div class="report-description">Analyse amélioration résultats</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 1024) {
+                if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                }
+            }
+        });
+
+        // Navigation active state
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (!link.getAttribute('href').includes('.html')) {
+                    e.preventDefault();
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Responsive sidebar
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 1024) {
+                sidebar.classList.remove('open');
+            }
+        });
+
+        // Animation des stats
+        document.querySelectorAll('.stat-number').forEach(stat => {
+            const text = stat.textContent;
+            const numericValue = parseFloat(text.replace(/[^0-9.]/g, ''));
+            
+            if (!isNaN(numericValue)) {
+                let current = 0;
+                const increment = numericValue / 50;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= numericValue) {
+                        stat.textContent = text;
+                        clearInterval(timer);
+                    } else {
+                        if (text.includes('F')) {
+                            stat.textContent = Math.floor(current).toLocaleString() + ' F';
+                        } else if (text.includes('%')) {
+                            stat.textContent = '+' + Math.floor(current) + '%';
+                        } else {
+                            stat.textContent = Math.floor(current);
+                        }
+                    }
+                }, 30);
+            }
+        });
+
+        // Animation des établissements
+        setTimeout(() => {
+            document.querySelectorAll('.school-item').forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.transform = 'translateX(-20px)';
+                    item.style.opacity = '0.5';
+                    setTimeout(() => {
+                        item.style.transition = 'all 0.5s ease';
+                        item.style.transform = 'translateX(0)';
+                        item.style.opacity = '1';
+                    }, 50);
+                }, index * 150);
+            });
+        }, 1000);
+    </script>
+</body>
+</html>
