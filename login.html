@@ -607,6 +607,7 @@
                         <option value="enseignant">👨‍🏫 Enseignant</option>
                         <option value="parent">👨‍👩‍👧‍👦 Parent</option>
                         <option value="etablissement">🏢 Établissement</option>
+                        <option value="dren">🏛️ DREN</option>
                         <option value="partenaire">🤝 Partenaire</option>
                     </select>
                 </div>
@@ -636,8 +637,8 @@
                 <div class="checkbox-container">
                     <div class="checkbox-custom" onclick="toggleCheckbox(this)"></div>
                     <label class="checkbox-label">
-                        J'accepte les <a href="/pages/terms.html">conditions d'utilisation</a> 
-                        et la <a href="/pages/privacy.html">politique de confidentialité</a>
+                        J'accepte les <a href="/pages/terms.html" target="_blank">conditions d'utilisation</a> 
+                        et la <a href="/pages/privacy.html" target="_blank">politique de confidentialité</a>
                     </label>
                 </div>
 
@@ -734,11 +735,43 @@
             checkbox.classList.toggle('checked');
         }
 
-        // ===== SOCIAL LOGIN =====
+        // ===== SOCIAL LOGIN FONCTIONNEL =====
         function socialLogin(provider) {
             console.log(`Connexion avec ${provider}`);
-            // Ici tu peux intégrer l'API OAuth
-            alert(`Fonctionnalité ${provider} en cours de développement !`);
+            trackEvent(`Social Login - ${provider}`);
+            
+            if (provider === 'google') {
+                // Configuration Google OAuth 2.0
+                const googleClientId = 'TON_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
+                const redirectUri = encodeURIComponent(window.location.origin + '/auth/google/callback');
+                const scope = encodeURIComponent('openid email profile');
+                
+                const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
+                    `client_id=${googleClientId}&` +
+                    `redirect_uri=${redirectUri}&` +
+                    `response_type=code&` +
+                    `scope=${scope}&` +
+                    `state=google_login`;
+                
+                // Ouvrir popup ou rediriger
+                window.location.href = googleAuthUrl;
+                
+            } else if (provider === 'microsoft') {
+                // Configuration Microsoft Azure AD
+                const msClientId = 'TON_MICROSOFT_CLIENT_ID';
+                const tenantId = 'common'; // ou ton tenant ID spécifique
+                const redirectUri = encodeURIComponent(window.location.origin + '/auth/microsoft/callback');
+                const scope = encodeURIComponent('openid email profile');
+                
+                const msAuthUrl = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?` +
+                    `client_id=${msClientId}&` +
+                    `redirect_uri=${redirectUri}&` +
+                    `response_type=code&` +
+                    `scope=${scope}&` +
+                    `state=microsoft_login`;
+                
+                window.location.href = msAuthUrl;
+            }
         }
 
         // ===== FORM SUBMISSIONS =====
@@ -816,6 +849,9 @@
                     case 'etablissement':
                         redirectUrl = '/backoffices/etablissements/index.html';
                         break;
+                    case 'dren':
+                        redirectUrl = '/backoffices/dren/index.html';
+                        break;
                     case 'partenaire':
                         redirectUrl = '/backoffices/partenaires/index.html';
                         break;
@@ -829,7 +865,7 @@
             
             // Simulation de redirection
             setTimeout(() => {
-                alert(`Connexion réussie ! Redirection vers votre espace...`);
+                showSuccess('Connexion réussie ! Redirection vers votre espace...');
                 // window.location.href = redirectUrl;
             }, 500);
         }
@@ -969,6 +1005,10 @@
         document.addEventListener('DOMContentLoaded', function() {
             createParticles();
             
+            // Initialisation Analytics
+            initGoogleAnalytics();
+            setupAnalyticsTracking();
+            
             // Auto-focus sur le premier champ
             document.getElementById('loginEmail').focus();
             
@@ -977,7 +1017,7 @@
                 document.querySelector('.login-container').style.transform = 'scale(1)';
             }, 100);
             
-            console.log('🔐 ÉtudIA Login - Page prête !');
+            console.log('🔐 ÉtudIA Login - Page prête avec Analytics !');
         });
 
         // ===== CSS ANIMATIONS DYNAMIQUES =====
@@ -1026,10 +1066,140 @@
             return interactionCount > 3; // Simple vérification d'interaction
         }
 
-        // ===== ANALYTICS SIMULATION =====
-        function trackEvent(action, category = 'Login') {
-            console.log(`📊 Analytics: ${category} - ${action}`);
-            // Ici tu peux intégrer Google Analytics, Mixpanel, etc.
+        // ===== ANALYTICS INTÉGRATION COMPLÈTE =====
+        // Configuration analytics (Google Analytics 4, Mixpanel, etc.)
+        const ANALYTICS_CONFIG = {
+            googleAnalytics: {
+                measurementId: 'G-XXXXXXXXXX', // Remplace par ton ID GA4
+                enabled: true
+            },
+            mixpanel: {
+                token: 'TON_MIXPANEL_TOKEN',
+                enabled: false
+            },
+            facebook: {
+                pixelId: 'TON_FACEBOOK_PIXEL_ID',
+                enabled: false
+            }
+        };
+
+        // Initialisation Google Analytics 4
+        function initGoogleAnalytics() {
+            if (ANALYTICS_CONFIG.googleAnalytics.enabled) {
+                // Chargement du script GA4
+                const script = document.createElement('script');
+                script.async = true;
+                script.src = `https://www.googletagmanager.com/gtag/js?id=${ANALYTICS_CONFIG.googleAnalytics.measurementId}`;
+                document.head.appendChild(script);
+
+                // Configuration GA4
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', ANALYTICS_CONFIG.googleAnalytics.measurementId, {
+                    page_title: 'ÉtudIA Login',
+                    page_location: window.location.href,
+                    custom_map: {
+                        'custom_parameter_1': 'login_page'
+                    }
+                });
+                
+                console.log('📊 Google Analytics 4 initialisé');
+            }
+        }
+
+        // Fonction analytics universelle
+        function trackEvent(action, category = 'Login', properties = {}) {
+            const eventData = {
+                action: action,
+                category: category,
+                timestamp: new Date().toISOString(),
+                page: 'login',
+                user_agent: navigator.userAgent,
+                ...properties
+            };
+            
+            console.log(`📊 Analytics Event:`, eventData);
+            
+            // Google Analytics 4
+            if (ANALYTICS_CONFIG.googleAnalytics.enabled && typeof gtag !== 'undefined') {
+                gtag('event', action, {
+                    event_category: category,
+                    event_label: properties.label || '',
+                    value: properties.value || 0,
+                    custom_parameter_login_type: properties.loginType || 'email'
+                });
+            }
+            
+            // Mixpanel (si activé)
+            if (ANALYTICS_CONFIG.mixpanel.enabled && typeof mixpanel !== 'undefined') {
+                mixpanel.track(action, eventData);
+            }
+            
+            // Facebook Pixel (si activé)
+            if (ANALYTICS_CONFIG.facebook.enabled && typeof fbq !== 'undefined') {
+                fbq('track', action, properties);
+            }
+            
+            // Analytics personnalisés ÉtudIA (envoi vers ton API)
+            sendToEtudiaAnalytics(eventData);
+        }
+
+        // Envoi vers analytics ÉtudIA (ton API)
+        async function sendToEtudiaAnalytics(eventData) {
+            try {
+                await fetch('https://etudia-africa-v4-1.onrender.com/api/analytics/events', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(eventData)
+                });
+            } catch (error) {
+                console.log('Analytics envoyé en mode hors-ligne');
+            }
+        }
+
+        // Tracking automatique des interactions
+        function setupAnalyticsTracking() {
+            // Track page load
+            trackEvent('page_view', 'Login', {
+                referrer: document.referrer,
+                load_time: performance.now()
+            });
+            
+            // Track form interactions
+            document.querySelectorAll('.form-input').forEach(input => {
+                input.addEventListener('focus', () => {
+                    trackEvent('form_field_focus', 'Login', {
+                        field_name: input.id,
+                        field_type: input.type
+                    });
+                });
+            });
+            
+            // Track scroll depth
+            let maxScroll = 0;
+            window.addEventListener('scroll', () => {
+                const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+                if (scrollPercent > maxScroll) {
+                    maxScroll = scrollPercent;
+                    if (maxScroll % 25 === 0) { // Track à 25%, 50%, 75%, 100%
+                        trackEvent('scroll_depth', 'Engagement', {
+                            depth_percent: maxScroll
+                        });
+                    }
+                }
+            });
+            
+            // Track time on page
+            const startTime = Date.now();
+            window.addEventListener('beforeunload', () => {
+                const timeSpent = Math.round((Date.now() - startTime) / 1000);
+                trackEvent('time_on_page', 'Engagement', {
+                    seconds: timeSpent
+                });
+            });
         }
 
         // Track des événements
