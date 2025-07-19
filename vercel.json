@@ -1,10 +1,14 @@
 {
   "version": 2,
   "name": "etudia-africa-v4-1",
-  "public": true,
+  "alias": ["etudia-africa-v4-1.vercel.app"],
   "builds": [
     {
       "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "login.html", 
       "use": "@vercel/static"
     },
     {
@@ -26,6 +30,13 @@
       "dest": "/index.html",
       "headers": {
         "cache-control": "s-maxage=86400"
+      }
+    },
+    {
+      "src": "^/login/?$",
+      "dest": "/login.html",
+      "headers": {
+        "cache-control": "s-maxage=3600"
       }
     },
     {
@@ -69,6 +80,13 @@
       "dest": "/pages/$1"
     },
     {
+      "src": "^/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
+      "dest": "/$1",
+      "headers": {
+        "cache-control": "s-maxage=31536000"
+      }
+    },
+    {
       "src": "^/(.*)",
       "dest": "/$1"
     }
@@ -106,6 +124,10 @@
         {
           "key": "X-XSS-Protection",
           "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy", 
+          "value": "strict-origin-when-cross-origin"
         }
       ]
     }
