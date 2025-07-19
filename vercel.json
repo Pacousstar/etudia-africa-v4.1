@@ -1,26 +1,12 @@
 {
   "version": 2,
   "name": "etudia-africa-v4-1",
-  "alias": ["etudia-africa-v4-1.vercel.app"],
+  "buildCommand": "echo 'Static site - no build needed'",
+  "outputDirectory": ".",
+  "framework": null,
   "builds": [
     {
-      "src": "index.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "login.html", 
-      "use": "@vercel/static"
-    },
-    {
-      "src": "frontend/build/**/*",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "backoffices/**/*",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "pages/**/*",
+      "src": "**",
       "use": "@vercel/static"
     }
   ],
@@ -40,61 +26,61 @@
       }
     },
     {
-      "src": "^/frontend/?(.*)$",
-      "dest": "/frontend/build/$1"
+      "src": "^/frontend/(.*)$",
+      "dest": "/frontend/$1"
     },
     {
-      "src": "^/interface/?(.*)$",
-      "dest": "/frontend/build/$1"
+      "src": "^/interface/(.*)$",
+      "dest": "/frontend/$1"
     },
     {
-      "src": "^/backoffices/eleves/?(.*)$",
+      "src": "^/backoffices/eleves/(.*)$",
       "dest": "/backoffices/eleves/$1"
     },
     {
-      "src": "^/backoffices/enseignants/?(.*)$",
+      "src": "^/backoffices/enseignants/(.*)$",
       "dest": "/backoffices/enseignants/$1"
     },
     {
-      "src": "^/backoffices/parents/?(.*)$",
+      "src": "^/backoffices/parents/(.*)$",
       "dest": "/backoffices/parents/$1"
     },
     {
-      "src": "^/backoffices/etablissements/?(.*)$",
+      "src": "^/backoffices/etablissements/(.*)$",
       "dest": "/backoffices/etablissements/$1"
     },
     {
-      "src": "^/backoffices/dren/?(.*)$",
+      "src": "^/backoffices/dren/(.*)$",
       "dest": "/backoffices/dren/$1"
     },
     {
-      "src": "^/backoffices/partenaires/?(.*)$",
+      "src": "^/backoffices/partenaires/(.*)$",
       "dest": "/backoffices/partenaires/$1"
     },
     {
-      "src": "^/backoffices/administrateurs/?(.*)$",
+      "src": "^/backoffices/administrateurs/(.*)$",
       "dest": "/backoffices/administrateurs/$1"
     },
     {
-      "src": "^/pages/(.*)",
+      "src": "^/pages/(.*)$",
       "dest": "/pages/$1"
     },
     {
-      "src": "^/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
+      "src": "^/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))$",
       "dest": "/$1",
       "headers": {
         "cache-control": "s-maxage=31536000"
       }
     },
     {
-      "src": "^/(.*)",
+      "src": "^/(.*)$",
       "dest": "/$1"
     }
   ],
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://etudia-v4-revolutionary.onrender.com/api/$1"
+      "destination": "https://etudia-africa-v4-1.onrender.com/api/$1"
     }
   ],
   "redirects": [
@@ -126,7 +112,7 @@
           "value": "1; mode=block"
         },
         {
-          "key": "Referrer-Policy", 
+          "key": "Referrer-Policy",
           "value": "strict-origin-when-cross-origin"
         }
       ]
