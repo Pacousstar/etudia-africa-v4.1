@@ -1,374 +1,1403 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#FF6B35" />
-  
-<!-- PWA Meta Tags - Ajouter après <title> -->
-<meta name="theme-color" content="#4CAF50">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ÉtudIA">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
-
-  <!-- Meta Tags for SEO and Social Media -->
-  <meta name="description" content="ÉtudIA v4.0 - L'Assistant IA Éducatif Révolutionnaire pour l'Afrique. Transformez votre façon d'apprendre avec l'intelligence artificielle. Made in Côte d'Ivoire par @Pacousstar." />
-  <meta name="keywords" content="ÉtudIA, IA éducative, Afrique, Côte d'Ivoire, intelligence artificielle, éducation, OCR, chat IA, devoirs, révisions, @Pacousstar" />
-  <meta name="author" content="@Pacousstar - Pionnier IA Éducative Africaine" />
-  <meta name="robots" content="index, follow" />
-  <meta name="language" content="French" />
-  <meta name="geo.region" content="CI" />
-  <meta name="geo.placename" content="Abidjan, Côte d'Ivoire" />
-
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://etudia-africa.vercel.app/" />
-  <meta property="og:title" content="ÉtudIA v4.0 - Assistant IA Éducatif Révolutionnaire pour l'Afrique" />
-  <meta property="og:description" content="Révolutionnez vos études avec l'IA ! OCR avancé, chat intelligent, adaptation niveau scolaire. Made in Côte d'Ivoire 🇨🇮" />
-  <meta property="og:image" content="https://etudia-africa.vercel.app/etudia-social-preview.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:site_name" content="ÉtudIA" />
-  <meta property="og:locale" content="fr_FR" />
-
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://etudia-africa.vercel.app/" />
-  <meta property="twitter:title" content="ÉtudIA v4.0 - Assistant IA Éducatif pour l'Afrique 🇨🇮" />
-  <meta property="twitter:description" content="L'IA éducative révolutionnaire made in Côte d'Ivoire ! OCR, Chat IA, adaptation scolaire. Par @Pacousstar" />
-  <meta property="twitter:image" content="https://etudia-africa.vercel.app/etudia-social-preview.png" />
-  <meta property="twitter:creator" content="@Pacousstar" />
-  <meta property="twitter:site" content="@EtudIA_Africa" />
-
-  <!-- Apple Touch Icon -->
-  <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
-  
-  <!-- Manifest for PWA -->
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-  
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://etudia-africa.vercel.app/" />
-
-  <!-- Preconnect to external services for performance -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://api.groq.com">
-  <link rel="preconnect" href="https://res.cloudinary.com">
-  <link rel="preconnect" href="https://etudia-africa-backend.railway.app">
-
-  <!-- Title -->
-  <title>ÉtudIA v4.0 - Assistant IA Éducatif Révolutionnaire | Made in Côte d'Ivoire</title>
-
-  <!-- Structured Data (JSON-LD) for SEO -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "ÉtudIA",
-    "description": "Assistant IA éducatif révolutionnaire pour l'Afrique, développé en Côte d'Ivoire",
-    "url": "https://etudia-africa.vercel.app",
-    "applicationCategory": "EducationalApplication",
-    "operatingSystem": "Web, iOS, Android",
-    "browserRequirements": "JavaScript, HTML5",
-    "author": {
-      "@type": "Person",
-      "name": "@Pacousstar",
-      "nationality": "Ivorian",
-      "description": "Pionnier de l'IA éducative en Afrique"
-    },
-    "creator": {
-      "@type": "Person",
-      "name": "@Pacousstar"
-    },
-    "dateCreated": "2025-01-01",
-    "inLanguage": "fr-FR",
-    "isAccessibleForFree": true,
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "EUR",
-      "availability": "https://schema.org/InStock"
-    },
-    "featureList": [
-      "OCR révolutionnaire avec Tesseract.js",
-      "Chat IA avec Llama 3.3 70B",
-      "Interface responsive cosmique",
-      "Adaptation niveau scolaire 6ème-Terminale",
-      "Support documents multiformats",
-      "Mémoire conversationnelle totale"
-    ],
-    "screenshot": "https://etudia-africa.vercel.app/screenshot.png",
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "ratingCount": "847",
-      "bestRating": "5",
-      "worstRating": "1"
-    }
-  }
-  </script>
-
-  <!-- Performance optimizations -->
-  <link rel="dns-prefetch" href="//etudia-africa-backend.railway.app">
-  <link rel="dns-prefetch" href="//res.cloudinary.com">
-
-  <!-- Security -->
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="X-Frame-Options" content="DENY">
-  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
-  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-
-  <!-- Custom CSS for loading state -->
-  <style>
-    /* Loading screen cosmique */
-    #loading-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #334155 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-      color: white;
-    }
-
-    .loading-logo {
-      font-size: 4rem;
-      font-weight: bold;
-      margin-bottom: 2rem;
-      background: linear-gradient(135deg, #FF6B35, #1DB954, #6366F1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmer 2s infinite;
-    }
-
-    .loading-text {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      text-align: center;
-      max-width: 500px;
-      line-height: 1.6;
-    }
-
-    .loading-made-in {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 1rem;
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 2rem;
-    }
-
-    .loading-spinner {
-      width: 50px;
-      height: 50px;
-      border: 3px solid rgba(255, 255, 255, 0.1);
-      border-top: 3px solid #FF6B35;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    .loading-progress {
-      margin-top: 2rem;
-      text-align: center;
-    }
-
-    .progress-bar {
-      width: 300px;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 2px;
-      overflow: hidden;
-      margin: 1rem 0;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #FF6B35, #1DB954);
-      width: 0%;
-      animation: progressFill 3s ease-in-out;
-      border-radius: 2px;
-    }
-
-    @keyframes shimmer {
-      0%, 100% { filter: brightness(1); }
-      50% { filter: brightness(1.3); }
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes progressFill {
-      0% { width: 0%; }
-      100% { width: 100%; }
-    }
-
-    /* Hide scrollbar during loading */
-    body.loading {
-      overflow: hidden;
-    }
-  </style>
-</head>
-
-<body class="loading">
-  <noscript>
-    <div style="background: #EF4444; color: white; padding: 1rem; text-align: center; font-family: Arial, sans-serif;">
-      <h2>🚫 JavaScript Requis</h2>
-      <p>ÉtudIA nécessite JavaScript pour fonctionner. Veuillez l'activer dans votre navigateur pour profiter de l'expérience révolutionnaire !</p>
-      <p><strong>Made with ❤️ by @Pacousstar - Côte d'Ivoire 🇨🇮</strong></p>
-    </div>
-  </noscript>
-
-  <!-- Loading Screen -->
-  <div id="loading-screen">
-    <div class="loading-logo">ÉtudIA</div>
-    <div class="loading-text">
-      🚀 Chargement de l'Assistant IA Éducatif Révolutionnaire<br>
-      Transformons l'éducation africaine ensemble !
-    </div>
-    <div class="loading-made-in">
-      <span>🇨🇮</span>
-      <span>Made with ❤️ by @Pacousstar - Côte d'Ivoire</span>
-    </div>
-    <div class="loading-spinner"></div>
-    <div class="loading-progress">
-      <div class="progress-bar">
-        <div class="progress-fill"></div>
-      </div>
-      <div style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.7);">
-        Préparation de l'IA révolutionnaire...
-      </div>
-    </div>
-  </div>
-
-  <!-- React App Container -->
-  <div id="root"></div>
-
-  <!-- Loading Script -->
-  <script>
-    // Performance monitoring
-    window.etudiaLoadStart = performance.now();
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 ÉtudIA V4.1 - Intelligence Artificielle Éducative</title>
     
-    // Remove loading screen when React app loads
-    window.addEventListener('load', function() {
-      setTimeout(function() {
-        const loadingScreen = document.getElementById('loading-screen');
-        const body = document.body;
-        
-        if (loadingScreen) {
-          loadingScreen.style.opacity = '0';
-          loadingScreen.style.transition = 'opacity 0.5s ease';
-          
-          setTimeout(function() {
-            loadingScreen.remove();
-            body.classList.remove('loading');
-            
-            // Log performance
-            const loadTime = performance.now() - window.etudiaLoadStart;
-            console.log(`🚀 ÉtudIA loaded in ${Math.round(loadTime)}ms`);
-            
-            // Analytics event (if needed)
-            if (window.gtag) {
-              window.gtag('event', 'app_loaded', {
-                'custom_parameter': loadTime
-              });
+    <!-- Meta tags essentiels -->
+    <meta name="description" content="ÉtudIA V4.1 - Plateforme éducative IA révolutionnaire avec OpenRouter DeepSeek R1. Chat intelligent, upload de documents, assistance personnalisée pour l'éducation africaine.">
+    <meta name="keywords" content="ÉtudIA, education, AI, intelligence artificielle, OpenRouter, DeepSeek, chat, documents, Afrique, école">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Pacousstar - ÉtudIA Team">
+    
+    <!-- OpenGraph et réseaux sociaux -->
+    <meta property="og:title" content="ÉtudIA V4.1 - IA Éducative Révolutionnaire">
+    <meta property="og:description" content="Révolutionnez votre éducation avec l'IA DeepSeek R1. Upload vos documents, chat intelligent, assistance personnalisée.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://etudia-africa-v4-1.vercel.app">
+    <meta property="og:image" content="https://etudia-africa-v4-1.vercel.app/logo-social.png">
+    <meta property="og:site_name" content="ÉtudIA">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Sécurité et performance -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    
+    <!-- DNS Prefetch pour performance -->
+    <link rel="dns-prefetch" href="//openrouter.ai">
+    <link rel="dns-prefetch" href="//etudia-africa-v4-1.onrender.com">
+    
+    <!-- React et librairies CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Styles intégrés -->
+    <style>
+        /* ===== VARIABLES CSS ETUDIA V4.1 ===== */
+        :root {
+            --primary-orange: #FF6B35;
+            --primary-green: #4CAF50;
+            --secondary-orange: #FF8C00;
+            --secondary-green: #32CD32;
+            --accent-blue: #6366F1;
+            --text-dark: #1F2937;
+            --text-light: #6B7280;
+            --bg-light: #F9FAFB;
+            --bg-white: #FFFFFF;
+            --bg-content: #FEFEFE;
+            --border-light: rgba(99, 102, 241, 0.1);
+            --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.15);
+            --gradient-orange: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
+            --gradient-green: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            --gradient-cosmic: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-content: linear-gradient(135deg, #FEFEFE, #F8FAFC);
+        }
+
+        /* ===== RESET ET BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: var(--gradient-content);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ===== LOADING SCREEN ===== */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #334155 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            color: white;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loading-logo {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #FF6B35, #4CAF50, #6366F1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: logoGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            0% { filter: drop-shadow(0 0 20px rgba(255, 107, 53, 0.5)); }
+            100% { filter: drop-shadow(0 0 30px rgba(76, 175, 80, 0.7)); }
+        }
+
+        .loading-text {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #FF6B35;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-features {
+            margin-top: 2rem;
+            text-align: center;
+            opacity: 0.7;
+        }
+
+        .loading-features div {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        /* ===== HEADER RÉVOLUTIONNAIRE ===== */
+        .app-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 15%, #667eea 30%, #764ba2 45%, #f093fb 60%, #f5576c 75%, #4facfe 90%, #00f2fe 100%);
+            background-size: 300% 300%;
+            animation: headerGradientFlow 12s ease infinite;
+            min-height: 70vh;
+            color: white;
+            padding: 2rem 1rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes headerGradientFlow {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 100% 50%; }
+            50% { background-position: 50% 100%; }
+            75% { background-position: 0% 50%; }
+            100% { background-position: 50% 0%; }
+        }
+
+        .header-content {
+            text-align: center;
+            max-width: 800px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-section {
+            margin-bottom: 2rem;
+        }
+
+        .logo-main {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            animation: logoFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .logo-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .version-badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            display: inline-block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn-primary {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ===== NAVIGATION TABS ===== */
+        .tab-navigation {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 1rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            box-shadow: var(--shadow-light);
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: 2px solid var(--border-light);
+            color: var(--text-light);
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 120px;
+            justify-content: center;
+        }
+
+        .tab-btn.active {
+            background: var(--gradient-orange);
+            color: white;
+            border-color: var(--primary-orange);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .tab-btn:hover:not(.active) {
+            border-color: var(--primary-orange);
+            color: var(--primary-orange);
+            transform: translateY(-1px);
+        }
+
+        /* ===== CONTENU PRINCIPAL ===== */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .tab-content {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-light);
+            min-height: 400px;
+        }
+
+        .tab-content h2 {
+            color: var(--accent-blue);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        /* ===== UPLOAD SECTION ===== */
+        .upload-zone {
+            border: 3px dashed var(--border-light);
+            border-radius: 15px;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 2rem;
+        }
+
+        .upload-zone:hover {
+            border-color: var(--primary-orange);
+            background: rgba(255, 107, 53, 0.05);
+        }
+
+        .upload-zone.dragover {
+            border-color: var(--primary-green);
+            background: rgba(76, 175, 80, 0.1);
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-blue);
+        }
+
+        .upload-text {
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-subtext {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* ===== DOCUMENTS LIST ===== */
+        .documents-list {
+            margin-top: 2rem;
+        }
+
+        .document-item {
+            background: var(--gradient-content);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .document-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .document-icon {
+            font-size: 2rem;
+            color: var(--primary-orange);
+        }
+
+        .document-info {
+            flex: 1;
+        }
+
+        .document-name {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .document-meta {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .document-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            background: var(--gradient-green);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-small:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #EF4444, #DC2626);
+        }
+
+        /* ===== CHAT SECTION ===== */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+            border: 1px solid var(--border-light);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: var(--gradient-cosmic);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .model-selector {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem;
+            border-radius: 10px;
+            margin-top: 0.5rem;
+        }
+
+        .model-toggle {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin: 0 0.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .model-toggle.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            max-width: 80%;
+            padding: 1rem;
+            border-radius: 15px;
+            position: relative;
+            animation: messageSlide 0.3s ease;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
-          }, 500);
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-      }, 1000); // Minimum loading time for better UX
-    });
 
-    // Fallback for slow connections
-    setTimeout(function() {
-      const loadingScreen = document.getElementById('loading-screen');
-      if (loadingScreen) {
-        const loadingText = loadingScreen.querySelector('.loading-text');
-        if (loadingText) {
-          loadingText.innerHTML = '⚡ Connexion lente détectée...<br>ÉtudIA se charge toujours ! Patience 🙏';
+        .message.user {
+            background: var(--gradient-orange);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
         }
-      }
-    }, 10000);
 
-    // Console welcome message
-    console.log(`
-🚀 ÉtudIA v4.0 - RÉVOLUTIONNAIRE !
-🌍 L'Assistant IA Éducatif pour l'Afrique
-🎓 Transformons l'éducation ensemble !
-💫 Made with ❤️ by @Pacousstar - Côte d'Ivoire
-
-🔧 Architecture:
-- Frontend: React.js 18+ (Vous êtes ici !)
-- Backend: Node.js + Express 
-- IA: Groq API - Llama 3.3 70B
-- OCR: Tesseract.js
-- DB: PostgreSQL (Supabase)
-- Storage: Cloudinary
-
-🌟 Ensemble, révolutionnons l'éducation africaine !
-    `);
-
-    // Error handling
-    window.addEventListener('error', function(e) {
-      console.error('ÉtudIA Error:', e.error);
-      
-      // Show user-friendly error if app fails to load
-      setTimeout(function() {
-        const loadingScreen = document.getElementById('loading-screen');
-        if (loadingScreen) {
-          loadingScreen.innerHTML = `
-            <div style="text-align: center; padding: 2rem;">
-              <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
-              <h2 style="color: #EF4444; margin-bottom: 1rem;">Erreur de Chargement</h2>
-              <p style="margin-bottom: 2rem; max-width: 400px;">
-                ÉtudIA rencontre des difficultés pour se charger. 
-                Veuillez vérifier votre connexion internet et réessayer.
-              </p>
-              <button onclick="window.location.reload()" 
-                style="background: #FF6B35; color: white; border: none; padding: 1rem 2rem; border-radius: 0.5rem; cursor: pointer; font-size: 1rem;">
-                🔄 Recharger ÉtudIA
-              </button>
-              <div style="margin-top: 2rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
-                Made with ❤️ by @Pacousstar - Côte d'Ivoire 🇨🇮
-              </div>
-            </div>
-          `;
+        .message.ai {
+            background: var(--bg-white);
+            border: 1px solid var(--border-light);
+            color: var(--text-dark);
+            border-bottom-left-radius: 5px;
+            box-shadow: var(--shadow-light);
         }
-      }, 15000);
-    });
-  </script>
 
-  <!-- Analytics (à configurer selon besoins) -->
-  <!-- Google Analytics -->
-  <!-- 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'GA_MEASUREMENT_ID');
-  </script>
-  -->
+        .message-content {
+            line-height: 1.6;
+        }
 
-  <!-- Service Worker Registration -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js')
-          .then(function(registration) {
-            console.log('SW registered: ', registration);
-          }, function(registrationError) {
-            console.log('SW registration failed: ', registrationError);
-          });
-      });
-    }
-  </script>
+        .message-meta {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: 0.5rem;
+        }
+
+        .chat-input-container {
+            padding: 1rem;
+            background: var(--bg-white);
+            border-top: 1px solid var(--border-light);
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--border-light);
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+
+        .send-btn {
+            background: var(--gradient-orange);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ===== LOADING STATES ===== */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            gap: 1rem;
+        }
+
+        .spinner {
+            width: 30px;
+            height: 30px;
+            border: 3px solid var(--border-light);
+            border-top: 3px solid var(--primary-orange);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .app-header {
+                min-height: 60vh;
+                padding: 1rem;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .tab-navigation {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .tab-btn {
+                min-width: auto;
+            }
+
+            .chat-container {
+                height: 500px;
+            }
+
+            .message {
+                max-width: 95%;
+            }
+
+            .chat-input-wrapper {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .chat-input {
+                width: 100%;
+            }
+        }
+
+        /* ===== ANIMATIONS AMÉLIORÉES ===== */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            text-align: center;
+            animation: successSlide 0.5s ease;
+        }
+
+        @keyframes successSlide {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .error-message {
+            background: linear-gradient(135deg, #EF4444, #DC2626);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        /* ===== ACCESSIBILITÉ ===== */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Focus states améliorés */
+        *:focus {
+            outline: 2px solid var(--primary-orange);
+            outline-offset: 2px;
+        }
+
+        /* ===== STYLES SPÉCIFIQUES V4.1 ===== */
+        .deepseek-badge {
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin: 0.5rem;
+        }
+
+        .openrouter-status {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #059669;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .tokens-display {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: #5B21B6;
+            padding: 0.3rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin: 0.2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-logo">ÉtudIA</div>
+        <div class="loading-text">
+            🚀 Chargement de l'interface V4.1<br>
+            <span class="deepseek-badge">Powered by OpenRouter DeepSeek R1</span>
+        </div>
+        <div class="loading-spinner"></div>
+        <div class="loading-features">
+            <div>✅ Chat IA révolutionnaire</div>
+            <div>📄 Upload de documents avancé</div>
+            <div>🎯 Assistance personnalisée</div>
+            <div>🌍 Optimisé pour l'Afrique</div>
+        </div>
+    </div>
+
+    <!-- App Container -->
+    <div id="app-root"></div>
+
+    <!-- React App Script -->
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // ===== CONFIGURATION GLOBALE =====
+        const CONFIG = {
+            API_URL: 'https://etudia-africa-v4-1.onrender.com',
+            OPENROUTER_MODELS: {
+                free: 'deepseek/deepseek-r1:free',
+                paid: 'deepseek/deepseek-r1'
+            },
+            MAX_FILE_SIZE: 10 * 1024 * 1024, // 10MB
+            SUPPORTED_FORMATS: ['.pdf', '.txt', '.doc', '.docx', '.jpg', '.png'],
+            VERSION: '4.1.0'
+        };
+
+        // ===== SERVICE OPENROUTER =====
+        class OpenRouterService {
+            constructor() {
+                this.baseUrl = CONFIG.API_URL;
+                this.currentModel = 'free';
+                this.stats = {
+                    requests: 0,
+                    responses: 0,
+                    errors: 0,
+                    totalTokens: 0
+                };
+            }
+
+            async chat(message, options = {}) {
+                try {
+                    this.stats.requests++;
+                    
+                    const response = await fetch(`${this.baseUrl}/api/chat`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            message,
+                            user_id: options.userId || 'user_' + Date.now(),
+                            mode: options.mode || 'normal',
+                            use_paid_model: this.currentModel === 'paid',
+                            document_context: options.documentContext || '',
+                            ...options
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.stats.responses++;
+                        this.stats.totalTokens += data.tokens_used || 0;
+                        return {
+                            success: true,
+                            message: data.response,
+                            tokens: data.tokens_used,
+                            model: data.model_used,
+                            responseTime: data.response_time
+                        };
+                    } else {
+                        throw new Error(data.error || 'Erreur inconnue');
+                    }
+                } catch (error) {
+                    this.stats.errors++;
+                    console.error('Erreur OpenRouter:', error);
+                    return {
+                        success: false,
+                        error: error.message || 'Erreur de connexion à l\'IA'
+                    };
+                }
+            }
+
+            setModel(model) {
+                this.currentModel = model;
+                console.log(`Modèle OpenRouter changé: ${model}`);
+            }
+
+            getStats() {
+                return { ...this.stats };
+            }
+        }
+
+        // ===== SERVICE UPLOAD =====
+        class UploadService {
+            constructor() {
+                this.baseUrl = CONFIG.API_URL;
+            }
+
+            async uploadDocument(file, userId) {
+                try {
+                    // Validation du fichier
+                    if (file.size > CONFIG.MAX_FILE_SIZE) {
+                        throw new Error('Fichier trop volumineux (max 10MB)');
+                    }
+
+                    const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
+                    if (!CONFIG.SUPPORTED_FORMATS.includes(fileExtension)) {
+                        throw new Error('Format de fichier non supporté');
+                    }
+
+                    const formData = new FormData();
+                    formData.append('document', file);
+                    formData.append('user_id', userId);
+
+                    const response = await fetch(`${this.baseUrl}/api/upload`, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        return {
+                            success: true,
+                            document: data.document,
+                            message: 'Document uploadé avec succès!'
+                        };
+                    } else {
+                        throw new Error(data.error || 'Erreur upload');
+                    }
+                } catch (error) {
+                    console.error('Erreur upload:', error);
+                    return {
+                        success: false,
+                        error: error.message
+                    };
+                }
+            }
+
+            async getDocuments(userId) {
+                try {
+                    const response = await fetch(`${this.baseUrl}/api/documents/${userId}`);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    return data.success ? data.documents : [];
+                } catch (error) {
+                    console.error('Erreur récupération documents:', error);
+                    return [];
+                }
+            }
+
+            async deleteDocument(documentId) {
+                try {
+                    const response = await fetch(`${this.baseUrl}/api/documents/${documentId}`, {
+                        method: 'DELETE'
+                    });
+
+                    const data = await response.json();
+                    return data.success;
+                } catch (error) {
+                    console.error('Erreur suppression:', error);
+                    return false;
+                }
+            }
+        }
+
+        // ===== COMPOSANTS REACT =====
+
+        // Composant principal de l'app
+        function EtudiaApp() {
+            const [currentTab, setCurrentTab] = useState('upload');
+            const [documents, setDocuments] = useState([]);
+            const [selectedDocument, setSelectedDocument] = useState(null);
+            const [chatMessages, setChatMessages] = useState([]);
+            const [currentModel, setCurrentModel] = useState('free');
+            const [userId] = useState('user_' + Date.now());
+            const [isLoading, setIsLoading] = useState(false);
+            const [notifications, setNotifications] = useState([]);
+
+            // Services
+            const openRouterService = useRef(new OpenRouterService());
+            const uploadService = useRef(new UploadService());
+
+            // Initialisation
+            useEffect(() => {
+                // Cacher l'écran de chargement après initialisation
+                setTimeout(() => {
+                    const loadingScreen = document.getElementById('loading-screen');
+                    if (loadingScreen) {
+                        loadingScreen.style.opacity = '0';
+                        setTimeout(() => {
+                            loadingScreen.style.display = 'none';
+                        }, 500);
+                    }
+                }, 2000);
+
+                // Charger les documents existants
+                loadDocuments();
+
+                // Message de bienvenue
+                setChatMessages([{
+                    id: 1,
+                    type: 'ai',
+                    content: '🚀 Bienvenue dans ÉtudIA V4.1 ! Je suis votre assistant IA powered by DeepSeek R1. Uploadez vos documents et posez-moi vos questions !',
+                    timestamp: new Date(),
+                    model: 'system'
+                }]);
+            }, []);
+
+            // Fonctions utilitaires
+            const loadDocuments = async () => {
+                const docs = await uploadService.current.getDocuments(userId);
+                setDocuments(docs);
+            };
+
+            const addNotification = (message, type = 'info') => {
+                const notification = {
+                    id: Date.now(),
+                    message,
+                    type,
+                    timestamp: new Date()
+                };
+                setNotifications(prev => [...prev, notification]);
+                
+                // Auto-suppression après 5 secondes
+                setTimeout(() => {
+                    setNotifications(prev => prev.filter(n => n.id !== notification.id));
+                }, 5000);
+            };
+
+            const handleModelChange = (model) => {
+                setCurrentModel(model);
+                openRouterService.current.setModel(model);
+                addNotification(`Modèle changé: ${model === 'free' ? 'DeepSeek R1 Free' : 'DeepSeek R1 Premium'}`, 'success');
+            };
+
+            return (
+                <div className="app-container">
+                    {/* Header */}
+                    <header className="app-header">
+                        <div className="header-content">
+                            <div className="logo-section">
+                                <h1 className="logo-main">ÉtudIA</h1>
+                                <p className="logo-subtitle">Intelligence Artificielle Éducative</p>
+                                <div className="version-badge">
+                                    V4.1 • OpenRouter DeepSeek R1
+                                </div>
+                            </div>
+                            <div className="cta-buttons">
+                                <button 
+                                    className="btn-primary"
+                                    onClick={() => setCurrentTab('upload')}
+                                >
+                                    📄 Upload Document
+                                </button>
+                                <button 
+                                    className="btn-primary"
+                                    onClick={() => setCurrentTab('chat')}
+                                >
+                                    💬 Chat IA
+                                </button>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Navigation */}
+                    <nav className="tab-navigation">
+                        <button 
+                            className={`tab-btn ${currentTab === 'upload' ? 'active' : ''}`}
+                            onClick={() => setCurrentTab('upload')}
+                        >
+                            📤 Upload
+                        </button>
+                        <button 
+                            className={`tab-btn ${currentTab === 'chat' ? 'active' : ''}`}
+                            onClick={() => setCurrentTab('chat')}
+                        >
+                            💬 Chat IA
+                        </button>
+                        <button 
+                            className={`tab-btn ${currentTab === 'documents' ? 'active' : ''}`}
+                            onClick={() => setCurrentTab('documents')}
+                        >
+                            📚 Mes Documents
+                        </button>
+                    </nav>
+
+                    {/* Contenu principal */}
+                    <main className="main-content">
+                        <div className="tab-content fade-in">
+                            {currentTab === 'upload' && (
+                                <UploadTab 
+                                    uploadService={uploadService.current}
+                                    userId={userId}
+                                    onUploadSuccess={loadDocuments}
+                                    onNotification={addNotification}
+                                    isLoading={isLoading}
+                                    setIsLoading={setIsLoading}
+                                />
+                            )}
+                            {currentTab === 'chat' && (
+                                <ChatTab 
+                                    openRouterService={openRouterService.current}
+                                    userId={userId}
+                                    messages={chatMessages}
+                                    setMessages={setChatMessages}
+                                    selectedDocument={selectedDocument}
+                                    currentModel={currentModel}
+                                    onModelChange={handleModelChange}
+                                    onNotification={addNotification}
+                                    isLoading={isLoading}
+                                    setIsLoading={setIsLoading}
+                                />
+                            )}
+                            {currentTab === 'documents' && (
+                                <DocumentsTab 
+                                    documents={documents}
+                                    selectedDocument={selectedDocument}
+                                    onSelectDocument={setSelectedDocument}
+                                    onDeleteDocument={async (id) => {
+                                        const success = await uploadService.current.deleteDocument(id);
+                                        if (success) {
+                                            loadDocuments();
+                                            addNotification('Document supprimé', 'success');
+                                        } else {
+                                            addNotification('Erreur suppression', 'error');
+                                        }
+                                    }}
+                                    onNotification={addNotification}
+                                />
+                            )}
+                        </div>
+                    </main>
+
+                    {/* Notifications */}
+                    <NotificationContainer notifications={notifications} />
+                </div>
+            );
+        }
+
+        // Composant Upload
+        function UploadTab({ uploadService, userId, onUploadSuccess, onNotification, isLoading, setIsLoading }) {
+            const [isDragOver, setIsDragOver] = useState(false);
+            const fileInputRef = useRef(null);
+
+            const handleFileSelect = async (files) => {
+                if (!files || files.length === 0) return;
+
+                setIsLoading(true);
+                const file = files[0];
+
+                try {
+                    const result = await uploadService.uploadDocument(file, userId);
+                    
+                    if (result.success) {
+                        onNotification(result.message, 'success');
+                        onUploadSuccess();
+                    } else {
+                        onNotification(result.error, 'error');
+                    }
+                } catch (error) {
+                    onNotification('Erreur upload: ' + error.message, 'error');
+                } finally {
+                    setIsLoading(false);
+                }
+            };
+
+            const handleDrop = (e) => {
+                e.preventDefault();
+                setIsDragOver(false);
+                handleFileSelect(e.dataTransfer.files);
+            };
+
+            const handleDragOver = (e) => {
+                e.preventDefault();
+                setIsDragOver(true);
+            };
+
+            const handleDragLeave = (e) => {
+                e.preventDefault();
+                setIsDragOver(false);
+            };
+
+            return (
+                <div>
+                    <h2>📤 Upload de Documents</h2>
+                    <div className="openrouter-status">
+                        🤖 IA prête : DeepSeek R1 via OpenRouter • Version 4.1
+                    </div>
+                    
+                    <div 
+                        className={`upload-zone ${isDragOver ? 'dragover' : ''}`}
+                        onDrop={handleDrop}
+                        onDragOver={handleDragOver}
+                        onDragLeave={handleDragLeave}
+                        onClick={() => fileInputRef.current?.click()}
+                    >
+                        <div className="upload-icon">📄</div>
+                        <div className="upload-text">
+                            {isLoading ? 'Upload en cours...' : 'Glissez votre document ici ou cliquez'}
+                        </div>
+                        <div className="upload-subtext">
+                            Formats supportés: PDF, TXT, DOC, DOCX, JPG, PNG (max 10MB)
+                        </div>
+                        {isLoading && <div className="spinner"></div>}
+                    </div>
+
+                    <input 
+                        ref={fileInputRef}
+                        type="file"
+                        className="file-input"
+                        accept={CONFIG.SUPPORTED_FORMATS.join(',')}
+                        onChange={(e) => handleFileSelect(e.target.files)}
+                    />
+                </div>
+            );
+        }
+
+        // Composant Chat
+        function ChatTab({ openRouterService, userId, messages, setMessages, selectedDocument, currentModel, onModelChange, onNotification, isLoading, setIsLoading }) {
+            const [inputMessage, setInputMessage] = useState('');
+            const messagesEndRef = useRef(null);
+
+            const scrollToBottom = () => {
+                messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+            };
+
+            useEffect(() => {
+                scrollToBottom();
+            }, [messages]);
+
+            const handleSendMessage = async () => {
+                if (!inputMessage.trim() || isLoading) return;
+
+                const userMessage = {
+                    id: Date.now(),
+                    type: 'user',
+                    content: inputMessage.trim(),
+                    timestamp: new Date()
+                };
+
+                setMessages(prev => [...prev, userMessage]);
+                setInputMessage('');
+                setIsLoading(true);
+
+                try {
+                    const result = await openRouterService.chat(userMessage.content, {
+                        userId,
+                        documentContext: selectedDocument?.content || '',
+                        mode: 'normal'
+                    });
+
+                    const aiMessage = {
+                        id: Date.now() + 1,
+                        type: 'ai',
+                        content: result.success ? result.message : `❌ ${result.error}`,
+                        timestamp: new Date(),
+                        model: result.model || currentModel,
+                        tokens: result.tokens,
+                        responseTime: result.responseTime
+                    };
+
+                    setMessages(prev => [...prev, aiMessage]);
+
+                    if (!result.success) {
+                        onNotification(result.error, 'error');
+                    }
+                } catch (error) {
+                    onNotification('Erreur chat: ' + error.message, 'error');
+                } finally {
+                    setIsLoading(false);
+                }
+            };
+
+            const handleKeyPress = (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSendMessage();
+                }
+            };
+
+            return (
+                <div>
+                    <h2>💬 Chat avec IA</h2>
+                    
+                    <div className="chat-container">
+                        <div className="chat-header">
+                            🤖 Assistant IA ÉtudIA V4.1
+                            <div className="model-selector">
+                                <button 
+                                    className={`model-toggle ${currentModel === 'free' ? 'active' : ''}`}
+                                    onClick={() => onModelChange('free')}
+                                >
+                                    🆓 Free
+                                </button>
+                                <button 
+                                    className={`model-toggle ${currentModel === 'paid' ? 'active' : ''}`}
+                                    onClick={() => onModelChange('paid')}
+                                >
+                                    ⚡ Premium
+                                </button>
+                                <div className="tokens-display">
+                                    Model: DeepSeek R1 {currentModel}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="chat-messages">
+                            {messages.map(message => (
+                                <div key={message.id} className={`message ${message.type}`}>
+                                    <div className="message-content">
+                                        {message.content}
+                                    </div>
+                                    <div className="message-meta">
+                                        {message.timestamp.toLocaleTimeString()}
+                                        {message.tokens && (
+                                            <span className="tokens-display">
+                                                {message.tokens} tokens
+                                            </span>
+                                        )}
+                                        {message.model && message.model !== 'system' && (
+                                            <span className="tokens-display">
+                                                {message.model}
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                            {isLoading && (
+                                <div className="message ai">
+                                    <div className="loading">
+                                        <div className="spinner"></div>
+                                        IA en train de réfléchir...
+                                    </div>
+                                </div>
+                            )}
+                            <div ref={messagesEndRef} />
+                        </div>
+
+                        <div className="chat-input-container">
+                            <div className="chat-input-wrapper">
+                                <textarea 
+                                    className="chat-input"
+                                    value={inputMessage}
+                                    onChange={(e) => setInputMessage(e.target.value)}
+                                    onKeyPress={handleKeyPress}
+                                    placeholder="Tapez votre message... (Entrée pour envoyer)"
+                                    rows="1"
+                                    disabled={isLoading}
+                                />
+                                <button 
+                                    className="send-btn"
+                                    onClick={handleSendMessage}
+                                    disabled={isLoading || !inputMessage.trim()}
+                                >
+                                    {isLoading ? '⏳' : '🚀'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // Composant Documents
+        function DocumentsTab({ documents, selectedDocument, onSelectDocument, onDeleteDocument, onNotification }) {
+            return (
+                <div>
+                    <h2>📚 Mes Documents</h2>
+                    <div className="openrouter-status">
+                        📄 {documents.length} document(s) uploadé(s)
+                    </div>
+
+                    {documents.length === 0 ? (
+                        <div style={{ textAlign: 'center', padding: '3rem', opacity: 0.7 }}>
+                            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📄</div>
+                            <p>Aucun document uploadé pour le moment.</p>
+                            <p>Utilisez l'onglet Upload pour ajouter vos premiers documents.</p>
+                        </div>
+                    ) : (
+                        <div className="documents-list">
+                            {documents.map(doc => (
+                                <div key={doc.id} className="document-item">
+                                    <div className="document-icon">📄</div>
+                                    <div className="document-info">
+                                        <div className="document-name">{doc.nom_original}</div>
+                                        <div className="document-meta">
+                                            Uploadé le {new Date(doc.date_upload).toLocaleDateString()} • 
+                                            {doc.taille ? ` ${Math.round(doc.taille / 1024)}KB` : ''} • 
+                                            {doc.pages ? ` ${doc.pages} page(s)` : ''}
+                                        </div>
+                                    </div>
+                                    <div className="document-actions">
+                                        <button 
+                                            className="btn-small"
+                                            onClick={() => {
+                                                onSelectDocument(doc);
+                                                onNotification(`Document "${doc.nom_original}" sélectionné`, 'success');
+                                            }}
+                                        >
+                                            {selectedDocument?.id === doc.id ? '✅ Sélectionné' : '📋 Sélectionner'}
+                                        </button>
+                                        <button 
+                                            className="btn-small btn-danger"
+                                            onClick={() => {
+                                                if (confirm(`Supprimer "${doc.nom_original}" ?`)) {
+                                                    onDeleteDocument(doc.id);
+                                                }
+                                            }}
+                                        >
+                                            🗑️ Supprimer
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        // Composant Notifications
+        function NotificationContainer({ notifications }) {
+            if (notifications.length === 0) return null;
+
+            return (
+                <div style={{
+                    position: 'fixed',
+                    top: '20px',
+                    right: '20px',
+                    zIndex: 10000,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '10px'
+                }}>
+                    {notifications.map(notification => (
+                        <div 
+                            key={notification.id}
+                            className={notification.type === 'error' ? 'error-message' : 'success-message'}
+                            style={{
+                                minWidth: '300px',
+                                boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            {notification.message}
+                        </div>
+                    ))}
+                </div>
+            );
+        }
+
+        // ===== RENDU DE L'APPLICATION =====
+        const root = ReactDOM.createRoot(document.getElementById('app-root'));
+        root.render(<EtudiaApp />);
+
+        // ===== LOGS DE DÉMARRAGE =====
+        console.log('🚀 ÉtudIA V4.1 initialisé avec succès!');
+        console.log('- React:', React.version);
+        console.log('- OpenRouter: Prêt');
+        console.log('- DeepSeek R1: Activé');
+        console.log('- Version:', CONFIG.VERSION);
+    </script>
 </body>
 </html>
