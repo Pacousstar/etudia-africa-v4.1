@@ -1,24 +1,113 @@
 {
-  "routes": [
+  "version": 2,
+  "name": "etudia-africa-v4-1",
+  "public": true,
+  "builds": [
     {
-      "src": "/backoffices/(.*)",
-      "dest": "/backoffices/$1"
+      "src": "index.html",
+      "use": "@vercel/static"
     },
     {
-      "src": "/pages/(.*)",
+      "src": "frontend/build/**/*",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "backoffices/**/*",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "pages/**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "^/$",
+      "dest": "/index.html",
+      "headers": {
+        "cache-control": "s-maxage=86400"
+      }
+    },
+    {
+      "src": "^/frontend/?(.*)$",
+      "dest": "/frontend/build/$1"
+    },
+    {
+      "src": "^/interface/?(.*)$",
+      "dest": "/frontend/build/$1"
+    },
+    {
+      "src": "^/backoffices/eleves/?(.*)$",
+      "dest": "/backoffices/eleves/$1"
+    },
+    {
+      "src": "^/backoffices/enseignants/?(.*)$",
+      "dest": "/backoffices/enseignants/$1"
+    },
+    {
+      "src": "^/backoffices/parents/?(.*)$",
+      "dest": "/backoffices/parents/$1"
+    },
+    {
+      "src": "^/backoffices/etablissements/?(.*)$",
+      "dest": "/backoffices/etablissements/$1"
+    },
+    {
+      "src": "^/backoffices/dren/?(.*)$",
+      "dest": "/backoffices/dren/$1"
+    },
+    {
+      "src": "^/backoffices/partenaires/?(.*)$",
+      "dest": "/backoffices/partenaires/$1"
+    },
+    {
+      "src": "^/backoffices/administrateurs/?(.*)$",
+      "dest": "/backoffices/administrateurs/$1"
+    },
+    {
+      "src": "^/pages/(.*)",
       "dest": "/pages/$1"
     },
     {
-      "src": "/frontend/(.*)",
-      "dest": "/frontend/$1"
-    },
-    {
-      "src": "/backend/(.*)",
-      "dest": "/backend/$1"
-    },
-    {
-      "src": "/(.*)",
+      "src": "^/(.*)",
       "dest": "/$1"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://etudia-v4-revolutionary.onrender.com/api/$1"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/react",
+      "destination": "/frontend/",
+      "permanent": false
+    },
+    {
+      "source": "/interface",
+      "destination": "/frontend/",
+      "permanent": false
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
     }
   ]
 }
