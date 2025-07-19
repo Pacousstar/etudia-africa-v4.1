@@ -1,1 +1,1060 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support & Centre d'aide - ÉtudIA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        :root {
+            --etudia-primary: #FF6B35;
+            --etudia-success: #10B981;
+            --etudia-danger: #EF4444;
+            --etudia-info: #3B82F6;
+            --etudia-dark: #1F2937;
+            --etudia-light: #F9FAFB;
+            --etudia-white: #FFFFFF;
+            --gradient-primary: linear-gradient(135deg, #FF6B35, #EF4444);
+            --gradient-secondary: linear-gradient(135deg, #10B981, #3B82F6);
+            --glassmorphism: rgba(255, 255, 255, 0.1);
+            --glassmorphism-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1F2937, #111827);
+            color: var(--etudia-white);
+            overflow-x: hidden;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            backdrop-filter: blur(20px);
+            background: var(--glassmorphism);
+            border-bottom: 1px solid var(--glassmorphism-border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--etudia-white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--etudia-primary);
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* ===== DRAPEAU CI ===== */
+        .floating-flag {
+            position: fixed;
+            top: 80px;
+            right: 15px;
+            width: 30px;
+            height: 45px;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            animation: wave 3s ease-in-out infinite;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: linear-gradient(to bottom, 
+                #FF6B35 0% 33%, 
+                white 33% 66%, 
+                #10B981 66% 100%
+            );
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(3deg) scale(1.05); }
+            50% { transform: rotate(-2deg) scale(1); }
+            75% { transform: rotate(2deg) scale(1.02); }
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            padding-top: 80px;
+            min-height: 100vh;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+            background: radial-gradient(ellipse at center, rgba(255, 107, 53, 0.15) 0%, transparent 70%);
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== SUPPORT CONTAINER ===== */
+        .support-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem 3rem;
+        }
+
+        /* ===== CONTACT RAPIDE ===== */
+        .quick-contact {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.2);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .contact-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--etudia-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .contact-button {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .contact-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        /* ===== FAQ SECTION ===== */
+        .faq-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--etudia-primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .faq-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .faq-category {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .category-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--etudia-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .faq-answer {
+            padding: 0 1rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .faq-answer.active {
+            padding: 1rem;
+            max-height: 200px;
+        }
+
+        /* ===== GUIDES SECTION ===== */
+        .guides-section {
+            margin-bottom: 3rem;
+        }
+
+        .guides-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .guide-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .guide-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.2);
+        }
+
+        .guide-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .guide-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--etudia-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .guide-description {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .guide-link {
+            color: var(--etudia-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .guide-link:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== STATUT SYSTÈME ===== */
+        .status-section {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .status-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--etudia-success);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .status-value {
+            font-weight: 600;
+            color: var(--etudia-success);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glassmorphism-border);
+            padding: 2rem 1rem 1rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .footer p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .quick-contact {
+                grid-template-columns: 1fr;
+            }
+            
+            .faq-categories {
+                grid-template-columns: 1fr;
+            }
+            
+            .guides-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .floating-flag {
+                width: 25px;
+                height: 35px;
+                right: 10px;
+            }
+
+            .hero-section {
+                padding: 2rem 1rem 1.5rem;
+            }
+
+            .status-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">ÉtudIA</div>
+            <ul class="nav-links">
+                <li><a href="/index.html">Accueil</a></li>
+                <li><a href="/backoffices/eleves/index.html">Élèves</a></li>
+                <li><a href="/backoffices/enseignants/index.html">Enseignants</a></li>
+                <li><a href="/pages/plans.html">Tarifs</a></li>
+                <li><a href="/pages/support.html" class="active">Support</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Drapeau Flottant CI -->
+    <div class="floating-flag" title="Fièrement Ivoirien 🇨🇮"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1 class="hero-title">Support & Centre d'aide</h1>
+            <p class="hero-subtitle">
+                Nous sommes là pour vous aider ! Trouvez rapidement les réponses à vos questions.
+            </p>
+        </section>
+
+        <div class="support-container">
+            <!-- Contact Rapide -->
+            <section class="quick-contact">
+                <div class="contact-card" onclick="openWhatsApp()">
+                    <span class="contact-icon">💬</span>
+                    <h3 class="contact-title">Chat WhatsApp</h3>
+                    <p class="contact-info">
+                        Support instantané<br>
+                        Lun-Dim 8h-22h<br>
+                        +225 XX XX XX XX
+                    </p>
+                    <button class="contact-button">Ouvrir WhatsApp</button>
+                </div>
+
+                <div class="contact-card" onclick="openEmail()">
+                    <span class="contact-icon">📧</span>
+                    <h3 class="contact-title">Email Support</h3>
+                    <p class="contact-info">
+                        Réponse sous 24h<br>
+                        Pour questions détaillées<br>
+                        support@etudia-africa.com
+                    </p>
+                    <button class="contact-button">Envoyer un Email</button>
+                </div>
+
+                <div class="contact-card" onclick="openTicket()">
+                    <span class="contact-icon">🎫</span>
+                    <h3 class="contact-title">Ticket Support</h3>
+                    <p class="contact-info">
+                        Suivi personnalisé<br>
+                        Pour problèmes techniques<br>
+                        Traitement prioritaire
+                    </p>
+                    <button class="contact-button">Créer un Ticket</button>
+                </div>
+
+                <div class="contact-card" onclick="openForum()">
+                    <span class="contact-icon">👥</span>
+                    <h3 class="contact-title">Forum Communauté</h3>
+                    <p class="contact-info">
+                        Entraide étudiants<br>
+                        Conseils et astuces<br>
+                        Discussions ouvertes
+                    </p>
+                    <button class="contact-button">Rejoindre Forum</button>
+                </div>
+            </section>
+
+            <!-- Statut Système -->
+            <section class="status-section">
+                <div class="status-header">
+                    <h2 class="section-title" style="margin: 0;">🟢 Statut du Système</h2>
+                    <div class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span>Tous les services fonctionnent</span>
+                    </div>
+                </div>
+                
+                <div class="status-grid">
+                    <div class="status-item">
+                        <span>🤖 IA DeepSeek R1</span>
+                        <span class="status-value">Opérationnel</span>
+                    </div>
+                    <div class="status-item">
+                        <span>📡 API ÉtudIA</span>
+                        <span class="status-value">Opérationnel</span>
+                    </div>
+                    <div class="status-item">
+                        <span>💾 Base de données</span>
+                        <span class="status-value">Opérationnel</span>
+                    </div>
+                    <div class="status-item">
+                        <span>🔄 Upload fichiers</span>
+                        <span class="status-value">Opérationnel</span>
+                    </div>
+                    <div class="status-item">
+                        <span>💳 Paiements</span>
+                        <span class="status-value">Opérationnel</span>
+                    </div>
+                    <div class="status-item">
+                        <span>📱 App mobile</span>
+                        <span class="status-value">Opérationnel</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ Section -->
+            <section class="faq-section">
+                <h2 class="section-title">❓ Questions Fréquentes</h2>
+                
+                <div class="faq-categories">
+                    <!-- Catégorie Compte & Inscription -->
+                    <div class="faq-category">
+                        <h3 class="category-title">
+                            <span>👤</span>
+                            Compte & Inscription
+                        </h3>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                Comment créer un compte ÉtudIA ?
+                                <span>+</span>
+                            </div>
+                            <div class="faq-answer">
+                                Cliquez sur "Commencer" depuis la page d'accueil, puis suivez les étapes d'inscription. Vous pouvez vous inscrire avec votre email ou votre numéro de téléphone.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                J'ai oublié mon mot de passe, que faire ?
+                                <span>+</span>
+                            </div>
+                            <div class="faq-answer">
+                                Cliquez sur "Mot de passe oublié" sur la page de connexion. Vous recevrez un lien de réinitialisation par email ou SMS.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                Puis-je changer mon email/téléphone ?
+                                <span>+</span>
+                            </div>
+                            <div class="faq-answer">
+                                Oui, rendez-vous dans les paramètres de votre compte pour modifier vos informations personnelles.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Catégorie Utilisation & Fonctionnalités -->
+                    <div class="faq-category">
+                        <h3 class="category-title">
+                            <span>🎯</span>
+                            Utilisation & Fonctionnalités
+                        </h3>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                Comment uploader mes documents ?
+                                <span>+</span>
+                            </div>
+                            <div class="faq-answer">
+                                Cliquez sur l'icône "📎" dans l'interface de chat, puis sélectionnez votre fichier (PDF, image, Word). ÉtudIA analysera automatiquement le contenu.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                Quels types de fichiers sont supportés ?
+                                <span>+</span>
+                            </div>
+                            <div class="faq-answer">
+                                PDF, images (JPG, PNG), documents Word, PowerPoint, Excel, et fichiers texte. Taille maximum : 10MB par fichier.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                Comment utiliser la fonction audio ?
+                                <span>+</span>
+                            </div>
+                            <div class="faq-answer">
+                                Appuyez sur l'icône micro pour poser vos questions oralement. ÉtudIA peut aussi vous répondre à voix haute selon vos préférences.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Catégorie Abonnements & Paiements -->
+                    <div class="faq-category">
+                        <h3 class="category-title">
+                            <span>💳</span>
+                            Abonnements & Paiements
+                        </h3>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                Quelles méthodes de paiement acceptez-vous ?
+                                <span>+</span>
+                            </div>
+                            <div class="faq-answer">
+                                Orange Money, MTN Mobile Money, Moov Money, cartes Visa/Mastercard, et virements bancaires pour les entreprises.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                Comment annuler mon abonnement ?
+                                <span>+</span>
+                            </div>
+                            <div class="faq-answer">
+                                Allez dans "Mon compte" > "Abonnements" et cliquez sur "Annuler". Vous gardez l'accès jusqu'à la fin de la période payée.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                Puis-je obtenir un remboursement ?
+                                <span>+</span>
+                            </div>
+                            <div class="faq-answer">
+                                Oui, nous offrons une garantie de satisfaction de 7 jours. Contactez notre support pour un remboursement complet.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Catégorie Problèmes Techniques -->
+                    <div class="faq-category">
+                        <h3 class="category-title">
+                            <span>🔧</span>
+                            Problèmes Techniques
+                        </h3>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                ÉtudIA ne répond pas, que faire ?
+                                <span>+</span>
+                            </div>
+                            <div class="faq-answer">
+                                Vérifiez votre connexion internet, actualisez la page, ou videz le cache de votre navigateur. Si le problème persiste, contactez le support.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                Mon fichier ne s'upload pas, pourquoi ?
+                                <span>+</span>
+                            </div>
+                            <div class="faq-answer">
+                                Vérifiez que le fichier fait moins de 10MB et qu'il est dans un format supporté. Connexion internet lente peut aussi causer des problèmes.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                L'app mobile ne fonctionne pas bien
+                                <span>+</span>
+                            </div>
+                            <div class="faq-answer">
+                                Mettez à jour l'application depuis Play Store/App Store. Redémarrez votre téléphone si nécessaire. Version minimum : Android 7.0 / iOS 12.0.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Guides Section -->
+            <section class="guides-section">
+                <h2 class="section-title">📚 Guides & Tutoriels</h2>
+                
+                <div class="guides-grid">
+                    <div class="guide-card" onclick="openGuide('premiers-pas')">
+                        <span class="guide-icon">🚀</span>
+                        <h3 class="guide-title">Guide de Premiers Pas</h3>
+                        <p class="guide-description">
+                            Découvrez comment utiliser ÉtudIA efficacement pour vos études. De l'inscription à votre première interaction.
+                        </p>
+                        <a href="#" class="guide-link">Lire le guide →</a>
+                    </div>
+
+                    <div class="guide-card" onclick="openGuide('upload-documents')">
+                        <span class="guide-icon">📄</span>
+                        <h3 class="guide-title">Upload de Documents</h3>
+                        <p class="guide-description">
+                            Apprenez à télécharger et organiser vos cours, exercices et documents pour une analyse optimale.
+                        </p>
+                        <a href="#" class="guide-link">Voir le tutoriel →</a>
+                    </div>
+
+                    <div class="guide-card" onclick="openGuide('modes-etude')">
+                        <span class="guide-icon">🎯</span>
+                        <h3 class="guide-title">Modes d'Étude</h3>
+                        <p class="guide-description">
+                            Explorez tous les modes : révision, QCM, exercices, rédaction et trouvez celui qui vous convient.
+                        </p>
+                        <a href="#" class="guide-link">Explorer les modes →</a>
+                    </div>
+
+                    <div class="guide-card" onclick="openGuide('optimiser-interactions')">
+                        <span class="guide-icon">💡</span>
+                        <h3 class="guide-title">Optimiser vos Interactions</h3>
+                        <p class="guide-description">
+                            Conseils et astuces pour poser les bonnes questions et obtenir les meilleures réponses de l'IA.
+                        </p>
+                        <a href="#" class="guide-link">Voir les astuces →</a>
+                    </div>
+
+                    <div class="guide-card" onclick="openGuide('gestion-abonnement')">
+                        <span class="guide-icon">⚙️</span>
+                        <h3 class="guide-title">Gestion d'Abonnement</h3>
+                        <p class="guide-description">
+                            Comment changer de plan, gérer vos paiements et suivre votre consommation d'interactions.
+                        </p>
+                        <a href="#" class="guide-link">Gérer mon compte →</a>
+                    </div>
+
+                    <div class="guide-card" onclick="openGuide('troubleshooting')">
+                        <span class="guide-icon">🔧</span>
+                        <h3 class="guide-title">Résolution de Problèmes</h3>
+                        <p class="guide-description">
+                            Solutions rapides aux problèmes courants : connexion, upload, synchronisation et performance.
+                        </p>
+                        <a href="#" class="guide-link">Résoudre un problème →</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 ÉtudIA - Tous droits réservés | Fièrement conçu en Côte d'Ivoire 🇨🇮</p>
+        <p style="margin-top: 0.5rem;">
+            <a href="/index.html" style="color: var(--etudia-primary); text-decoration: none;">Retour à l'accueil</a> | 
+            <a href="/pages/plans.html" style="color: var(--etudia-primary); text-decoration: none;">Plans & Tarifs</a> | 
+            <a href="/pages/about.html" style="color: var(--etudia-primary); text-decoration: none;">À propos</a>
+        </p>
+    </footer>
+
+    <script>
+        // ===== FAQ TOGGLE =====
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('span:last-child');
+            const allAnswers = document.querySelectorAll('.faq-answer');
+            const allIcons = document.querySelectorAll('.faq-question span:last-child');
+            
+            // Fermer toutes les autres FAQ
+            allAnswers.forEach(ans => {
+                if (ans !== answer) {
+                    ans.classList.remove('active');
+                }
+            });
+            
+            allIcons.forEach(ic => {
+                if (ic !== icon && ic.textContent === '−') {
+                    ic.textContent = '+';
+                }
+            });
+            
+            // Toggle la FAQ actuelle
+            if (answer.classList.contains('active')) {
+                answer.classList.remove('active');
+                icon.textContent = '+';
+            } else {
+                answer.classList.add('active');
+                icon.textContent = '−';
+            }
+        }
+
+        // ===== CONTACT FUNCTIONS =====
+        function openWhatsApp() {
+            const message = encodeURIComponent("Bonjour ! J'ai besoin d'aide avec ÉtudIA 🎓");
+            window.open(`https://wa.me/2250000000000?text=${message}`, '_blank');
+        }
+
+        function openEmail() {
+            const subject = encodeURIComponent("Support ÉtudIA - Demande d'aide");
+            const body = encodeURIComponent(`Bonjour l'équipe ÉtudIA,
+
+J'ai besoin d'aide concernant :
+
+[Décrivez votre problème ici]
+
+Informations utiles :
+- Navigateur : ${navigator.userAgent}
+- Plateforme : ${navigator.platform}
+
+Merci pour votre aide !`);
+            
+            window.open(`mailto:support@etudia-africa.com?subject=${subject}&body=${body}`, '_blank');
+        }
+
+        function openTicket() {
+            alert(`🎫 Création de ticket support...
+
+Pour créer un ticket détaillé :
+
+1. 📧 Envoyez un email à support@etudia-africa.com
+2. 📝 Décrivez précisément votre problème
+3. 📱 Mentionnez votre appareil et navigateur
+4. 🎯 Vous recevrez un numéro de ticket de suivi
+
+⏱️ Temps de réponse : 24h maximum`);
+        }
+
+        function openForum() {
+            alert(`👥 Forum Communauté ÉtudIA
+
+Le forum communautaire sera bientôt disponible !
+
+En attendant, rejoignez-nous sur :
+• 📘 Facebook : ÉtudIA Afrique
+• 🐦 Twitter : @EtudIA_Africa
+• 📱 Telegram : @EtudIASupport
+
+💬 Échangez avec d'autres étudiants et partagez vos astuces !`);
+        }
+
+        // ===== GUIDE FUNCTIONS =====
+        function openGuide(guideType) {
+            const guides = {
+                'premiers-pas': {
+                    title: '🚀 Guide de Premiers Pas',
+                    content: `1. Créez votre compte ÉtudIA
+2. Explorez le plan Découverte gratuit
+3. Uploadez votre premier document
+4. Posez votre première question
+5. Découvrez les différents modes d'étude`
+                },
+                'upload-documents': {
+                    title: '📄 Upload de Documents',
+                    content: `• Formats supportés : PDF, JPG, PNG, Word, PowerPoint
+• Taille max : 10MB par fichier
+• L'IA analyse automatiquement le contenu
+• Organisez vos documents par matière
+• Utilisez des noms de fichiers clairs`
+                },
+                'modes-etude': {
+                    title: '🎯 Modes d\'Étude',
+                    content: `🔄 Révision : Questions/réponses sur vos cours
+📝 QCM : Création de quiz personnalisés
+✍️ Exercices : Problèmes adaptés à votre niveau
+📖 Rédaction : Aide à l'écriture et correction
+🎧 Audio : Interaction vocale avec l'IA`
+                },
+                'optimiser-interactions': {
+                    title: '💡 Optimiser vos Interactions',
+                    content: `• Soyez précis dans vos questions
+• Mentionnez le contexte (matière, niveau)
+• Uploadez les documents pertinents
+• Utilisez des exemples concrets
+• Demandez des explications étape par étape`
+                },
+                'gestion-abonnement': {
+                    title: '⚙️ Gestion d\'Abonnement',
+                    content: `• Consultez votre plan actuel dans "Mon compte"
+• Suivez votre consommation d'interactions
+• Changez de plan à tout moment
+• Gérez vos méthodes de paiement
+• Consultez l'historique des factures`
+                },
+                'troubleshooting': {
+                    title: '🔧 Résolution de Problèmes',
+                    content: `🌐 Problème de connexion : Vérifiez votre internet
+🔄 Page qui charge pas : Actualisez (Ctrl+F5)
+📎 Upload qui échoue : Vérifiez la taille/format
+🤖 IA qui répond pas : Patientez ou contactez support
+📱 App lente : Redémarrez l'application`
+                }
+            };
+
+            const guide = guides[guideType];
+            if (guide) {
+                alert(`${guide.title}
+
+${guide.content}
+
+📞 Besoin d'aide supplémentaire ?
+Contactez notre support via WhatsApp ou email !`);
+            }
+        }
+
+        // ===== SMOOTH SCROLLING =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ===== NAVBAR SCROLL EFFECT =====
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(31, 41, 55, 0.95)';
+            } else {
+                navbar.style.background = 'var(--glassmorphism)';
+            }
+        });
+
+        // ===== ANIMATION DES CARTES AU SCROLL =====
+        const observerCards = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        // Observer toutes les cartes
+        document.querySelectorAll('.contact-card, .guide-card, .faq-category').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observerCards.observe(card);
+        });
+
+        // ===== STATUS UPDATES =====
+        function updateSystemStatus() {
+            // Simulation de vérification du statut
+            const statusItems = document.querySelectorAll('.status-value');
+            const statusDot = document.querySelector('.status-dot');
+            
+            // Simulation aléatoire de statut (normalement vient d'une API)
+            const isAllGreen = Math.random() > 0.1; // 90% chance tout est OK
+            
+            if (isAllGreen) {
+                statusItems.forEach(item => {
+                    item.textContent = 'Opérationnel';
+                    item.style.color = 'var(--etudia-success)';
+                });
+                statusDot.style.background = 'var(--etudia-success)';
+            } else {
+                // Simuler un problème occasionnel
+                const randomItem = statusItems[Math.floor(Math.random() * statusItems.length)];
+                randomItem.textContent = 'Maintenance';
+                randomItem.style.color = 'var(--etudia-primary)';
+            }
+        }
+
+        // Mettre à jour le statut toutes les 30 secondes
+        setInterval(updateSystemStatus, 30000);
+
+        // ===== GESTION RESPONSIVE MENU =====
+        function createMobileMenu() {
+            if (window.innerWidth <= 768) {
+                const navContainer = document.querySelector('.nav-container');
+                const navLinks = document.querySelector('.nav-links');
+                
+                if (!document.querySelector('.mobile-toggle')) {
+                    const mobileToggle = document.createElement('div');
+                    mobileToggle.className = 'mobile-toggle';
+                    mobileToggle.innerHTML = '☰';
+                    mobileToggle.style.cssText = `
+                        font-size: 1.5rem;
+                        cursor: pointer;
+                        color: white;
+                        display: block;
+                    `;
+                    
+                    mobileToggle.addEventListener('click', () => {
+                        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                        navLinks.style.position = 'absolute';
+                        navLinks.style.top = '100%';
+                        navLinks.style.left = '0';
+                        navLinks.style.right = '0';
+                        navLinks.style.background = 'rgba(31, 41, 55, 0.95)';
+                        navLinks.style.flexDirection = 'column';
+                        navLinks.style.padding = '1rem';
+                        navLinks.style.backdropFilter = 'blur(20px)';
+                    });
+                    
+                    navContainer.appendChild(mobileToggle);
+                }
+            }
+        }
+
+        // Créer menu mobile au chargement et redimensionnement
+        window.addEventListener('load', createMobileMenu);
+        window.addEventListener('resize', createMobileMenu);
+
+        console.log('🎧 Page Support & Centre d\'aide ÉtudIA chargée avec succès ! 🇨🇮');
+    </script>
+</body>
+</html>
