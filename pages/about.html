@@ -1,1 +1,959 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos - ÉtudIA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        :root {
+            --etudia-primary: #FF6B35;
+            --etudia-success: #10B981;
+            --etudia-danger: #EF4444;
+            --etudia-info: #3B82F6;
+            --etudia-dark: #1F2937;
+            --etudia-light: #F9FAFB;
+            --etudia-white: #FFFFFF;
+            --gradient-primary: linear-gradient(135deg, #FF6B35, #EF4444);
+            --gradient-secondary: linear-gradient(135deg, #10B981, #3B82F6);
+            --glassmorphism: rgba(255, 255, 255, 0.1);
+            --glassmorphism-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1F2937, #111827);
+            color: var(--etudia-white);
+            overflow-x: hidden;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            backdrop-filter: blur(20px);
+            background: var(--glassmorphism);
+            border-bottom: 1px solid var(--glassmorphism-border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--etudia-white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--etudia-primary);
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* ===== DRAPEAU CI ===== */
+        .floating-flag {
+            position: fixed;
+            top: 80px;
+            right: 15px;
+            width: 45px;
+            height: 30px;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            animation: wave 3s ease-in-out infinite;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: linear-gradient(to right, 
+                #FF6B35 0% 33%, 
+                white 33% 66%, 
+                #10B981 66% 100%
+            );
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(3deg) scale(1.05); }
+            50% { transform: rotate(-2deg) scale(1); }
+            75% { transform: rotate(2deg) scale(1.02); }
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            padding-top: 80px;
+            min-height: 100vh;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+            background: radial-gradient(ellipse at center, rgba(255, 107, 53, 0.15) 0%, transparent 70%);
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        /* ===== ABOUT CONTAINER ===== */
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem 3rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--etudia-primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        /* ===== MISSION SECTION ===== */
+        .mission-section {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .mission-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .mission-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* ===== VALEURS GRID ===== */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .value-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.2);
+        }
+
+        .value-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .value-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--etudia-primary);
+            margin-bottom: 0.8rem;
+        }
+
+        .value-description {
+            opacity: 0.8;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        /* ===== ÉQUIPE SECTION ===== */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .team-member {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.2);
+        }
+
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .member-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--etudia-primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .member-role {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.8rem;
+        }
+
+        .member-description {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            opacity: 0.7;
+        }
+
+        /* ===== IMPACT SECTION ===== */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .impact-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .impact-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .impact-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--etudia-primary);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .impact-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* ===== VISION SECTION ===== */
+        .vision-section {
+            background: linear-gradient(135deg, var(--glassmorphism), rgba(255, 107, 53, 0.1));
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vision-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .vision-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .vision-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .vision-text {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* ===== TECHNOLOGIE SECTION ===== */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .tech-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.2);
+        }
+
+        .tech-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .tech-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--etudia-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-description {
+            opacity: 0.8;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+
+        /* ===== CONTACT CTA ===== */
+        .contact-cta {
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .cta-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-description {
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .cta-button.primary {
+            background: white;
+            color: var(--etudia-primary);
+            border-color: white;
+        }
+
+        .cta-button.primary:hover {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glassmorphism-border);
+            padding: 2rem 1rem 1rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .footer p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .impact-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .floating-flag {
+                width: 35px;
+                height: 25px;
+                right: 10px;
+            }
+
+            .hero-section {
+                padding: 2rem 1rem 1.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">ÉtudIA</div>
+            <ul class="nav-links">
+                <li><a href="/index.html">Accueil</a></li>
+                <li><a href="/backoffices/eleves/index.html">Élèves</a></li>
+                <li><a href="/backoffices/enseignants/index.html">Enseignants</a></li>
+                <li><a href="/pages/plans.html">Tarifs</a></li>
+                <li><a href="/pages/about.html" class="active">À propos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Drapeau Flottant CI -->
+    <div class="floating-flag" title="Fièrement Ivoirien 🇨🇮"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1 class="hero-title">À propos d'ÉtudIA</h1>
+            <p class="hero-subtitle">
+                Découvrez notre mission, nos valeurs et l'équipe passionnée qui révolutionne 
+                l'éducation en Afrique grâce à l'intelligence artificielle.
+            </p>
+        </section>
+
+        <div class="about-container">
+            <!-- Mission Section -->
+            <section class="section">
+                <h2 class="section-title">🎯 Notre Mission</h2>
+                <div class="mission-section">
+                    <span class="mission-icon">🌍</span>
+                    <p class="mission-text">
+                        <strong>Démocratiser l'accès à une éducation de qualité en Afrique</strong> grâce à l'intelligence artificielle. 
+                        ÉtudIA accompagne chaque étudiant dans sa réussite scolaire, quel que soit son niveau socio-économique 
+                        ou sa localisation géographique. Nous croyons fermement que l'éducation est le moteur du développement 
+                        du continent africain et que chaque jeune mérite les meilleures chances de réussir.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Valeurs Section -->
+            <section class="section">
+                <h2 class="section-title">💎 Nos Valeurs</h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <span class="value-icon">🤝</span>
+                        <h3 class="value-title">Inclusion</h3>
+                        <p class="value-description">
+                            Nous rendons l'éducation accessible à tous, sans distinction de classe sociale ou de lieu de résidence. 
+                            Nos tarifs sont adaptés aux réalités africaines.
+                        </p>
+                    </div>
+
+                    <div class="value-card">
+                        <span class="value-icon">🚀</span>
+                        <h3 class="value-title">Innovation</h3>
+                        <p class="value-description">
+                            Nous utilisons les technologies les plus avancées en IA pour créer des expériences d'apprentissage 
+                            révolutionnaires et adaptées aux besoins locaux.
+                        </p>
+                    </div>
+
+                    <div class="value-card">
+                        <span class="value-icon">🏆</span>
+                        <h3 class="value-title">Excellence</h3>
+                        <p class="value-description">
+                            Nous nous engageons à fournir la meilleure qualité éducative possible, avec un taux de réussite 
+                            de 98% aux examens pour nos utilisateurs actifs.
+                        </p>
+                    </div>
+
+                    <div class="value-card">
+                        <span class="value-icon">🇨🇮</span>
+                        <h3 class="value-title">Fierté Africaine</h3>
+                        <p class="value-description">
+                            Conçu par des Africains pour l'Afrique, ÉtudIA comprend les défis uniques du continent et 
+                            propose des solutions culturellement adaptées.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Impact Section -->
+            <section class="section">
+                <h2 class="section-title">📊 Notre Impact</h2>
+                <div class="impact-grid">
+                    <div class="impact-card">
+                        <span class="impact-number" data-target="15000">0</span>
+                        <div class="impact-label">Étudiants Aidés</div>
+                    </div>
+
+                    <div class="impact-card">
+                        <span class="impact-number" data-target="12">0</span>
+                        <div class="impact-label">Pays Couverts</div>
+                    </div>
+
+                    <div class="impact-card">
+                        <span class="impact-number" data-target="98">0</span>
+                        <div class="impact-label">% Réussite Examens</div>
+                    </div>
+
+                    <div class="impact-card">
+                        <span class="impact-number" data-target="500">0</span>
+                        <div class="impact-label">Enseignants Partenaires</div>
+                    </div>
+
+                    <div class="impact-card">
+                        <span class="impact-number" data-target="2500000">0</span>
+                        <div class="impact-label">Questions Résolues</div>
+                    </div>
+
+                    <div class="impact-card">
+                        <span class="impact-number" data-target="24">0</span>
+                        <div class="impact-label">Langues Supportées</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Équipe Section -->
+            <section class="section">
+                <h2 class="section-title">👥 Notre Équipe</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-avatar">👨‍💻</div>
+                        <h3 class="member-name">@Pacousstar</h3>
+                        <p class="member-role">Fondateur & Lead Developer</p>
+                        <p class="member-description">
+                            Développeur Full-Stack passionné d'IA éducative. Basé en Côte d'Ivoire, 
+                            il porte la vision de démocratiser l'éducation en Afrique.
+                        </p>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="member-avatar">👩‍💼</div>
+                        <h3 class="member-name">MonAP</h3>
+                        <p class="member-role">Chef de Projet & AI Strategist</p>
+                        <p class="member-description">
+                            Experte en stratégie produit et optimisation IA. Elle pilote la croissance 
+                            et l'expansion continentale d'ÉtudIA.
+                        </p>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <h3 class="member-name">Dr. Koné</h3>
+                        <p class="member-role">Conseiller Pédagogique</p>
+                        <p class="member-description">
+                            Ancien inspecteur de l'Education Nationale ivoirienne. Il veille à la qualité 
+                            et l'adaptation des contenus aux programmes africains.
+                        </p>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="member-avatar">👩‍🔬</div>
+                        <h3 class="member-name">Sarah Diallo</h3>
+                        <p class="member-role">Ingénieure IA</p>
+                        <p class="member-description">
+                            Spécialiste en traitement du langage naturel et apprentissage automatique. 
+                            Elle développe les algorithmes d'ÉtudIA.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Technologie Section -->
+            <section class="section">
+                <h2 class="section-title">⚡ Notre Technologie</h2>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <span class="tech-icon">🧠</span>
+                        <h3 class="tech-title">IA DeepSeek R1</h3>
+                        <p class="tech-description">
+                            Intelligence artificielle de raisonnement avancée, capable d'analyser et de répondre 
+                            aux questions complexes avec une précision remarquable.
+                        </p>
+                    </div>
+
+                    <div class="tech-card">
+                        <span class="tech-icon">☁️</span>
+                        <h3 class="tech-title">Infrastructure Cloud</h3>
+                        <p class="tech-description">
+                            Architecture distribuée sur plusieurs continents pour garantir une disponibilité 
+                            24h/24 et des temps de réponse optimaux.
+                        </p>
+                    </div>
+
+                    <div class="tech-card">
+                        <span class="tech-icon">🔒</span>
+                        <h3 class="tech-title">Sécurité Avancée</h3>
+                        <p class="tech-description">
+                            Chiffrement de bout en bout, authentification multi-facteurs et conformité RGPD 
+                            pour protéger vos données éducatives.
+                        </p>
+                    </div>
+
+                    <div class="tech-card">
+                        <span class="tech-icon">📱</span>
+                        <h3 class="tech-title">Multi-Plateforme</h3>
+                        <p class="tech-description">
+                            Accessible sur web, mobile (iOS/Android) et même hors-ligne pour s'adapter 
+                            aux contraintes de connectivité africaines.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Vision Section -->
+            <section class="section">
+                <h2 class="section-title">🔮 Notre Vision 2030</h2>
+                <div class="vision-section">
+                    <div class="vision-content">
+                        <span class="vision-icon">🌟</span>
+                        <p class="vision-text">
+                            <strong>Faire de l'Afrique le continent leader en éducation numérique.</strong> 
+                            D'ici 2030, nous voulons accompagner 10 millions d'étudiants africains, 
+                            être présents dans tous les 54 pays du continent, et contribuer à former 
+                            la génération qui transformera l'Afrique en puissance technologique mondiale.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact CTA -->
+            <div class="contact-cta">
+                <h2 class="cta-title">Rejoignez l'Aventure ÉtudIA ! 🚀</h2>
+                <p class="cta-description">
+                    Que vous soyez étudiant, enseignant, parent ou partenaire, 
+                    ensemble nous révolutionnons l'éducation africaine.
+                </p>
+                <div class="cta-buttons">
+                    <a href="/backoffices/eleves/index.html" class="cta-button primary">Commencer Maintenant</a>
+                    <a href="/pages/support.html" class="cta-button">Nous Contacter</a>
+                    <a href="/backoffices/partenaires/index.html" class="cta-button">Devenir Partenaire</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 ÉtudIA - Tous droits réservés | Fièrement conçu en Côte d'Ivoire 🇨🇮</p>
+        <p style="margin-top: 0.5rem;">
+            <a href="/index.html" style="color: var(--etudia-primary); text-decoration: none;">Retour à l'accueil</a> | 
+            <a href="/pages/plans.html" style="color: var(--etudia-primary); text-decoration: none;">Plans & Tarifs</a> | 
+            <a href="/pages/support.html" style="color: var(--etudia-primary); text-decoration: none;">Support</a>
+        </p>
+    </footer>
+
+    <script>
+        // ===== ANIMATION COMPTEURS =====
+        function animateCounters() {
+            const counters = document.querySelectorAll('.impact-number');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const increment = target / 50;
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    
+                    // Formatage des grands nombres
+                    let displayValue = Math.floor(current);
+                    if (target >= 1000000) {
+                        displayValue = (Math.floor(current / 10000) / 100) + 'M';
+                    } else if (target >= 1000) {
+                        displayValue = (Math.floor(current / 10) / 100) + 'K';
+                    }
+                    
+                    counter.textContent = displayValue;
+                }, 30);
+            });
+        }
+
+        // Observer pour déclencher les animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.disconnect();
+                }
+            });
+        });
+
+        // Observer la section impact
+        const impactSection = document.querySelector('.impact-grid');
+        if (impactSection) {
+            observer.observe(impactSection);
+        }
+
+        // ===== SMOOTH SCROLLING =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ===== NAVBAR SCROLL EFFECT =====
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(31, 41, 55, 0.95)';
+            } else {
+                navbar.style.background = 'var(--glassmorphism)';
+            }
+        });
+
+        // ===== ANIMATION DES CARTES AU SCROLL =====
+        const observerCards = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        // Observer toutes les cartes
+        document.querySelectorAll('.value-card, .team-member, .tech-card, .impact-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observerCards.observe(card);
+        });
+
+        // ===== PARALLAX EFFECT POUR LA VISION =====
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const visionSection = document.querySelector('.vision-section');
+            
+            if (visionSection) {
+                const rate = scrolled * -0.5;
+                visionSection.style.transform = `translateY(${rate}px)`;
+            }
+        });
+
+        // ===== GESTION RESPONSIVE MENU =====
+        function createMobileMenu() {
+            if (window.innerWidth <= 768) {
+                const navContainer = document.querySelector('.nav-container');
+                const navLinks = document.querySelector('.nav-links');
+                
+                if (!document.querySelector('.mobile-toggle')) {
+                    const mobileToggle = document.createElement('div');
+                    mobileToggle.className = 'mobile-toggle';
+                    mobileToggle.innerHTML = '☰';
+                    mobileToggle.style.cssText = `
+                        font-size: 1.5rem;
+                        cursor: pointer;
+                        color: white;
+                        display: block;
+                    `;
+                    
+                    mobileToggle.addEventListener('click', () => {
+                        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                        navLinks.style.position = 'absolute';
+                        navLinks.style.top = '100%';
+                        navLinks.style.left = '0';
+                        navLinks.style.right = '0';
+                        navLinks.style.background = 'rgba(31, 41, 55, 0.95)';
+                        navLinks.style.flexDirection = 'column';
+                        navLinks.style.padding = '1rem';
+                        navLinks.style.backdropFilter = 'blur(20px)';
+                    });
+                    
+                    navContainer.appendChild(mobileToggle);
+                }
+            } else {
+                // Sur desktop, supprimer le toggle et afficher le menu
+                const mobileToggle = document.querySelector('.mobile-toggle');
+                const navLinks = document.querySelector('.nav-links');
+                
+                if (mobileToggle) {
+                    mobileToggle.remove();
+                }
+                
+                if (navLinks) {
+                    navLinks.style.display = 'flex';
+                    navLinks.style.position = 'static';
+                    navLinks.style.background = 'transparent';
+                    navLinks.style.flexDirection = 'row';
+                    navLinks.style.padding = '0';
+                    navLinks.style.backdropFilter = 'none';
+                }
+            }
+        }
+
+        // Créer menu mobile au chargement et redimensionnement
+        window.addEventListener('load', createMobileMenu);
+        window.addEventListener('resize', createMobileMenu);
+
+        // ===== EASTER EGG ÉQUIPE =====
+        let teamClicks = 0;
+        document.querySelectorAll('.team-member').forEach(member => {
+            member.addEventListener('click', () => {
+                teamClicks++;
+                if (teamClicks === 4) {
+                    alert(`🎉 Équipe ÉtudIA au Complet ! 🇨🇮
+
+Merci de nous découvrir ! Nous sommes une équipe passionnée 
+qui travaille 24h/24 pour révolutionner l'éducation en Afrique.
+
+🚀 Rejoignez l'aventure : 
+- Étudiants : Démarrez votre apprentissage IA
+- Enseignants : Partenaires éducatifs  
+- Développeurs : Contributeurs open-source
+- Investisseurs : Participer à notre mission
+
+Ensemble, construisons l'avenir de l'éducation africaine ! 💪`);
+                    teamClicks = 0;
+                }
+            });
+        });
+
+        console.log('ℹ️ Page À propos d\'ÉtudIA chargée avec succès ! 🇨🇮');
+    </script>
+</body>
+</html>
