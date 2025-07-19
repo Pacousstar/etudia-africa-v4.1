@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📋 Conditions d'Utilisation - ÉtudIA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --etudia-primary: #FF6B35;
+            --etudia-success: #10B981;
+            --etudia-danger: #EF4444;
+            --etudia-info: #3B82F6;
+            --etudia-dark: #1F2937;
+            --etudia-light: #F9FAFB;
+            --etudia-white: #FFFFFF;
+            --gradient-primary: linear-gradient(135deg, #FF6B35, #EF4444);
+            --gradient-secondary: linear-gradient(135deg, #10B981, #3B82F6);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1F2937, #111827);
+            color: var(--etudia-white);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--etudia-primary);
+        }
+
+        .last-updated {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        .nav-links {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--etudia-primary);
+            text-decoration: none;
+            margin: 0 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            background: rgba(255, 107, 53, 0.1);
+        }
+
+        .nav-links a:hover {
+            background: var(--etudia-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            line-height: 1.8;
+        }
+
+        .section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--etudia-primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--etudia-primary);
+        }
+
+        .subsection {
+            margin-bottom: 1.5rem;
+        }
+
+        .subsection-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--etudia-success);
+            margin-bottom: 0.5rem;
+        }
+
+        p, li {
+            margin-bottom: 0.8rem;
+            opacity: 0.9;
+        }
+
+        ul, ol {
+            padding-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background: rgba(255, 107, 53, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            color: var(--etudia-primary);
+            font-weight: 600;
+        }
+
+        .important {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid var(--etudia-danger);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .contact-info {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--etudia-success);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            
+            .back-button {
+                top: 1rem;
+                left: 1rem;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .title {
+                font-size: 1.6rem;
+            }
+            
+            .nav-links a {
+                display: block;
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="/login.html" class="back-button">← Retour</a>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">ÉtudIA</div>
+            <h1 class="title">Conditions d'Utilisation</h1>
+            <p class="last-updated">Dernière mise à jour : 19 juillet 2025</p>
+        </div>
+
+        <div class="nav-links">
+            <a href="#acceptance">Acceptation</a>
+            <a href="#services">Services</a>
+            <a href="#comptes">Comptes</a>
+            <a href="#utilisation">Utilisation</a>
+            <a href="#propriete">Propriété</a>
+            <a href="#responsabilites">Responsabilités</a>
+        </div>
+
+        <div class="content">
+            <div class="section" id="acceptance">
+                <h2 class="section-title">1. Acceptation des Conditions</h2>
+                <p>
+                    En accédant et en utilisant la plateforme <span class="highlight">ÉtudIA</span>, vous acceptez d'être lié par ces conditions d'utilisation. 
+                    Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser nos services.
+                </p>
+                <p>
+                    ÉtudIA se réserve le droit de modifier ces conditions à tout moment. Les utilisateurs seront notifiés des changements importants.
+                </p>
+            </div>
+
+            <div class="section" id="services">
+                <h2 class="section-title">2. Description des Services</h2>
+                <div class="subsection">
+                    <h3 class="subsection-title">2.1 Plateforme Éducative IA</h3>
+                    <p>
+                        ÉtudIA fournit une plateforme d'intelligence artificielle éducative dédiée à l'Afrique, comprenant :
+                    </p>
+                    <ul>
+                        <li>Assistant IA personnalisé pour l'apprentissage</li>
+                        <li>Outils de gestion scolaire pour les établissements</li>
+                        <li>Suivi pédagogique pour enseignants et parents</li>
+                        <li>Ressources éducatives adaptées au contexte africain</li>
+                        <li>Analytics et reporting avancés</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">2.2 Types de Comptes</h3>
+                    <ul>
+                        <li><strong>Élèves :</strong> Accès aux outils d'apprentissage et suivi personnel</li>
+                        <li><strong>Enseignants :</strong> Gestion de classes et création de contenu</li>
+                        <li><strong>Parents :</strong> Suivi de la progression de leurs enfants</li>
+                        <li><strong>Établissements :</strong> Gestion complète et centre de revenus</li>
+                        <li><strong>DREN :</strong> Supervision régionale et reporting</li>
+                        <li><strong>Partenaires :</strong> Réseau de distribution et commissions</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section" id="comptes">
+                <h2 class="section-title">3. Comptes Utilisateurs</h2>
+                <div class="subsection">
+                    <h3 class="subsection-title">3.1 Création de Compte</h3>
+                    <p>
+                        Pour utiliser ÉtudIA, vous devez créer un compte en fournissant des informations exactes et complètes. 
+                        Vous êtes responsable de maintenir la confidentialité de vos identifiants.
+                    </p>
+                </div>
+
+                <div class="important">
+                    <strong>Important :</strong> Les comptes créés avec de fausses informations peuvent être suspendus ou supprimés sans préavis.
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">3.2 Sécurité du Compte</h3>
+                    <ul>
+                        <li>Utilisez un mot de passe fort et unique</li>
+                        <li>Ne partagez jamais vos identifiants</li>
+                        <li>Signalez immédiatement toute utilisation non autorisée</li>
+                        <li>Activez l'authentification à deux facteurs quand disponible</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section" id="utilisation">
+                <h2 class="section-title">4. Utilisation Acceptable</h2>
+                <div class="subsection">
+                    <h3 class="subsection-title">4.1 Utilisations Autorisées</h3>
+                    <ul>
+                        <li>Apprentissage et enseignement légitimes</li>
+                        <li>Gestion administrative scolaire</li>
+                        <li>Recherche éducative et académique</li>
+                        <li>Collaboration pédagogique</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">4.2 Utilisations Interdites</h3>
+                    <ul>
+                        <li>Utilisation à des fins illégales ou malveillantes</li>
+                        <li>Harcèlement, discrimination ou intimidation</li>
+                        <li>Partage de contenu inapproprié ou offensant</li>
+                        <li>Tentative de piratage ou d'accès non autorisé</li>
+                        <li>Utilisation commerciale non autorisée</li>
+                        <li>Spam ou envoi de messages non sollicités</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section" id="propriete">
+                <h2 class="section-title">5. Propriété Intellectuelle</h2>
+                <div class="subsection">
+                    <h3 class="subsection-title">5.1 Contenu ÉtudIA</h3>
+                    <p>
+                        Tous les contenus, logiciels, designs, textes, images et autres matériaux fournis par ÉtudIA 
+                        sont protégés par les droits d'auteur et autres droits de propriété intellectuelle.
+                    </p>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">5.2 Contenu Utilisateur</h3>
+                    <p>
+                        En téléchargeant du contenu sur ÉtudIA, vous accordez une licence non exclusive pour utiliser, 
+                        modifier et distribuer ce contenu dans le cadre des services éducatifs.
+                    </p>
+                </div>
+            </div>
+
+            <div class="section" id="responsabilites">
+                <h2 class="section-title">6. Responsabilités et Limitations</h2>
+                <div class="subsection">
+                    <h3 class="subsection-title">6.1 Responsabilité de l'Utilisateur</h3>
+                    <ul>
+                        <li>Utilisation conforme aux présentes conditions</li>
+                        <li>Respect des lois applicables en Côte d'Ivoire et dans votre pays</li>
+                        <li>Protection de vos identifiants et données personnelles</li>
+                        <li>Signalement des problèmes de sécurité</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">6.2 Limitation de Responsabilité</h3>
+                    <p>
+                        ÉtudIA fournit ses services "en l'état" et ne garantit pas l'absence d'interruptions ou d'erreurs. 
+                        Notre responsabilité est limitée dans les conditions prévues par la loi ivoirienne.
+                    </p>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">6.3 Force Majeure</h3>
+                    <p>
+                        ÉtudIA ne peut être tenu responsable des retards ou défaillances causés par des événements 
+                        hors de notre contrôle (catastrophes naturelles, pannes internet, etc.).
+                    </p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">7. Protection des Données</h2>
+                <p>
+                    La collecte et l'utilisation de vos données personnelles sont régies par notre 
+                    <a href="/pages/privacy.html" style="color: var(--etudia-primary);">Politique de Confidentialité</a>.
+                </p>
+                <div class="important">
+                    <strong>Engagement :</strong> ÉtudIA s'engage à protéger la vie privée de tous les utilisateurs, 
+                    en particulier les données des mineurs, conformément aux standards internationaux.
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">8. Suspension et Résiliation</h2>
+                <div class="subsection">
+                    <h3 class="subsection-title">8.1 Par l'Utilisateur</h3>
+                    <p>
+                        Vous pouvez supprimer votre compte à tout moment depuis les paramètres de votre profil. 
+                        La suppression est définitive après une période de grâce de 30 jours.
+                    </p>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">8.2 Par ÉtudIA</h3>
+                    <p>
+                        ÉtudIA se réserve le droit de suspendre ou supprimer un compte en cas de :
+                    </p>
+                    <ul>
+                        <li>Violation des présentes conditions</li>
+                        <li>Utilisation frauduleuse ou malveillante</li>
+                        <li>Inactivité prolongée (plus de 2 ans)</li>
+                        <li>Demande des autorités compétentes</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">9. Modifications du Service</h2>
+                <p>
+                    ÉtudIA se réserve le droit de modifier, suspendre ou interrompre tout ou partie des services 
+                    à tout moment, avec ou sans préavis. Nous nous efforçons de minimiser les perturbations 
+                    et d'informer les utilisateurs des changements importants.
+                </p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">10. Droit Applicable et Juridiction</h2>
+                <p>
+                    Ces conditions sont régies par le droit ivoirien. Tout litige sera soumis à la juridiction 
+                    exclusive des tribunaux d'Abidjan, Côte d'Ivoire.
+                </p>
+                <p>
+                    En cas de traduction de ces conditions, la version française fait foi.
+                </p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">11. Dispositions Diverses</h2>
+                <div class="subsection">
+                    <h3 class="subsection-title">11.1 Intégralité de l'Accord</h3>
+                    <p>
+                        Ces conditions constituent l'intégralité de l'accord entre vous et ÉtudIA concernant 
+                        l'utilisation des services.
+                    </p>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">11.2 Divisibilité</h3>
+                    <p>
+                        Si une disposition de ces conditions est jugée invalide, les autres dispositions 
+                        restent en vigueur.
+                    </p>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">11.3 Cession</h3>
+                    <p>
+                        ÉtudIA peut céder ces conditions à une société affiliée. 
+                        Vous ne pouvez pas céder vos droits sans notre accord écrit.
+                    </p>
+                </div>
+            </div>
+
+            <div class="contact-info">
+                <h2 class="section-title">📞 Contact</h2>
+                <p><strong>ÉtudIA - Plateforme Éducative IA</strong></p>
+                <p><strong>Siège social :</strong> Abidjan, Côte d'Ivoire 🇨🇮</p>
+                <p><strong>Email :</strong> legal@etudia-africa.com</p>
+                <p><strong>Support :</strong> support@etudia-africa.com</p>
+                <p><strong>Téléphone :</strong> +225 XX XX XX XX XX</p>
+                <p><strong>Site web :</strong> <a href="/" style="color: var(--etudia-primary);">www.etudia-africa.com</a></p>
+            </div>
+
+            <div class="important">
+                <p><strong>Note importante :</strong> 
+                    Ces conditions d'utilisation sont effectives à compter du 19 juillet 2025. 
+                    L'utilisation continue des services ÉtudIA après cette date constitue votre acceptation de ces conditions.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling pour les liens internes
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight de la section active
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.background = 'rgba(255, 107, 53, 0.1)';
+                link.style.color = 'var(--etudia-primary)';
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.style.background = 'var(--etudia-primary)';
+                    link.style.color = 'white';
+                }
+            });
+        });
+
+        console.log('📋 Conditions d\'utilisation ÉtudIA chargées');
+    </script>
+</body>
+</html>
