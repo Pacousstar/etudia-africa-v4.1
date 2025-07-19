@@ -1,1 +1,972 @@
-pages/plans.html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plans & Tarifs - ÉtudIA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --etudia-primary: #FF6B35;
+            --etudia-success: #10B981;
+            --etudia-danger: #EF4444;
+            --etudia-info: #3B82F6;
+            --etudia-dark: #1F2937;
+            --etudia-light: #F9FAFB;
+            --etudia-white: #FFFFFF;
+            --gradient-primary: linear-gradient(135deg, #FF6B35, #EF4444);
+            --gradient-secondary: linear-gradient(135deg, #10B981, #3B82F6);
+            --glassmorphism: rgba(255, 255, 255, 0.1);
+            --glassmorphism-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1F2937, #111827);
+            color: var(--etudia-white);
+            overflow-x: hidden;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            backdrop-filter: blur(20px);
+            background: var(--glassmorphism);
+            border-bottom: 1px solid var(--glassmorphism-border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--etudia-white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--etudia-primary);
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* ===== DRAPEAU CI ===== */
+        .floating-flag {
+            position: fixed;
+            top: 80px;
+            right: 15px;
+            width: 45px;
+            height: 30px;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            animation: wave 3s ease-in-out infinite;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: linear-gradient(to right, 
+                #FF6B35 0% 33%, 
+                white 33% 66%, 
+                #10B981 66% 100%
+            );
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(3deg) scale(1.05); }
+            50% { transform: rotate(-2deg) scale(1); }
+            75% { transform: rotate(2deg) scale(1.02); }
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            padding-top: 80px;
+            min-height: 100vh;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+            background: radial-gradient(ellipse at center, rgba(255, 107, 53, 0.15) 0%, transparent 70%);
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== PLANS GRID ===== */
+        .plans-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem 3rem;
+        }
+
+        .plans-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--etudia-primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Plan Découverte - Style spécial */
+        .plan-card.free {
+            background: linear-gradient(135deg, var(--etudia-success), #059669);
+            border: 2px solid rgba(16, 185, 129, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plan-card.free::before {
+            content: '🎁 GRATUIT';
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--etudia-success);
+            padding: 5px 40px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transform: rotate(45deg);
+        }
+
+        /* Plans réguliers */
+        .plan-card {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.2);
+        }
+
+        .plan-card.popular {
+            border: 2px solid var(--etudia-primary);
+            background: linear-gradient(135deg, var(--glassmorphism), rgba(255, 107, 53, 0.1));
+        }
+
+        .plan-card.popular::before {
+            content: '⭐ POPULAIRE';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .plan-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .plan-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--etudia-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.3rem;
+        }
+
+        .plan-duration {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-features li {
+            padding: 0.4rem 0;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .plan-features li::before {
+            content: '✅';
+            margin-right: 0.5rem;
+        }
+
+        .plan-button {
+            width: 100%;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .plan-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .plan-button.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* ===== COMPARAISON TABLE MODERNE ===== */
+        .comparison-section {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--glassmorphism);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .comparison-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .comparison-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--etudia-primary);
+            position: relative;
+            z-index: 2;
+        }
+
+        .table-container {
+            position: relative;
+            z-index: 2;
+            overflow-x: auto;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem 0.8rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.3), rgba(239, 68, 68, 0.2));
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.8rem;
+            border-bottom: 2px solid var(--etudia-primary);
+        }
+
+        .comparison-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: rgba(255, 107, 53, 0.1);
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.2);
+        }
+
+        .comparison-table td:first-child {
+            font-weight: 600;
+            color: var(--etudia-primary);
+            text-align: left;
+            border-right: 2px solid rgba(255, 107, 53, 0.3);
+        }
+
+        .comparison-table .highlight {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.2), rgba(16, 185, 129, 0.1));
+            font-weight: 700;
+            color: white;
+            border-radius: 6px;
+            position: relative;
+        }
+
+        .comparison-table .highlight::before {
+            content: '⭐';
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            font-size: 0.8rem;
+        }
+
+        /* ===== FAQ SECTION ===== */
+        .faq-section {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--glassmorphism);
+            border-radius: 16px;
+            backdrop-filter: blur(20px);
+        }
+
+        .faq-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--etudia-primary);
+        }
+
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            padding: 0 1rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .faq-answer.active {
+            padding: 1rem;
+            max-height: 200px;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glassmorphism-border);
+            padding: 2rem 1rem 1rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .footer p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .plans-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .comparison-table {
+                font-size: 0.8rem;
+            }
+            
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.5rem;
+            }
+
+            .floating-flag {
+                width: 25px;
+                height: 35px;
+                right: 10px;
+            }
+
+            .hero-section {
+                padding: 2rem 1rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">ÉtudIA</div>
+            <ul class="nav-links">
+                <li><a href="/index.html">Accueil</a></li>
+                <li><a href="/backoffices/eleves/index.html">Élèves</a></li>
+                <li><a href="/backoffices/enseignants/index.html">Enseignants</a></li>
+                <li><a href="/pages/plans.html" class="active">Tarifs</a></li>
+                <li><a href="/pages/contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Drapeau Flottant CI -->
+    <div class="floating-flag" title="Fièrement Ivoirien 🇨🇮"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1 class="hero-title">Plans & Tarifs ÉtudIA</h1>
+            <p class="hero-subtitle">
+                Choisissez le plan qui correspond à vos besoins. Tarifs adaptés aux étudiants africains.
+            </p>
+        </section>
+
+        <div class="plans-container">
+            <!-- Plan Découverte -->
+            <section class="plans-section">
+                <h2 class="section-title">🆓 Plan Découverte</h2>
+                <div style="display: flex; justify-content: center;">
+                    <div class="plan-card free" style="max-width: 350px;">
+                        <div class="plan-header">
+                            <span class="plan-icon">🎁</span>
+                            <h3 class="plan-name">Découverte</h3>
+                            <div class="plan-price">0 FCFA</div>
+                            <div class="plan-duration">3 jours d'essai</div>
+                        </div>
+                        <ul class="plan-features">
+                            <li>4 interactions par jour (12 total)</li>
+                            <li>IA DeepSeek R1 gratuit</li>
+                            <li>Tous les modes disponibles</li>
+                            <li>2 utilisations audio total</li>
+                        </ul>
+                        <button class="plan-button">Commencer Gratuitement</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Plans Journaliers -->
+            <section class="plans-section">
+                <h2 class="section-title">💰 Plans Journaliers (Nouveauté !)</h2>
+                <div class="plans-grid">
+                    <div class="plan-card">
+                        <div class="plan-header">
+                            <span class="plan-icon">💎</span>
+                            <h3 class="plan-name">Premium Jour</h3>
+                            <div class="plan-price">500 FCFA</div>
+                            <div class="plan-duration">24 heures</div>
+                        </div>
+                        <ul class="plan-features">
+                            <li>30 interactions en 24h</li>
+                            <li>IA DeepSeek R1 payant</li>
+                            <li>Tous les modes + audio illimité</li>
+                            <li>Parfait pour révisions d'examen</li>
+                            <li>Support par email</li>
+                        </ul>
+                        <button class="plan-button">Choisir Premium Jour</button>
+                    </div>
+
+                    <div class="plan-card popular">
+                        <div class="plan-header">
+                            <span class="plan-icon">🏆</span>
+                            <h3 class="plan-name">Excellence Jour</h3>
+                            <div class="plan-price">750 FCFA</div>
+                            <div class="plan-duration">24 heures</div>
+                        </div>
+                        <ul class="plan-features">
+                            <li>150 interactions en 24h</li>
+                            <li>IA DeepSeek R1 prioritaire</li>
+                            <li>Tous les modes + support chat 24h</li>
+                            <li>Journée intensive de préparation</li>
+                            <li>Assistance personnalisée</li>
+                        </ul>
+                        <button class="plan-button">Choisir Excellence Jour</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Plans Week-end -->
+            <section class="plans-section">
+                <h2 class="section-title">🎉 Plans Week-end</h2>
+                <div class="plans-grid">
+                    <div class="plan-card">
+                        <div class="plan-header">
+                            <span class="plan-icon">💎</span>
+                            <h3 class="plan-name">Premium Week-end</h3>
+                            <div class="plan-price">2 000 FCFA</div>
+                            <div class="plan-duration">Sam 01h → Dim 23h59</div>
+                        </div>
+                        <ul class="plan-features">
+                            <li>300 interactions total week-end</li>
+                            <li>IA DeepSeek R1 payant</li>
+                            <li>Tous les modes disponibles</li>
+                            <li>Audio illimité week-end</li>
+                            <li>Support par email</li>
+                        </ul>
+                        <button class="plan-button">Choisir Premium Week-end</button>
+                    </div>
+
+                    <div class="plan-card">
+                        <div class="plan-header">
+                            <span class="plan-icon">🏆</span>
+                            <h3 class="plan-name">Excellence Week-end</h3>
+                            <div class="plan-price">4 000 FCFA</div>
+                            <div class="plan-duration">Sam 01h → Dim 23h59</div>
+                        </div>
+                        <ul class="plan-features">
+                            <li>400 interactions total week-end</li>
+                            <li>IA DeepSeek R1 prioritaire</li>
+                            <li>Support WhatsApp week-end</li>
+                            <li>Export PDF des solutions</li>
+                            <li>Assistance premium continue</li>
+                        </ul>
+                        <button class="plan-button">Choisir Excellence Week-end</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Plans Mensuels -->
+            <section class="plans-section">
+                <h2 class="section-title">💎 Plans Mensuels</h2>
+                <div class="plans-grid">
+                    <div class="plan-card">
+                        <div class="plan-header">
+                            <span class="plan-icon">📅</span>
+                            <h3 class="plan-name">Premium Mensuel</h3>
+                            <div class="plan-price">6 500 FCFA</div>
+                            <div class="plan-duration">30 jours</div>
+                        </div>
+                        <ul class="plan-features">
+                            <li>50 interactions par jour (1 500/mois)</li>
+                            <li>IA DeepSeek R1 optimisé</li>
+                            <li>Tous les modes inclus</li>
+                            <li>Support prioritaire</li>
+                            <li>Statistiques détaillées</li>
+                        </ul>
+                        <button class="plan-button">Choisir Premium Mensuel</button>
+                    </div>
+
+                    <div class="plan-card popular">
+                        <div class="plan-header">
+                            <span class="plan-icon">👑</span>
+                            <h3 class="plan-name">Excellence Mensuel</h3>
+                            <div class="plan-price">10 000 FCFA</div>
+                            <div class="plan-duration">30 jours</div>
+                        </div>
+                        <ul class="plan-features">
+                            <li>200 interactions par jour (6 000/mois)</li>
+                            <li>IA DeepSeek R1 prioritaire</li>
+                            <li>Support premium complet</li>
+                            <li>Accès aux nouvelles fonctionnalités</li>
+                            <li>Mentor IA personnalisé</li>
+                        </ul>
+                        <button class="plan-button">Choisir Excellence Mensuel</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tableau de Comparaison -->
+            <section class="comparison-section">
+                <h2 class="comparison-title">📊 Comparaison des Plans</h2>
+                <div class="table-container">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Fonctionnalités</th>
+                                <th>Découverte</th>
+                                <th>Premium Jour</th>
+                                <th class="highlight">Excellence Jour</th>
+                                <th>Premium Mensuel</th>
+                                <th class="highlight">Excellence Mensuel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Prix</strong></td>
+                                <td>0 FCFA</td>
+                                <td>500 FCFA</td>
+                                <td class="highlight">750 FCFA</td>
+                                <td>6 500 FCFA</td>
+                                <td class="highlight">10 000 FCFA</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Interactions</strong></td>
+                                <td>4/jour (12 total)</td>
+                                <td>30/24h</td>
+                                <td class="highlight">150/24h</td>
+                                <td>50/jour</td>
+                                <td class="highlight">200/jour</td>
+                            </tr>
+                            <tr>
+                                <td><strong>IA DeepSeek R1</strong></td>
+                                <td>Gratuit</td>
+                                <td>Payant</td>
+                                <td class="highlight">Prioritaire</td>
+                                <td>Optimisé</td>
+                                <td class="highlight">Prioritaire</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Audio</strong></td>
+                                <td>2 utilisations</td>
+                                <td>Illimité</td>
+                                <td class="highlight">Illimité</td>
+                                <td>Illimité</td>
+                                <td class="highlight">Illimité</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Support</strong></td>
+                                <td>Email basique</td>
+                                <td>Email</td>
+                                <td class="highlight">Chat 24h</td>
+                                <td>Prioritaire</td>
+                                <td class="highlight">Premium complet</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Export PDF</strong></td>
+                                <td>❌</td>
+                                <td>❌</td>
+                                <td class="highlight">❌</td>
+                                <td>✅</td>
+                                <td class="highlight">✅</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- FAQ Section -->
+            <section class="faq-section">
+                <h2 class="faq-title">❓ Questions Fréquentes</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(0)">
+                        Comment fonctionne le plan Découverte ?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Le plan Découverte vous offre 3 jours gratuits avec 4 interactions par jour. C'est parfait pour tester ÉtudIA et découvrir nos fonctionnalités.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(1)">
+                        Puis-je changer de plan à tout moment ?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Oui ! Vous pouvez upgrader votre plan à tout moment. Les interactions restantes sont conservées et s'ajoutent à votre nouveau plan.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(2)">
+                        Comment effectuer le paiement ?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Nous acceptons Orange Money, MTN Mobile Money, Moov Money et les cartes bancaires. Paiement 100% sécurisé.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(3)">
+                        Que se passe-t-il si j'épuise mes interactions ?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Vous pouvez soit attendre le renouvellement de votre plan, soit upgrader vers un plan supérieur pour obtenir plus d'interactions immédiatement.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(4)">
+                        Y a-t-il une garantie de remboursement ?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Oui, nous offrons une garantie de satisfaction de 7 jours. Si vous n'êtes pas satisfait, nous vous remboursons intégralement.
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 ÉtudIA - Tous droits réservés | Fièrement conçu en Côte d'Ivoire 🇨🇮</p>
+        <p style="margin-top: 0.5rem;">
+            <a href="/index.html" style="color: var(--etudia-primary); text-decoration: none;">Retour à l'accueil</a> | 
+            <a href="/pages/about.html" style="color: var(--etudia-primary); text-decoration: none;">À propos</a> | 
+            <a href="/pages/support.html" style="color: var(--etudia-primary); text-decoration: none;">Support</a>
+        </p>
+    </footer>
+
+    <script>
+        // ===== FAQ TOGGLE =====
+        function toggleFaq(index) {
+            const faqItems = document.querySelectorAll('.faq-item');
+            const currentItem = faqItems[index];
+            const answer = currentItem.querySelector('.faq-answer');
+            const icon = currentItem.querySelector('.faq-question span');
+            
+            // Fermer toutes les autres FAQ
+            faqItems.forEach((item, i) => {
+                if (i !== index) {
+                    item.querySelector('.faq-answer').classList.remove('active');
+                    item.querySelector('.faq-question span').textContent = '+';
+                }
+            });
+            
+            // Toggle la FAQ actuelle
+            if (answer.classList.contains('active')) {
+                answer.classList.remove('active');
+                icon.textContent = '+';
+            } else {
+                answer.classList.add('active');
+                icon.textContent = '−';
+            }
+        }
+
+        // ===== SMOOTH SCROLLING =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ===== NAVBAR SCROLL EFFECT =====
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(31, 41, 55, 0.95)';
+            } else {
+                navbar.style.background = 'var(--glassmorphism)';
+            }
+        });
+
+        // ===== ANIMATION DES CARTES AU SCROLL =====
+        const observerCards = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        // Observer toutes les cartes
+        document.querySelectorAll('.plan-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observerCards.observe(card);
+        });
+
+        // ===== CLICK HANDLERS POUR LES BOUTONS =====
+        document.querySelectorAll('.plan-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const planName = this.closest('.plan-card').querySelector('.plan-name').textContent;
+                
+                // Simulation de redirection vers paiement
+                if (planName === 'Découverte') {
+                    window.location.href = '/backoffices/eleves/index.html';
+                } else {
+                    alert(`🚀 Redirection vers le paiement pour ${planName}...
+                    
+💳 Méthodes de paiement acceptées :
+• Orange Money
+• MTN Mobile Money  
+• Moov Money
+• Carte bancaire
+
+📱 Vous serez redirigé vers notre plateforme de paiement sécurisée.`);
+                    
+                    // Ici tu peux ajouter la vraie logique de redirection
+                    // window.location.href = `/payment?plan=${planName}`;
+                }
+            });
+        });
+
+        // ===== GESTION RESPONSIVE MENU =====
+        function createMobileMenu() {
+            if (window.innerWidth <= 768) {
+                const navContainer = document.querySelector('.nav-container');
+                const navLinks = document.querySelector('.nav-links');
+                
+                if (!document.querySelector('.mobile-toggle')) {
+                    const mobileToggle = document.createElement('div');
+                    mobileToggle.className = 'mobile-toggle';
+                    mobileToggle.innerHTML = '☰';
+                    mobileToggle.style.cssText = `
+                        font-size: 1.5rem;
+                        cursor: pointer;
+                        color: white;
+                        display: block;
+                    `;
+                    
+                    mobileToggle.addEventListener('click', () => {
+                        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                        navLinks.style.position = 'absolute';
+                        navLinks.style.top = '100%';
+                        navLinks.style.left = '0';
+                        navLinks.style.right = '0';
+                        navLinks.style.background = 'rgba(31, 41, 55, 0.95)';
+                        navLinks.style.flexDirection = 'column';
+                        navLinks.style.padding = '1rem';
+                        navLinks.style.backdropFilter = 'blur(20px)';
+                    });
+                    
+                    navContainer.appendChild(mobileToggle);
+                }
+            } else {
+                // Sur desktop, supprimer le toggle et afficher le menu
+                const mobileToggle = document.querySelector('.mobile-toggle');
+                const navLinks = document.querySelector('.nav-links');
+                
+                if (mobileToggle) {
+                    mobileToggle.remove();
+                }
+                
+                if (navLinks) {
+                    navLinks.style.display = 'flex';
+                    navLinks.style.position = 'static';
+                    navLinks.style.background = 'transparent';
+                    navLinks.style.flexDirection = 'row';
+                    navLinks.style.padding = '0';
+                    navLinks.style.backdropFilter = 'none';
+                }
+            }
+        }
+
+        // Créer menu mobile au chargement et redimensionnement
+        window.addEventListener('load', createMobileMenu);
+        window.addEventListener('resize', createMobileMenu);
+
+        // ===== HIGHLIGHT PLAN POPULAIRE =====
+        function highlightPopularPlans() {
+            const popularCards = document.querySelectorAll('.plan-card.popular');
+            popularCards.forEach(card => {
+                setInterval(() => {
+                    card.style.boxShadow = '0 0 20px rgba(255, 107, 53, 0.5)';
+                    setTimeout(() => {
+                        card.style.boxShadow = '0 15px 35px rgba(255, 107, 53, 0.2)';
+                    }, 1000);
+                }, 3000);
+            });
+        }
+
+        // Démarrer les animations
+        setTimeout(highlightPopularPlans, 2000);
+
+        console.log('💰 Page Plans & Tarifs ÉtudIA chargée avec succès ! 🇨🇮');
+    </script>
+</body>
+</html>
