@@ -26,12 +26,20 @@
       }
     },
     {
-      "src": "^/frontend/(.*)$",
-      "dest": "/frontend/$1"
+      "src": "^/landing/?$",
+      "dest": "/landing.html"
+    },
+    {
+      "src": "^/apps-react/(.*)$",
+      "dest": "/apps-react/$1"
     },
     {
       "src": "^/interface/(.*)$",
-      "dest": "/frontend/$1"
+      "dest": "/apps-react/$1"
+    },
+    {
+      "src": "^/react/(.*)$",
+      "dest": "/apps-react/$1"
     },
     {
       "src": "^/backoffices/eleves/(.*)$",
@@ -85,13 +93,8 @@
   ],
   "redirects": [
     {
-      "source": "/react",
-      "destination": "/frontend/",
-      "permanent": false
-    },
-    {
-      "source": "/interface",
-      "destination": "/frontend/",
+      "source": "/frontend/(.*)",
+      "destination": "/apps-react/$1",
       "permanent": false
     }
   ],
