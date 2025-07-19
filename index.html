@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ÉtudIA - Révolutionnons l'Éducation Africaine</title>
+    <title>🚀 ÉtudIA - Révolutionnons l'Éducation Africaine</title>
     <style>
         * {
             margin: 0;
@@ -12,13 +12,13 @@
         }
 
         :root {
-            --etudia-primary: #FF6B35;
-            --etudia-success: #10B981;
-            --etudia-danger: #EF4444;
-            --etudia-info: #3B82F6;
+            --etudia-primary: #FF6B35;    /* Orange principal */
+            --etudia-success: #10B981;    /* Vert */
+            --etudia-danger: #EF4444;     /* Rouge */
+            --etudia-info: #3B82F6;       /* Bleu */
             --etudia-dark: #1F2937;
             --etudia-light: #F9FAFB;
-            --etudia-white: #FFFFFF;
+            --etudia-white: #FFFFFF;      /* Blanc */
             --gradient-primary: linear-gradient(135deg, #FF6B35, #EF4444);
             --gradient-secondary: linear-gradient(135deg, #10B981, #3B82F6);
             --glassmorphism: rgba(255, 255, 255, 0.1);
@@ -32,77 +32,117 @@
             overflow-x: hidden;
         }
 
-        /* Navigation Tesla */
+        /* ===== PARTICLES BACKGROUND ===== */
+        .particles-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--etudia-primary);
+            border-radius: 50%;
+            animation: float 25s infinite linear;
+        }
+
+        @keyframes float {
+            0% { 
+                transform: translateY(100vh) translateX(0) rotate(0deg); 
+                opacity: 0; 
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { 
+                transform: translateY(-10vh) translateX(200px) rotate(360deg); 
+                opacity: 0; 
+            }
+        }
+
+        /* Navigation Tesla RÉDUITE - AFFICHÉE */
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(30px);
             background: var(--glassmorphism);
             border-bottom: 1px solid var(--glassmorphism-border);
             z-index: 1000;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 0;
+        }
+
+        .navbar.scrolled {
+            background: rgba(31, 41, 55, 0.98);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
         }
 
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 1rem 2rem;
+            padding: 0 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 2rem;
-            font-weight: bold;
+            font-size: 1.6rem;
+            font-weight: 900;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1rem;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links a {
             color: var(--etudia-white);
             text-decoration: none;
             font-weight: 500;
+            font-size: 0.8rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 5px;
             transition: all 0.3s ease;
-            position: relative;
         }
 
         .nav-links a:hover {
             color: var(--etudia-primary);
-            transform: translateY(-2px);
+            background: rgba(255, 107, 53, 0.1);
         }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background: var(--gradient-primary);
-            transition: width 0.3s ease;
+        .nav-cta {
+            background: var(--gradient-primary) !important;
+            color: white !important;
+            padding: 0.4rem 1rem !important;
+            border-radius: 15px !important;
+            font-weight: 700 !important;
+            font-size: 0.75rem !important;
         }
 
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Petit Drapeau Flottant */
+        /* Petit Drapeau Flottant RÉDUIT */
         .floating-flag {
             position: fixed;
-            top: 120px;
-            right: 30px;
-            width: 60px;
-            height: 40px;
+            top: 80px;
+            right: 20px;
+            width: 50px;
+            height: 33px;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -134,12 +174,12 @@
             background: #10B981;
         }
 
-        /* Hero Section */
+        /* Hero Section RÉDUITE */
         .hero {
-            min-height: 85vh;
+            min-height: 60vh;
             display: flex;
             align-items: center;
-            padding: 6rem 2rem 2rem;
+            padding: 4rem 1.5rem 2rem;
             position: relative;
             overflow: hidden;
         }
@@ -157,19 +197,19 @@
         }
 
         .hero-container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            gap: 2rem;
             align-items: center;
         }
 
         .hero-content h1 {
-            font-size: 3.5rem;
+            font-size: 2.2rem;
             font-weight: bold;
             line-height: 1.1;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             background: linear-gradient(135deg, var(--etudia-primary), var(--etudia-success));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -178,26 +218,26 @@
         }
 
         .hero-content p {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            margin-bottom: 2.5rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
             opacity: 0.9;
             animation: slideInLeft 1s ease-out 0.3s both;
         }
 
         .cta-buttons {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
             animation: slideInLeft 1s ease-out 0.6s both;
         }
 
         .btn-primary {
             background: var(--gradient-primary);
             color: var(--etudia-white);
-            padding: 1rem 2rem;
+            padding: 0.7rem 1.5rem;
             border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -213,10 +253,10 @@
         .btn-secondary {
             background: transparent;
             color: var(--etudia-white);
-            padding: 1rem 2rem;
+            padding: 0.7rem 1.5rem;
             border: 2px solid var(--etudia-white);
-            border-radius: 50px;
-            font-size: 1.1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -230,14 +270,14 @@
             transform: translateY(-3px);
         }
 
-        /* Carousel d'Images Hero */
+        /* Carousel d'Images Hero RÉDUIT */
         .hero-carousel {
             position: relative;
             width: 100%;
-            height: 350px;
-            border-radius: 20px;
+            height: 250px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
             animation: slideInRight 1s ease-out;
         }
 
@@ -284,21 +324,21 @@
         }
 
         .carousel-slide:nth-child(5) {
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect fill="%23F59E0B" width="800" height="600"/><rect fill="%23FFFFFF" x="150" y="150" width="500" height="300" rx="30"/><text x="400" y="320" font-family="Arial" font-size="35" fill="%23F59E0B" text-anchor="middle">AFRIQUE</text></svg>');
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect fill="%23FFFFFF" width="800" height="600"/><rect fill="%23FF6B35" x="150" y="150" width="500" height="300" rx="30"/><text x="400" y="320" font-family="Arial" font-size="35" fill="%23FFFFFF" text-anchor="middle">AFRIQUE</text></svg>');
         }
 
         .carousel-indicators {
             position: absolute;
-            bottom: 20px;
+            bottom: 15px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
 
         .indicator {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.5);
             transition: all 0.3s ease;
@@ -309,9 +349,9 @@
             transform: scale(1.2);
         }
 
-        /* Stats Section */
+        /* Stats Section RÉDUITE - 4 SUR UNE LIGNE */
         .stats {
-            padding: 2.5rem 2rem;
+            padding: 2rem 1.5rem;
             background: var(--glassmorphism);
             backdrop-filter: blur(20px);
             border-top: 1px solid var(--glassmorphism-border);
@@ -320,11 +360,11 @@
 
         .stats-header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .stats-title {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: bold;
             background: var(--gradient-secondary);
             -webkit-background-clip: text;
@@ -335,61 +375,61 @@
 
         .stats-subtitle {
             opacity: 0.8;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
         }
 
         .stats-container {
-            max-width: 1000px;
+            max-width: 800px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
+            gap: 1rem;
             text-align: center;
         }
 
         .stat-item {
-            padding: 1.5rem;
-            border-radius: 15px;
+            padding: 1rem;
+            border-radius: 10px;
             background: var(--glassmorphism);
             border: 1px solid var(--glassmorphism-border);
             transition: all 0.3s ease;
         }
 
         .stat-item:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
         .stat-number {
-            font-size: 2.2rem;
+            font-size: 1.6rem;
             font-weight: bold;
             background: var(--gradient-secondary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.2rem;
         }
 
         .stat-label {
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             opacity: 0.8;
         }
 
-        /* Acteurs Section */
+        /* Acteurs Section RÉDUITE */
         .acteurs {
-            padding: 3rem 2rem;
+            padding: 2.5rem 1.5rem;
         }
 
         .acteurs-container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
         .section-title {
             text-align: center;
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: bold;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.5rem;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -398,14 +438,14 @@
 
         .section-subtitle {
             text-align: center;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             opacity: 0.8;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
         }
 
         .acteurs-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
         }
 
@@ -413,42 +453,27 @@
             background: var(--glassmorphism);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glassmorphism-border);
-            border-radius: 20px;
-            padding: 2rem;
+            border-radius: 15px;
+            padding: 1.5rem;
             text-align: center;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
 
-        .acteur-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: all 0.5s ease;
-        }
-
-        .acteur-card:hover::before {
-            left: 100%;
-        }
-
         .acteur-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
         }
 
         .acteur-icon {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
             display: block;
         }
 
         .acteur-title {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: bold;
             margin-bottom: 0.8rem;
             color: var(--etudia-primary);
@@ -456,23 +481,23 @@
 
         .acteur-description {
             opacity: 0.8;
-            margin-bottom: 1.5rem;
-            line-height: 1.5;
-            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+            line-height: 1.4;
+            font-size: 0.85rem;
         }
 
         .acteur-btn {
             background: var(--gradient-secondary);
             color: var(--etudia-white);
-            padding: 0.7rem 1.3rem;
+            padding: 0.6rem 1.2rem;
             border: none;
-            border-radius: 50px;
+            border-radius: 20px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .acteur-btn:hover {
@@ -480,72 +505,186 @@
             box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
         }
 
-        /* Footer */
-        .footer {
-            background: linear-gradient(135deg, var(--etudia-dark), #111827);
-            padding: 3rem 2rem 1.5rem;
+        /* Features Section RÉDUITE - 3 PAR LIGNE */
+        .features {
+            padding: 2.5rem 1.5rem;
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
             border-top: 1px solid var(--glassmorphism-border);
-            position: relative;
+            border-bottom: 1px solid var(--glassmorphism-border);
         }
 
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 80%, rgba(255, 107, 53, 0.05), transparent),
-                        radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.05), transparent);
-            pointer-events: none;
+        .features-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+            color: var(--etudia-primary);
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 0.6rem;
+            color: var(--etudia-primary);
+        }
+
+        .feature-description {
+            font-size: 0.8rem;
+            line-height: 1.4;
+            opacity: 0.8;
+        }
+
+        /* CTA Section RÉDUITE */
+        .cta-section {
+            padding: 2.5rem 1.5rem;
+            background: var(--gradient-primary);
+            text-align: center;
+        }
+
+        .cta-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 0.8rem;
+        }
+
+        .cta-subtitle {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+
+        .cta-buttons-big {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn-cta-primary {
+            background: white;
+            color: var(--etudia-primary);
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-cta-secondary {
+            background: transparent;
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: 2px solid white;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        /* Footer CORRIGÉ - PLATEFORME COMMUNAUTÉ CONTACT SUR MÊME LIGNE */
+        .footer {
+            background: linear-gradient(135deg, var(--etudia-dark), #111827);
+            padding: 2.5rem 1.5rem 1.5rem;
+            border-top: 1px solid var(--glassmorphism-border);
         }
 
         .footer-container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
-            position: relative;
-            z-index: 1;
         }
 
         .footer-main {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 2rem;
             margin-bottom: 2rem;
         }
 
         .footer-brand {
+            flex: 2;
             text-align: left;
         }
 
+        .footer-menus {
+            flex: 3;
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .footer-section {
+            flex: 1;
+        }
+
         .footer-logo {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         .footer-tagline {
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             opacity: 0.9;
-            margin-bottom: 1rem;
-            line-height: 1.5;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
         }
 
         .footer-description {
             opacity: 0.7;
-            line-height: 1.6;
-            font-size: 0.95rem;
+            line-height: 1.5;
+            font-size: 0.8rem;
         }
 
         .footer-section h4 {
             color: var(--etudia-primary);
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             font-weight: bold;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         .footer-links {
@@ -553,15 +692,15 @@
         }
 
         .footer-links li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
         }
 
         .footer-links a {
             color: var(--etudia-white);
             text-decoration: none;
-            opacity: 0.8;
+            opacity: 0.7;
             transition: all 0.3s ease;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .footer-links a:hover {
@@ -572,8 +711,8 @@
 
         .footer-contact {
             opacity: 0.8;
-            font-size: 0.9rem;
-            line-height: 1.8;
+            font-size: 0.8rem;
+            line-height: 1.6;
         }
 
         .footer-contact strong {
@@ -590,7 +729,7 @@
 
         .copyright {
             opacity: 0.6;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .footer-socials {
@@ -599,8 +738,8 @@
         }
 
         .social-link {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             background: var(--glassmorphism);
             border: 1px solid var(--glassmorphism-border);
@@ -673,42 +812,43 @@
             }
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.8;
-            }
-        }
-
-        /* Responsive */
+        /* Responsive CORRIGÉ pour footer */
         @media (max-width: 1024px) {
             .footer-main {
-                grid-template-columns: 1fr 1fr;
-                gap: 2rem;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
             }
 
             .footer-brand {
-                grid-column: 1 / -1;
-                text-align: center;
-                margin-bottom: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .footer-menus {
+                width: 100%;
+                justify-content: space-around;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
+            .footer-menus {
+                flex-direction: column;
+                gap: 1.5rem;
+                align-items: center;
+            }
+
+            .footer-section {
+                text-align: center;
             }
 
             .hero-container {
                 grid-template-columns: 1fr;
                 text-align: center;
-                gap: 2rem;
-            }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
+                gap: 1.5rem;
             }
 
             .cta-buttons {
@@ -718,38 +858,33 @@
 
             .stats-container {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-            }
-
-            .stat-number {
-                font-size: 1.8rem;
+                gap: 0.8rem;
             }
 
             .acteurs-grid {
                 grid-template-columns: 1fr;
             }
 
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .floating-flag {
-                top: 80px;
-                right: 15px;
-                width: 50px;
-                height: 33px;
-            }
-
-            .footer-main {
+            .features-grid {
                 grid-template-columns: 1fr;
-                text-align: center;
-                gap: 1.5rem;
+            }
+
+            .cta-buttons-big {
+                flex-direction: column;
+                align-items: center;
             }
 
             .footer-bottom {
                 flex-direction: column;
                 gap: 1rem;
                 text-align: center;
+            }
+
+            .floating-flag {
+                top: 70px;
+                right: 15px;
+                width: 40px;
+                height: 27px;
             }
         }
 
@@ -785,6 +920,9 @@
     </style>
 </head>
 <body>
+    <!-- Particles Background -->
+    <div class="particles-bg" id="particles"></div>
+
     <!-- Petit Drapeau Flottant -->
     <div class="floating-flag">
         <div class="flag-mini">
@@ -795,15 +933,16 @@
     </div>
 
     <!-- Navigation Tesla -->
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="logo">ÉtudIA</div>
             <ul class="nav-links">
                 <li><a href="#accueil">Accueil</a></li>
                 <li><a href="#stats">Statistiques</a></li>
                 <li><a href="#acteurs">Nos Acteurs</a></li>
+                <li><a href="#features">Fonctionnalités</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="/frontend/public/index.html">Interface V4.1</a></li>
+                <li><a href="/frontend/public/index.html" class="nav-cta">Interface V4.1</a></li>
             </ul>
         </div>
     </nav>
@@ -819,7 +958,7 @@
                 </p>
                 <div class="cta-buttons">
                     <a href="#acteurs" class="btn-primary">Découvrir ÉtudIA</a>
-                    <a href="/back-offices/eleves/index.html" class="btn-secondary">Commencer Maintenant</a>
+                    <a href="/backoffices/eleves/index.html" class="btn-secondary">Commencer Maintenant</a>
                 </div>
             </div>
             <div class="hero-carousel">
@@ -841,10 +980,10 @@
         </div>
     </section>
 
-    <!-- Stats Section -->
+    <!-- Stats Section - 4 ÉLÉMENTS SUR UNE LIGNE -->
     <section id="stats" class="stats">
         <div class="stats-header">
-            <h2 class="stats-title">ÉtudIA en Chiffres</h2>
+            <h2 class="stats-title">🎯 ÉtudIA en Chiffres</h2>
             <p class="stats-subtitle">Des résultats concrets qui parlent d'eux-mêmes</p>
         </div>
         <div class="stats-container">
@@ -870,7 +1009,7 @@
     <!-- Acteurs Section -->
     <section id="acteurs" class="acteurs">
         <div class="acteurs-container">
-            <h2 class="section-title">Votre Espace ÉtudIA</h2>
+            <h2 class="section-title">🎯 Votre Espace ÉtudIA</h2>
             <p class="section-subtitle">Choisissez votre profil et accédez à votre backoffice personnalisé</p>
             
             <div class="acteurs-grid">
@@ -881,7 +1020,7 @@
                         Accédez à votre espace personnel avec IA assistant, gamification, 
                         suivi de progression et liaison parents en temps réel.
                     </p>
-                    <a href="/back-offices/eleves/index.html" class="acteur-btn">Accéder à Mon Espace</a>
+                    <a href="/backoffices/eleves/index.html" class="acteur-btn">Accéder à Mon Espace</a>
                 </div>
 
                 <div class="acteur-card">
@@ -891,7 +1030,7 @@
                         Gérez vos classes, suivez la progression de vos élèves, 
                         améliorez vos méthodes pédagogiques et communiquez avec les parents.
                     </p>
-                    <a href="/back-offices/enseignants/index.html" class="acteur-btn">Gérer Mes Classes</a>
+                    <a href="/backoffices/enseignants/index.html" class="acteur-btn">Gérer Mes Classes</a>
                 </div>
 
                 <div class="acteur-card">
@@ -901,7 +1040,7 @@
                         Suivez l'activité scolaire de vos enfants en temps réel, 
                         recevez des notifications et communiquez avec l'école.
                     </p>
-                    <a href="/back-offices/parents/index.html" class="acteur-btn">Suivre Mes Enfants</a>
+                    <a href="/backoffices/parents/index.html" class="acteur-btn">Suivre Mes Enfants</a>
                 </div>
 
                 <div class="acteur-card">
@@ -911,33 +1050,119 @@
                         Boostez vos résultats scolaires, modernisez votre pédagogie 
                         et générez des revenus supplémentaires avec ÉtudIA.
                     </p>
-                    <a href="/back-offices/etablissements/index.html" class="acteur-btn">Centre de Revenus</a>
+                    <a href="/backoffices/etablissements/index.html" class="acteur-btn">Centre de Revenus</a>
                 </div>
 
                 <div class="acteur-card">
-                    <span class="acteur-icon">🏛️</span>
-                    <h3 class="acteur-title">DREN</h3>
-                    <p class="acteur-description">
-                        Supervision régionale avec cartographie adoption, 
-                        reporting Ministère et planification expansion.
-                    </p>
-                    <a href="/back-offices/dren/index.html" class="acteur-btn">Tableau de Bord Régional</a>
-                </div>
-
-                <div class="acteur-card">
-                    <span class="acteur-icon">🌟</span>
+                    <span class="acteur-icon">🤝</span>
                     <h3 class="acteur-title">Partenaires</h3>
                     <p class="acteur-description">
                         Rejoignez le réseau ÉtudIA avec commissions premium, 
                         outils marketing et formation business continue.
                     </p>
-                    <a href="/back-offices/partenaires/index.html" class="acteur-btn">Rejoindre ÉtudIA</a>
+                    <a href="/backoffices/partenaires/index.html" class="acteur-btn">Rejoindre ÉtudIA</a>
+                </div>
+
+                <div class="acteur-card">
+                    <span class="acteur-icon">👨‍💼</span>
+                    <h3 class="acteur-title">Administrateurs</h3>
+                    <p class="acteur-description">
+                        Supervision complète avec métriques avancées, 
+                        contrôle système et gestion globale de la plateforme ÉtudIA.
+                    </p>
+                    <a href="/backoffices/administrateurs/index.html" class="acteur-btn">Gestion Globale</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Features Section - 3 PAR LIGNE -->
+    <section id="features" class="features">
+        <div class="features-container">
+            <h2 class="section-title">✨ Fonctionnalités Révolutionnaires</h2>
+            <p class="section-subtitle">
+                Découvrez les technologies de pointe qui font d'ÉtudIA 
+                la plateforme éducative la plus avancée d'Afrique
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">IA Personnalisée</h3>
+                    <p class="feature-description">
+                        Assistant virtuel adapté au niveau africain avec support multilingue 
+                        et pédagogie culturellement adaptée.
+                    </p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Analytics Avancés</h3>
+                    <p class="feature-description">
+                        Tableaux de bord temps réel avec métriques de performance 
+                        et prédictions de réussite basées sur l'IA.
+                    </p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">🌍</div>
+                    <h3 class="feature-title">Réseau Continental</h3>
+                    <p class="feature-description">
+                        Connectez-vous avec des étudiants et enseignants de toute l'Afrique 
+                        pour un apprentissage collaboratif.
+                    </p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">💡</div>
+                    <h3 class="feature-title">Apprentissage Adaptatif</h3>
+                    <p class="feature-description">
+                        Contenu qui s'adapte automatiquement au rythme et 
+                        style d'apprentissage de chaque utilisateur.
+                    </p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">Sécurité Renforcée</h3>
+                    <p class="feature-description">
+                        Protection des données avec chiffrement avancé 
+                        et conformité aux standards internationaux.
+                    </p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">Multi-Plateforme</h3>
+                    <p class="feature-description">
+                        Accès seamless sur web, mobile et tablette avec synchronisation 
+                        automatique des données.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section RÉDUITE -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2 class="cta-title">Prêt à Révolutionner Votre Éducation ?</h2>
+            <p class="cta-subtitle">
+                Rejoignez les milliers d'étudiants qui transforment déjà 
+                l'avenir de l'éducation africaine avec ÉtudIA
+            </p>
+            <div class="cta-buttons-big">
+                <a href="/backoffices/eleves/index.html" class="btn-cta-primary">
+                    Commencer Gratuitement
+                </a>
+                <a href="/pages/plans.html" class="btn-cta-secondary">
+                    Voir les Tarifs
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer - PLATEFORME COMMUNAUTÉ CONTACT SUR MÊME LIGNE -->
     <footer id="contact" class="footer">
         <div class="footer-container">
             <div class="footer-main">
@@ -950,33 +1175,35 @@
                     </p>
                 </div>
                 
-                <div class="footer-section">
-                    <h4>Plateforme</h4>
-                    <ul class="footer-links">
-                        <li><a href="/pages/plans.html">Plans & Tarifs</a></li>
-                        <li><a href="/pages/about.html">À Propos</a></li>
-                        <li><a href="https://etudia-africa-v4-1.onrender.com/health">Statut API</a></li>
-                        <li><a href="/pages/support.html">Support</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Communauté</h4>
-                    <ul class="footer-links">
-                        <li><a href="/back-offices/eleves/index.html">Espace Élèves</a></li>
-                        <li><a href="/back-offices/enseignants/index.html">Espace Enseignants</a></li>
-                        <li><a href="/back-offices/parents/index.html">Espace Parents</a></li>
-                        <li><a href="/back-offices/partenaires/index.html">Devenir Partenaire</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Contact</h4>
-                    <div class="footer-contact">
-                        <p><strong>Siège :</strong> Abidjan, Côte d'Ivoire</p>
-                        <p><strong>Email :</strong> contact@etudia-africa.com</p>
-                        <p><strong>Support :</strong> support@etudia-africa.com</p>
-                        <p><strong>Partenaires :</strong> partners@etudia-africa.com</p>
+                <div class="footer-menus">
+                    <div class="footer-section">
+                        <h4>Plateforme</h4>
+                        <ul class="footer-links">
+                            <li><a href="/pages/plans.html">Plans & Tarifs</a></li>
+                            <li><a href="/pages/about.html">À Propos</a></li>
+                            <li><a href="https://etudia-africa-v4-1.onrender.com/health">Statut API</a></li>
+                            <li><a href="/pages/support.html">Support</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Communauté</h4>
+                        <ul class="footer-links">
+                            <li><a href="/backoffices/eleves/index.html">Espace Élèves</a></li>
+                            <li><a href="/backoffices/enseignants/index.html">Espace Enseignants</a></li>
+                            <li><a href="/backoffices/parents/index.html">Espace Parents</a></li>
+                            <li><a href="/backoffices/partenaires/index.html">Devenir Partenaire</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Contact</h4>
+                        <div class="footer-contact">
+                            <p><strong>Siège :</strong> Abidjan, Côte d'Ivoire</p>
+                            <p><strong>Email :</strong> contact@etudia-africa.com</p>
+                            <p><strong>Support :</strong> support@etudia-africa.com</p>
+                            <p><strong>Partenaires :</strong> partners@etudia-africa.com</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -996,17 +1223,37 @@
     </footer>
 
     <script>
-        // Navigation scroll effect
+        // ===== PARTICLES SYSTÈME =====
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 25 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                
+                const colors = ['#FF6B35', '#10B981', '#3B82F6', '#EF4444'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // ===== NAVIGATION SCROLL EFFECT =====
         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar');
             if (window.scrollY > 50) {
-                navbar.style.background = 'rgba(31, 41, 55, 0.95)';
+                navbar.classList.add('scrolled');
             } else {
-                navbar.style.background = 'rgba(255, 255, 255, 0.1)';
+                navbar.classList.remove('scrolled');
             }
         });
 
-        // Smooth scrolling
+        // ===== SMOOTH SCROLLING =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1020,7 +1267,7 @@
             });
         });
 
-        // Stats animation with database connection simulation
+        // ===== STATS ANIMATION =====
         const observerOptions = {
             threshold: 0.5,
             rootMargin: '0px 0px -100px 0px'
@@ -1054,7 +1301,7 @@
             statsObserver.observe(section);
         });
 
-        // Carousel indicators animation
+        // ===== CAROUSEL INDICATORS ANIMATION =====
         let currentSlide = 0;
         const indicators = document.querySelectorAll('.indicator');
         
@@ -1069,32 +1316,10 @@
             updateIndicators();
         }, 3000);
 
-        // Database connection simulation for establishments count
-        async function updateEstablishmentsCount() {
-            try {
-                // Simulation d'une requête à la base de données
-                // En réalité, tu feras : fetch('https://etudia-africa-v4-1.onrender.com/api/stats/etablissements')
-                const response = await fetch('https://etudia-africa-v4-1.onrender.com/health');
-                if (response.ok) {
-                    // Pour l'instant, on utilise la valeur par défaut de 12
-                    // Quand l'API sera prête, tu remplaceras par la vraie valeur
-                    const establishmentStat = document.querySelector('[data-count="12"]');
-                    if (establishmentStat) {
-                        establishmentStat.setAttribute('data-count', '12'); // Valeur réelle de la DB
-                    }
-                }
-            } catch (error) {
-                console.log('API non disponible, utilisation des valeurs par défaut');
-            }
-        }
-
-        // Appel au chargement de la page
-        updateEstablishmentsCount();
-
-        // Acteur cards hover effects
+        // ===== ACTEUR CARDS INTERACTIONS =====
         document.querySelectorAll('.acteur-card').forEach(card => {
             card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-12px) scale(1.02)';
+                card.style.transform = 'translateY(-8px) scale(1.02)';
             });
             
             card.addEventListener('mouseleave', () => {
@@ -1102,7 +1327,7 @@
             });
         });
 
-        // Button click effects
+        // ===== BUTTON RIPPLE EFFECTS =====
         document.querySelectorAll('.btn-primary, .btn-secondary, .acteur-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 const ripple = document.createElement('span');
@@ -1124,7 +1349,13 @@
             });
         });
 
-        // Add ripple CSS dynamically
+        // ===== INITIALISATION =====
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            console.log('✅ ÉtudIA Landing Page - Prête !');
+        });
+
+        // ===== CSS DYNAMIQUE POUR ANIMATIONS =====
         const style = document.createElement('style');
         style.textContent = `
             .ripple {
