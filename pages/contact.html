@@ -1,1 +1,942 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - ÉtudIA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        :root {
+            --etudia-primary: #FF6B35;
+            --etudia-success: #10B981;
+            --etudia-danger: #EF4444;
+            --etudia-info: #3B82F6;
+            --etudia-dark: #1F2937;
+            --etudia-light: #F9FAFB;
+            --etudia-white: #FFFFFF;
+            --gradient-primary: linear-gradient(135deg, #FF6B35, #EF4444);
+            --gradient-secondary: linear-gradient(135deg, #10B981, #3B82F6);
+            --glassmorphism: rgba(255, 255, 255, 0.1);
+            --glassmorphism-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1F2937, #111827);
+            color: var(--etudia-white);
+            overflow-x: hidden;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            backdrop-filter: blur(20px);
+            background: var(--glassmorphism);
+            border-bottom: 1px solid var(--glassmorphism-border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--etudia-white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--etudia-primary);
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* ===== DRAPEAU CI ===== */
+        .floating-flag {
+            position: fixed;
+            top: 80px;
+            right: 15px;
+            width: 45px;
+            height: 30px;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            animation: wave 3s ease-in-out infinite;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: linear-gradient(to right, 
+                #FF6B35 0% 33%, 
+                white 33% 66%, 
+                #10B981 66% 100%
+            );
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(3deg) scale(1.05); }
+            50% { transform: rotate(-2deg) scale(1); }
+            75% { transform: rotate(2deg) scale(1.02); }
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            padding-top: 80px;
+            min-height: 100vh;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+            background: radial-gradient(ellipse at center, rgba(255, 107, 53, 0.15) 0%, transparent 70%);
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== CONTACT CONTAINER ===== */
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        /* ===== FORMULAIRE ===== */
+        .contact-form {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            min-height: 600px;
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--etudia-primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--etudia-primary);
+            font-size: 0.9rem;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--etudia-white);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--etudia-primary);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-button {
+            width: 100%;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .form-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+        }
+
+        .form-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ===== INFORMATIONS CONTACT ===== */
+        .contact-info {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            min-height: 600px;
+        }
+
+        .info-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--etudia-primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .info-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .info-icon {
+            font-size: 1.5rem;
+            width: 40px;
+            text-align: center;
+        }
+
+        .info-content h3 {
+            color: var(--etudia-primary);
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .info-content p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        /* ===== HORAIRES ===== */
+        .hours-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+
+        .hours-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--etudia-primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .hours-list {
+            list-style: none;
+        }
+
+        .hours-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+        }
+
+        .hours-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* ===== FAQ SECTION ===== */
+        .faq-section {
+            grid-column: 1 / -1;
+            background: var(--glassmorphism);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .faq-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--etudia-primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid var(--etudia-primary);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            color: var(--etudia-primary);
+            font-size: 0.9rem;
+            padding: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            margin: 0;
+        }
+
+        .faq-question:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-question.active::after {
+            content: '−';
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            opacity: 0.8;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            padding: 0 1rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-answer.active {
+            padding: 0 1rem 1rem 1rem;
+            max-height: 150px;
+        }
+
+        /* ===== VALIDATION STYLES ===== */
+        .form-input.error, .form-select.error, .form-textarea.error {
+            border-color: var(--etudia-danger);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+        }
+
+        .form-input.success, .form-select.success, .form-textarea.success {
+            border-color: var(--etudia-success);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+
+        .error-message {
+            color: var(--etudia-danger);
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glassmorphism-border);
+            padding: 2rem 1rem 1rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .footer p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .floating-flag {
+                width: 35px;
+                height: 25px;
+                right: 10px;
+            }
+
+            .hero-section {
+                padding: 2rem 1rem 1.5rem;
+            }
+
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">ÉtudIA</div>
+            <ul class="nav-links">
+                <li><a href="/index.html">Accueil</a></li>
+                <li><a href="/backoffices/eleves/index.html">Élèves</a></li>
+                <li><a href="/backoffices/enseignants/index.html">Enseignants</a></li>
+                <li><a href="/pages/plans.html">Tarifs</a></li>
+                <li><a href="/pages/contact.html" class="active">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Drapeau Flottant CI -->
+    <div class="floating-flag" title="Fièrement Ivoirien 🇨🇮"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1 class="hero-title">Contactez-nous</h1>
+            <p class="hero-subtitle">
+                Une question ? Un projet ? Notre équipe est là pour vous accompagner dans votre réussite éducative.
+            </p>
+        </section>
+
+        <div class="contact-container">
+            <!-- Formulaire de Contact -->
+            <div class="contact-form">
+                <h2 class="form-title">📝 Envoyez-nous un message</h2>
+                
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="nom" class="form-label">Nom complet *</label>
+                        <input type="text" id="nom" name="nom" class="form-input" required>
+                        <div class="error-message" id="nom-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email *</label>
+                        <input type="email" id="email" name="email" class="form-input" required>
+                        <div class="error-message" id="email-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profil" class="form-label">Vous êtes *</label>
+                        <select id="profil" name="profil" class="form-select" required>
+                            <option value="">Sélectionnez votre profil</option>
+                            <option value="etudiant">🎓 Étudiant (Primaire/Secondaire/Supérieur)</option>
+                            <option value="enseignant">👨‍🏫 Enseignant/Professeur</option>
+                            <option value="parent">👨‍👩‍👧‍👦 Parent/Tuteur</option>
+                            <option value="directeur">🏫 Directeur d'établissement</option>
+                            <option value="partenaire">🤝 Partenaire/Entreprise</option>
+                            <option value="investisseur">💼 Investisseur</option>
+                            <option value="journaliste">📰 Journaliste/Média</option>
+                            <option value="developpeur">👨‍💻 Développeur/Tech</option>
+                            <option value="gouvernement">🏛️ Institution publique</option>
+                            <option value="autre">🌟 Autre</option>
+                        </select>
+                        <div class="error-message" id="profil-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sujet" class="form-label">Sujet *</label>
+                        <input type="text" id="sujet" name="sujet" class="form-input" placeholder="Décrivez brièvement votre demande..." required>
+                        <div class="error-message" id="sujet-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message" class="form-label">Message *</label>
+                        <textarea id="message" name="message" class="form-textarea" placeholder="Décrivez votre demande en détail..." required></textarea>
+                        <div class="error-message" id="message-error"></div>
+                    </div>
+
+                    <button type="submit" class="form-button" id="submitBtn">
+                        📤 Envoyer le message
+                    </button>
+                </form>
+            </div>
+
+            <!-- Informations de Contact -->
+            <div class="contact-info">
+                <h2 class="info-title">📞 Nos Coordonnées</h2>
+                
+                <div class="info-item">
+                    <span class="info-icon">🏢</span>
+                    <div class="info-content">
+                        <h3>Siège Social</h3>
+                        <p>Abidjan, Côte d'Ivoire<br>Plateau - Zone 4</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-icon">📧</span>
+                    <div class="info-content">
+                        <h3>Email Général</h3>
+                        <p>contact@etudia-africa.com</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-icon">🛠️</span>
+                    <div class="info-content">
+                        <h3>Support Technique</h3>
+                        <p>support@etudia-africa.com<br>Réponse sous 24h</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-icon">💬</span>
+                    <div class="info-content">
+                        <h3>WhatsApp Support</h3>
+                        <p>+225 XX XX XX XX<br>Lun-Dim 8h-22h</p>
+                    </div>
+                </div>
+
+                <!-- Horaires -->
+                <div class="hours-section">
+                    <h3 class="hours-title">🕐 Horaires de Support</h3>
+                    <ul class="hours-list">
+                        <li><span>Lundi - Vendredi</span><span>8h00 - 22h00</span></li>
+                        <li><span>Samedi</span><span>9h00 - 20h00</span></li>
+                        <li><span>Dimanche</span><span>10h00 - 18h00</span></li>
+                        <li><span>Jours fériés</span><span>Support réduit</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="faq-section">
+                <h2 class="faq-title">❓ Questions Fréquentes</h2>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question">Combien de temps pour une réponse ?</div>
+                        <div class="faq-answer">Nous répondons sous 24h par email, et immédiatement sur WhatsApp pendant les heures d'ouverture (8h-22h).</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Comment contacter le support technique ?</div>
+                        <div class="faq-answer">Email : support@etudia-africa.com ou WhatsApp pour une assistance immédiate. Décrivez précisément votre problème.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Puis-je visiter vos bureaux ?</div>
+                        <div class="faq-answer">Oui ! Prenez rendez-vous par email. Nous organisons aussi des démos produit sur site au Plateau Zone 4.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Support en langues locales ?</div>
+                        <div class="faq-answer">Nous supportons le français, l'anglais, et progressivement les langues locales africaines (Dioula, Baoulé, etc.).</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Problème urgent le week-end ?</div>
+                        <div class="faq-answer">WhatsApp reste ouvert le week-end (10h-18h dimanche). Pour urgences techniques, email support avec [URGENT] en objet.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Comment signaler un bug ?</div>
+                        <div class="faq-answer">Utilisez le formulaire avec sujet "Signaler un bug", décrivez les étapes pour reproduire le problème et votre navigateur.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Demande de partenariat ?</div>
+                        <div class="faq-answer">Sélectionnez "Partenaire/Entreprise" dans le formulaire. Précisez votre structure et type de collaboration souhaité.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Problème de paiement ?</div>
+                        <div class="faq-answer">Contactez-nous immédiatement via WhatsApp avec votre numéro de transaction. Nous résolvons sous 2h en moyenne.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Demande de remboursement ?</div>
+                        <div class="faq-answer">Email à contact@etudia-africa.com avec votre numéro de commande. Garantie de satisfaction 7 jours selon nos CGV.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Contact presse et médias ?</div>
+                        <div class="faq-answer">Journalistes : utilisez le profil "Journaliste/Média" dans le formulaire. Réponse prioritaire sous 12h pour interviews.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Suggestion d'amélioration ?</div>
+                        <div class="faq-answer">Nous adorons vos idées ! Décrivez votre proposition dans le message. Toutes sont étudiées par notre équipe.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Support pour les enseignants ?</div>
+                        <div class="faq-answer">Support dédié pour les enseignants. Mentionnez votre établissement et besoins spécifiques. Formation gratuite disponible.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 ÉtudIA - Tous droits réservés | Fièrement conçu en Côte d'Ivoire 🇨🇮</p>
+        <p style="margin-top: 0.5rem;">
+            <a href="/index.html" style="color: var(--etudia-primary); text-decoration: none;">Retour à l'accueil</a> | 
+            <a href="/pages/plans.html" style="color: var(--etudia-primary); text-decoration: none;">Plans & Tarifs</a> | 
+            <a href="/pages/support.html" style="color: var(--etudia-primary); text-decoration: none;">Support</a>
+        </p>
+    </footer>
+
+    <script>
+        // Toutes les fonctions définies AVANT le DOMContentLoaded
+        function toggleFaqItem(element) {
+            const answer = element.nextElementSibling;
+            const isActive = answer.classList.contains('active');
+            
+            // Fermer toutes les autres FAQ
+            document.querySelectorAll('.faq-answer.active').forEach(ans => {
+                ans.classList.remove('active');
+            });
+            document.querySelectorAll('.faq-question.active').forEach(q => {
+                q.classList.remove('active');
+            });
+            
+            // Toggle la FAQ actuelle
+            if (!isActive) {
+                answer.classList.add('active');
+                element.classList.add('active');
+            }
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function showError(fieldId, message) {
+            const field = document.getElementById(fieldId);
+            const errorDiv = document.getElementById(fieldId + '-error');
+            
+            field.classList.add('error');
+            field.classList.remove('success');
+            errorDiv.textContent = message;
+        }
+
+        function showSuccess(fieldId) {
+            const field = document.getElementById(fieldId);
+            const errorDiv = document.getElementById(fieldId + '-error');
+            
+            field.classList.add('success');
+            field.classList.remove('error');
+            errorDiv.textContent = '';
+        }
+
+        function clearValidation(fieldId) {
+            const field = document.getElementById(fieldId);
+            const errorDiv = document.getElementById(fieldId + '-error');
+            
+            field.classList.remove('error', 'success');
+            errorDiv.textContent = '';
+        }
+
+        function validateField(fieldId) {
+            const field = document.getElementById(fieldId);
+            const value = field.value.trim();
+
+            switch(fieldId) {
+                case 'nom':
+                    if (!value) {
+                        showError(fieldId, 'Le nom est requis');
+                        return false;
+                    } else if (value.length < 2) {
+                        showError(fieldId, 'Le nom doit faire au moins 2 caractères');
+                        return false;
+                    } else {
+                        showSuccess(fieldId);
+                        return true;
+                    }
+
+                case 'email':
+                    if (!value) {
+                        showError(fieldId, 'L\'email est requis');
+                        return false;
+                    } else if (!validateEmail(value)) {
+                        showError(fieldId, 'Format d\'email invalide');
+                        return false;
+                    } else {
+                        showSuccess(fieldId);
+                        return true;
+                    }
+
+                case 'profil':
+                    if (!value) {
+                        showError(fieldId, 'Veuillez sélectionner votre profil');
+                        return false;
+                    } else {
+                        showSuccess(fieldId);
+                        return true;
+                    }
+
+                case 'sujet':
+                    if (!value) {
+                        showError(fieldId, 'Le sujet est requis');
+                        return false;
+                    } else if (value.length < 3) {
+                        showError(fieldId, 'Le sujet doit faire au moins 3 caractères');
+                        return false;
+                    } else {
+                        showSuccess(fieldId);
+                        return true;
+                    }
+
+                case 'message':
+                    if (!value) {
+                        showError(fieldId, 'Le message est requis');
+                        return false;
+                    } else if (value.length < 10) {
+                        showError(fieldId, 'Le message doit faire au moins 10 caractères');
+                        return false;
+                    } else {
+                        showSuccess(fieldId);
+                        return true;
+                    }
+
+                default:
+                    return true;
+            }
+        }
+
+        // Attendre que le DOM soit chargé
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Ajouter les événements FAQ
+            document.querySelectorAll('.faq-question').forEach(function(question) {
+                question.addEventListener('click', function() {
+                    toggleFaqItem(this);
+                });
+            });
+
+            // Validation formulaire
+            const form = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+
+            // Validation en temps réel
+            const fields = ['nom', 'email', 'profil', 'sujet', 'message'];
+            
+            fields.forEach(function(fieldId) {
+                const field = document.getElementById(fieldId);
+                
+                field.addEventListener('blur', function() {
+                    validateField(fieldId);
+                });
+
+                field.addEventListener('input', function() {
+                    if (field.classList.contains('error')) {
+                        clearValidation(fieldId);
+                    }
+                });
+            });
+
+            // Soumission du formulaire
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Validation complète
+                let isValid = true;
+                fields.forEach(function(fieldId) {
+                    if (!validateField(fieldId)) {
+                        isValid = false;
+                    }
+                });
+
+                if (!isValid) {
+                    alert('❌ Veuillez corriger les erreurs dans le formulaire');
+                    return;
+                }
+
+                // Simulation d'envoi
+                submitBtn.disabled = true;
+                submitBtn.textContent = '⏳ Envoi en cours...';
+
+                try {
+                    // Simulation d'attente
+                    await new Promise(function(resolve) {
+                        setTimeout(resolve, 2000);
+                    });
+                    
+                    // Récupération des données
+                    const formData = new FormData(form);
+                    const data = Object.fromEntries(formData.entries());
+                    
+                    // Simulation de succès
+                    alert('✅ Message envoyé avec succès !\n\nMerci ' + data.nom + ' pour votre message.\n\n📧 Nous vous répondrons à ' + data.email + ' dans les 24h.\n\n📋 Récapitulatif :\n• Profil : ' + data.profil + '\n• Sujet : ' + data.sujet + '\n• Message : ' + data.message.substring(0, 50) + '...\n\n🎯 Prochaines étapes :\n1. Vous recevrez une confirmation par email\n2. Notre équipe analysera votre demande\n3. Vous obtiendrez une réponse personnalisée\n\nMerci de faire confiance à ÉtudIA ! 🇨🇮');
+
+                    // Reset du formulaire
+                    form.reset();
+                    fields.forEach(function(fieldId) {
+                        clearValidation(fieldId);
+                    });
+                    
+                } catch (error) {
+                    alert('❌ Erreur lors de l\'envoi. Veuillez réessayer ou nous contacter directement.');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '📤 Envoyer le message';
+                }
+            });
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 100) {
+                    navbar.style.background = 'rgba(31, 41, 55, 0.95)';
+                } else {
+                    navbar.style.background = 'var(--glassmorphism)';
+                }
+            });
+
+            // Menu mobile responsive - SEULEMENT SUR MOBILE
+            function createMobileMenu() {
+                if (window.innerWidth <= 768) {
+                    const navContainer = document.querySelector('.nav-container');
+                    const navLinks = document.querySelector('.nav-links');
+                    
+                    if (!document.querySelector('.mobile-toggle')) {
+                        const mobileToggle = document.createElement('div');
+                        mobileToggle.className = 'mobile-toggle';
+                        mobileToggle.innerHTML = '☰';
+                        mobileToggle.style.cssText = 'font-size: 1.5rem; cursor: pointer; color: white; display: block;';
+                        
+                        mobileToggle.addEventListener('click', function() {
+                            if (navLinks.style.display === 'flex') {
+                                navLinks.style.display = 'none';
+                            } else {
+                                navLinks.style.display = 'flex';
+                                navLinks.style.position = 'absolute';
+                                navLinks.style.top = '100%';
+                                navLinks.style.left = '0';
+                                navLinks.style.right = '0';
+                                navLinks.style.background = 'rgba(31, 41, 55, 0.95)';
+                                navLinks.style.flexDirection = 'column';
+                                navLinks.style.padding = '1rem';
+                                navLinks.style.backdropFilter = 'blur(20px)';
+                            }
+                        });
+                        
+                        navContainer.appendChild(mobileToggle);
+                    }
+                } else {
+                    // Sur desktop, supprimer le toggle et afficher le menu
+                    const mobileToggle = document.querySelector('.mobile-toggle');
+                    const navLinks = document.querySelector('.nav-links');
+                    
+                    if (mobileToggle) {
+                        mobileToggle.remove();
+                    }
+                    
+                    if (navLinks) {
+                        navLinks.style.display = 'flex';
+                        navLinks.style.position = 'static';
+                        navLinks.style.background = 'transparent';
+                        navLinks.style.flexDirection = 'row';
+                        navLinks.style.padding = '0';
+                        navLinks.style.backdropFilter = 'none';
+                    }
+                }
+            }
+
+            // Créer menu mobile
+            createMobileMenu();
+            window.addEventListener('resize', createMobileMenu);
+
+            // Easter egg logo
+            let logoClicks = 0;
+            document.querySelector('.logo').addEventListener('click', function() {
+                logoClicks++;
+                if (logoClicks === 5) {
+                    document.getElementById('message').value = 'Bonjour l\'équipe ÉtudIA ! 🎉\n\nJe viens de découvrir votre easter egg en cliquant 5 fois sur le logo !\n\nJ\'adore l\'attention aux détails que vous portez à votre plateforme. Cela montre vraiment votre passion pour l\'innovation éducative.\n\nJe suis [votre profil] et je souhaiterais en savoir plus sur ÉtudIA.\n\nCordialement,\n[Votre nom]\n\nP.S: Continuez à surprendre vos utilisateurs ! 🇨🇮';
+                    
+                    alert('🎉 Easter Egg découvert ! Le message type a été pré-rempli pour vous ! Vous pouvez le personnaliser avant envoi.');
+                    logoClicks = 0;
+                }
+            });
+
+            console.log('📞 Page Contact ÉtudIA chargée avec succès ! 🇨🇮');
+        });
+    </script>
+</body>
+</html>
