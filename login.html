@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔐 ÉtudIA - Connexion & Inscription</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --etudia-primary: #FF6B35;
+            --etudia-success: #10B981;
+            --etudia-danger: #EF4444;
+            --etudia-info: #3B82F6;
+            --etudia-dark: #1F2937;
+            --etudia-light: #F9FAFB;
+            --etudia-white: #FFFFFF;
+            --gradient-primary: linear-gradient(135deg, #FF6B35, #EF4444);
+            --gradient-secondary: linear-gradient(135deg, #10B981, #3B82F6);
+            --glassmorphism: rgba(255, 255, 255, 0.1);
+            --glassmorphism-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1F2937, #111827);
+            color: var(--etudia-white);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ===== PARTICLES BACKGROUND ===== */
+        .particles-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--etudia-primary);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { 
+                transform: translateY(100vh) translateX(0) rotate(0deg); 
+                opacity: 0; 
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { 
+                transform: translateY(-10vh) translateX(100px) rotate(360deg); 
+                opacity: 0; 
+            }
+        }
+
+        /* ===== LOGO FLOTTANT ===== */
+        .floating-logo {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            font-size: 2rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        .floating-logo:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 15px rgba(255, 107, 53, 0.6));
+        }
+
+        /* ===== CONTAINER PRINCIPAL TESLA ===== */
+        .login-container {
+            background: var(--glassmorphism);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 25px;
+            padding: 3rem;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: slideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--etudia-primary) 0%, transparent 70%);
+            opacity: 0.05;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== HEADER ===== */
+        .login-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            filter: drop-shadow(0 0 20px rgba(255, 107, 53, 0.3));
+        }
+
+        .login-subtitle {
+            font-size: 1rem;
+            opacity: 0.8;
+            color: var(--etudia-white);
+        }
+
+        /* ===== TOGGLE BUTTONS ===== */
+        .toggle-container {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            padding: 0.3rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--etudia-white);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0.6;
+        }
+
+        .toggle-btn.active {
+            background: var(--gradient-primary);
+            opacity: 1;
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+            transform: scale(1.02);
+        }
+
+        /* ===== FORMS ===== */
+        .form-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .form {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .form.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--etudia-white);
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 15px;
+            color: var(--etudia-white);
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--etudia-primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 15px;
+            color: var(--etudia-white);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: var(--etudia-primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+        }
+
+        .form-select option {
+            background: var(--etudia-dark);
+            color: var(--etudia-white);
+        }
+
+        /* ===== BUTTONS ===== */
+        .form-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 15px;
+            color: var(--etudia-white);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+        }
+
+        .form-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .form-btn:hover::before {
+            left: 100%;
+        }
+
+        .form-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.6);
+        }
+
+        .form-btn:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        /* ===== SOCIAL LOGIN ===== */
+        .social-login {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-title {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .social-title::before,
+        .social-title::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 35%;
+            height: 1px;
+            background: var(--glassmorphism-border);
+        }
+
+        .social-title::before {
+            left: 0;
+        }
+
+        .social-title::after {
+            right: 0;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 12px;
+            color: var(--etudia-white);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .social-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ===== FOOTER LINKS ===== */
+        .form-footer {
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .form-footer a {
+            color: var(--etudia-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .form-footer a:hover {
+            opacity: 0.8;
+            transform: translateY(-1px);
+        }
+
+        /* ===== BACK TO HOME ===== */
+        .back-home {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glassmorphism-border);
+            border-radius: 50px;
+            padding: 0.8rem 1.5rem;
+            color: var(--etudia-white);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .back-home:hover {
+            background: var(--gradient-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        /* ===== CHECKBOX CUSTOM ===== */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .checkbox-custom {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--glassmorphism-border);
+            border-radius: 6px;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .checkbox-custom.checked {
+            background: var(--gradient-primary);
+            border-color: var(--etudia-primary);
+        }
+
+        .checkbox-custom.checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .checkbox-label {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            cursor: pointer;
+            line-height: 1.4;
+        }
+
+        .checkbox-label a {
+            color: var(--etudia-primary);
+            text-decoration: none;
+        }
+
+        .checkbox-label a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .login-container {
+                margin: 1rem;
+                padding: 2rem;
+                max-width: 95%;
+            }
+
+            .floating-logo {
+                top: 1rem;
+                left: 1rem;
+                font-size: 1.6rem;
+            }
+
+            .back-home {
+                top: 1rem;
+                right: 1rem;
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            .login-title {
+                font-size: 1.8rem;
+            }
+
+            .social-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* ===== SUCCESS ANIMATION ===== */
+        @keyframes success {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .success-animation {
+            animation: success 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Particles Background -->
+    <div class="particles-bg" id="particles"></div>
+
+    <!-- Logo flottant -->
+    <a href="/index.html" class="floating-logo">ÉtudIA</a>
+
+    <!-- Retour accueil -->
+    <a href="/index.html" class="back-home">← Retour Accueil</a>
+
+    <!-- Container principal -->
+    <div class="login-container">
+        <!-- Header -->
+        <div class="login-header">
+            <h1 class="login-title">Bienvenue !</h1>
+            <p class="login-subtitle">Accédez à votre espace ÉtudIA</p>
+        </div>
+
+        <!-- Toggle Connexion/Inscription -->
+        <div class="toggle-container">
+            <button class="toggle-btn active" onclick="showForm('login')">Connexion</button>
+            <button class="toggle-btn" onclick="showForm('register')">Inscription</button>
+        </div>
+
+        <!-- Forms Container -->
+        <div class="form-container">
+            <!-- FORMULAIRE CONNEXION -->
+            <form class="form active" id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="loginEmail">Email</label>
+                    <input 
+                        type="email" 
+                        id="loginEmail" 
+                        class="form-input" 
+                        placeholder="votre@email.com"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="loginPassword">Mot de passe</label>
+                    <input 
+                        type="password" 
+                        id="loginPassword" 
+                        class="form-input" 
+                        placeholder="••••••••"
+                        required
+                    >
+                </div>
+
+                <div class="checkbox-container">
+                    <div class="checkbox-custom" onclick="toggleCheckbox(this)"></div>
+                    <label class="checkbox-label">Se souvenir de moi</label>
+                </div>
+
+                <button type="submit" class="form-btn">Se Connecter</button>
+
+                <div class="form-footer">
+                    <a href="#" onclick="showForm('forgot')">Mot de passe oublié ?</a>
+                </div>
+            </form>
+
+            <!-- FORMULAIRE INSCRIPTION -->
+            <form class="form" id="registerForm">
+                <div class="form-group">
+                    <label class="form-label" for="registerName">Nom complet</label>
+                    <input 
+                        type="text" 
+                        id="registerName" 
+                        class="form-input" 
+                        placeholder="Votre nom complet"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="registerEmail">Email</label>
+                    <input 
+                        type="email" 
+                        id="registerEmail" 
+                        class="form-input" 
+                        placeholder="votre@email.com"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="registerType">Type de compte</label>
+                    <select id="registerType" class="form-select" required>
+                        <option value="">Choisissez votre profil</option>
+                        <option value="eleve">👨‍🎓 Élève</option>
+                        <option value="enseignant">👨‍🏫 Enseignant</option>
+                        <option value="parent">👨‍👩‍👧‍👦 Parent</option>
+                        <option value="etablissement">🏢 Établissement</option>
+                        <option value="partenaire">🤝 Partenaire</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="registerPassword">Mot de passe</label>
+                    <input 
+                        type="password" 
+                        id="registerPassword" 
+                        class="form-input" 
+                        placeholder="••••••••"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="registerConfirmPassword">Confirmer le mot de passe</label>
+                    <input 
+                        type="password" 
+                        id="registerConfirmPassword" 
+                        class="form-input" 
+                        placeholder="••••••••"
+                        required
+                    >
+                </div>
+
+                <div class="checkbox-container">
+                    <div class="checkbox-custom" onclick="toggleCheckbox(this)"></div>
+                    <label class="checkbox-label">
+                        J'accepte les <a href="/pages/terms.html">conditions d'utilisation</a> 
+                        et la <a href="/pages/privacy.html">politique de confidentialité</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="form-btn">Créer mon Compte</button>
+
+                <div class="form-footer">
+                    Déjà un compte ? 
+                    <a href="#" onclick="showForm('login')">Se connecter</a>
+                </div>
+            </form>
+
+            <!-- FORMULAIRE MOT DE PASSE OUBLIÉ -->
+            <form class="form" id="forgotForm">
+                <div class="form-group">
+                    <label class="form-label" for="forgotEmail">Email</label>
+                    <input 
+                        type="email" 
+                        id="forgotEmail" 
+                        class="form-input" 
+                        placeholder="votre@email.com"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="form-btn">Réinitialiser</button>
+
+                <div class="form-footer">
+                    <a href="#" onclick="showForm('login')">← Retour à la connexion</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Social Login -->
+        <div class="social-login">
+            <div class="social-title">Ou continuez avec</div>
+            <div class="social-buttons">
+                <button class="social-btn" onclick="socialLogin('google')">
+                    🔍 Google
+                </button>
+                <button class="social-btn" onclick="socialLogin('microsoft')">
+                    🖥️ Microsoft
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== PARTICLES SYSTÈME =====
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                
+                const colors = ['#FF6B35', '#10B981', '#3B82F6', '#EF4444'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // ===== TOGGLE FORMS =====
+        function showForm(formType) {
+            // Reset all toggle buttons
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Reset all forms
+            document.querySelectorAll('.form').forEach(form => {
+                form.classList.remove('active');
+            });
+
+            // Show selected form
+            if (formType === 'login') {
+                document.querySelector('.toggle-btn').classList.add('active');
+                document.getElementById('loginForm').classList.add('active');
+            } else if (formType === 'register') {
+                document.querySelectorAll('.toggle-btn')[1].classList.add('active');
+                document.getElementById('registerForm').classList.add('active');
+            } else if (formType === 'forgot') {
+                document.getElementById('forgotForm').classList.add('active');
+            }
+        }
+
+        // ===== CHECKBOX CUSTOM =====
+        function toggleCheckbox(checkbox) {
+            checkbox.classList.toggle('checked');
+        }
+
+        // ===== SOCIAL LOGIN =====
+        function socialLogin(provider) {
+            console.log(`Connexion avec ${provider}`);
+            // Ici tu peux intégrer l'API OAuth
+            alert(`Fonctionnalité ${provider} en cours de développement !`);
+        }
+
+        // ===== FORM SUBMISSIONS =====
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (email && password) {
+                // Animation de succès
+                this.classList.add('success-animation');
+                
+                // Simulation de connexion
+                setTimeout(() => {
+                    // Redirection basée sur le type d'utilisateur
+                    // Tu peux intégrer ici ton système d'authentification
+                    redirectToBackoffice(email);
+                }, 500);
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const type = document.getElementById('registerType').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('Les mots de passe ne correspondent pas !');
+                return;
+            }
+            
+            if (name && email && type && password) {
+                // Animation de succès
+                this.classList.add('success-animation');
+                
+                // Simulation d'inscription
+                setTimeout(() => {
+                    redirectToBackoffice(email, type);
+                }, 500);
+            }
+        });
+
+        document.getElementById('forgotForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('forgotEmail').value;
+            
+            if (email) {
+                alert('Un email de réinitialisation a été envoyé à ' + email);
+                showForm('login');
+            }
+        });
+
+        // ===== REDIRECTION INTELLIGENTE =====
+        function redirectToBackoffice(email, userType = null) {
+            // Logique de redirection basée sur le type d'utilisateur
+            let redirectUrl = '/index.html';
+            
+            if (userType) {
+                switch(userType) {
+                    case 'eleve':
+                        redirectUrl = '/backoffices/eleves/index.html';
+                        break;
+                    case 'enseignant':
+                        redirectUrl = '/backoffices/enseignants/index.html';
+                        break;
+                    case 'parent':
+                        redirectUrl = '/backoffices/parents/index.html';
+                        break;
+                    case 'etablissement':
+                        redirectUrl = '/backoffices/etablissements/index.html';
+                        break;
+                    case 'partenaire':
+                        redirectUrl = '/backoffices/partenaires/index.html';
+                        break;
+                }
+            } else {
+                // Logique pour déterminer le type basé sur l'email (à implémenter)
+                redirectUrl = '/backoffices/eleves/index.html'; // Par défaut
+            }
+            
+            console.log(`Redirection vers : ${redirectUrl}`);
+            
+            // Simulation de redirection
+            setTimeout(() => {
+                alert(`Connexion réussie ! Redirection vers votre espace...`);
+                // window.location.href = redirectUrl;
+            }, 500);
+        }
+
+        // ===== VALIDATION EN TEMPS RÉEL =====
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.value.trim() === '') {
+                    this.style.borderColor = '#EF4444';
+                    this.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.2)';
+                } else {
+                    this.style.borderColor = '#10B981';
+                    this.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.2)';
+                }
+            });
+            
+            input.addEventListener('focus', function() {
+                this.style.borderColor = '#FF6B35';
+                this.style.boxShadow = '0 0 0 3px rgba(255, 107, 53, 0.2)';
+            });
+        });
+
+        // ===== VALIDATION MOT DE PASSE =====
+        document.getElementById('registerPassword').addEventListener('input', function() {
+            const password = this.value;
+            const confirmField = document.getElementById('registerConfirmPassword');
+            
+            // Vérification force du mot de passe
+            const strength = checkPasswordStrength(password);
+            updatePasswordStrength(this, strength);
+            
+            // Vérification correspondance
+            if (confirmField.value && confirmField.value !== password) {
+                confirmField.style.borderColor = '#EF4444';
+                confirmField.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.2)';
+            } else if (confirmField.value && confirmField.value === password) {
+                confirmField.style.borderColor = '#10B981';
+                confirmField.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.2)';
+            }
+        });
+
+        document.getElementById('registerConfirmPassword').addEventListener('input', function() {
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = this.value;
+            
+            if (confirmPassword !== password) {
+                this.style.borderColor = '#EF4444';
+                this.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.2)';
+            } else {
+                this.style.borderColor = '#10B981';
+                this.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.2)';
+            }
+        });
+
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+            return strength;
+        }
+
+        function updatePasswordStrength(input, strength) {
+            const colors = ['#EF4444', '#F59E0B', '#F59E0B', '#10B981', '#10B981'];
+            input.style.borderColor = colors[strength - 1] || '#EF4444';
+        }
+
+        // ===== GESTION ERREURS =====
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.style.cssText = `
+                position: fixed;
+                top: 2rem;
+                right: 2rem;
+                background: linear-gradient(135deg, #EF4444, #DC2626);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 10px;
+                box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4);
+                z-index: 10000;
+                animation: slideInRight 0.3s ease;
+            `;
+            errorDiv.textContent = message;
+            document.body.appendChild(errorDiv);
+            
+            setTimeout(() => {
+                errorDiv.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => document.body.removeChild(errorDiv), 300);
+            }, 3000);
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.createElement('div');
+            successDiv.style.cssText = `
+                position: fixed;
+                top: 2rem;
+                right: 2rem;
+                background: linear-gradient(135deg, #10B981, #059669);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 10px;
+                box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+                z-index: 10000;
+                animation: slideInRight 0.3s ease;
+            `;
+            successDiv.textContent = message;
+            document.body.appendChild(successDiv);
+            
+            setTimeout(() => {
+                successDiv.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => document.body.removeChild(successDiv), 300);
+            }, 3000);
+        }
+
+        // ===== KEYBOARD SHORTCUTS =====
+        document.addEventListener('keydown', function(e) {
+            // Échap pour fermer
+            if (e.key === 'Escape') {
+                window.location.href = '/index.html';
+            }
+            
+            // Tab entre les forms
+            if (e.key === 'Tab' && e.ctrlKey) {
+                e.preventDefault();
+                const currentForm = document.querySelector('.form.active').id;
+                if (currentForm === 'loginForm') {
+                    showForm('register');
+                } else {
+                    showForm('login');
+                }
+            }
+        });
+
+        // ===== INITIALISATION =====
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            
+            // Auto-focus sur le premier champ
+            document.getElementById('loginEmail').focus();
+            
+            // Animation d'entrée retardée pour les éléments
+            setTimeout(() => {
+                document.querySelector('.login-container').style.transform = 'scale(1)';
+            }, 100);
+            
+            console.log('🔐 ÉtudIA Login - Page prête !');
+        });
+
+        // ===== CSS ANIMATIONS DYNAMIQUES =====
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from {
+                    opacity: 0;
+                    transform: translateX(100px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            
+            @keyframes slideOutRight {
+                from {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateX(100px);
+                }
+            }
+            
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+            
+            .shake {
+                animation: shake 0.5s ease-in-out;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // ===== PROTECTION CONTRE LES BOTS (SIMPLE) =====
+        let interactionCount = 0;
+        document.addEventListener('click', () => interactionCount++);
+        document.addEventListener('keydown', () => interactionCount++);
+
+        function isHuman() {
+            return interactionCount > 3; // Simple vérification d'interaction
+        }
+
+        // ===== ANALYTICS SIMULATION =====
+        function trackEvent(action, category = 'Login') {
+            console.log(`📊 Analytics: ${category} - ${action}`);
+            // Ici tu peux intégrer Google Analytics, Mixpanel, etc.
+        }
+
+        // Track des événements
+        document.querySelectorAll('.toggle-btn').forEach(btn => {
+            btn.addEventListener('click', () => trackEvent('Form Switch'));
+        });
+
+        document.querySelectorAll('.social-btn').forEach(btn => {
+            btn.addEventListener('click', () => trackEvent('Social Login Attempt'));
+        });
+    </script>
+</body>
+</html>
