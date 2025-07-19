@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔒 Politique de Confidentialité - ÉtudIA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --etudia-primary: #FF6B35;
+            --etudia-success: #10B981;
+            --etudia-danger: #EF4444;
+            --etudia-info: #3B82F6;
+            --etudia-dark: #1F2937;
+            --etudia-light: #F9FAFB;
+            --etudia-white: #FFFFFF;
+            --gradient-primary: linear-gradient(135deg, #FF6B35, #EF4444);
+            --gradient-secondary: linear-gradient(135deg, #10B981, #3B82F6);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1F2937, #111827);
+            color: var(--etudia-white);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--etudia-success);
+        }
+
+        .last-updated {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        .nav-links {
+            text-align: center;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links a {
+            color: var(--etudia-success);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            background: rgba(16, 185, 129, 0.1);
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            background: var(--etudia-success);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            line-height: 1.8;
+        }
+
+        .section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--etudia-success);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--etudia-success);
+        }
+
+        .subsection {
+            margin-bottom: 1.5rem;
+        }
+
+        .subsection-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--etudia-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        p, li {
+            margin-bottom: 0.8rem;
+            opacity: 0.9;
+        }
+
+        ul, ol {
+            padding-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background: rgba(16, 185, 129, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            color: var(--etudia-success);
+            font-weight: 600;
+        }
+
+        .important {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--etudia-info);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .security-box {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--etudia-success);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .warning {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid var(--etudia-danger);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .data-table th {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--etudia-success);
+            font-weight: 600;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .privacy-controls {
+            background: rgba(255, 107, 53, 0.1);
+            border-left: 4px solid var(--etudia-primary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            
+            .back-button {
+                top: 1rem;
+                left: 1rem;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .title {
+                font-size: 1.6rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-links a {
+                display: block;
+                margin: 0.2rem 0;
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="/login.html" class="back-button">← Retour</a>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">ÉtudIA</div>
+            <h1 class="title">🔒 Politique de Confidentialité</h1>
+            <p class="last-updated">Dernière mise à jour : 19 juillet 2025</p>
+        </div>
+
+        <div class="nav-links">
+            <a href="#introduction">Introduction</a>
+            <a href="#donnees">Données Collectées</a>
+            <a href="#utilisation">Utilisation</a>
+            <a href="#partage">Partage</a>
+            <a href="#securite">Sécurité</a>
+            <a href="#droits">Vos Droits</a>
+            <a href="#cookies">Cookies</a>
+            <a href="#contact">Contact</a>
+        </div>
+
+        <div class="content">
+            <div class="section" id="introduction">
+                <h2 class="section-title">1. Introduction</h2>
+                <p>
+                    <span class="highlight">ÉtudIA</span> s'engage à protéger votre vie privée et la confidentialité de vos données personnelles. 
+                    Cette politique explique comment nous collectons, utilisons, stockons et protégeons vos informations.
+                </p>
+                <div class="important">
+                    <strong>🛡️ Notre Engagement :</strong> Nous accordons une attention particulière à la protection des données des mineurs 
+                    et nous conformons aux standards internationaux de protection des données (RGPD, COPPA).
+                </div>
+                <p>
+                    En utilisant ÉtudIA, vous acceptez les pratiques décrites dans cette politique. 
+                    Si vous n'acceptez pas ces pratiques, veuillez ne pas utiliser nos services.
+                </p>
+            </div>
+
+            <div class="section" id="donnees">
+                <h2 class="section-title">2. Données que Nous Collectons</h2>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">2.1 Informations Personnelles</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Type de Données</th>
+                                <th>Exemples</th>
+                                <th>Finalité</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Identification</td>
+                                <td>Nom, prénom, email</td>
+                                <td>Création et gestion du compte</td>
+                            </tr>
+                            <tr>
+                                <td>Éducatives</td>
+                                <td>Niveau scolaire, matières, notes</td>
+                                <td>Personnalisation de l'apprentissage</td>
+                            </tr>
+                            <tr>
+                                <td>Techniques</td>
+                                <td>Adresse IP, navigateur</td>
+                                <td>Sécurité et amélioration du service</td>
+                            </tr>
+                            <tr>
+                                <td>Utilisation</td>
+                                <td>Pages visitées, temps passé</td>
+                                <td>Analytics et optimisation</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">2.2 Données par Type de Compte</h3>
+                    <ul>
+                        <li><strong>👨‍🎓 Élèves :</strong> Informations scolaires, progression, préférences d'apprentissage</li>
+                        <li><strong>👨‍🏫 Enseignants :</strong> Qualifications, matières enseignées, classes gérées</li>
+                        <li><strong>👨‍👩‍👧‍👦 Parents :</strong> Relation avec l'élève, informations de contact</li>
+                        <li><strong>🏢 Établissements :</strong> Informations administratives, données de facturation</li>
+                        <li><strong>🏛️ DREN :</strong> Informations régionales, rapports de supervision</li>
+                        <li><strong>🤝 Partenaires :</strong> Informations commerciales, commissions</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">2.3 Données Automatiques</h3>
+                    <p>Nous collectons automatiquement certaines informations lors de votre utilisation :</p>
+                    <ul>
+                        <li>Informations sur votre appareil et navigateur</li>
+                        <li>Adresse IP et localisation géographique générale</li>
+                        <li>Pages visitées et durée des sessions</li>
+                        <li>Interactions avec l'interface et l'IA</li>
+                        <li>Données de performance et erreurs techniques</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section" id="utilisation">
+                <h2 class="section-title">3. Comment Nous Utilisons Vos Données</h2>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">3.1 Finalités Principales</h3>
+                    <ul>
+                        <li><strong>🎓 Éducation Personnalisée :</strong> Adapter l'IA et les contenus à votre niveau</li>
+                        <li><strong>📊 Suivi de Progression :</strong> Analyser vos performances et améliorer l'apprentissage</li>
+                        <li><strong>🔐 Sécurité :</strong> Protéger votre compte et prévenir les abus</li>
+                        <li><strong>📞 Communication :</strong> Vous envoyer des notifications importantes</li>
+                        <li><strong>🔧 Amélioration :</strong> Développer et optimiser nos services</li>
+                        <li><strong>📋 Conformité :</strong> Respecter nos obligations légales</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">3.2 Intelligence Artificielle</h3>
+                    <p>
+                        Nos algorithmes d'IA utilisent vos données pour :
+                    </p>
+                    <ul>
+                        <li>Personnaliser votre expérience d'apprentissage</li>
+                        <li>Recommander du contenu adapté à votre niveau</li>
+                        <li>Identifier vos points forts et difficultés</li>
+                        <li>Prédire et prévenir les échecs scolaires</li>
+                        <li>Optimiser les méthodes pédagogiques</li>
+                    </ul>
+                </div>
+
+                <div class="security-box">
+                    <strong>🔒 Protection IA :</strong> Tous nos modèles d'IA sont conçus pour protéger votre vie privée. 
+                    Vos données personnelles ne sont jamais utilisées pour entraîner des modèles publics.
+                </div>
+            </div>
+
+            <div class="section" id="partage">
+                <h2 class="section-title">4. Partage de Vos Données</h2>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">4.1 Nous Ne Vendons Jamais Vos Données</h3>
+                    <p>
+                        ÉtudIA ne vend, ne loue et ne commercialise jamais vos données personnelles à des tiers.
+                    </p>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">4.2 Partages Autorisés</h3>
+                    <ul>
+                        <li><strong>👨‍🏫 Enseignants :</strong> Accès aux données de leurs élèves pour le suivi pédagogique</li>
+                        <li><strong>👨‍👩‍👧‍👦 Parents :</strong> Informations sur la progression de leurs enfants</li>
+                        <li><strong>🏢 Établissements :</strong> Données administratives de leurs élèves et enseignants</li>
+                        <li><strong>🏛️ DREN :</strong> Rapports statistiques anonymisés pour supervision régionale</li>
+                        <li><strong>⚖️ Autorités :</strong> Si requis par la loi ou pour protéger la sécurité</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">4.3 Prestataires de Services</h3>
+                    <p>Nous partageons certaines données avec nos prestataires de confiance :</p>
+                    <ul>
+                        <li>Hébergement cloud sécurisé (serveurs en Afrique)</li>
+                        <li>Services d'analytics (données anonymisées)</li>
+                        <li>Systèmes de paiement (données de facturation uniquement)</li>
+                        <li>Support technique (accès limité et supervisé)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section" id="securite">
+                <h2 class="section-title">5. Sécurité de Vos Données</h2>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">5.1 Mesures Techniques</h3>
+                    <ul>
+                        <li><strong>🔐 Chiffrement :</strong> Toutes les données sont chiffrées en transit et au repos</li>
+                        <li><strong>🛡️ Pare-feu :</strong> Protection contre les intrusions et cyberattaques</li>
+                        <li><strong>🔑 Authentification :</strong> Accès sécurisé avec authentification à deux facteurs</li>
+                        <li><strong>📋 Audits :</strong> Contrôles de sécurité réguliers par des experts</li>
+                        <li><strong>💾 Sauvegardes :</strong> Copies de sécurité quotidiennes et géo-répliquées</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">5.2 Mesures Organisationnelles</h3>
+                    <ul>
+                        <li>Formation de sécurité pour tous les employés</li>
+                        <li>Accès aux données sur principe du "besoin de savoir"</li>
+                        <li>Contrôles d'accès et journalisation des actions</li>
+                        <li>Politique de mots de passe renforcée</li>
+                        <li>Plan de réponse aux incidents de sécurité</li>
+                    </ul>
+                </div>
+
+                <div class="security-box">
+                    <strong>🌍 Hébergement Africain :</strong> Vos données sont stockées sur des serveurs sécurisés 
+                    situés en Afrique, garantissant une souveraineté des données et une meilleure performance.
+                </div>
+            </div>
+
+            <div class="section" id="droits">
+                <h2 class="section-title">6. Vos Droits</h2>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">6.1 Droits Fondamentaux</h3>
+                    <ul>
+                        <li><strong>📖 Accès :</strong> Consulter toutes vos données personnelles</li>
+                        <li><strong>✏️ Rectification :</strong> Corriger les informations inexactes</li>
+                        <li><strong>🗑️ Suppression :</strong> Demander l'effacement de vos données</li>
+                        <li><strong>⏸️ Limitation :</strong> Restreindre le traitement de certaines données</li>
+                        <li><strong>📤 Portabilité :</strong> Récupérer vos données dans un format standard</li>
+                        <li><strong>🚫 Opposition :</strong> Vous opposer à certains traitements</li>
+                    </ul>
+                </div>
+
+                <div class="privacy-controls">
+                    <h3 class="subsection-title">6.2 Comment Exercer Vos Droits</h3>
+                    <p>Pour exercer vos droits, vous pouvez :</p>
+                    <ul>
+                        <li>Utiliser les paramètres de confidentialité dans votre compte</li>
+                        <li>Contacter notre équipe à : <strong>privacy@etudia-africa.com</strong></li>
+                        <li>Envoyer un courrier à notre siège social à Abidjan</li>
+                    </ul>
+                    <p><strong>Délai de réponse :</strong> Nous nous engageons à répondre sous 30 jours.</p>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">6.3 Droits Spécifiques aux Mineurs</h3>
+                    <p>
+                        Les utilisateurs de moins de 18 ans bénéficient de protections renforcées :
+                    </p>
+                    <ul>
+                        <li>Consentement parental requis pour les moins de 16 ans</li>
+                        <li>Droit de suppression facilité et prioritaire</li>
+                        <li>Limitation du profilage et de la publicité ciblée</li>
+                        <li>Contrôles parentaux avancés</li>
+                        <li>Données traitées uniquement à des fins éducatives</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section" id="cookies">
+                <h2 class="section-title">7. Cookies et Technologies Similaires</h2>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">7.1 Types de Cookies</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Finalité</th>
+                                <th>Durée</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>🔧 Techniques</td>
+                                <td>Fonctionnement du site</td>
+                                <td>Session</td>
+                            </tr>
+                            <tr>
+                                <td>🎯 Préférences</td>
+                                <td>Mémoriser vos choix</td>
+                                <td>1 an</td>
+                            </tr>
+                            <tr>
+                                <td>📊 Analytics</td>
+                                <td>Mesurer l'audience</td>
+                                <td>2 ans</td>
+                            </tr>
+                            <tr>
+                                <td>🔐 Sécurité</td>
+                                <td>Protéger votre compte</td>
+                                <td>Session</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">7.2 Gestion des Cookies</h3>
+                    <p>Vous pouvez contrôler les cookies via :</p>
+                    <ul>
+                        <li>Les paramètres de votre navigateur</li>
+                        <li>Notre centre de préférences cookies</li>
+                        <li>Les paramètres de votre compte ÉtudIA</li>
+                    </ul>
+                </div>
+
+                <div class="warning">
+                    <strong>⚠️ Attention :</strong> Désactiver certains cookies peut limiter les fonctionnalités du site.
+                </div>
+            </div>
+
+            <div class="section" id="retention">
+                <h2 class="section-title">8. Conservation des Données</h2>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">8.1 Durées de Conservation</h3>
+                    <ul>
+                        <li><strong>Données de compte :</strong> Pendant la durée d'utilisation + 3 ans</li>
+                        <li><strong>Données éducatives :</strong> Pendant la scolarité + 5 ans pour suivi</li>
+                        <li><strong>Données financières :</strong> 10 ans (obligation légale)</li>
+                        <li><strong>Logs techniques :</strong> 1 an maximum</li>
+                        <li><strong>Données marketing :</strong> 3 ans ou jusqu'à opposition</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">8.2 Suppression Automatique</h3>
+                    <p>
+                        Vos données sont automatiquement supprimées à l'expiration des durées de conservation, 
+                        sauf si une obligation légale impose leur conservation plus longue.
+                    </p>
+                </div>
+            </div>
+
+            <div class="section" id="transferts">
+                <h2 class="section-title">9. Transferts Internationaux</h2>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">9.1 Principe de Localisation</h3>
+                    <p>
+                        Vos données sont principalement stockées et traitées en Afrique. 
+                        Elles peuvent être transférées vers d'autres pays uniquement si :
+                    </p>
+                    <ul>
+                        <li>Vous avez donné votre consentement explicite</li>
+                        <li>Le transfert est nécessaire au service (support technique)</li>
+                        <li>Le pays bénéficie d'une décision d'adéquation</li>
+                        <li>Des garanties appropriées sont mises en place (clauses contractuelles)</li>
+                    </ul>
+                </div>
+
+                <div class="security-box">
+                    <strong>🌍 Engagement Africain :</strong> Nous privilégions les prestataires africains 
+                    pour garantir la souveraineté numérique du continent.
+                </div>
+            </div>
+
+            <div class="section" id="modifications">
+                <h2 class="section-title">10. Modifications de la Politique</h2>
+                
+                <p>
+                    Cette politique peut être modifiée pour refléter les évolutions de nos services ou de la législation. 
+                    Les modifications importantes vous seront notifiées par :
+                </p>
+                <ul>
+                    <li>Email à votre adresse de contact</li>
+                    <li>Notification dans votre espace ÉtudIA</li>
+                    <li>Bannière d'information sur le site</li>
+                </ul>
+                
+                <div class="important">
+                    <strong>📅 Historique :</strong> L'historique des versions de cette politique est disponible 
+                    sur demande à privacy@etudia-africa.com
+                </div>
+            </div>
+
+            <div class="section" id="autorites">
+                <h2 class="section-title">11. Autorités de Contrôle</h2>
+                
+                <p>
+                    Si vous estimez que vos droits ne sont pas respectés, vous pouvez saisir :
+                </p>
+                <ul>
+                    <li><strong>🇨🇮 Côte d'Ivoire :</strong> Commission Nationale de l'Informatique et des Libertés (CNIL-CI)</li>
+                    <li><strong>🇪🇺 Europe :</strong> Autorité de protection des données de votre pays de résidence</li>
+                    <li><strong>⚖️ Justice :</strong> Tribunaux compétents d'Abidjan</li>
+                </ul>
+            </div>
+
+            <div class="section" id="contact">
+                <h2 class="section-title">📞 Contact - Délégué à la Protection des Données</h2>
+                
+                <div class="security-box">
+                    <p><strong>ÉtudIA - Équipe Protection des Données</strong></p>
+                    <p><strong>📧 Email :</strong> privacy@etudia-africa.com</p>
+                    <p><strong>📧 DPO :</strong> dpo@etudia-africa.com</p>
+                    <p><strong>📍 Adresse :</strong> 
+                        <br>Délégué à la Protection des Données
+                        <br>ÉtudIA - Plateforme Éducative IA
+                        <br>Abidjan, Côte d'Ivoire 🇨🇮
+                    </p>
+                    <p><strong>📞 Téléphone :</strong> +225 XX XX XX XX XX</p>
+                    <p><strong>🕒 Horaires :</strong> Lundi - Vendredi, 8h - 18h (GMT)</p>
+                </div>
+                
+                <div class="subsection">
+                    <h3 class="subsection-title">Formulaire de Contact Rapide</h3>
+                    <p>
+                        Pour toute question relative à vos données personnelles, utilisez notre 
+                        <a href="/pages/privacy-contact.html" style="color: var(--etudia-success);">formulaire de contact sécurisé</a> 
+                        qui garantit un traitement prioritaire de votre demande.
+                    </p>
+                </div>
+            </div>
+
+            <div class="important">
+                <h2 class="section-title">✅ Résumé de Nos Engagements</h2>
+                <ul>
+                    <li>🔒 <strong>Sécurité maximale</strong> de vos données avec chiffrement avancé</li>
+                    <li>🚫 <strong>Aucune vente</strong> de données personnelles à des tiers</li>
+                    <li>🎓 <strong>Usage éducatif uniquement</strong> de vos informations</li>
+                    <li>👶 <strong>Protection renforcée</strong> des données des mineurs</li>
+                    <li>🌍 <strong>Hébergement africain</strong> pour la souveraineté des données</li>
+                    <li>⚡ <strong>Réponse rapide</strong> à vos demandes (sous 30 jours)</li>
+                    <li>📞 <strong>Support dédié</strong> pour les questions de confidentialité</li>
+                    <li>🔄 <strong>Transparence totale</strong> sur l'utilisation de vos données</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <p><strong>📅 Entrée en vigueur :</strong> 
+                    Cette politique de confidentialité est effective à compter du 19 juillet 2025. 
+                    Votre utilisation continue d'ÉtudIA après cette date constitue votre acceptation de cette politique.
+                </p>
+                <p><strong>🔄 Version :</strong> 1.0 - Politique initiale ÉtudIA</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling pour les liens internes
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight de la section active
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.background = 'rgba(16, 185, 129, 0.1)';
+                link.style.color = 'var(--etudia-success)';
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.style.background = 'var(--etudia-success)';
+                    link.style.color = 'white';
+                }
+            });
+        });
+
+        // Animation d'entrée pour les tableaux
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'slideInUp 0.6s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.data-table, .important, .security-box, .warning').forEach(el => {
+            observer.observe(el);
+        });
+
+        // CSS pour l'animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        console.log('🔒 Politique de confidentialité ÉtudIA chargée');
+    </script>
+</body>
+</html>
