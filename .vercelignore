@@ -1,0 +1,9 @@
+frontend/package.json
+frontend/src/
+frontend/public/
+frontend/build/
+frontend/node_modules/
+backend/
+*.log
+node_modules/
+.env
