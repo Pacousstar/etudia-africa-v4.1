@@ -1,87 +1,24 @@
 {
-  "version": 2,
-  "name": "etudia-africa-v4-1",
-  "framework": null,
-  "buildCommand": "cd frontend && npm install && npm run build",
-  "outputDirectory": "frontend/build",
-  "installCommand": "cd frontend && npm install",
-  "redirects": [
-    {
-      "source": "/",
-      "destination": "/landing.html",
-      "permanent": false
-    },
-    {
-      "source": "/accueil",
-      "destination": "/landing.html",
-      "permanent": false
-    },
-    {
-      "source": "/admin",
-      "destination": "/frontend/",
-      "permanent": false
-    },
-    {
-      "source": "/interface",
-      "destination": "/frontend/",
-      "permanent": false
-    },
-    {
-      "source": "/react",
-      "destination": "/frontend/",
-      "permanent": false
-    },
-    {
-      "source": "/ia",
-      "destination": "/frontend/",
-      "permanent": false
-    }
-  ],
   "routes": [
     {
-      "src": "^/frontend/(.*)$",
-      "dest": "/frontend/build/$1"
-    },
-    {
-      "src": "^/landing.html$",
-      "dest": "/landing.html"
-    },
-    {
-      "src": "^/login.html$", 
-      "dest": "/login.html"
-    },
-    {
-      "src": "^/backoffices/(.*)$",
+      "src": "/backoffices/(.*)",
       "dest": "/backoffices/$1"
     },
     {
-      "src": "^/pages/(.*)$",
+      "src": "/pages/(.*)",
       "dest": "/pages/$1"
     },
     {
-      "src": "^/(.*)$",
+      "src": "/frontend/(.*)",
+      "dest": "/frontend/$1"
+    },
+    {
+      "src": "/backend/(.*)",
+      "dest": "/backend/$1"
+    },
+    {
+      "src": "/(.*)",
       "dest": "/$1"
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "https://etudia-africa-v4-1.onrender.com/api/$1"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options", 
-          "value": "SAMEORIGIN"
-        }
-      ]
     }
   ]
 }
