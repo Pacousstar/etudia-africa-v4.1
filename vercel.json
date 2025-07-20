@@ -1,6 +1,10 @@
 {
   "version": 2,
   "name": "etudia-africa-v4-1",
+  "framework": null,
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/build",
+  "installCommand": "cd frontend && npm install",
   "redirects": [
     {
       "source": "/",
@@ -33,6 +37,32 @@
       "permanent": false
     }
   ],
+  "routes": [
+    {
+      "src": "^/frontend/(.*)$",
+      "dest": "/frontend/build/$1"
+    },
+    {
+      "src": "^/landing.html$",
+      "dest": "/landing.html"
+    },
+    {
+      "src": "^/login.html$", 
+      "dest": "/login.html"
+    },
+    {
+      "src": "^/backoffices/(.*)$",
+      "dest": "/backoffices/$1"
+    },
+    {
+      "src": "^/pages/(.*)$",
+      "dest": "/pages/$1"
+    },
+    {
+      "src": "^/(.*)$",
+      "dest": "/$1"
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
@@ -48,7 +78,7 @@
           "value": "nosniff"
         },
         {
-          "key": "X-Frame-Options",
+          "key": "X-Frame-Options", 
           "value": "SAMEORIGIN"
         }
       ]
