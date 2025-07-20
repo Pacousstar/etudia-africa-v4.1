@@ -1,90 +1,6 @@
 {
   "version": 2,
   "name": "etudia-africa-v4-1",
-  "buildCommand": "echo 'Static site - no build needed'",
-  "outputDirectory": ".",
-  "framework": null,
-  "builds": [
-    {
-      "src": "**",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "^/$",
-      "dest": "/index.html",
-      "headers": {
-        "cache-control": "s-maxage=86400"
-      }
-    },
-    {
-      "src": "^/login/?$",
-      "dest": "/login.html",
-      "headers": {
-        "cache-control": "s-maxage=3600"
-      }
-    },
-    {
-      "src": "^/landing/?$",
-      "dest": "/landing.html"
-    },
-    {
-      "src": "^/apps-react/(.*)$",
-      "dest": "/apps-react/$1"
-    },
-    {
-      "src": "^/interface/(.*)$",
-      "dest": "/apps-react/$1"
-    },
-    {
-      "src": "^/react/(.*)$",
-      "dest": "/apps-react/$1"
-    },
-    {
-      "src": "^/backoffices/eleves/(.*)$",
-      "dest": "/backoffices/eleves/$1"
-    },
-    {
-      "src": "^/backoffices/enseignants/(.*)$",
-      "dest": "/backoffices/enseignants/$1"
-    },
-    {
-      "src": "^/backoffices/parents/(.*)$",
-      "dest": "/backoffices/parents/$1"
-    },
-    {
-      "src": "^/backoffices/etablissements/(.*)$",
-      "dest": "/backoffices/etablissements/$1"
-    },
-    {
-      "src": "^/backoffices/dren/(.*)$",
-      "dest": "/backoffices/dren/$1"
-    },
-    {
-      "src": "^/backoffices/partenaires/(.*)$",
-      "dest": "/backoffices/partenaires/$1"
-    },
-    {
-      "src": "^/backoffices/administrateurs/(.*)$",
-      "dest": "/backoffices/administrateurs/$1"
-    },
-    {
-      "src": "^/pages/(.*)$",
-      "dest": "/pages/$1"
-    },
-    {
-      "src": "^/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))$",
-      "dest": "/$1",
-      "headers": {
-        "cache-control": "s-maxage=31536000"
-      }
-    },
-    {
-      "src": "^/(.*)$",
-      "dest": "/$1"
-    }
-  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
@@ -93,32 +9,29 @@
   ],
   "redirects": [
     {
-      "source": "/frontend/(.*)",
-      "destination": "/apps-react/$1",
+      "source": "/",
+      "destination": "/landing.html",
       "permanent": false
-    }
-  ],
-  "headers": [
+    },
     {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "SAMEORIGIN"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        }
-      ]
+      "source": "/accueil",
+      "destination": "/landing.html", 
+      "permanent": false
+    },
+    {
+      "source": "/admin",
+      "destination": "/frontend/",
+      "permanent": false
+    },
+    {
+      "source": "/react",
+      "destination": "/frontend/",
+      "permanent": false
+    },
+    {
+      "source": "/interface",
+      "destination": "/frontend/",
+      "permanent": false
     }
   ]
 }
