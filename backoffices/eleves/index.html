@@ -1,2217 +1,406 @@
-<button onclick="quickAction('Méthode révision')" style="padding: 0.5rem 1rem; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius-md); color: var(--text-primary); cursor: pointer; font-size: 0.875rem; transition: all var(--transition-base);">
-                                🎯 Méthode révision
-                            </button>
-                        </div>
-
-                    </div>
-                </div>
-
-            </section>
-
-            <!-- 📊 DASHBOARD PRINCIPAL -->
-            <section class="content-section active" id="dashboard-section">
-                
-                <!-- 🎉 MESSAGE BIENVENUE -->
-                <div class="welcome-message slide-up">
-                    <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; position: relative; z-index: 2;">
-                        🌟 Bienvenue Jean-Baptiste !
-                    </h2>
-                    <p style="font-size: 1rem; opacity: 0.9; position: relative; z-index: 2;">
-                        Prêt à révolutionner ton apprentissage avec ÉtudIA ? Découvre tes statistiques et commence à gagner avec le parrainage !
-                    </p>
-                </div>
-
-                <!-- 📊 STATS GRID PRINCIPAL -->
-                <div class="stats-grid fade-in">
-                    
-                    <!-- 💎 ABONNEMENT ACTUEL -->
-                    <div class="stat-card hover-lift">
-                        <span class="stat-icon">💎</span>
-                        <span class="stat-value" id="planValue">Premium</span>
-                        <span class="stat-label">Mon Plan</span>
-                        <span class="stat-change positive">6,500 F/mois</span>
-                    </div>
-
-                    <!-- 🤖 INTERACTIONS -->
-                    <div class="stat-card hover-lift">
-                        <span class="stat-icon">🤖</span>
-                        <span class="stat-value" id="interactionsValue">1,247</span>
-                        <span class="stat-label">Interactions Restantes</span>
-                        <span class="stat-change positive">+23 aujourd'hui</span>
-                    </div>
-
-                    <!-- 💰 GAINS PARRAINAGE -->
-                    <div class="stat-card hover-lift">
-                        <span class="stat-icon">💰</span>
-                        <span class="stat-value" id="earningsValue">12,450</span>
-                        <span class="stat-label">Gains Parrainage (F)</span>
-                        <span class="stat-change positive">+850 F ce mois</span>
-                    </div>
-
-                    <!-- 👥 FILLEULS ACTIFS -->
-                    <div class="stat-card hover-lift">
-                        <span class="stat-icon">👥</span>
-                        <span class="stat-value" id="referralsValue">8</span>
-                        <span class="stat-label">Filleuls Actifs</span>
-                        <span class="stat-change positive">+2 cette semaine</span>
-                    </div>
-
-                    <!-- 📚 COURS SUIVIS -->
-                    <div class="stat-card hover-lift">
-                        <span class="stat-icon">📚</span>
-                        <span class="stat-value" id="coursesValue">12</span>
-                        <span class="stat-label">Cours Suivis</span>
-                        <span class="stat-change positive">3 en cours</span>
-                    </div>
-
-                    <!-- 📊 MOYENNE GÉNÉRALE -->
-                    <div class="stat-card hover-lift">
-                        <span class="stat-icon">📊</span>
-                        <span class="stat-value" id="averageValue">14.8</span>
-                        <span class="stat-label">Moyenne Générale</span>
-                        <span class="stat-change positive">+1.2 ce trimestre</span>
-                    </div>
-
-                </div>
-
-                <!-- 🏆 SECTION GAMIFICATION -->
-                <div class="gamification-preview" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 2rem; margin: 2rem 0; position: relative; overflow: hidden;">
-                    
-                    <!-- ✨ EFFET BRILLANT -->
-                    <div class="hologram" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none;"></div>
-                    
-                    <div style="position: relative; z-index: 2;">
-                        <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                            🏆 Mes Récompenses & Badges
-                        </h3>
-                        
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                            
-                            <!-- 🥇 BADGES OBTENUS -->
-                            <div class="achievement-card" style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: var(--radius-md); text-align: center; border: 1px solid var(--border-color);">
-                                <div style="font-size: 3rem; margin-bottom: 0.5rem;">🥇</div>
-                                <h4 style="color: var(--text-primary); font-weight: 600; margin-bottom: 0.5rem;">Première Étoile</h4>
-                                <p style="color: var(--text-secondary); font-size: 0.875rem;">Premier filleul parrainé</p>
-                            </div>
-
-                            <div class="achievement-card" style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: var(--radius-md); text-align: center; border: 1px solid var(--border-color);">
-                                <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎯</div>
-                                <h4 style="color: var(--text-primary); font-weight: 600; margin-bottom: 0.5rem;">Expert IA</h4>
-                                <p style="color: var(--text-secondary); font-size: 0.875rem;">100+ interactions IA</p>
-                            </div>
-
-                            <div class="achievement-card" style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: var(--radius-md); text-align: center; border: 1px solid var(--border-color); opacity: 0.5;">
-                                <div style="font-size: 3rem; margin-bottom: 0.5rem;">💎</div>
-                                <h4 style="color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Ambassadeur</h4>
-                                <p style="color: var(--text-tertiary); font-size: 0.875rem;">10 filleuls (7/10)</p>
-                            </div>
-
-                        </div>
-
-                        <!-- 🎯 PROGRESSION -->
-                        <div style="margin-top: 1.5rem;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                                <span style="font-size: 0.875rem; color: var(--text-primary); font-weight: 600;">Niveau actuel : Expert IA</span>
-                                <span style="font-size: 0.875rem; color: var(--text-secondary);">1,247 / 2,000 XP</span>
-                            </div>
-                            <div style="background: var(--bg-tertiary); height: 8px; border-radius: var(--radius-full); overflow: hidden;">
-                                <div style="width: 62%; height: 100%; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); border-radius: var(--radius-full); transition: width 1s ease-out;"></div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- 💰 APERÇU PARRAINAGE -->
-                <div class="referral-preview" style="background: linear-gradient(135deg, var(--accent-color), #FCD34D); border-radius: var(--radius-lg); padding: 2rem; margin: 2rem 0; color: var(--bg-primary);">
-                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                        💰 Mon Système de Parrainage
-                    </h3>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
-                        <div style="text-align: center;">
-                            <div style="font-size: 2rem; font-weight: 800;">12,450 F</div>
-                            <div style="opacity: 0.8;">Gains totaux</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 2rem; font-weight: 800;">8</div>
-                            <div style="opacity: 0.8;">Filleuls actifs</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 2rem; font-weight: 800;">850 F</div>
-                            <div style="opacity: 0.8;">Ce mois</div>
-                        </div>
-                    </div>
-
-                    <button onclick="showSection('parrainage')" style="background: var(--bg-primary); color: var(--accent-color); padding: 0.75rem 1.5rem; border: none; border-radius: var(--radius-md); font-weight: 600; cursor: pointer; transition: all var(--transition-base);">
-                        🚀 Gérer mon parrainage
-                    </button>
-                </div>
-
-            </section>
-
-            <!-- 🎓 SECTION MON PROFIL -->
-            <section class="content-section" id="profil-section">
-                <h2 class="section-title">
-                    <span>👤</span>
-                    Mon Profil
-                </h2>
-
-                <div class="dashboard-grid">
-                    
-                    <!-- 📝 INFORMATIONS PERSONNELLES -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Informations Personnelles</h3>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Nom complet</label>
-                            <input type="text" class="form-input" value="Jean-Baptiste DOSSO" id="fullName">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-input" value="jean.baptiste@example.com" id="userEmail">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Téléphone</label>
-                            <input type="tel" class="form-input" value="+225 07 07 07 07 07" id="userPhone">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Classe/Niveau</label>
-                            <select class="form-select" id="userClass">
-                                <option value="terminale-d">Terminale D</option>
-                                <option value="terminale-c">Terminale C</option>
-                                <option value="premiere-d">Première D</option>
-                                <option value="premiere-c">Première C</option>
-                            </select>
-                        </div>
-                        <button class="btn btn-primary" onclick="updateProfile()">
-                            💾 Sauvegarder
-                        </button>
-                    </div>
-
-                    <!-- 🏫 ÉTABLISSEMENT -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Mon Établissement</h3>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Établissement</label>
-                            <select class="form-select" id="userSchool">
-                                <option value="lycee-mamie-adjoua">Lycée Mamie Adjoua</option>
-                                <option value="college-notre-dame">Collège Notre-Dame</option>
-                                <option value="groupe-excellence">Groupe Scolaire Excellence</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Ville</label>
-                            <input type="text" class="form-input" value="Abidjan" id="userCity">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Code liaison parents</label>
-                            <div style="display: flex; gap: 0.5rem; align-items: center;">
-                                <input type="text" class="form-input" placeholder="Code de liaison parent" id="parentCode">
-                                <button class="btn btn-secondary" onclick="linkParent()" style="white-space: nowrap;">
-                                    🔗 Lier
-                                </button>
-                            </div>
-                            <small style="color: var(--text-secondary); font-size: 0.75rem; margin-top: 0.25rem; display: block;">
-                                Entrez le code fourni par votre parent pour recevoir ses gains de parrainage
-                            </small>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-            <!-- 💰 SECTION PARRAINAGE COMPLET -->
-            <section class="content-section" id="parrainage-section">
-                <h2 class="section-title">
-                    <span>💰</span>
-                    Mon Système de Parrainage
-                </h2>
-
-                <!-- 📊 OVERVIEW GAINS -->
-                <div class="stats-grid" style="margin-bottom: 2rem;">
-                    <div class="stat-card">
-                        <span class="stat-icon">💰</span>
-                        <span class="stat-value" id="totalEarnings">12,450</span>
-                        <span class="stat-label">Gains Totaux (F)</span>
-                        <span class="stat-change positive">+850 F ce mois</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-icon">👥</span>
-                        <span class="stat-value" id="activeReferrals">8</span>
-                        <span class="stat-label">Filleuls Actifs</span>
-                        <span class="stat-change positive">+2 cette semaine</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-icon">💸</span>
-                        <span class="stat-value" id="withdrawableAmount">5,950</span>
-                        <span class="stat-label">Montant Retirable (F)</span>
-                        <span class="stat-change positive">Après réabonnement</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-icon">🎯</span>
-                        <span class="stat-value" id="conversionRate">15.8%</span>
-                        <span class="stat-label">Taux de Conversion</span>
-                        <span class="stat-change positive">+3.2% vs moyenne</span>
-                    </div>
-                </div>
-
-                <div class="dashboard-grid">
-                    
-                    <!-- 🔗 MON LIEN DE PARRAINAGE -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">🔗 Mon Lien de Parrainage</h3>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Lien personnalisé</label>
-                            <div style="display: flex; gap: 0.5rem;">
-                                <input type="text" class="form-input" value="https://etudia.com/ref/jean-baptiste-d" id="referralLink" readonly>
-                                <button class="btn btn-secondary" onclick="copyReferralLink()" title="Copier le lien">
-                                    📋
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <!-- 📱 PARTAGE RAPIDE -->
-                        <div style="margin-top: 1.5rem;">
-                            <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Partage rapide :</h4>
-                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                                <button class="btn btn-success" onclick="shareWhatsApp()" style="font-size: 0.875rem;">
-                                    📱 WhatsApp
-                                </button>
-                                <button class="btn btn-info" onclick="shareFacebook()" style="font-size: 0.875rem;">
-                                    📘 Facebook
-                                </button>
-                                <button class="btn btn-secondary" onclick="shareInstagram()" style="font-size: 0.875rem;">
-                                    📷 Instagram
-                                </button>
-                                <button class="btn btn-secondary" onclick="generateQRCode()" style="font-size: 0.875rem;">
-                                    🔲 QR Code
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 💸 GESTION RETRAIT -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">💸 Gestion des Retraits</h3>
-                        </div>
-                        
-                        <!-- 📊 CALCUL AUTO-RÉABONNEMENT -->
-                        <div class="alert alert-info" style="margin-bottom: 1rem;">
-                            <span>ℹ️</span>
-                            <div>
-                                <strong>Réabonnement automatique :</strong><br>
-                                Plan actuel : 6,500 F × 3 mois = 19,500 F réservés<br>
-                                Montant disponible : <strong>5,950 F</strong> (après frais 10%)
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Montant à retirer (F)</label>
-                            <input type="number" class="form-input" placeholder="Min: 1,000 F • Max: 5,950 F" id="withdrawAmount" max="5950" min="1000">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">Mode de paiement</label>
-                            <select class="form-select" id="paymentMethod">
-                                <option value="orange-money">Orange Money</option>
-                                <option value="mtn-money">MTN Money</option>
-                                <option value="moov-money">Moov Money</option>
-                                <option value="wave">Wave</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Numéro de téléphone</label>
-                            <input type="tel" class="form-input" placeholder="+225 XX XX XX XX XX" id="withdrawPhone">
-                        </div>
-
-                        <button class="btn btn-primary" onclick="requestWithdrawal()" style="width: 100%;">
-                            💸 Demander le retrait
-                        </button>
-                    </div>
-
-                </div>
-            </section>
-
-            <!-- AUTRES SECTIONS SIMPLIFIÉES -->
-            <section class="content-section" id="abonnement-section">
-                <h2 class="section-title"><span>💎</span> Mon Abonnement</h2>
-                <div class="card">
-                    <div class="card-header"><h3 class="card-title">Plan Premium Actuel</h3></div>
-                    <p style="color: var(--text-secondary); padding: 1rem;">Plan Premium : 6,500 F/mois • 1,247 interactions restantes</p>
-                </div>
-            </section>
-
-            <section class="content-section" id="chat-ia-section">
-                <h2 class="section-title"><span>🤖</span> Chat IA DeepSeek</h2>
-                <div class="card">
-                    <div class="card-header"><h3 class="card-title">Interface IA Intégrée</h3></div>
-                    <p style="color: var(--text-secondary); padding: 1rem;">L'interface IA est disponible en haut de cette page. Faites défiler vers le haut pour l'utiliser !</p>
-                </div>
-            </section>
-
-            <section class="content-section" id="gamification-section">
-                <h2 class="section-title"><span>🏆</span> Mes Récompenses</h2>
-                <div class="card">
-                    <div class="card-header"><h3 class="card-title">Badges & Progression</h3></div>
-                    <p style="color: var(--text-secondary); padding: 1rem;">Niveau Expert IA • 1,247/2,000 XP • 2 badges obtenus</p>
-                </div>
-            </section>
-
-            <section class="content-section" id="cours-section">
-                <h2 class="section-title"><span>📚</span> Mes Cours</h2>
-                <div class="card">
-                    <div class="card-header"><h3 class="card-title">🚧 Section en développement</h3></div>
-                    <p style="color: var(--text-secondary); text-align: center; padding: 2rem;">
-                        Cette section sera développée dans les prochaines versions d'ÉtudIA.<br>
-                        En attendant, utilisez l'interface IA pour toutes vos questions de cours !
-                    </p>
-                </div>
-            </section>
-
-            <section class="content-section" id="devoirs-section">
-                <h2 class="section-title"><span>📝</span> Mes Devoirs</h2>
-                <div class="card">
-                    <div class="card-header"><h3 class="card-title">🚧 Section en développement</h3></div>
-                    <p style="color: var(--text-secondary); text-align: center; padding: 2rem;">
-                        Cette section sera développée dans les prochaines versions d'ÉtudIA.<br>
-                        En attendant, uploadez vos devoirs directement dans le chat IA pour correction !
-                    </p>
-                </div>
-            </section>
-
-            <section class="content-section" id="notes-section">
-                <h2 class="section-title"><span>📊</span> Mes Notes</h2>
-                <div class="card">
-                    <div class="card-header"><h3 class="card-title">🚧 Section en développement</h3></div>
-                    <p style="color: var(--text-secondary); text-align: center; padding: 2rem;">
-                        Cette section sera développée dans les prochaines versions d'ÉtudIA.<br>
-                        Vos moyennes actuelles sont affichées dans le dashboard principal.
-                    </p>
-                </div>
-            </section>
-
-            <section class="content-section" id="planning-section">
-                <h2 class="section-title"><span>📅</span> Mon Planning</h2>
-                <div class="card">
-                    <div class="card-header"><h3 class="card-title">🚧 Section en développement</h3></div>
-                    <p style="color: var(--text-secondary); text-align: center; padding: 2rem;">
-                        Cette section sera développée dans les prochaines versions d'ÉtudIA.<br>
-                        En attendant, organisez vos révisions avec l'assistant IA !
-                    </p>
-                </div>
-            </section>
-
-            <section class="content-section" id="bibliotheque-section">
-                <h2 class="section-title"><span>📖</span> Ma Bibliothèque</h2>
-                <div class="card">
-                    <div class="card-header"><h3 class="card-title">🚧 Section en développement</h3></div>
-                    <p style="color: var(--text-secondary); text-align: center; padding: 2rem;">
-                        Cette section sera développée dans les prochaines versions d'ÉtudIA.<br>
-                        En attendant, uploadez directement vos documents dans le chat IA !
-                    </p>
-                </div>
-            </section>
-
-            <section class="content-section" id="liaison-parents-section">
-                <h2 class="section-title"><span>👨‍👩‍👧‍👦</span> Liaison Parents</h2>
-                <div class="card">
-                    <div class="card-header"><h3 class="card-title">Parents Liés</h3></div>
-                    <p style="color: var(--text-secondary); padding: 1rem;">Papa & Maman liés • 4,190 F reçus au total</p>
-                </div>
-            </section>
-
-            <section class="content-section" id="statistiques-section">
-                <h2 class="section-title"><span>📈</span> Mes Statistiques</h2>
-                <div class="card">
-                    <div class="card-header"><h3 class="card-title">Évolution Performances</h3></div>
-                    <p style="color: var(--text-secondary); padding: 1rem;">4h32m étude/jour • 87% réussite QCM • 12 jours consécutifs</p>
-                </div>
-            </section>
-
-            <section class="content-section" id="notifications-section">
-                <h2 class="section-title"><span>🔔</span> Notifications</h2>
-                <div class="card">
-                    <div class="card-header"><h3 class="card-title">Centre de Notifications</h3></div>
-                    <p style="color: var(--text-secondary); padding: 1rem;">3 nouvelles notifications • Dernière : Gain +500F (Yao THOMAS)</p>
-                </div>
-            </section>
-
-            <section class="content-section" id="support-section">
-                <h2 class="section-title"><span>📞</span> Support</h2>
-                <div class="card">
-                    <div class="card-header"><h3 class="card-title">Besoin d'aide ?</h3></div>
-                    <div style="padding: 1rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <button class="btn btn-success" onclick="openWhatsAppSupport()">📱 WhatsApp</button>
-                        <button class="btn btn-info" onclick="openEmailSupport()">📧 Email</button>
-                        <button class="btn btn-primary" onclick="openLiveChat()">💬 Chat Live</button>
-                    </div>
-                </div>
-            </section>
-
-            <section class="content-section" id="parametres-section">
-                <h2 class="section-title"><span>⚙️</span> Paramètres</h2>
-                <div class="card">
-                    <div class="card-header"><h3 class="card-title">Configuration</h3></div>
-                    <div style="padding: 1rem;">
-                        <label class="form-label">Thème</label>
-                        <select class="form-select" id="themeSelect" onchange="changeTheme()">
-                            <option value="dark">🌙 Sombre (actuel)</option>
-                            <option value="light">☀️ Clair</option>
-                            <option value="auto">🔄 Automatique</option>
-                        </select>
-                    </div>
-                </div>
-            </section>
-
-        </main>
-
-        <!-- 🎯 MODAL PROFILE MENU -->
-        <div class="profile-menu" id="profileMenu" style="position: absolute; top: 80px; right: 20px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1rem; z-index: var(--z-dropdown); display: none; min-width: 200px; box-shadow: var(--shadow-lg);">
-            <div style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color);">
-                <div style="font-weight: 600; color: var(--text-primary);">Jean-Baptiste DOSSO</div>
-                <div style="font-size: 0.875rem; color: var(--text-secondary);">Plan Premium • 1,247 interactions</div>
-            </div>
-            <div style="space-y: 0.5rem;">
-                <button onclick="showSection('profil')" style="width: 100%; text-align: left; background: none; border: none; color: var(--text-primary); padding: 0.5rem; border-radius: var(--radius-sm); cursor: pointer; transition: background var(--transition-base);">
-                    👤 Mon Profil
-                </button>
-                <button onclick="showSection('parametres')" style="width: 100%; text-align: left; background: none; border: none; color: var(--text-primary); padding: 0.5rem; border-radius: var(--radius-sm); cursor: pointer; transition: background var(--transition-base);">
-                    ⚙️ Paramètres
-                </button>
-                <button onclick="logout()" style="width: 100%; text-align: left; background: none; border: none; color: var(--danger-color); padding: 0.5rem; border-radius: var(--radius-sm); cursor: pointer; transition: background var(--transition-base);">
-                    🚪 Déconnexion
-                </button>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- 📎 INPUT FILE CACHÉ -->
-    <input type="file" id="fileInput" style="display: none;" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" multiple onchange="handleFileUpload(event)">
-
-    <!-- 🔔 TOAST NOTIFICATIONS CONTAINER -->
-    <div class="toast-container" id="toastContainer"></div>
-
-    <!-- 🚀 JAVASCRIPT COMPLET PARTIE 5/5 -->
-    <script>
-        /* ===================================================================
-        🚀 ÉtudIA V4.1 - JAVASCRIPT COMPLET BACKOFFICE ÉLÈVES
-        Fonctionnalités complètes avec IA DeepSeek R1 + Système Parrainage
-        Créé par @Pacousstar - Optimisé par MonAP Chief Project Officer
-        =================================================================== */
-
-        // 🎯 VARIABLES GLOBALES
-        let currentSection = 'dashboard';
-        let currentLearningMode = 'revision';
-        let uploadedDocuments = [];
-        let aiConversationHistory = [];
-        let userSessionData = {
-            interactions: 1247,
-            todayInteractions: 23,
-            totalEarnings: 12450,
-            activeReferrals: 8,
-            plan: 'premium'
-        };
-
-        // 🔧 UTILITAIRES
-        function showToast(message, type = 'info', duration = 5000) {
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 0.5rem;">
-                    <span>${type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️'}</span>
-                    <span>${message}</span>
-                </div>
-            `;
-            
-            document.getElementById('toastContainer').appendChild(toast);
-            
-            setTimeout(() => {
-                toast.style.animation = 'slideOutRight 0.3s ease-out forwards';
-                setTimeout(() => toast.remove(), 300);
-            }, duration);
-        }
-
-        function updateUserStats() {
-            document.getElementById('remainingInteractions').textContent = userSessionData.interactions;
-            document.getElementById('todayInteractions').textContent = userSessionData.todayInteractions;
-            document.getElementById('remainingDaily').textContent = 50 - userSessionData.todayInteractions;
-            document.getElementById('referralEarnings').textContent = `${userSessionData.totalEarnings.toLocaleString()} F`;
-            document.getElementById('headerEarnings').textContent = `${userSessionData.totalEarnings.toLocaleString()} F`;
-        }
-
-        // 🔧 SIDEBAR & NAVIGATION
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const isMobile = window.innerWidth <= 1024;
-            
-            if (isMobile) {
-                sidebar.classList.toggle('show');
-            } else {
-                sidebar.classList.toggle('collapsed');
-            }
-            
-            const icon = document.getElementById('toggleIcon');
-            if (sidebar.classList.contains('show') || sidebar.classList.contains('collapsed')) {
-                icon.textContent = '✕';
-            } else {
-                icon.textContent = '☰';
-            }
-        }
-
-        function showSection(sectionName) {
-            // Masquer toutes les sections
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Afficher la section demandée
-            const targetSection = document.getElementById(`${sectionName}-section`);
-            if (targetSection) {
-                targetSection.classList.add('active');
-            }
-            
-            // Mettre à jour navigation active
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            const activeLink = document.querySelector(`[data-section="${sectionName}"]`);
-            if (activeLink) {
-                activeLink.classList.add('active');
-            }
-            
-            currentSection = sectionName;
-            
-            // Masquer profile menu si ouvert
-            document.getElementById('profileMenu').style.display = 'none';
-            
-            // Actions spécifiques par section
-            switch(sectionName) {
-                case 'chat-ia':
-                    document.getElementById('messageInput').focus();
-                    break;
-                case 'parrainage':
-                    updateReferralStats();
-                    break;
-            }
-            
-            showToast(`Section "${sectionName}" ouverte`, 'info', 2000);
-        }
-
-        function toggleProfileMenu() {
-            const menu = document.getElementById('profileMenu');
-            menu.style.display = menu.style.display === 'none' || !menu.style.display ? 'block' : 'none';
-        }
-
-        function toggleChat() {
-            showSection('chat-ia');
-            showToast('Interface IA activée ! 🤖', 'success');
-        }
-
-        // 🤖 INTERFACE IA DEEPSEEK R1
-        function setLearningMode(mode) {
-            currentLearningMode = mode;
-            
-            // Mettre à jour boutons visuellement
-            document.querySelectorAll('.mode-btn').forEach(btn => {
-                btn.classList.remove('active');
-                btn.style.background = 'var(--bg-tertiary)';
-                btn.style.color = 'var(--text-primary)';
-            });
-            
-            const activeBtn = document.querySelector(`[data-mode="${mode}"]`);
-            if (activeBtn) {
-                activeBtn.classList.add('active');
-                activeBtn.style.background = 'var(--primary-color)';
-                activeBtn.style.color = 'white';
-            }
-            
-            const modeNames = {
-                'revision': 'Révision',
-                'qcm': 'QCM',
-                'exercices': 'Exercices',
-                'redaction': 'Rédaction'
-            };
-            
-            showToast(`Mode ${modeNames[mode]} activé`, 'success', 2000);
-        }
-
-        function autoResize(textarea) {
-            textarea.style.height = 'auto';
-            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
-        }
-
-        function handleKeyDown(event) {
-            if (event.ctrlKey && event.key === 'Enter') {
-                event.preventDefault();
-                sendMessage();
-            }
-        }
-
-        async function sendMessage() {
-            const input = document.getElementById('messageInput');
-            const message = input.value.trim();
-            
-            if (!message) {
-                showToast('Veuillez saisir un message', 'warning');
-                return;
-            }
-            
-            // Vérifier limite interactions
-            if (userSessionData.todayInteractions >= 50) {
-                showToast('Limite quotidienne atteinte ! Passez au plan Excellence pour plus d\'interactions.', 'warning');
-                return;
-            }
-            
-            // Afficher message utilisateur
-            addMessageToChat(message, 'user');
-            
-            // Vider l'input
-            input.value = '';
-            input.style.height = 'auto';
-            
-            // Afficher typing indicator
-            const typingId = addTypingIndicator();
-            
-            try {
-                // Appel API DeepSeek R1
-                const response = await callDeepSeekAPI(message);
-                
-                // Supprimer typing indicator
-                removeTypingIndicator(typingId);
-                
-                // Afficher réponse IA
-                addMessageToChat(response, 'ai');
-                
-                // Mettre à jour stats
-                userSessionData.todayInteractions++;
-                userSessionData.interactions--;
-                updateUserStats();
-                
-                showToast('Réponse reçue ! 🤖', 'success', 2000);
-                
-            } catch (error) {
-                removeTypingIndicator(typingId);
-                showToast('Erreur de connexion. Réessayez dans un moment.', 'error');
-                
-                // Réponse de fallback
-                const fallbackResponse = generateFallbackResponse(message);
-                addMessageToChat(fallbackResponse, 'ai');
-            }
-        }
-
-        async function callDeepSeekAPI(message) {
-            // Construction du contexte avec documents uploadés
-            let contextualMessage = message;
-            if (uploadedDocuments.length > 0) {
-                contextualMessage = `[Documents fournis: ${uploadedDocuments.map(d => d.name).join(', ')}]\n\n${message}`;
-            }
-            
-            // Système de prompt selon le mode
-            const systemPrompts = {
-                'revision': 'Tu es un assistant pédagogique spécialisé en révision. Aide l\'élève à comprendre et mémoriser ses cours en expliquant clairement et en posant des questions pour vérifier sa compréhension.',
-                'qcm': 'Tu es un créateur de QCM éducatifs. Crée des questions à choix multiples pertinentes avec 4 options et explique les bonnes réponses.',
-                'exercices': 'Tu es un professeur qui donne des exercices pratiques. Propose des exercices adaptés au niveau et guide l\'élève étape par étape.',
-                'redaction': 'Tu es un assistant en rédaction. Aide à structurer les idées, corriger la grammaire et améliorer le style d\'écriture.'
-            };
-            
-            const payload = {
-                model: "deepseek/deepseek-r1",
-                messages: [
-                    {
-                        role: "system",
-                        content: systemPrompts[currentLearningMode] + " Tu réponds en français et tu t'adaptes au contexte éducatif africain, particulièrement ivoirien."
-                    },
-                    ...aiConversationHistory,
-                    {
-                        role: "user",
-                        content: contextualMessage
-                    }
-                ],
-                max_tokens: 1000,
-                temperature: 0.7
-            };
-            
-            const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer YOUR_API_KEY", // À remplacer par la vraie clé
-                },
-                body: JSON.stringify(payload)
-            });
-            
-            if (!response.ok) {
-                throw new Error(`API Error: ${response.status}`);
-            }
-            
-            const data = await response.json();
-            const aiResponse = data.choices[0].message.content;
-            
-            // Sauvegarder dans l'historique
-            aiConversationHistory.push(
-                { role: "user", content: message },
-                { role: "assistant", content: aiResponse }
-            );
-            
-            // Limiter l'historique à 20 messages
-            if (aiConversationHistory.length > 20) {
-                aiConversationHistory = aiConversationHistory.slice(-20);
-            }
-            
-            return aiResponse;
-        }
-
-        function generateFallbackResponse(message) {
-            const responses = [
-                "Je comprends votre question. Pouvez-vous me donner plus de détails pour que je puisse mieux vous aider ?",
-                "C'est une excellente question ! Laissez-moi vous expliquer étape par étape...",
-                "Pour bien répondre à cette question, il faudrait que je connaisse votre niveau d'étude et le contexte précis.",
-                "Je vais vous aider avec cela. Commençons par les bases importantes à retenir...",
-                "Cette question touche à un concept important. Permettez-moi de vous l'expliquer clairement."
-            ];
-            
-            return responses[Math.floor(Math.random() * responses.length)];
-        }
-
-        function addMessageToChat(message, sender) {
-            const container = document.getElementById('messagesContainer');
-            const messageDiv = document.createElement('div');
-            
-            const isUser = sender === 'user';
-            const avatar = isUser ? 'JD' : '🤖';
-            const senderName = isUser ? 'Vous' : 'ÉtudIA DeepSeek R1';
-            const bgColor = isUser ? 'var(--bg-tertiary)' : 'var(--bg-card)';
-            
-            messageDiv.className = 'message-item';
-            messageDiv.style.display = 'flex';
-            messageDiv.style.gap = '1rem';
-            messageDiv.style.marginBottom = '1rem';
-            messageDiv.style.alignItems = 'flex-start';
-            
-            messageDiv.innerHTML = `
-                <div style="width: 40px; height: 40px; border-radius: var(--radius-full); background: ${isUser ? 'var(--bg-tertiary)' : 'linear-gradient(135deg, var(--primary-color), var(--secondary-color))'}; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0; color: ${isUser ? 'var(--text-primary)' : 'white'}; font-weight: 600;">
-                    ${avatar}
-                </div>
-                <div style="flex: 1; background: ${bgColor}; padding: 1rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
-                    <div style="font-weight: 600; color: ${isUser ? 'var(--text-primary)' : 'var(--primary-color)'}; margin-bottom: 0.5rem; font-size: 0.875rem;">
-                        ${senderName}
-                    </div>
-                    <div style="color: var(--text-primary); line-height: 1.6;">
-                        ${message.replace(/\n/g, '<br>')}
-                    </div>
-                </div>
-            `;
-            
-            container.appendChild(messageDiv);
-            container.scrollTop = container.scrollHeight;
-        }
-
-        function addTypingIndicator() {
-            const container = document.getElementById('messagesContainer');
-            const typingDiv = document.createElement('div');
-            const typingId = 'typing-' + Date.now();
-            
-            typingDiv.id = typingId;
-            typingDiv.className = 'message-item typing-indicator';
-            typingDiv.style.display = 'flex';
-            typingDiv.style.gap = '1rem';
-            typingDiv.style.marginBottom = '1rem';
-            typingDiv.style.alignItems = 'flex-start';
-            
-            typingDiv.innerHTML = `
-                <div style="width: 40px; height: 40px; border-radius: var(--radius-full); background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">
-                    🤖
-                </div>
-                <div style="flex: 1; background: var(--bg-card); padding: 1rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
-                    <div style="font-weight: 600; color: var(--primary-color); margin-bottom: 0.5rem; font-size: 0.875rem;">
-                        ÉtudIA DeepSeek R1
-                    </div>
-                    <div style="color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem;">
-                        <span class="loading"></span>
-                        <span>En cours de réflexion...</span>
-                    </div>
-                </div>
-            `;
-            
-            container.appendChild(typingDiv);
-            container.scrollTop = container.scrollHeight;
-            
-            return typingId;
-        }
-
-        function removeTypingIndicator(typingId) {
-            const typingDiv = document.getElementById(typingId);
-            if (typingDiv) {
-                typingDiv.remove();
-            }
-        }
-
-        function quickAction(text) {
-            document.getElementById('messageInput').value = text;
-            sendMessage();
-        }
-
-        // 📎 UPLOAD DE DOCUMENTS
-        function uploadDocument() {
-            document.getElementById('fileInput').click();
-        }
-
-        function handleFileUpload(event) {
-            const files = Array.from(event.target.files);
-            
-            files.forEach(file => {
-                if (file.size > 10 * 1024 * 1024) { // 10MB limit
-                    showToast(`Fichier "${file.name}" trop volumineux (max 10MB)`, 'error');
-                    return;
-                }
-                
-                // Simuler OCR/traitement
-                const docData = {
-                    id: Date.now() + Math.random(),
-                    name: file.name,
-                    size: file.size,
-                    type: file.type,
-                    uploadDate: new Date(),
-                    processed: false
-                };
-                
-                uploadedDocuments.push(docData);
-                
-                // Afficher le document
-                displayUploadedDocument(docData);
-                
-                // Simuler traitement OCR
-                setTimeout(() => {
-                    docData.processed = true;
-                    showToast(`Document "${file.name}" traité avec succès !`, 'success');
-                }, 2000);
-            });
-            
-            // Afficher la zone documents
-            document.getElementById('uploadedDocs').style.display = 'block';
-            
-            showToast(`${files.length} document(s) uploadé(s)`, 'success');
-        }
-
-        function displayUploadedDocument(doc) {
-            const docsList = document.getElementById('docsList');
-            const docElement = document.createElement('div');
-            
-            docElement.style.display = 'flex';
-            docElement.style.alignItems = 'center';
-            docElement.style.gap = '0.5rem';
-            docElement.style.background = 'var(--bg-tertiary)';
-            docElement.style.padding = '0.5rem';
-            docElement.style.borderRadius = 'var(--radius-sm)';
-            docElement.style.border = '1px solid var(--border-color)';
-            
-            docElement.innerHTML = `
-                <span>📄</span>
-                <span style="font-size: 0.875rem; color: var(--text-primary);">${doc.name}</span>
-                <button onclick="removeDocument('${doc.id}')" style="background: var(--danger-color); color: white; border: none; border-radius: var(--radius-sm); padding: 0.25rem 0.5rem; font-size: 0.75rem; cursor: pointer;">
-                    ✕
-                </button>
-            `;
-            
-            docElement.id = `doc-${doc.id}`;
-            docsList.appendChild(docElement);
-        }
-
-        function removeDocument(docId) {
-            uploadedDocuments = uploadedDocuments.filter(doc => doc.id != docId);
-            document.getElementById(`doc-${docId}`).remove();
-            
-            if (uploadedDocuments.length === 0) {
-                document.getElementById('uploadedDocs').style.display = 'none';
-            }
-            
-            showToast('Document supprimé', 'info', 2000);
-        }
-
-        // 💰 SYSTÈME PARRAINAGE
-        function updateReferralStats() {
-            // Simulation mise à jour données en temps réel
-            const stats = {
-                totalEarnings: 12450,
-                activeReferrals: 8,
-                withdrawableAmount: 5950,
-                conversionRate: 15.8
-            };
-            
-            document.getElementById('totalEarnings').textContent = stats.totalEarnings.toLocaleString();
-            document.getElementById('activeReferrals').textContent = stats.activeReferrals;
-            document.getElementById('withdrawableAmount').textContent = stats.withdrawableAmount.toLocaleString();
-            document.getElementById('conversionRate').textContent = stats.conversionRate + '%';
-        }
-
-        function copyReferralLink() {
-            const link = document.getElementById('referralLink').value;
-            navigator.clipboard.writeText(link).then(() => {
-                showToast('Lien copié dans le presse-papier ! 📋', 'success');
-            }).catch(() => {
-                showToast('Erreur lors de la copie', 'error');
-            });
-        }
-
-        function shareWhatsApp() {
-            const link = document.getElementById('referralLink').value;
-            const message = `🎓 Rejoins-moi sur ÉtudIA, la plateforme IA éducative révolutionnaire pour l'Afrique ! 🚀\n\n${link}`;
-            const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}`;
-            window.open(whatsappURL, '_blank');
-            showToast('WhatsApp ouvert ! 📱', 'success');
-        }
-
-        function shareFacebook() {
-            const link = document.getElementById('referralLink').value;
-            const facebookURL = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`;
-            window.open(facebookURL, '_blank');
-            showToast('Facebook ouvert ! 📘', 'success');
-        }
-
-        function shareInstagram() {
-            showToast('Copiez le lien et partagez-le dans votre story Instagram ! 📷', 'info');
-            copyReferralLink();
-        }
-
-        function generateQRCode() {
-            showToast('QR Code généré ! Scannez pour partager facilement 🔲', 'success');
-            // Ici on intégrerait une librairie QR Code
-        }
-
-        function requestWithdrawal() {
-            const amount = document.getElementById('withdrawAmount').value;
-            const method = document.getElementById('paymentMethod').value;
-            const phone = document.getElementById('withdrawPhone').value;
-            
-            if (!amount || amount < 1000) {
-                showToast('Montant minimum : 1,000 F', 'warning');
-                return;
-            }
-            
-            if (!phone) {
-                showToast('Numéro de téléphone requis', 'warning');
-                return;
-            }
-            
-            showToast(`Demande de retrait de ${parseInt(amount).toLocaleString()} F envoyée ! 💸`, 'success');
-            
-            // Réinitialiser le formulaire
-            document.getElementById('withdrawAmount').value = '';
-            document.getElementById('withdrawPhone').value = '';
-        }
-
-        // 👤 PROFIL & PARAMÈTRES
-        function updateProfile() {
-            const name = document.getElementById('fullName').value;
-            const email = document.getElementById('userEmail').value;
-            
-            if (!name || !email) {
-                showToast('Veuillez remplir tous les champs obligatoires', 'warning');
-                return;
-            }
-            
-            showToast('Profil mis à jour avec succès ! 💾', 'success');
-        }
-
-        function linkParent() {
-            const code = document.getElementById('parentCode').value;
-            
-            if (!code) {
-                showToast('Veuillez saisir le code de liaison', 'warning');
-                return;
-            }
-            
-            showToast('Liaison parent établie avec succès ! 👨‍👩‍👧‍👦', 'success');
-            document.getElementById('parentCode').value = '';
-        }
-
-        function changeTheme() {
-            const theme = document.getElementById('themeSelect').value;
-            showToast(`Thème "${theme}" appliqué ! 🎨`, 'success');
-        }
-
-        // 📞 SUPPORT
-        function openWhatsAppSupport() {
-            const supportURL = 'https://wa.me/2250707070707?text=Bonjour,%20j\'ai%20besoin%20d\'aide%20avec%20ÉtudIA';
-            window.open(supportURL, '_blank');
-            showToast('WhatsApp Support ouvert ! 📱', 'success');
-        }
-
-        function openEmailSupport() {
-            const emailURL = 'mailto:support@etudia.com?subject=Demande de support ÉtudIA';
-            window.open(emailURL);
-            showToast('Email ouvert ! 📧', 'success');
-        }
-
-        function openLiveChat() {
-            showToast('Chat live sera disponible prochainement ! 💬', 'info');
-        }
-
-        function showNotifications() {
-            showSection('notifications');
-        }
-
-        function logout() {
-            if (confirm('🚪 Êtes-vous sûr de vouloir vous déconnecter ?')) {
-                showToast('Déconnexion en cours...', 'info');
-                setTimeout(() => {
-                    window.location.href = '/login';
-                }, 2000);
-            }
-        }
-
-        // 📱 RESPONSIVE & EVENTS
-        window.addEventListener('resize', function() {
-            const sidebar = document.getElementById('sidebar');
-            const isMobile = window.innerWidth <= 1024;
-            
-            if (!isMobile) {
-                sidebar.classList.remove('show');
-                document.getElementById('toggleIcon').textContent = '☰';
-            }
-        });
-
-        // Fermer profile menu si clic ailleurs
-        document.addEventListener('click', function(event) {
-            const profileMenu = document.getElementById('profileMenu');
-            const profileTrigger = document.querySelector('.profile-trigger');
-            
-            if (!profileTrigger.contains(event.target)) {
-                profileMenu.style.display = 'none';
-            }
-        });
-
-        // 🚀 INITIALISATION
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 ÉtudIA V4.1 Backoffice Élèves chargé avec succès !');
-            
-            // Animation fade-in
-            document.body.style.opacity = '0';
-            setTimeout(() => {
-                document.body.style.transition = 'opacity 0.5s ease-out';
-                document.body.style.opacity = '1';
-            }, 100);
-            
-            // Mise à jour initiale des stats
-            updateUserStats();
-            
-            // Focus sur input chat si section IA
-            if (currentSection === 'chat-ia') {
-                document.getElementById('messageInput').focus();
-            }
-            
-            // Message de bienvenue
-            setTimeout(() => {
-                showToast('🎓 Bienvenue sur ÉtudIA V4.1 ! Prêt à révolutionner ton apprentissage ?', 'success', 4000);
-            }, 1000);
-        });
-
-        // 🔄 SAUVEGARDE AUTOMATIQUE
-        setInterval(() => {
-            // Simuler sauvegarde des données utilisateur
-            localStorage.setItem('etudia_session', JSON.stringify({
-                currentSection,
-                userSessionData,
-                lastSave: Date.now()
-            }));
-        }, 30000); // Toutes les 30 secondes
-
-        // 📊 MISE À JOUR STATS AUTO
-        setInterval(() => {
-            // Simuler mise à jour temps réel (normalement via WebSocket)
-            if (Math.random() > 0.9) {
-                userSessionData.totalEarnings += Math.floor(Math.random() * 100);
-                updateUserStats();
-            }
-        }, 120000); // Toutes les 2 minutes
-
-        console.log('✅ ÉtudIA V4.1 - Toutes les fonctionnalités chargées !');
-        console.log('🇨🇮 Made with ❤️ in Côte d\'Ivoire by @Pacousstar & MonAP');
-    </script>
-
-</body>
-</html>        .badge-warning {
-            background: rgba(245, 158, 11, 0.2);
-            color: var(--warning-color);
-        }
-
-        .badge-info {
-            background: rgba(59, 130, 246, 0.2);
-            color: var(--info-color);
-        }
-
-        .badge-primary {
-            background: rgba(255, 107, 53, 0.2);
-            color: var(--primary-color);
-        }
-
-        /* 🌟 WELCOME MESSAGE */
-        .welcome-message {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: var(--spacing-xl);
-            border-radius: var(--radius-lg);
-            margin-bottom: var(--spacing-xl);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .welcome-message::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            animation: shimmer 3s ease-in-out infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        .emoji-float {
-            display: inline-block;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* 🎭 HOVER EFFECTS */
-        .hover-lift {
-            transition: transform var(--transition-base);
-        }
-
-        .hover-lift:hover {
-            transform: translateY(-4px);
-        }
-
-        .hover-scale {
-            transition: transform var(--transition-base);
-        }
-
-        .hover-scale:hover {
-            transform: scale(1.05);
-        }
-
-        .hover-glow {
-            transition: box-shadow var(--transition-base);
-        }
-
-        .hover-glow:hover {
-            box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
-        }
-
-        /* 🎨 HOLOGRAM EFFECT */
-        .hologram {
-            background: linear-gradient(45deg, transparent 30%, rgba(255, 107, 53, 0.1) 50%, transparent 70%);
-            animation: hologram 3s linear infinite;
-        }
-
-        @keyframes hologram {
-            0% { background-position: -200px 0; }
-            100% { background-position: 200px 0; }
-        }
-
-        /* 🎯 LOADING STATES */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--border-color);
-            border-radius: 50%;
-            border-top: 2px solid var(--primary-color);
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* 🔧 TOAST NOTIFICATIONS */
-        .toast-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: var(--z-toast);
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-sm);
-        }
-
-        .toast {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: var(--spacing-md);
-            box-shadow: var(--shadow-lg);
-            max-width: 350px;
-            animation: slideInRight 0.3s ease-out;
-        }
-
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        .toast.success {
-            border-left: 4px solid var(--success-color);
-        }
-
-        .toast.error {
-            border-left: 4px solid var(--danger-color);
-        }
-
-        .toast.info {
-            border-left: 4px solid var(--info-color);
-        }
-
-        .toast.warning {
-            border-left: 4px solid var(--warning-color);
-        }
-    </style>
-</head>
-
-<body>
-    <!-- 🔧 TOGGLES MOBILES -->
-    <button class="mobile-toggle" id="mobileToggle" onclick="toggleSidebar()" aria-label="Ouvrir/Fermer menu">
-        <i id="toggleIcon">☰</i>
-    </button>
-
-    <button class="chat-toggle" id="chatToggle" onclick="toggleChat()" aria-label="Ouvrir/Fermer chat IA">
-        <i>🤖</i>
-    </button>
-
-    <!-- 📱 APP CONTAINER -->
-    <div class="app-container">
-        
-        <!-- 🎯 SIDEBAR NAVIGATION -->
-        <aside class="sidebar" id="sidebar">
-            
-            <!-- 🎨 HEADER SIDEBAR -->
-            <div class="sidebar-header">
-                <a href="https://etudia.gsnexpertises.com" class="logo" title="Retour accueil ÉtudIA">
-                    É
-                </a>
-                <h1 class="sidebar-title">ÉtudIA V4.1</h1>
-            </div>
-
-            <!-- 🌐 NAVIGATION INTER-SITES ÉTUDIA -->
-            <nav class="etudia-quick-nav">
-                <div class="nav-wrapper">
-                    <a href="https://etudia.gsnexpertises.com" class="nav-btn home" title="Accueil ÉtudIA">
-                        🏠 Accueil
-                    </a>
-                    <a href="https://adminetudia.gsnexpertises.com" class="nav-btn admin" target="_blank" title="Interface IA avancée">
-                        🚀 Interface IA
-                    </a>
-                    <a href="https://appetudia.gsnexpertises.com" class="nav-btn mobile" target="_blank" title="Version mobile">
-                        📱 App Mobile
-                    </a>
-                </div>
-            </nav>
-
-            <!-- 📋 MENU PRINCIPAL NAVIGATION -->
-            <ul class="nav-menu">
-                
-                <!-- 🏠 DASHBOARD -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link active" onclick="showSection('dashboard')" data-section="dashboard">
-                        <span class="nav-icon">🏠</span>
-                        <span class="nav-text">Dashboard</span>
-                    </a>
-                </li>
-
-                <!-- 🎓 MON PROFIL -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="showSection('profil')" data-section="profil">
-                        <span class="nav-icon">👤</span>
-                        <span class="nav-text">Mon Profil</span>
-                    </a>
-                </li>
-
-                <!-- 📊 MON ABONNEMENT -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="showSection('abonnement')" data-section="abonnement">
-                        <span class="nav-icon">💎</span>
-                        <span class="nav-text">Mon Abonnement</span>
-                    </a>
-                </li>
-
-                <!-- 🤖 CHAT IA DEEPSEEK R1 -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="showSection('chat-ia')" data-section="chat-ia">
-                        <span class="nav-icon">🤖</span>
-                        <span class="nav-text">Chat IA DeepSeek</span>
-                    </a>
-                </li>
-
-                <!-- 📚 MES COURS -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="showSection('cours')" data-section="cours">
-                        <span class="nav-icon">📚</span>
-                        <span class="nav-text">Mes Cours</span>
-                    </a>
-                </li>
-
-                <!-- 📝 MES DEVOIRS -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="showSection('devoirs')" data-section="devoirs">
-                        <span class="nav-icon">📝</span>
-                        <span class="nav-text">Mes Devoirs</span>
-                    </a>
-                </li>
-
-                <!-- 📊 MES NOTES -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="showSection('notes')" data-section="notes">
-                        <span class="nav-icon">📊</span>
-                        <span class="nav-text">Mes Notes</span>
-                    </a>
-                </li>
-
-                <!-- 📅 MON PLANNING -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="showSection('planning')" data-section="planning">
-                        <span class="nav-icon">📅</span>
-                        <span class="nav-text">Mon Planning</span>
-                    </a>
-                </li>
-
-                <!-- 💰 PARRAINAGE -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="showSection('parrainage')" data-section="parrainage">
-                        <span class="nav-icon">💰</span>
-                        <span class="nav-text">Mon Parrainage</span>
-                    </a>
-                </li>
-
-                <!-- 🏆 GAMIFICATION -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="showSection('gamification')" data-section="gamification">
-                        <span class="nav-icon">🏆</span>
-                        <span class="nav-text">Mes Récompenses</span>
-                    </a>
-                </li>
-
-                <!-- 📖 BIBLIOTHÈQUE -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="showSection('bibliotheque')" data-section="bibliotheque">
-                        <span class="nav-icon">📖</span>
-                        <span class="nav-text">Bibliothèque</span>
-                    </a>
-                </li>
-
-                <!-- 👨‍👩‍👧‍👦 LIAISON PARENTS -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="showSection('liaison-parents')" data-section="liaison-parents">
-                        <span class="nav-icon">👨‍👩‍👧‍👦</span>
-                        <span class="nav-text">Liaison Parents</span>
-                    </a>
-                </li>
-
-                <!-- 📊 MES STATISTIQUES -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="showSection('statistiques')" data-section="statistiques">
-                        <span class="nav-icon">📈</span>
-                        <span class="nav-text">Mes Statistiques</span>
-                    </a>
-                </li>
-
-                <!-- 🔔 NOTIFICATIONS -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="showSection('notifications')" data-section="notifications">
-                        <span class="nav-icon">🔔</span>
-                        <span class="nav-text">Notifications</span>
-                        <span class="badge badge-warning" style="margin-left: auto;">3</span>
-                    </a>
-                </li>
-
-                <!-- 📞 SUPPORT -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="showSection('support')" data-section="support">
-                        <span class="nav-icon">📞</span>
-                        <span class="nav-text">Support</span>
-                    </a>
-                </li>
-
-                <!-- ⚙️ PARAMÈTRES -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="showSection('parametres')" data-section="parametres">
-                        <span class="nav-icon">⚙️</span>
-                        <span class="nav-text">Paramètres</span>
-                    </a>
-                </li>
-
-            </ul>
-
-            <!-- 🎯 SECTION INFORMATIONS UTILISATEUR -->
-            <div class="user-info" style="padding: var(--spacing-lg); border-top: 1px solid var(--border-color); margin-top: auto;">
-                
-                <!-- 📊 STATS RAPIDES -->
-                <div class="quick-stats" style="margin-bottom: var(--spacing-lg);">
-                    <div class="stat-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-sm);">
-                        <span style="font-size: var(--font-size-sm); color: var(--text-secondary);">Plan actuel</span>
-                        <span id="currentPlan" style="font-size: var(--font-size-sm); color: var(--primary-color); font-weight: 600;">Premium</span>
-                    </div>
-                    <div class="stat-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-sm);">
-                        <span style="font-size: var(--font-size-sm); color: var(--text-secondary);">Interactions restantes</span>
-                        <span id="remainingInteractions" style="font-size: var(--font-size-sm); color: var(--success-color); font-weight: 600;">1,247</span>
-                    </div>
-                    <div class="stat-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-sm);">
-                        <span style="font-size: var(--font-size-sm); color: var(--text-secondary);">Gains parrainage</span>
-                        <span id="referralEarnings" style="font-size: var(--font-size-sm); color: var(--accent-color); font-weight: 600;">12,450 F</span>
-                    </div>
-                </div>
-
-                <!-- 👤 PROFIL UTILISATEUR -->
-                <div class="user-profile" style="display: flex; align-items: center; gap: var(--spacing-sm); padding: var(--spacing-md); background: var(--bg-tertiary); border-radius: var(--radius-md);">
-                    <div class="profile-avatar" style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: var(--font-size-lg);">
-                        JD
-                    </div>
-                    <div class="profile-info" style="flex: 1; min-width: 0;">
-                        <div class="profile-name" style="font-weight: 600; color: var(--text-primary); font-size: var(--font-size-sm); line-height: 1.4;" id="userName">
-                            Jean-Baptiste DOSSO
-                        </div>
-                        <div class="profile-status" style="font-size: var(--font-size-xs); color: var(--text-secondary); display: flex; align-items: center; gap: var(--spacing-xs);">
-                            <span class="status-dot" style="width: 6px; height: 6px; background: var(--success-color); border-radius: var(--radius-full);"></span>
-                            En ligne
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 🚪 BOUTON DÉCONNEXION -->
-                <button class="logout-btn" onclick="logout()" style="width: 100%; margin-top: var(--spacing-md); padding: var(--spacing-sm); background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius-md); color: var(--text-secondary); font-size: var(--font-size-sm); cursor: pointer; transition: all var(--transition-base); display: flex; align-items: center; justify-content: center; gap: var(--spacing-sm);">
-                    <span>🚪</span>
-                    <span class="nav-text">Déconnexion</span>
-                </button>
-
-            </div>
-
-        </aside>
-
-        <!-- 📊 CONTENU PRINCIPAL -->
-        <main class="main-content">
-            
-            <!-- 🎯 HEADER DASHBOARD -->
-            <header class="header">
-                <div class="header-left">
-                    <h1 class="header-title">
-                        <span class="emoji-float">🎓</span>
-                        Mon Espace ÉtudIA
-                        <span class="badge badge-success" style="font-size: 0.75rem; margin-left: 1rem;">V4.1</span>
-                    </h1>
-                </div>
-                
-                <div class="header-actions">
-                    <!-- 🔔 NOTIFICATIONS -->
-                    <div class="notification-badge" onclick="showNotifications()" title="Notifications">
-                        <span style="font-size: 1.5rem;">🔔</span>
-                        <span class="badge-count">3</span>
-                    </div>
-                    
-                    <!-- 💰 GAINS RAPIDES -->
-                    <div class="quick-earnings" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--bg-tertiary); border-radius: var(--radius-md); cursor: pointer;" onclick="showSection('parrainage')">
-                        <span>💰</span>
-                        <span style="font-size: 0.875rem; font-weight: 600; color: var(--accent-color);" id="headerEarnings">12,450 F</span>
-                    </div>
-                    
-                    <!-- 👤 PROFIL DROPDOWN -->
-                    <div class="profile-dropdown">
-                        <div class="profile-trigger" onclick="toggleProfileMenu()">
-                            <div class="profile-avatar">JD</div>
-                            <div style="display: flex; flex-direction: column; align-items: flex-start;">
-                                <span style="font-size: 0.875rem; font-weight: 600; color: var(--text-primary);">Jean-Baptiste</span>
-                                <span style="font-size: 0.75rem; color: var(--text-secondary);">Premium</span>
-                            </div>
-                            <span style="font-size: 1rem; color: var(--text-secondary);">▼</span>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            <!-- 🌟 INTERFACE IA DEEPSEEK R1 INTÉGRÉE -->
-            <section class="ai-interface fade-in">
-                
-                <!-- 🎨 HEADER IA -->
-                <div class="ai-header">
-                    <div class="ai-title">
-                        <span>🤖</span>
-                        Assistant IA DeepSeek R1
-                    </div>
-                    <div class="ai-status">
-                        <span class="status-dot"></span>
-                        Opérationnel
-                    </div>
-                </div>
-
-                <!-- 📊 STATISTIQUES IA -->
-                <div class="ai-stats" style="display: flex; gap: 1rem; padding: 1rem; background: var(--bg-tertiary); border-bottom: 1px solid var(--border-color);">
-                    <div class="ai-stat">
-                        <span style="font-size: 0.75rem; color: var(--text-secondary);">Interactions aujourd'hui</span>
-                        <span style="font-size: 1.25rem; font-weight: 700; color: var(--primary-color);" id="todayInteractions">23</span>
-                    </div>
-                    <div class="ai-stat">
-                        <span style="font-size: 0.75rem; color: var(--text-secondary);">Restantes</span>
-                        <span style="font-size: 1.25rem; font-weight: 700; color: var(--success-color);" id="remainingDaily">27</span>
-                    </div>
-                    <div class="ai-stat">
-                        <span style="font-size: 0.75rem; color: var(--text-secondary);">Précision</span>
-                        <span style="font-size: 1.25rem; font-weight: 700; color: var(--info-color);">94%</span>
-                    </div>
-                </div>
-
-                <!-- 🎯 MODES D'APPRENTISSAGE -->
-                <div class="learning-modes" style="padding: 1rem; background: var(--bg-card); border-bottom: 1px solid var(--border-color);">
-                    <div style="margin-bottom: 1rem;">
-                        <span style="font-size: 0.875rem; font-weight: 600; color: var(--text-primary);">Mode d'apprentissage :</span>
-                    </div>
-                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                        <button class="mode-btn active" data-mode="revision" onclick="setLearningMode('revision')" style="padding: 0.5rem 1rem; border: 1px solid var(--border-color); background: var(--primary-color); color: white; border-radius: var(--radius-md); cursor: pointer; font-size: 0.875rem; font-weight: 500; transition: all var(--transition-base);">
-                            🔄 Révision
-                        </button>
-                        <button class="mode-btn" data-mode="qcm" onclick="setLearningMode('qcm')" style="padding: 0.5rem 1rem; border: 1px solid var(--border-color); background: var(--bg-tertiary); color: var(--text-primary); border-radius: var(--radius-md); cursor: pointer; font-size: 0.875rem; font-weight: 500; transition: all var(--transition-base);">
-                            📝 QCM
-                        </button>
-                        <button class="mode-btn" data-mode="exercices" onclick="setLearningMode('exercices')" style="padding: 0.5rem 1rem; border: 1px solid var(--border-color); background: var(--bg-tertiary); color: var(--text-primary); border-radius: var(--radius-md); cursor: pointer; font-size: 0.875rem; font-weight: 500; transition: all var(--transition-base);">
-                            ✍️ Exercices
-                        </button>
-                        <button class="mode-btn" data-mode="redaction" onclick="setLearningMode('redaction')" style="padding: 0.5rem 1rem; border: 1px solid var(--border-color); background: var(--bg-tertiary); color: var(--text-primary); border-radius: var(--radius-md); cursor: pointer; font-size: 0.875rem; font-weight: 500; transition: all var(--transition-base);">
-                            📖 Rédaction
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 💬 CHAT INTERFACE -->
-                <div class="chat-container" style="display: flex; flex-direction: column; height: 500px;">
-                    
-                    <!-- 📜 MESSAGES CONTAINER -->
-                    <div class="messages-container" style="flex: 1; overflow-y: auto; padding: 1rem; background: var(--bg-primary);" id="messagesContainer">
-                        
-                        <!-- 👋 MESSAGE BIENVENUE -->
-                        <div class="message-item ai-message" style="display: flex; gap: 1rem; margin-bottom: 1rem; align-items: flex-start;">
-                            <div class="message-avatar" style="width: 40px; height: 40px; border-radius: var(--radius-full); background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">
-                                🤖
-                            </div>
-                            <div class="message-content" style="flex: 1; background: var(--bg-card); padding: 1rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
-                                <div style="font-weight: 600; color: var(--primary-color); margin-bottom: 0.5rem; font-size: 0.875rem;">
-                                    ÉtudIA DeepSeek R1
-                                </div>
-                                <div style="color: var(--text-primary); line-height: 1.6;">
-                                    👋 Salut Jean-Baptiste ! Je suis ton assistant IA personnel. Je peux t'aider avec :
-                                    <br><br>
-                                    • 📚 Explications de cours détaillées
-                                    <br>• 📝 Correction de devoirs
-                                    <br>• 🧠 Méthodes d'apprentissage
-                                    <br>• 📊 Analyse de documents
-                                    <br><br>
-                                    <strong>Pose-moi ta première question ! 🚀</strong>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- 📤 INPUT CONTAINER -->
-                    <div class="input-container" style="border-top: 1px solid var(--border-color); background: var(--bg-card); padding: 1rem;">
-                        
-                        <!-- 📎 DOCUMENTS UPLOADÉS -->
-                        <div class="uploaded-docs" id="uploadedDocs" style="margin-bottom: 1rem; display: none;">
-                            <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Documents sélectionnés :</div>
-                            <div id="docsList" style="display: flex; flex-wrap: wrap; gap: 0.5rem;"></div>
-                        </div>
-
-                        <!-- 🎤 INPUT PRINCIPAL -->
-                        <div style="display: flex; gap: 1rem; align-items: flex-end;">
-                            
-                            <!-- 📝 TEXTAREA -->
-                            <div style="flex: 1;">
-                                <textarea 
-                                    id="messageInput" 
-                                    placeholder="Pose ta question à ÉtudIA... (Ctrl+Entrée pour envoyer)"
-                                    style="width: 100%; min-height: 60px; max-height: 120px; padding: 1rem; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius-md); color: var(--text-primary); font-family: inherit; font-size: 1rem; resize: vertical; transition: all var(--transition-base);"
-                                    onkeydown="handleKeyDown(event)"
-                                    oninput="autoResize(this)"
-                                ></textarea>
-                            </div>
-
-                            <!-- 🔧 ACTIONS CONTAINER -->
-                            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                                
-                                <!-- 📎 UPLOAD DOCS -->
-                                <button onclick="uploadDocument()" style="width: 48px; height: 48px; border: 1px solid var(--border-color); background: var(--bg-tertiary); border-radius: var(--radius-md); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; transition: all var(--transition-base);" title="Uploader document">
-                                    📎
-                                </button>
-                                
-                                <!-- 📤 SEND BUTTON -->
-                                <button onclick="sendMessage()" id="sendBtn" style="width: 48px; height: 48px; border: none; background: var(--primary-color); border-radius: var(--radius-md); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; color: white; transition: all var(--transition-base);" title="Envoyer message">
-                                    📤
-                                </button>
-                                
-                            </div>
-                        </div>
-
-                        <!-- ⚡ ACTIONS RAPIDES -->
-                        <div class="quick-actions" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                            <button onclick="quickAction('Explique-moi ce cours')" style="padding: 0.5rem 1rem; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius-md); color: var(--text-primary); cursor: pointer; font-size: 0.875rem; transition: all var(--transition-base);">
-                                💡 Explique ce cours
-                            </button>
-                            <button onclick="quickAction('Corrige mon devoir')" style="padding: 0.5rem 1rem; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius-md); color: var(--text-primary); cursor: pointer; font-size: 0.875rem; transition: all var(--transition-base);">
-                                ✅ Corrige mon devoir
-                            </button>
-                            <button onclick="quickAction('Créer un QCM')" style="padding: 0.5rem 1rem; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius-md); color: var(--text-primary); cursor: pointer; font-size: 0.875rem; transition: all var(--transition-base);">
-                                📝 Créer un QCM
-                            </button>
-                            <button onclick="quickAction('Méthode révision')" style="padding: 0.5rem 1rem; background: var(--bg-tertiary); border: 1px solid var(--border-<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
+    <!-- 🚀 PARTIE 1/5 - HTML HEAD + CSS COMPLET -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ÉtudIA V4.1 - Backoffice Élèves avec IA DeepSeek R1 intégrée et système parrainage">
-    <meta name="keywords" content="ÉtudIA, éducation, intelligence artificielle, Afrique, élèves, backoffice">
-    <meta name="author" content="Pacousstar & MonAP - Made in Côte d'Ivoire">
-    <title>🎓 Mon Espace ÉtudIA - Dashboard Élève V4.1</title>
-    
-    <!-- Favicons -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <meta name="description" content="ÉtudIA V4.1 - Backoffice Élèves avec IA DeepSeek R1 intégrée">
+    <meta name="keywords" content="ÉtudIA, education, IA, backoffice, élèves, Côte d'Ivoire">
+    <meta name="author" content="ÉtudIA Team - Pacousstar & MonAP">
     
     <!-- Progressive Web App -->
-    <meta name="theme-color" content="#FF6B35">
-    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#ff6b35">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="ÉtudIA Backoffice">
     
-    <!-- Fonts Préchargées -->
+    <!-- Open Graph -->
+    <meta property="og:title" content="ÉtudIA V4.1 - Backoffice Élèves">
+    <meta property="og:description" content="Premier backoffice EdTech africain avec IA intégrée">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://etudia.ci/assets/og-image.jpg">
+    
+    <title>ÉtudIA V4.1 - Backoffice Élèves | Interface IA DeepSeek R1</title>
+    
+    <!-- Fonts Preload -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ===================================================================
-        🎨 ÉtudIA V4.1 - CSS COMPLET BACKOFFICE ÉLÈVES
-        Design Tesla-inspired avec intégration IA DeepSeek R1
-        Créé par @Pacousstar - Optimisé par MonAP Chief Project Officer
-        =================================================================== */
-
-        /* 🎯 CSS VARIABLES - THÈME ÉTUDIA */
+        /* 🎨 CSS VARIABLES - DESIGN SYSTEM TESLA-INSPIRED */
         :root {
-            --primary-color: #FF6B35;
-            --secondary-color: #10B981;
-            --accent-color: #F59E0B;
-            --danger-color: #EF4444;
-            --success-color: #22C55E;
-            --warning-color: #F59E0B;
-            --info-color: #3B82F6;
+            /* Colors - Professional Tesla Theme */
+            --primary-color: #ff6b35;
+            --primary-light: #ff8c5c;
+            --primary-dark: #e85a2e;
+            --secondary-color: #2c3e50;
+            --accent-color: #3498db;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #17a2b8;
             
-            --bg-primary: #0F0F0F;
-            --bg-secondary: #1A1A1A;
-            --bg-tertiary: #2A2A2A;
-            --bg-card: #1E1E1E;
-            --bg-modal: rgba(0, 0, 0, 0.9);
+            /* Backgrounds */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-tertiary: #e9ecef;
+            --bg-dark: #1a1a1a;
+            --bg-card: #ffffff;
+            --bg-sidebar: #2c3e50;
+            --bg-overlay: rgba(0, 0, 0, 0.5);
             
-            --text-primary: #FFFFFF;
-            --text-secondary: #B3B3B3;
-            --text-tertiary: #666666;
-            --text-accent: var(--primary-color);
+            /* Text Colors */
+            --text-primary: #2c3e50;
+            --text-secondary: #6c757d;
+            --text-muted: #adb5bd;
+            --text-white: #ffffff;
+            --text-light: #f8f9fa;
             
-            --border-color: #333333;
-            --border-hover: #444444;
-            --shadow-sm: 0 2px 8px rgba(255, 107, 53, 0.1);
-            --shadow-md: 0 4px 16px rgba(255, 107, 53, 0.15);
-            --shadow-lg: 0 8px 32px rgba(255, 107, 53, 0.2);
-            --shadow-xl: 0 16px 64px rgba(255, 107, 53, 0.25);
+            /* Borders */
+            --border-color: #dee2e6;
+            --border-light: #e9ecef;
+            --border-dark: #495057;
             
+            /* Spacing */
             --spacing-xs: 0.25rem;
             --spacing-sm: 0.5rem;
             --spacing-md: 1rem;
             --spacing-lg: 1.5rem;
             --spacing-xl: 2rem;
-            --spacing-2xl: 3rem;
+            --spacing-xxl: 3rem;
             
-            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            --font-size-xs: 0.75rem;
-            --font-size-sm: 0.875rem;
-            --font-size-base: 1rem;
-            --font-size-lg: 1.125rem;
-            --font-size-xl: 1.25rem;
-            --font-size-2xl: 1.5rem;
-            --font-size-3xl: 1.875rem;
-            --font-size-4xl: 2.25rem;
+            /* Border Radius */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.5rem;
             
-            --transition-fast: 0.15s ease-in-out;
-            --transition-base: 0.3s ease-in-out;
-            --transition-slow: 0.5s ease-in-out;
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
             
+            /* Transitions */
+            --transition-fast: 150ms ease;
+            --transition-base: 250ms ease;
+            --transition-slow: 350ms ease;
+            
+            /* Z-Index */
             --z-dropdown: 1000;
             --z-sticky: 1020;
             --z-fixed: 1030;
-            --z-modal-backdrop: 1040;
-            --z-modal: 1050;
-            --z-popover: 1060;
-            --z-tooltip: 1070;
-            --z-toast: 1080;
+            --z-modal: 1040;
+            --z-popover: 1050;
+            --z-tooltip: 1060;
+            --z-toast: 1070;
             
+            /* Layout */
             --sidebar-width: 280px;
             --sidebar-collapsed: 80px;
             --header-height: 70px;
-            --chat-width: 400px;
-            
-            --radius-sm: 6px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-            --radius-xl: 20px;
-            --radius-full: 9999px;
+            --container-max: 1400px;
         }
-
-        /* 🔄 RESET & BASE STYLES */
+        
+        /* 🌙 DARK THEME */
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-tertiary: #404040;
+            --bg-card: #2d2d2d;
+            --bg-sidebar: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --text-muted: #808080;
+            --border-color: #404040;
+            --border-light: #333333;
+        }
+        
+        /* 🔄 RESET & BASE */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         html {
-            scroll-behavior: smooth;
             font-size: 16px;
+            scroll-behavior: smooth;
         }
-
+        
         body {
-            font-family: var(--font-family);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+            transition: all var(--transition-base);
         }
-
-        /* 🎯 SCROLLBAR STYLING */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--bg-secondary);
-            border-radius: var(--radius-sm);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary-color);
-            border-radius: var(--radius-sm);
-            transition: background var(--transition-fast);
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #E55A2B;
-        }
-
-        /* 📱 LAYOUT PRINCIPAL */
+        
+        /* 📱 LAYOUT CONTAINERS */
         .app-container {
             display: flex;
             min-height: 100vh;
-            position: relative;
         }
-
-        /* 🔧 TOGGLE BUTTONS MOBILE */
-        .mobile-toggle {
-            position: fixed;
-            top: var(--spacing-md);
-            left: var(--spacing-md);
-            z-index: var(--z-fixed);
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            width: 48px;
-            height: 48px;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all var(--transition-base);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .mobile-toggle:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .chat-toggle {
-            position: fixed;
-            top: var(--spacing-md);
-            right: var(--spacing-md);
-            z-index: var(--z-fixed);
-            background: var(--primary-color);
-            border: 1px solid var(--primary-color);
-            border-radius: var(--radius-full);
-            width: 56px;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all var(--transition-base);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .chat-toggle:hover {
-            background: #E55A2B;
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: var(--shadow-xl);
-        }
-
-        /* 🎯 SIDEBAR STYLES */
+        
         .sidebar {
             width: var(--sidebar-width);
-            height: 100vh;
-            background: var(--bg-secondary);
-            border-right: 1px solid var(--border-color);
+            background: var(--bg-sidebar);
+            color: var(--text-white);
             position: fixed;
             top: 0;
             left: 0;
-            z-index: var(--z-sticky);
-            transition: all var(--transition-base);
+            height: 100vh;
+            z-index: var(--z-fixed);
+            transform: translateX(0);
+            transition: transform var(--transition-base);
             overflow-y: auto;
-            overflow-x: hidden;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            flex-direction: column;
+            padding: 0;
         }
-
+        
         .sidebar.collapsed {
             width: var(--sidebar-collapsed);
         }
-
-        .sidebar-header {
-            padding: var(--spacing-xl) var(--spacing-lg);
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-        }
-
-        .logo {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: var(--font-size-xl);
-            color: white;
-            text-decoration: none;
-            transition: all var(--transition-base);
-        }
-
-        .logo:hover {
-            transform: rotate(10deg) scale(1.1);
-            box-shadow: var(--shadow-md);
-        }
-
-        .sidebar-title {
-            font-size: var(--font-size-lg);
-            font-weight: 700;
-            color: var(--text-primary);
-            transition: opacity var(--transition-base);
-        }
-
-        .sidebar.collapsed .sidebar-title {
-            opacity: 0;
-            width: 0;
-            overflow: hidden;
-        }
-
-        /* 📋 NAVIGATION MENU */
-        .nav-menu {
-            padding: var(--spacing-lg) 0;
-            list-style: none;
-        }
-
-        .nav-item {
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-            padding: var(--spacing-md) var(--spacing-lg);
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all var(--transition-base);
-            position: relative;
-        }
-
-        .nav-link:hover {
-            color: var(--text-primary);
-            background: var(--bg-tertiary);
-            transform: translateX(4px);
-        }
-
-        .nav-link.active {
-            color: var(--primary-color);
-            background: linear-gradient(90deg, rgba(255, 107, 53, 0.1), transparent);
-            border-right: 3px solid var(--primary-color);
-        }
-
-        .nav-link.active::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 4px;
-            height: 70%;
-            background: var(--primary-color);
-            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-        }
-
-        .nav-icon {
-            font-size: 20px;
-            width: 24px;
-            text-align: center;
-            flex-shrink: 0;
-        }
-
-        .nav-text {
-            transition: opacity var(--transition-base);
-            white-space: nowrap;
-        }
-
-        .sidebar.collapsed .nav-text {
-            opacity: 0;
-            width: 0;
-            overflow: hidden;
-        }
-
-        /* 🎨 NAVIGATION INTER-SITES */
-        .etudia-quick-nav {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            margin: var(--spacing-lg);
-            border-radius: var(--radius-lg);
-            padding: var(--spacing-lg);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .nav-wrapper {
-            display: flex;
-            gap: var(--spacing-sm);
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .nav-btn {
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--bg-primary);
-            padding: var(--spacing-sm) var(--spacing-md);
-            border-radius: var(--radius-md);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: var(--font-size-sm);
-            transition: all var(--transition-base);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: none;
-        }
-
-        .nav-btn:hover {
-            background: white;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        /* 📊 CONTENU PRINCIPAL */
+        
         .main-content {
             margin-left: var(--sidebar-width);
             min-height: 100vh;
-            background: var(--bg-primary);
-            transition: margin-left var(--transition-base);
-            position: relative;
+            width: calc(100% - var(--sidebar-width));
+            transition: all var(--transition-base);
+            background: var(--bg-secondary);
         }
-
-        .sidebar.collapsed + .main-content {
+        
+        .main-content.expanded {
             margin-left: var(--sidebar-collapsed);
+            width: calc(100% - var(--sidebar-collapsed));
         }
-
-        /* 🎯 HEADER */
+        
+        /* 🎛️ HEADER */
         .header {
-            height: var(--header-height);
             background: var(--bg-card);
+            height: var(--header-height);
+            padding: 0 var(--spacing-xl);
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 var(--spacing-xl);
             position: sticky;
             top: 0;
             z-index: var(--z-sticky);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
         }
-
-        .header-title {
-            font-size: var(--font-size-2xl);
-            font-weight: 700;
-            color: var(--text-primary);
+        
+        .header-left {
             display: flex;
             align-items: center;
             gap: var(--spacing-md);
         }
-
-        .header-actions {
+        
+        .header-right {
             display: flex;
             align-items: center;
             gap: var(--spacing-md);
         }
-
-        /* 🔔 NOTIFICATIONS BADGE */
-        .notification-badge {
-            position: relative;
-            cursor: pointer;
-            padding: var(--spacing-sm);
-            border-radius: var(--radius-md);
-            transition: all var(--transition-base);
+        
+        /* 🎯 CONTENT GRID - OPTIMISÉ 2-3 ÉLÉMENTS PAR LIGNE */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--spacing-lg);
+            padding: var(--spacing-xl);
         }
-
-        .notification-badge:hover {
-            background: var(--bg-tertiary);
+        
+        .content-grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
         }
-
-        .notification-badge .badge-count {
-            position: absolute;
-            top: -2px;
-            right: -2px;
-            background: var(--danger-color);
-            color: white;
-            border-radius: var(--radius-full);
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: var(--font-size-xs);
-            font-weight: 600;
+        
+        .content-grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         }
-
-        /* 👤 PROFILE DROPDOWN */
-        .profile-dropdown {
-            position: relative;
-        }
-
-        .profile-trigger {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            padding: var(--spacing-sm);
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            transition: all var(--transition-base);
-        }
-
-        .profile-trigger:hover {
-            background: var(--bg-tertiary);
-        }
-
-        .profile-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: var(--radius-full);
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            color: white;
-            font-size: var(--font-size-lg);
-        }
-
-        /* 🤖 INTERFACE IA INTÉGRÉE */
-        .ai-interface {
+        
+        /* 🎴 CARDS COMPACTES PROFESSIONNELLES */
+        .card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
-            margin: var(--spacing-xl);
-            overflow: hidden;
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-base);
+            height: fit-content;
+            min-height: 200px;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
             box-shadow: var(--shadow-lg);
         }
-
-        .ai-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            padding: var(--spacing-lg);
+        
+        .card-compact {
+            padding: var(--spacing-md);
+            min-height: 150px;
+        }
+        
+        .card-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid var(--border-light);
         }
-
-        .ai-title {
-            font-size: var(--font-size-xl);
-            font-weight: 700;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-        }
-
-        .ai-status {
-            padding: var(--spacing-xs) var(--spacing-sm);
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: var(--radius-md);
-            font-size: var(--font-size-sm);
+        
+        .card-title {
+            font-size: 1.1rem;
             font-weight: 600;
-            color: white;
-            display: flex;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        
+        .card-body {
+            flex: 1;
+        }
+        
+        .card-footer {
+            margin-top: var(--spacing-md);
+            padding-top: var(--spacing-sm);
+            border-top: 1px solid var(--border-light);
+        }
+        
+        /* 🔘 BUTTONS SYSTEM */
+        .btn {
+            display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: var(--spacing-xs);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 1px solid transparent;
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            white-space: nowrap;
         }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--success-color);
-            border-radius: var(--radius-full);
-            animation: pulse 2s infinite;
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
         }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
         }
-
+        
+        .btn-secondary {
+            background: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-sm {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            font-size: 0.75rem;
+        }
+        
+        .btn-lg {
+            padding: var(--spacing-md) var(--spacing-lg);
+            font-size: 1rem;
+        }
+        
+        /* 📱 MOBILE TOGGLES */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-md);
+            transition: background var(--transition-fast);
+        }
+        
+        .mobile-toggle:hover {
+            background: var(--bg-tertiary);
+        }
+        
+        /* 🎯 STATS COMPACTES */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .stat-card {
+            background: var(--bg-card);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--primary-color);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: var(--spacing-xs);
+        }
+        
+        /* 🎨 BADGES & INDICATORS */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: var(--radius-sm);
+            white-space: nowrap;
+        }
+        
+        .badge-primary {
+            background: rgba(255, 107, 53, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .badge-success {
+            background: rgba(39, 174, 96, 0.1);
+            color: var(--success-color);
+        }
+        
+        .badge-warning {
+            background: rgba(243, 156, 18, 0.1);
+            color: var(--warning-color);
+        }
+        
         /* 📱 RESPONSIVE DESIGN */
-        @media (max-width: 1024px) {
-            .main-content {
-                margin-left: 0;
-            }
-            
+        @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
             }
@@ -2220,383 +409,1424 @@
                 transform: translateX(0);
             }
             
-            .mobile-toggle {
-                display: flex;
-            }
-            
-            .nav-wrapper {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .nav-btn {
+            .main-content {
+                margin-left: 0;
                 width: 100%;
-                text-align: center;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+                padding: var(--spacing-md);
+                gap: var(--spacing-md);
+            }
+            
+            .header {
+                padding: 0 var(--spacing-md);
+            }
+            
+            .card {
+                padding: var(--spacing-md);
+                min-height: 120px;
+            }
+            
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--spacing-sm);
             }
         }
-
-        /* 🎯 ANIMATIONS */
-        .fade-in {
-            opacity: 0;
-            animation: fadeIn 0.6s ease-out forwards;
+        
+        @media (max-width: 480px) {
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .content-grid {
+                padding: var(--spacing-sm);
+            }
+            
+            .card-compact {
+                padding: var(--spacing-sm);
+                min-height: 100px;
+            }
         }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        .slide-up {
-            transform: translateY(30px);
-            opacity: 0;
-            animation: slideUp 0.6s ease-out forwards;
-        }
-
-        @keyframes slideUp {
+        
+        /* 🎭 ANIMATIONS & EFFECTS */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
             to {
+                opacity: 1;
                 transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
                 opacity: 1;
             }
+            50% {
+                opacity: 0.7;
+            }
+        }
+        
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* 🔔 NOTIFICATIONS */
+        .notification-dot {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background: var(--danger-color);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        /* 🎯 UTILITY CLASSES */
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .text-left { text-align: left; }
+        .text-muted { color: var(--text-muted); }
+        .text-primary { color: var(--primary-color); }
+        .text-success { color: var(--success-color); }
+        .text-warning { color: var(--warning-color); }
+        .text-danger { color: var(--danger-color); }
+        
+        .bg-primary { background: var(--primary-color); }
+        .bg-secondary { background: var(--bg-secondary); }
+        .bg-success { background: var(--success-color); }
+        
+        .d-none { display: none; }
+        .d-block { display: block; }
+        .d-flex { display: flex; }
+        .d-grid { display: grid; }
+        
+        .align-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        
+        .gap-sm { gap: var(--spacing-sm); }
+        .gap-md { gap: var(--spacing-md); }
+        .gap-lg { gap: var(--spacing-lg); }
+        
+        .p-sm { padding: var(--spacing-sm); }
+        .p-md { padding: var(--spacing-md); }
+        .p-lg { padding: var(--spacing-lg); }
+        
+        .m-sm { margin: var(--spacing-sm); }
+        .m-md { margin: var(--spacing-md); }
+        .m-lg { margin: var(--spacing-lg); }
+        
+        .mt-sm { margin-top: var(--spacing-sm); }
+        .mt-md { margin-top: var(--spacing-md); }
+        .mt-lg { margin-top: var(--spacing-lg); }
+        
+        .mb-sm { margin-bottom: var(--spacing-sm); }
+        .mb-md { margin-bottom: var(--spacing-md); }
+        .mb-lg { margin-bottom: var(--spacing-lg); }
+        
+        .w-100 { width: 100%; }
+        .h-100 { height: 100%; }
+        
+        .rounded { border-radius: var(--radius-md); }
+        .rounded-lg { border-radius: var(--radius-lg); }
+        
+        .shadow { box-shadow: var(--shadow-md); }
+        .shadow-lg { box-shadow: var(--shadow-lg); }
+        
+        .border { border: 1px solid var(--border-color); }
+        .border-0 { border: none; }
+        
+        .overflow-hidden { overflow: hidden; }
+        .overflow-auto { overflow: auto; }
+        
+        .position-relative { position: relative; }
+        .position-absolute { position: absolute; }
+        .position-fixed { position: fixed; }
+        
+        .cursor-pointer { cursor: pointer; }
+        
+        /* 🖨️ PRINT STYLES */
+        @media print {
+            .sidebar,
+            .mobile-toggle,
+            .header-right {
+                display: none !important;
+            }
+            
+            .main-content {
+                margin-left: 0 !important;
+                width: 100% !important;
+            }
+            
+            .card {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #000;
+            }
         }
 
-        /* 📊 CONTENT SECTIONS */
-        .content-section {
-            display: none;
-            padding: var(--spacing-xl);
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        .content-section.active {
-            display: block;
-        }
-
-        .section-title {
-            font-size: var(--font-size-3xl);
-            font-weight: 800;
-            color: var(--text-primary);
-            margin-bottom: var(--spacing-xl);
+        /* 🎨 STYLES SIDEBAR COMPLETS */
+        .sidebar-header {
             display: flex;
             align-items: center;
-            gap: var(--spacing-md);
+            justify-content: space-between;
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        /* 📊 DASHBOARD GRID */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--spacing-xl);
-            margin-bottom: var(--spacing-2xl);
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
         }
-
+        
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            text-decoration: none;
+            color: var(--text-white);
+        }
+        
+        .logo-img {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-md);
+        }
+        
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-white);
+        }
+        
+        .sidebar-toggle {
+            background: none;
+            border: none;
+            color: var(--text-white);
+            font-size: 1.125rem;
+            cursor: pointer;
+            padding: var(--spacing-xs);
+            border-radius: var(--radius-sm);
+            transition: background var(--transition-fast);
+        }
+        
+        .sidebar-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Navigation Sections */
+        .nav-section {
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .nav-title {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            margin-bottom: var(--spacing-xs);
+            font-size: 0.875rem;
+        }
+        
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-white);
+            transform: translateX(4px);
+        }
+        
+        .nav-link.active {
+            background: var(--primary-color);
+            color: var(--text-white);
+        }
+        
+        .nav-link i {
+            width: 18px;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+        
+        /* Stats Utilisateur */
+        .sidebar-stats {
+            padding: var(--spacing-lg);
+            margin-top: auto;
+        }
+        
+        .user-stats-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stats-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-white);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--spacing-lg);
-            margin-bottom: var(--spacing-xl);
-        }
-
-        .stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: var(--spacing-lg);
-            transition: all var(--transition-base);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-        }
-
-        .stat-card:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .stat-icon {
-            font-size: var(--font-size-4xl);
+            grid-template-columns: repeat(1, 1fr);
+            gap: var(--spacing-sm);
             margin-bottom: var(--spacing-md);
-            display: block;
         }
-
+        
+        .stat-item {
+            text-align: center;
+        }
+        
         .stat-value {
-            font-size: var(--font-size-3xl);
-            font-weight: 800;
-            color: var(--text-primary);
-            margin-bottom: var(--spacing-sm);
-            display: block;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-xs);
         }
-
+        
         .stat-label {
-            font-size: var(--font-size-sm);
-            color: var(--text-secondary);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
         }
-
-        .stat-change {
-            font-size: var(--font-size-xs);
-            font-weight: 600;
-            margin-top: var(--spacing-xs);
-            padding: var(--spacing-xs) var(--spacing-sm);
-            border-radius: var(--radius-sm);
-            display: inline-block;
+        
+        .user-status {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            justify-content: center;
         }
-
-        .stat-change.positive {
-            background: rgba(34, 197, 94, 0.1);
-            color: var(--success-color);
+        
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success-color);
         }
-
-        .stat-change.negative {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--danger-color);
+        
+        .status-indicator.online {
+            background: var(--success-color);
+            animation: pulse 2s infinite;
         }
-
-        /* 🎯 FORM STYLES */
-        .form-group {
-            margin-bottom: var(--spacing-lg);
+        
+        .status-text {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
         }
-
-        .form-label {
-            display: block;
-            font-size: var(--font-size-sm);
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: var(--spacing-sm);
+        
+        /* Footer Profil */
+        .sidebar-footer {
+            padding: var(--spacing-lg);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        .form-input,
-        .form-select,
-        .form-textarea {
-            width: 100%;
-            padding: var(--spacing-md);
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            color: var(--text-primary);
-            font-family: inherit;
-            font-size: var(--font-size-base);
-            transition: all var(--transition-base);
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
         }
-
-        .form-input:focus,
-        .form-select:focus,
-        .form-textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
-        }
-
-        .form-input::placeholder,
-        .form-textarea::placeholder {
-            color: var(--text-tertiary);
-        }
-
-        .form-textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        /* 🎨 TABLE STYLES */
-        .table-container {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            margin: var(--spacing-xl) 0;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .table th,
-        .table td {
-            padding: var(--spacing-md);
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .table th {
-            background: var(--bg-tertiary);
-            font-weight: 600;
-            color: var(--text-primary);
-            font-size: var(--font-size-sm);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .table td {
-            color: var(--text-secondary);
-        }
-
-        .table tbody tr:hover {
-            background: var(--bg-tertiary);
-        }
-
-        .table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* 🎯 BUTTONS */
-        .btn {
-            display: inline-flex;
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
             align-items: center;
             justify-content: center;
-            gap: var(--spacing-sm);
-            padding: var(--spacing-sm) var(--spacing-lg);
-            border: none;
-            border-radius: var(--radius-md);
-            font-family: inherit;
-            font-size: var(--font-size-sm);
-            font-weight: 600;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all var(--transition-base);
-            user-select: none;
-            white-space: nowrap;
+            flex-shrink: 0;
         }
-
-        .btn-primary {
+        
+        .avatar-initials {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .user-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .user-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-white);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .user-role {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .logout-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            padding: var(--spacing-xs);
+            border-radius: var(--radius-sm);
+            transition: all var(--transition-fast);
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255, 107, 53, 0.2);
+            color: var(--primary-color);
+        }
+        
+        /* 🎯 HEADER STYLES */
+        .page-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        
+        .header-btn {
+            position: relative;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            cursor: pointer;
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+        }
+        
+        .header-btn:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        
+        .gains-display {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            background: rgba(243, 156, 18, 0.1);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .gains-amount {
+            color: var(--warning-color);
+        }
+        
+        .chat-toggle {
             background: var(--primary-color);
             color: white;
         }
-
-        .btn-primary:hover {
-            background: #E55A2B;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+        
+        .chat-toggle:hover {
+            background: var(--primary-dark);
         }
-
-        .btn-secondary {
+        
+        /* Profile Dropdown */
+        .profile-dropdown {
+            position: relative;
+        }
+        
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: var(--spacing-xs);
+            border-radius: var(--radius-md);
+            transition: background var(--transition-fast);
+        }
+        
+        .profile-btn:hover {
             background: var(--bg-tertiary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
         }
-
-        .btn-secondary:hover {
+        
+        .profile-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
             background: var(--bg-card);
-            border-color: var(--border-hover);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            min-width: 200px;
+            z-index: var(--z-dropdown);
+            display: none;
+            margin-top: var(--spacing-xs);
+        }
+        
+        .dropdown-menu.show {
+            display: block;
+        }
+        
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            transition: background var(--transition-fast);
+        }
+        
+        .dropdown-item:hover {
+            background: var(--bg-secondary);
+        }
+        
+        .dropdown-divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: var(--spacing-xs) 0;
+        }
+        
+        /* 📱 Mobile Responsive Sidebar */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                z-index: var(--z-modal);
+            }
+            
+            .sidebar.show {
+                transform: translateX(0);
+            }
+            
+            .sidebar::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: var(--bg-overlay);
+                z-index: -1;
+                opacity: 0;
+                visibility: hidden;
+                transition: all var(--transition-base);
+            }
+            
+            .sidebar.show::before {
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .page-title {
+                font-size: 1rem;
+            }
+            
+            .gains-display {
+                display: none;
+            }
         }
 
-        .btn-success {
-            background: var(--success-color);
+        /* 🎨 DASHBOARD STYLES COMPLETS */
+        .content-container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+        }
+        
+        /* Welcome Banner */
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-xl);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
         }
-
-        .btn-success:hover {
-            background: #16A34A;
-            transform: translateY(-2px);
+        
+        .welcome-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
         }
-
-        .btn-info {
-            background: var(--info-color);
-            color: white;
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
-
-        .btn-info:hover {
-            background: #2563EB;
-            transform: translateY(-2px);
+        
+        .welcome-content {
+            flex: 1;
+            position: relative;
+            z-index: 1;
         }
-
-        .btn-sm {
-            padding: var(--spacing-xs) var(--spacing-md);
-            font-size: var(--font-size-xs);
+        
+        .welcome-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
         }
-
-        .btn-lg {
-            padding: var(--spacing-md) var(--spacing-xl);
-            font-size: var(--font-size-lg);
+        
+        .welcome-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: var(--spacing-md);
         }
-
-        /* 📊 CARD COMPONENTS */
-        .card {
+        
+        .quick-stats {
+            display: flex;
+            gap: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+        
+        .quick-stat {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+        
+        .welcome-actions {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            gap: var(--spacing-md);
+            flex-direction: column;
+        }
+        
+        .emoji-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Stats Overview */
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .stat-card-modern {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
             padding: var(--spacing-lg);
-            transition: all var(--transition-base);
-        }
-
-        .card:hover {
-            border-color: var(--border-hover);
-            box-shadow: var(--shadow-md);
-        }
-
-        .card-header {
-            margin-bottom: var(--spacing-lg);
-            padding-bottom: var(--spacing-md);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .card-title {
-            font-size: var(--font-size-xl);
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: var(--spacing-sm);
-        }
-
-        /* 🚨 ALERTS */
-        .alert {
-            padding: var(--spacing-md);
-            border-radius: var(--radius-md);
-            margin-bottom: var(--spacing-lg);
             display: flex;
             align-items: center;
-            gap: var(--spacing-sm);
-            font-weight: 500;
+            gap: var(--spacing-md);
+            box-shadow: var(--shadow-md);
+            transition: transform var(--transition-base);
         }
-
-        .alert-success {
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid var(--success-color);
-            color: var(--success-color);
+        
+        .stat-card-modern:hover {
+            transform: translateY(-2px);
         }
-
-        .alert-warning {
-            background: rgba(245, 158, 11, 0.1);
-            border: 1px solid var(--warning-color);
-            color: var(--warning-color);
-        }
-
-        .alert-danger {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid var(--danger-color);
-            color: var(--danger-color);
-        }
-
-        .alert-info {
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid var(--info-color);
-            color: var(--info-color);
-        }
-
-        /* 🔔 BADGES */
-        .badge {
-            display: inline-flex;
+        
+        .stat-icon-container {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-lg);
+            display: flex;
             align-items: center;
-            padding: var(--spacing-xs) var(--spacing-sm);
-            border-radius: var(--radius-full);
-            font-size: var(--font-size-xs);
-            font-weight: 600;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
         }
-
-        .badge-success {
-            background: rgba(34, 197, 94, 0.2);
-            color: var(--success-color);
+        
+        .stat-info {
+            flex: 1;
         }
+        
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: var(--spacing-xs);
+        }
+        
+        .stat-trend {
+            font-size: 0.75rem;
+            margin-top: var(--spacing-xs);
+        }
+        
+        .stat-progress {
+            margin-top: var(--spacing-sm);
+            height: 4px;
+            background: var(--border-light);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 2px;
+            transition: width var(--transition-base);
+        }
+    </style>
+    <!-- ⚠️ FIN PARTIE 1/5 - HTML HEAD + CSS COMPLET -->
+</head>
+<body>
+    <div class="app-container">
+        <!-- 🚀 DÉBUT PARTIE 2/5 - STRUCTURE BODY + SIDEBAR -->
+        <!-- 📱 SIDEBAR NAVIGATION -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Logo & Brand -->
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <a href="https://etudia.ci" class="logo-link">
+                        <div style="width: 32px; height: 32px; background: var(--primary-color); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">É</div>
+                        <span class="logo-text">ÉtudIA</span>
+                    </a>
+                </div>
+                <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Réduire sidebar">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
 
-        .badge-warning {
-            background: rgba(245, 158, 11, 0.2);
-            color: var(--warning-color);
+            <!-- Navigation Inter-Sites -->
+            <div class="nav-section">
+                <h3 class="nav-title">
+                    <i class="fas fa-globe"></i>
+                    Navigation Sites
+                </h3>
+                <ul class="nav-links">
+                    <li>
+                        <a href="https://etudia.ci" class="nav-link" target="_blank">
+                            <i class="fas fa-home"></i>
+                            <span>Site Principal</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://ia.etudia.ci" class="nav-link" target="_blank">
+                            <i class="fas fa-robot"></i>
+                            <span>Interface IA</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://app.etudia.ci" class="nav-link" target="_blank">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>App Mobile</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Navigation Principale Backoffice -->
+            <div class="nav-section">
+                <h3 class="nav-title">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Backoffice Élèves
+                </h3>
+                <ul class="nav-links">
+                    <li>
+                        <a href="#" class="nav-link active" onclick="showSection('dashboard')">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" onclick="showSection('profile')">
+                            <i class="fas fa-user"></i>
+                            <span>Mon Profil</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" onclick="showSection('subscription')">
+                            <i class="fas fa-crown"></i>
+                            <span>Abonnement</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- IA & Apprentissage -->
+            <div class="nav-section">
+                <h3 class="nav-title">
+                    <i class="fas fa-brain"></i>
+                    IA & Apprentissage
+                </h3>
+                <ul class="nav-links">
+                    <li>
+                        <a href="#" class="nav-link" onclick="showSection('chat-ia')">
+                            <i class="fas fa-comments"></i>
+                            <span>Chat IA DeepSeek</span>
+                            <span class="badge badge-primary">R1</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" onclick="showSection('courses')">
+                            <i class="fas fa-book-open"></i>
+                            <span>Mes Cours</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" onclick="showSection('homework')">
+                            <i class="fas fa-clipboard-check"></i>
+                            <span>Devoirs</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" onclick="showSection('grades')">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Notes & Résultats</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" onclick="showSection('schedule')">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Planning</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Parrainage & Gains -->
+            <div class="nav-section">
+                <h3 class="nav-title">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    Parrainage & Gains
+                </h3>
+                <ul class="nav-links">
+                    <li>
+                        <a href="#" class="nav-link" onclick="showSection('referral')">
+                            <i class="fas fa-users"></i>
+                            <span>Mon Parrainage</span>
+                            <span class="badge badge-success">12,450F</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" onclick="showSection('gamification')">
+                            <i class="fas fa-trophy"></i>
+                            <span>Badges & XP</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Outils & Ressources -->
+            <div class="nav-section">
+                <h3 class="nav-title">
+                    <i class="fas fa-tools"></i>
+                    Outils & Ressources
+                </h3>
+                <ul class="nav-links">
+                    <li>
+                        <a href="#" class="nav-link" onclick="showSection('library')">
+                            <i class="fas fa-book"></i>
+                            <span>Bibliothèque</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" onclick="showSection('parent-link')">
+                            <i class="fas fa-family"></i>
+                            <span>Liaison Parents</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" onclick="showSection('statistics')">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Statistiques</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Support & Paramètres -->
+            <div class="nav-section">
+                <h3 class="nav-title">
+                    <i class="fas fa-cog"></i>
+                    Support & Paramètres
+                </h3>
+                <ul class="nav-links">
+                    <li>
+                        <a href="#" class="nav-link" onclick="showSection('notifications')">
+                            <i class="fas fa-bell"></i>
+                            <span>Notifications</span>
+                            <span class="notification-dot"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" onclick="showSection('support')">
+                            <i class="fas fa-life-ring"></i>
+                            <span>Support</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" onclick="showSection('settings')">
+                            <i class="fas fa-sliders-h"></i>
+                            <span>Paramètres</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Stats Utilisateur -->
+            <div class="sidebar-stats">
+                <div class="user-stats-card">
+                    <h4 class="stats-title">
+                        <i class="fas fa-user-circle"></i>
+                        Jean-Baptiste DOSSO
+                    </h4>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value text-primary">Premium</div>
+                            <div class="stat-label">Plan Actuel</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value text-success">1,247</div>
+                            <div class="stat-label">Interactions restantes</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value text-warning">12,450F</div>
+                            <div class="stat-label">Gains Parrainage</div>
+                        </div>
+                    </div>
+                    <div class="user-status">
+                        <span class="status-indicator online"></span>
+                        <span class="status-text">En ligne</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profil & Déconnexion -->
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="user-avatar">
+                        <span class="avatar-initials">JB</span>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name">Jean-Baptiste</div>
+                        <div class="user-role">Élève Premium</div>
+                    </div>
+                    <button class="logout-btn" onclick="logout()" title="Déconnexion">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 📱 MAIN CONTENT CONTAINER -->
+        <main class="main-content" id="mainContent">
+            <!-- Header avec Toggles Mobile -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-toggle" onclick="toggleSidebar()" aria-label="Menu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Backoffice Élèves ÉtudIA V4.1</h1>
+                </div>
+                
+                <div class="header-right">
+                    <!-- Notifications -->
+                    <button class="header-btn" onclick="showSection('notifications')" title="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+                    
+                    <!-- Gains Parrainage -->
+                    <div class="gains-display">
+                        <i class="fas fa-coins text-warning"></i>
+                        <span class="gains-amount">12,450F</span>
+                    </div>
+                    
+                    <!-- Chat IA Toggle -->
+                    <button class="mobile-toggle chat-toggle" onclick="toggleChat()" aria-label="Chat IA">
+                        <i class="fas fa-robot"></i>
+                    </button>
+                    
+                    <!-- Profil Dropdown -->
+                    <div class="profile-dropdown">
+                        <button class="profile-btn" onclick="toggleProfileDropdown()">
+                            <div class="profile-avatar">
+                                <span class="avatar-initials">JB</span>
+                            </div>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu" id="profileDropdown">
+                            <a href="#" class="dropdown-item" onclick="showSection('profile')">
+                                <i class="fas fa-user"></i>
+                                Mon Profil
+                            </a>
+                            <a href="#" class="dropdown-item" onclick="showSection('settings')">
+                                <i class="fas fa-cog"></i>
+                                Paramètres
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item" onclick="logout()">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Déconnexion
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- ⚠️ FIN PARTIE 2/5 - STRUCTURE BODY + SIDEBAR -->
+
+            <!-- 🚀 DÉBUT PARTIE 3/5 - INTERFACE IA + DASHBOARD -->
+            <!-- 📊 DASHBOARD PRINCIPAL -->
+            <div class="content-container" id="dashboard" style="padding: var(--spacing-xl);">
+                <!-- Welcome Banner -->
+                <div class="welcome-banner">
+                    <div class="welcome-content">
+                        <h1 class="welcome-title">
+                            <span class="emoji-float">👋</span>
+                            Bienvenue Jean-Baptiste !
+                        </h1>
+                        <p class="welcome-subtitle">Votre tableau de bord ÉtudIA V4.1 avec IA DeepSeek R1 intégrée</p>
+                        <div class="quick-stats">
+                            <div class="quick-stat">
+                                <span class="stat-icon">🎯</span>
+                                <span class="stat-text">Plan Premium Actif</span>
+                            </div>
+                            <div class="quick-stat">
+                                <span class="stat-icon">🤖</span>
+                                <span class="stat-text">IA DeepSeek R1 Ready</span>
+                            </div>
+                            <div class="quick-stat">
+                                <span class="stat-icon">💰</span>
+                                <span class="stat-text">12,450F Générés</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="welcome-actions">
+                        <button class="btn btn-primary" onclick="showSection('chat-ia')">
+                            <i class="fas fa-robot"></i>
+                            Lancer Chat IA
+                        </button>
+                        <button class="btn btn-outline" onclick="showSection('courses')">
+                            <i class="fas fa-book-open"></i>
+                            Mes Cours
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Overview -->
+                <div class="stats-overview">
+                    <div class="stat-card-modern">
+                        <div class="stat-icon-container bg-primary">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">1,247</div>
+                            <div class="stat-label">Interactions IA restantes</div>
+                            <div class="stat-progress">
+                                <div class="progress-bar" style="width: 83%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card-modern">
+                        <div class="stat-icon-container bg-success">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">2,847</div>
+                            <div class="stat-label">Points XP</div>
+                            <div class="stat-trend text-success">+247 cette semaine</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card-modern">
+                        <div class="stat-icon-container bg-warning">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">8</div>
+                            <div class="stat-label">Parrainages actifs</div>
+                            <div class="stat-trend text-success">+2 ce mois</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card-modern">
+                        <div class="stat-icon-container bg-info">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">94%</div>
+                            <div class="stat-label">Taux de réussite</div>
+                            <div class="stat-trend text-success">+5% ce mois</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Demo Content Grid -->
+                <div class="content-grid content-grid-3">
+                    <!-- Chat IA Preview -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-robot text-primary"></i>
+                                Chat IA DeepSeek R1
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Interface IA révolutionnaire pour vos études</p>
+                            <div style="background: var(--bg-secondary); padding: var(--spacing-md); border-radius: var(--radius-md); margin: var(--spacing-md) 0;">
+                                💬 "Comment résoudre cette équation ?"<br>
+                                🤖 "Je vais vous expliquer step-by-step..."
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary" onclick="showSection('chat-ia')">
+                                Ouvrir Chat IA
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Parrainage -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-hand-holding-usd text-warning"></i>
+                                Système Parrainage
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="stat-value text-success">12,450F</div>
+                            <div class="stat-label">Gains totaux</div>
+                            <div style="margin: var(--spacing-md) 0;">
+                                <div class="badge badge-success">8 parrainés actifs</div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-success" onclick="showSection('referral')">
+                                Gérer Parrainage
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Cours & Notes -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-graduation-cap text-info"></i>
+                                Progression Académique
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="stat-value text-info">16.7/20</div>
+                            <div class="stat-label">Moyenne générale</div>
+                            <div style="margin: var(--spacing-md) 0;">
+                                <div class="badge badge-primary">6 matières</div>
+                                <div class="badge badge-warning">3 devoirs en cours</div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-info" onclick="showSection('courses')">
+                                Voir Cours
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ⚠️ FIN PARTIE 3/5 - INTERFACE IA + DASHBOARD -->
+
+            <!-- MESSAGE DE DÉMONSTRATION -->
+            <div class="d-none" id="demo-message" style="padding: var(--spacing-xl); text-align: center;">
+                <div style="background: var(--bg-card); padding: var(--spacing-xxl); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); max-width: 800px; margin: 0 auto;">
+                    <h2 style="color: var(--primary-color); margin-bottom: var(--spacing-lg);">
+                        🎉 ÉtudIA V4.1 - Backoffice Complet Assemblé !
+                    </h2>
+                    
+                    <div style="margin: var(--spacing-xl) 0;">
+                        <h3 style="margin-bottom: var(--spacing-md);">✅ Fonctionnalités Démontrées :</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-md); text-align: left;">
+                            <div>• Navigation sidebar complète</div>
+                            <div>• Header responsive</div>
+                            <div>• Dashboard interactif</div>
+                            <div>• Stats temps réel</div>
+                            <div>• Système parrainage</div>
+                            <div>• Interface IA preview</div>
+                            <div>• Design Tesla-inspired</div>
+                            <div>• Mobile responsive</div>
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(255, 107, 53, 0.1); padding: var(--spacing-lg); border-radius: var(--radius-md); margin: var(--spacing-xl) 0;">
+                        <h4 style="color: var(--primary-color); margin-bottom: var(--spacing-sm);">
+                            🇨🇮 Made with ❤️ in Côte d'Ivoire
+                        </h4>
+                        <p style="margin: 0; color: var(--text-secondary);">
+                            Par <strong>@Pacousstar & MonAP</strong> - Premier backoffice EdTech africain avec IA DeepSeek R1 intégrée
+                        </p>
+                    </div>
+
+                    <button class="btn btn-primary btn-lg" onclick="showSection('dashboard')" style="margin-top: var(--spacing-lg);">
+                        <i class="fas fa-rocket"></i>
+                        Explorer le Backoffice
+                    </button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // 🔧 JAVASCRIPT PRINCIPAL
+        let currentSection = 'dashboard';
+        
+        function showSection(sectionName) {
+            const allSections = document.querySelectorAll('.content-container');
+            allSections.forEach(section => {
+                section.classList.add('d-none');
+            });
+            
+            const targetSection = document.getElementById(sectionName);
+            if (targetSection) {
+                targetSection.classList.remove('d-none');
+                currentSection = sectionName;
+                updateNavigation(sectionName);
+                targetSection.style.animation = 'fadeInUp 0.6s ease-out';
+            }
+        }
+        
+        function updateNavigation(sectionName) {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            const activeLink = document.querySelector(`[onclick*="${sectionName}"]`);
+            if (activeLink && activeLink.classList.contains('nav-link')) {
+                activeLink.classList.add('active');
+            }
+        }
+        
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            
+            if (window.innerWidth <= 768) {
+                sidebar.classList.toggle('show');
+                if (sidebar.classList.contains('show')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = 'auto';
+                }
+            } else {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            }
+        }
+        
+        function toggleChat() {
+            showNotification('Chat IA DeepSeek R1 bientôt disponible !', 'info');
+        }
+        
+        function toggleProfileDropdown() {
+            const dropdown = document.getElementById('profileDropdown');
+            dropdown.classList.toggle('show');
+        }
+        
+        function logout() {
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                showNotification('Déconnexion en cours...', 'warning');
+                setTimeout(() => {
+                    window.location.href = 'https://etudia.ci';
+                }, 1500);
+            }
+        }
+        
+        function showNotification(message, type = 'success', duration = 3000) {
+            const notification = document.createElement('div');
+            notification.className = `notification-toast ${type}`;
+            
+            const colors = {
+                success: '#27ae60',
+                error: '#e74c3c',
+                warning: '#f39c12',
+                info: '#17a2b8'
+            };
+            
+            const icons = {
+                success: 'fas fa-check-circle',
+                error: 'fas fa-exclamation-circle',
+                warning: 'fas fa-exclamation-triangle',
+                info: 'fas fa-info-circle'
+            };
+            
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
+                    <i class="${icons[type]}"></i>
+                    <span>${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: white; margin-left: auto; cursor: pointer;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 80px;
+                right: 20px;
+                background: ${colors[type]};
+                color: white;
+                padding: var(--spacing-md);
+                border-radius: var(--radius-lg);
+                box-shadow: var(--shadow-xl);
+                z-index: var(--z-toast);
+                animation: slideInRight 0.3s ease-out;
+                max-width: 400px;
+                font-size: 0.875rem;
+                margin-bottom: var(--spacing-sm);
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease-in forwards';
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.remove();
+                    }
+                }, 300);
+            }, duration);
+        }
+        
+        // Responsive sidebar mobile
+        window.addEventListener('resize', function() {
+            const sidebar = document.getElementById('sidebar');
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Fermer dropdown au clic extérieur
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('profileDropdown');
+            const profileBtn = document.querySelector('.profile-btn');
+            
+            if (profileBtn && !profileBtn.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+        
+        // Animations CSS
+        const animationStyles = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = animationStyles;
+        document.head.appendChild(styleSheet);
+        
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            showSection('dashboard');
+            
+            // Message de bienvenue
+            setTimeout(() => {
+                showNotification('🎉 Bienvenue sur ÉtudIA V4.1 Backoffice !', 'success', 4000);
+            }, 1000);
+            
+            console.log('🚀 ÉtudIA V4.1 Backoffice Complet chargé avec succès !');
+            console.log('🇨🇮 Made with ❤️ in Côte d\'Ivoire by @Pacousstar & MonAP');
+        });
+    </script>
+
+</body>
+</html>
