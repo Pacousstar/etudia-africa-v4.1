@@ -4,6 +4,7 @@
   "description": "ÉtudIA V4.1 - Interface React avec DeepSeek R1",
   "private": true,
   "dependencies": {
+    "@remix-run/dev": "^2.9.2"
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
@@ -43,3 +44,4 @@
     "npm": ">=8.0.0"
   }
 }
+
