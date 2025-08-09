@@ -1,17 +1,11 @@
 services:
   - type: web
-    name: etudia-v4-revolutionary
+    name: etudia-v41-api
     env: node
+    buildCommand: cd react-app/backend && npm install
+    startCommand: cd react-app/backend && npm start
     plan: free
-    region: frankfurt  # Plus proche de l'Afrique
-    buildCommand: npm install --production
-    startCommand: npm start
-    healthCheckPath: /health
+    rootDir: react-app/backend
     envVars:
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 10000
-    scaling:
-      minInstances: 1
-      maxInstances: 1
