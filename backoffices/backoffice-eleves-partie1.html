@@ -1080,3 +1080,512 @@
             <!-- ===============================
                  🔥 FIN PARTIE 2/6 : STRUCTURE BODY + SIDEBAR
                  =============================== -->
+
+
+<!-- ===============================
+                 🔥 DÉBUT PARTIE 3/6 : DASHBOARD + SECTIONS (DESIGN HARMONISÉ)
+                 =============================== -->
+            
+            <!-- Content Sections -->
+            <div class="content-sections">
+                <!-- Section Dashboard -->
+                <div id="dashboard" class="content-section active">
+                    <!-- Stats Section -->
+                    <section class="stats-section">
+                        <h2 class="section-title">📊 Vue d'ensemble</h2>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <div class="stat-icon">🤖</div>
+                                    <div class="stat-trend">+47 aujourd'hui</div>
+                                </div>
+                                <div class="stat-value">2,450</div>
+                                <div class="stat-label">Tokens Disponibles</div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <div class="stat-icon">💬</div>
+                                    <div class="stat-trend">+12 vs hier</div>
+                                </div>
+                                <div class="stat-value">127</div>
+                                <div class="stat-label">Sessions IA DeepSeek</div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <div class="stat-icon">🏆</div>
+                                    <div class="stat-trend">550 XP restants</div>
+                                </div>
+                                <div class="stat-value">Level 12</div>
+                                <div class="stat-label">Expert Étudiant</div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <div class="stat-icon">💰</div>
+                                    <div class="stat-trend">+2,100 FCFA</div>
+                                </div>
+                                <div class="stat-value">12,500F</div>
+                                <div class="stat-label">Gains Parrainage</div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Main Grid -->
+                    <div class="main-grid">
+                        <!-- Interface IA DeepSeek R1 -->
+                        <div class="content-card">
+                            <h3 class="card-title">🤖 Assistant IA DeepSeek R1</h3>
+                            
+                            <div class="ai-modes">
+                                <button class="btn btn-primary mode-btn active" data-mode="normal">
+                                    💬 Normal (250 tokens)
+                                </button>
+                                <button class="btn btn-secondary mode-btn" data-mode="step_by_step">
+                                    📚 Étape par Étape (180 tokens)
+                                </button>
+                                <button class="btn btn-info mode-btn" data-mode="direct_solution">
+                                    ⚡ Solution Directe (400 tokens)
+                                </button>
+                                <button class="btn btn-warning mode-btn" data-mode="audio">
+                                    🎤 Mode Audio (200 tokens)
+                                </button>
+                            </div>
+                            
+                            <div class="chat-interface">
+                                <div class="chat-messages" id="chatMessages">
+                                    <div class="message ai-message">
+                                        <div class="message-avatar">🤖</div>
+                                        <div class="message-content">
+                                            <div class="message-text">
+                                                Salut PACOUSSTAR ! 👋 Je suis DeepSeek R1, votre assistant IA personnel pour l'apprentissage.
+                                                <br><br>
+                                                <strong>Comment puis-je vous aider aujourd'hui ?</strong>
+                                                <br>
+                                                • Expliquer des concepts difficiles
+                                                <br>
+                                                • Résoudre des exercices étape par étape
+                                                <br>
+                                                • Analyser vos documents PDF
+                                                <br>
+                                                • Répondre à vos questions académiques
+                                            </div>
+                                            <div class="message-time">Maintenant</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="chat-input-area">
+                                    <div class="input-tools">
+                                        <button class="tool-btn" onclick="attachDocument()" title="Joindre document">
+                                            <i class="fas fa-paperclip"></i>
+                                        </button>
+                                        <button class="tool-btn" onclick="startVoiceInput()" title="Saisie vocale">
+                                            <i class="fas fa-microphone"></i>
+                                        </button>
+                                    </div>
+                                    <textarea 
+                                        class="chat-input" 
+                                        id="chatInput" 
+                                        placeholder="Posez votre question à DeepSeek R1..."
+                                        rows="2"
+                                    ></textarea>
+                                    <button class="btn btn-primary send-btn" onclick="sendMessage()">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stats & Progress -->
+                        <div class="content-card">
+                            <h3 class="card-title">📈 Progression & Stats</h3>
+                            
+                            <!-- XP Progress -->
+                            <div class="xp-section">
+                                <div class="xp-header">
+                                    <span class="xp-level">Level 12 - Expert Étudiant</span>
+                                    <span class="xp-points">2,450 / 3,000 XP</span>
+                                </div>
+                                <div class="progress-bar-large">
+                                    <div class="progress-fill-large" style="width: 82%"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Quick Stats -->
+                            <div class="quick-stats">
+                                <div class="quick-stat-item">
+                                    <div class="quick-stat-icon">📚</div>
+                                    <div class="quick-stat-info">
+                                        <div class="quick-stat-value">17/20</div>
+                                        <div class="quick-stat-label">Chapitres Math</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="quick-stat-item">
+                                    <div class="quick-stat-icon">⚡</div>
+                                    <div class="quick-stat-info">
+                                        <div class="quick-stat-value">156</div>
+                                        <div class="quick-stat-label">Sessions IA</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="quick-stat-item">
+                                    <div class="quick-stat-icon">📄</div>
+                                    <div class="quick-stat-info">
+                                        <div class="quick-stat-value">24</div>
+                                        <div class="quick-stat-label">Documents</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Parrainage Quick View -->
+                            <div class="parrainage-summary">
+                                <div class="parrainage-header">
+                                    <span class="parrainage-title">💰 Gains Parrainage</span>
+                                    <button class="btn btn-sm btn-secondary" onclick="showSection('parrainage')">
+                                        Détails
+                                    </button>
+                                </div>
+                                <div class="parrainage-amount">12,500 FCFA</div>
+                                <div class="parrainage-detail">23 filleuls • 3 niveaux actifs</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <div class="action-card" onclick="showSection('documents')">
+                            <div class="action-icon">📄</div>
+                            <div class="action-title">Analyser Document</div>
+                            <div class="action-desc">Upload PDF pour analyse IA</div>
+                        </div>
+                        
+                        <div class="action-card" onclick="showSection('cours')">
+                            <div class="action-icon">📚</div>
+                            <div class="action-title">Mes Cours</div>
+                            <div class="action-desc">Accéder à vos matières</div>
+                        </div>
+                        
+                        <div class="action-card" onclick="showSection('devoirs')">
+                            <div class="action-icon">✏️</div>
+                            <div class="action-title">Devoirs</div>
+                            <div class="action-desc">Aide IA pour vos devoirs</div>
+                        </div>
+                        
+                        <div class="action-card" onclick="showSection('parrainage')">
+                            <div class="action-icon">💰</div>
+                            <div class="action-title">Parrainage</div>
+                            <div class="action-desc">Gagnez en invitant vos amis</div>
+                        </div>
+                        
+                        <div class="action-card" onclick="showSection('gamification')">
+                            <div class="action-icon">🏆</div>
+                            <div class="action-title">Achievements</div>
+                            <div class="action-desc">Badges et récompenses</div>
+                        </div>
+                        
+                        <div class="action-card" onclick="showSection('liaison-parents')">
+                            <div class="action-icon">👨‍👩‍👧‍👦</div>
+                            <div class="action-title">Liaison Parents</div>
+                            <div class="action-desc">Communication avec vos parents</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Section Chat IA -->
+                <div id="chat-ia" class="content-section">
+                    <section class="chat-ia-section">
+                        <h2 class="section-title">🤖 Chat IA DeepSeek R1 - Interface Complète</h2>
+                        
+                        <div class="chat-container-full">
+                            <!-- Chat Header -->
+                            <div class="chat-header-full">
+                                <div class="chat-title-section">
+                                    <h3 class="chat-title">
+                                        <i class="fas fa-robot"></i>
+                                        DeepSeek R1 - Assistant IA Personnel
+                                    </h3>
+                                    <div class="chat-status">
+                                        <span class="status-dot"></span>
+                                        Connecté • Tokens: <span id="tokenDisplay">2,450</span>
+                                    </div>
+                                </div>
+                                <div class="chat-actions">
+                                    <button class="btn btn-sm btn-secondary" onclick="newChatSession()">
+                                        <i class="fas fa-plus"></i> Nouvelle session
+                                    </button>
+                                    <button class="btn btn-sm btn-secondary" onclick="clearChat()">
+                                        <i class="fas fa-trash"></i> Effacer
+                                    </button>
+                                    <button class="btn btn-sm btn-info" onclick="exportChat()">
+                                        <i class="fas fa-download"></i> Export
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Chat Sessions Tabs -->
+                            <div class="chat-sessions">
+                                <div class="session-tabs" id="sessionTabs">
+                                    <div class="session-tab active" data-session="1">
+                                        <span class="tab-title">Mathématiques</span>
+                                        <button class="tab-close">×</button>
+                                    </div>
+                                    <div class="session-tab" data-session="2">
+                                        <span class="tab-title">Physique</span>
+                                        <button class="tab-close">×</button>
+                                    </div>
+                                    <button class="add-session-btn" onclick="newChatSession()">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Chat Modes -->
+                            <div class="chat-modes-full">
+                                <div class="mode-buttons-full">
+                                    <button class="mode-btn-full active" data-mode="normal">
+                                        💬 Normal <small>(250 tokens)</small>
+                                    </button>
+                                    <button class="mode-btn-full" data-mode="step_by_step">
+                                        📚 Étape par Étape <small>(180 tokens)</small>
+                                    </button>
+                                    <button class="mode-btn-full" data-mode="direct_solution">
+                                        ⚡ Solution Directe <small>(400 tokens)</small>
+                                    </button>
+                                    <button class="mode-btn-full" data-mode="audio">
+                                        🎤 Mode Audio <small>(200 tokens)</small>
+                                    </button>
+                                </div>
+                                <div class="mode-description">
+                                    <p id="modeDescription">Mode Normal : Conversation équilibrée avec explications détaillées et exemples.</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Chat Messages Full -->
+                            <div class="chat-messages-full" id="chatMessagesFull">
+                                <!-- Messages will be populated here -->
+                                <div class="message ai-message">
+                                    <div class="message-avatar">🤖</div>
+                                    <div class="message-content">
+                                        <div class="message-text">
+                                            Salut PACOUSSTAR ! 👋 Nouvelle session démarrée avec DeepSeek R1.
+                                            <br><br>
+                                            <strong>Interface complète activée !</strong> Vous pouvez maintenant :
+                                            <br>
+                                            • Créer plusieurs sessions simultanées
+                                            <br>
+                                            • Basculer entre 4 modes d'apprentissage
+                                            <br>
+                                            • Joindre des documents à vos questions
+                                            <br>
+                                            • Exporter vos conversations
+                                            <br><br>
+                                            <em>Choisissez un mode ci-dessus et posez votre première question !</em>
+                                        </div>
+                                        <div class="message-time">Maintenant</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Chat Input Full -->
+                            <div class="chat-input-full">
+                                <div class="input-group-full">
+                                    <div class="input-tools-full">
+                                        <button class="tool-btn" title="Joindre document">
+                                            <i class="fas fa-paperclip"></i>
+                                        </button>
+                                        <button class="tool-btn" title="Saisie vocale">
+                                            <i class="fas fa-microphone"></i>
+                                        </button>
+                                        <button class="tool-btn" title="Templates rapides">
+                                            <i class="fas fa-magic"></i>
+                                        </button>
+                                    </div>
+                                    <textarea 
+                                        class="chat-textarea-full" 
+                                        id="chatInputFull" 
+                                        placeholder="Tapez votre question ici... (Ctrl+Entrée pour envoyer)"
+                                        rows="3"
+                                    ></textarea>
+                                    <button class="send-btn-full" onclick="sendMessageFull()">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                                <div class="input-footer-full">
+                                    <div class="input-stats">
+                                        <span class="char-count">0 / 2000 caractères</span>
+                                        <span class="estimated-tokens">~0 tokens estimés</span>
+                                    </div>
+                                    <div class="quick-prompts">
+                                        <button class="quick-prompt" onclick="insertQuickPrompt('Explique-moi')">Explique-moi</button>
+                                        <button class="quick-prompt" onclick="insertQuickPrompt('Résous cet exercice')">Résous cet exercice</button>
+                                        <button class="quick-prompt" onclick="insertQuickPrompt('Corrige mes erreurs')">Corrige mes erreurs</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                
+                <!-- Autres sections (placeholders) -->
+                <div id="cours" class="content-section">
+                    <h2 class="section-title">📚 Mes Cours</h2>
+                    <div class="content-card">
+                        <div class="coming-soon">
+                            <div class="coming-soon-icon">📚</div>
+                            <h3>Section en développement</h3>
+                            <p>La gestion des cours sera bientôt disponible !</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="devoirs" class="content-section">
+                    <h2 class="section-title">✏️ Mes Devoirs</h2>
+                    <div class="content-card">
+                        <div class="coming-soon">
+                            <div class="coming-soon-icon">✏️</div>
+                            <h3>Section en développement</h3>
+                            <p>La gestion des devoirs sera bientôt disponible !</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="notes" class="content-section">
+                    <h2 class="section-title">📊 Notes & Résultats</h2>
+                    <div class="content-card">
+                        <div class="coming-soon">
+                            <div class="coming-soon-icon">📊</div>
+                            <h3>Section en développement</h3>
+                            <p>Le suivi des notes sera bientôt disponible !</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="planning" class="content-section">
+                    <h2 class="section-title">📅 Planning</h2>
+                    <div class="content-card">
+                        <div class="coming-soon">
+                            <div class="coming-soon-icon">📅</div>
+                            <h3>Section en développement</h3>
+                            <p>La gestion du planning sera bientôt disponible !</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="bibliotheque" class="content-section">
+                    <h2 class="section-title">📖 Bibliothèque</h2>
+                    <div class="content-card">
+                        <div class="coming-soon">
+                            <div class="coming-soon-icon">📖</div>
+                            <h3>Section en développement</h3>
+                            <p>La bibliothèque numérique sera bientôt disponible !</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="documents" class="content-section">
+                    <h2 class="section-title">📄 Mes Documents</h2>
+                    <div class="content-card">
+                        <div class="coming-soon">
+                            <div class="coming-soon-icon">📄</div>
+                            <h3>Section en développement</h3>
+                            <p>La gestion des documents sera bientôt disponible !</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="gamification" class="content-section">
+                    <h2 class="section-title">🏆 Gamification</h2>
+                    <div class="content-card">
+                        <div class="coming-soon">
+                            <div class="coming-soon-icon">🏆</div>
+                            <h3>Section en développement</h3>
+                            <p>Le système de gamification sera bientôt disponible !</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="parrainage" class="content-section">
+                    <h2 class="section-title">💰 Système de Parrainage</h2>
+                    <div class="content-card">
+                        <div class="coming-soon">
+                            <div class="coming-soon-icon">💰</div>
+                            <h3>Section en développement</h3>
+                            <p>Le système de parrainage sera bientôt disponible !</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="liaison-parents" class="content-section">
+                    <h2 class="section-title">👨‍👩‍👧‍👦 Liaison Parents</h2>
+                    <div class="content-card">
+                        <div class="coming-soon">
+                            <div class="coming-soon-icon">👨‍👩‍👧‍👦</div>
+                            <h3>Section en développement</h3>
+                            <p>La liaison avec les parents sera bientôt disponible !</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="communaute" class="content-section">
+                    <h2 class="section-title">💬 Communauté</h2>
+                    <div class="content-card">
+                        <div class="coming-soon">
+                            <div class="coming-soon-icon">💬</div>
+                            <h3>Section en développement</h3>
+                            <p>Le forum communautaire sera bientôt disponible !</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="profil" class="content-section">
+                    <h2 class="section-title">👤 Mon Profil</h2>
+                    <div class="content-card">
+                        <div class="coming-soon">
+                            <div class="coming-soon-icon">👤</div>
+                            <h3>Section en développement</h3>
+                            <p>La gestion du profil sera bientôt disponible !</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="abonnement" class="content-section">
+                    <h2 class="section-title">💳 Mon Abonnement</h2>
+                    <div class="content-card">
+                        <div class="coming-soon">
+                            <div class="coming-soon-icon">💳</div>
+                            <h3>Section en développement</h3>
+                            <p>La gestion des abonnements sera bientôt disponible !</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="parametres" class="content-section">
+                    <h2 class="section-title">⚙️ Paramètres</h2>
+                    <div class="content-card">
+                        <div class="coming-soon">
+                            <div class="coming-soon-icon">⚙️</div>
+                            <h3>Section en développement</h3>
+                            <p>Les paramètres seront bientôt disponibles !</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="aide" class="content-section">
+                    <h2 class="section-title">❓ Aide & Support</h2>
+                    <div class="content-card">
+                        <div class="coming-soon">
+                            <div class="coming-soon-icon">❓</div>
+                            <h3>Section en développement</h3>
+                            <p>Le support sera bientôt disponible !</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ===============================
+                 🔥 FIN PARTIE 3/6 : DASHBOARD + SECTIONS (DESIGN HARMONISÉ)
+                 =============================== -->
