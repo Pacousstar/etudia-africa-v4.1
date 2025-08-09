@@ -1,24 +1,39 @@
 {
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "backoffices/**/*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "assets/**/*",
+      "use": "@vercel/static"
+    }
+  ],
   "routes": [
     {
-      "src": "/backoffices/(.*)",
-      "dest": "/backoffices/$1"
+      "src": "/",
+      "dest": "/index.html"
     },
     {
-      "src": "/pages/(.*)",
-      "dest": "/pages/$1"
+      "src": "/backoffices/eleves",
+      "dest": "/backoffices/eleves/index.html"
     },
     {
-      "src": "/frontend/(.*)",
-      "dest": "/frontend/$1"
+      "src": "/backoffices/enseignants", 
+      "dest": "/backoffices/enseignants/index.html"
     },
     {
-      "src": "/backend/(.*)",
-      "dest": "/backend/$1"
+      "src": "/backoffices/parents",
+      "dest": "/backoffices/parents/index.html"
     },
     {
-      "src": "/(.*)",
-      "dest": "/$1"
+      "src": "/login",
+      "dest": "/login.html"
     }
   ]
 }
