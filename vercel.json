@@ -2,15 +2,15 @@
   "version": 2,
   "builds": [
     {
-      "src": "index.html",
+      "src": "**/*.html",
       "use": "@vercel/static"
     },
     {
-      "src": "backoffices/**/*.html",
+      "src": "**/*.css",
       "use": "@vercel/static"
     },
     {
-      "src": "assets/**/*",
+      "src": "**/*.js",
       "use": "@vercel/static"
     }
   ],
@@ -20,11 +20,19 @@
       "dest": "/index.html"
     },
     {
+      "src": "/home",
+      "dest": "/landing.html"
+    },
+    {
+      "src": "/login",
+      "dest": "/login.html"
+    },
+    {
       "src": "/backoffices/eleves",
       "dest": "/backoffices/eleves/index.html"
     },
     {
-      "src": "/backoffices/enseignants", 
+      "src": "/backoffices/enseignants",
       "dest": "/backoffices/enseignants/index.html"
     },
     {
@@ -32,8 +40,28 @@
       "dest": "/backoffices/parents/index.html"
     },
     {
-      "src": "/login",
-      "dest": "/login.html"
+      "src": "/backoffices/etablissements",
+      "dest": "/backoffices/etablissements/index.html"
+    },
+    {
+      "src": "/backoffices/dren",
+      "dest": "/backoffices/dren/index.html"
+    },
+    {
+      "src": "/backoffices/partenaires",
+      "dest": "/backoffices/partenaires/index.html"
+    },
+    {
+      "src": "/backoffices/administrateurs",
+      "dest": "/backoffices/administrateurs/index.html"
+    },
+    {
+      "src": "/backoffices/analytics",
+      "dest": "/backoffices/analytics/index.html"
+    },
+    {
+      "src": "/pages/(.*)",
+      "dest": "/pages/$1"
     }
   ]
 }
