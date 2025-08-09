@@ -801,3 +801,282 @@
     <!-- ===============================
          🔥 FIN PARTIE 1/6 : HTML HEAD + CSS BASE PRODUCTION
          =============================== -->
+
+    <!-- ===============================
+         🔥 DÉBUT PARTIE 2/6 : STRUCTURE BODY + SIDEBAR
+         =============================== -->
+</head>
+<body data-theme="light">
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
+    
+    <!-- App Container -->
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Sidebar Header -->
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="logo-text">ÉtudIA V4.1</div>
+                </div>
+                <button class="toggle-btn" id="toggleSidebar" onclick="toggleSidebar()" title="Réduire/Agrandir">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            
+            <!-- User Profile -->
+            <div class="user-profile">
+                <div class="user-info">
+                    <div class="user-avatar">P</div>
+                    <div class="user-details">
+                        <div class="user-name">PACOUSSTAR</div>
+                        <div class="user-role">Élève Premium • Level 12</div>
+                        <div class="user-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">2,450</div>
+                                <div class="stat-label">Tokens</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">Level 12</div>
+                                <div class="stat-label">XP</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">89%</div>
+                                <div class="stat-label">Progrès</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation Menu -->
+            <nav class="nav-menu">
+                <!-- Section Principale -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Principal</div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link active" onclick="showSection('dashboard')" data-section="dashboard">
+                            <i class="fas fa-home nav-icon"></i>
+                            <span class="nav-text">Dashboard</span>
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link" onclick="showSection('chat-ia')" data-section="chat-ia">
+                            <i class="fas fa-robot nav-icon"></i>
+                            <span class="nav-text">Chat IA DeepSeek</span>
+                            <span class="nav-badge">Nouveau</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Section Académique -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Académique</div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link" onclick="showSection('cours')" data-section="cours">
+                            <i class="fas fa-book nav-icon"></i>
+                            <span class="nav-text">Mes Cours</span>
+                            <span class="nav-badge">12</span>
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link" onclick="showSection('devoirs')" data-section="devoirs">
+                            <i class="fas fa-clipboard-check nav-icon"></i>
+                            <span class="nav-text">Devoirs</span>
+                            <span class="nav-badge">3</span>
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link" onclick="showSection('notes')" data-section="notes">
+                            <i class="fas fa-chart-line nav-icon"></i>
+                            <span class="nav-text">Notes & Résultats</span>
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link" onclick="showSection('planning')" data-section="planning">
+                            <i class="fas fa-calendar nav-icon"></i>
+                            <span class="nav-text">Planning</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Section Outils -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Outils ÉtudIA</div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link" onclick="showSection('bibliotheque')" data-section="bibliotheque">
+                            <i class="fas fa-books nav-icon"></i>
+                            <span class="nav-text">Bibliothèque</span>
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link" onclick="showSection('documents')" data-section="documents">
+                            <i class="fas fa-file-upload nav-icon"></i>
+                            <span class="nav-text">Mes Documents</span>
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link" onclick="showSection('gamification')" data-section="gamification">
+                            <i class="fas fa-trophy nav-icon"></i>
+                            <span class="nav-text">Gamification</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Section Social -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Social & Support</div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link" onclick="showSection('parrainage')" data-section="parrainage">
+                            <i class="fas fa-users nav-icon"></i>
+                            <span class="nav-text">Parrainage</span>
+                            <span class="nav-badge">💰</span>
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link" onclick="showSection('liaison-parents')" data-section="liaison-parents">
+                            <i class="fas fa-user-friends nav-icon"></i>
+                            <span class="nav-text">Liaison Parents</span>
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link" onclick="showSection('communaute')" data-section="communaute">
+                            <i class="fas fa-comments nav-icon"></i>
+                            <span class="nav-text">Communauté</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Section Navigation Inter-Sites -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Navigation ÉtudIA</div>
+                    <div class="nav-item">
+                        <a href="https://etudia.gsnexpertises.com" class="nav-link" target="_blank">
+                            <i class="fas fa-home nav-icon"></i>
+                            <span class="nav-text">🏠 Site Principal</span>
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="https://adminetudia.gsnexpertises.com" class="nav-link" target="_blank">
+                            <i class="fas fa-rocket nav-icon"></i>
+                            <span class="nav-text">🚀 Interface IA</span>
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="https://appetudia.gsnexpertises.com" class="nav-link" target="_blank">
+                            <i class="fas fa-mobile-alt nav-icon"></i>
+                            <span class="nav-text">📱 App Mobile</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Section Paramètres -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Compte</div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link" onclick="showSection('profil')" data-section="profil">
+                            <i class="fas fa-user nav-icon"></i>
+                            <span class="nav-text">Mon Profil</span>
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link" onclick="showSection('abonnement')" data-section="abonnement">
+                            <i class="fas fa-credit-card nav-icon"></i>
+                            <span class="nav-text">Abonnement</span>
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link" onclick="showSection('parametres')" data-section="parametres">
+                            <i class="fas fa-cog nav-icon"></i>
+                            <span class="nav-text">Paramètres</span>
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link" onclick="showSection('aide')" data-section="aide">
+                            <i class="fas fa-question-circle nav-icon"></i>
+                            <span class="nav-text">Aide & Support</span>
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="/login.html" class="nav-link">
+                            <i class="fas fa-sign-out-alt nav-icon"></i>
+                            <span class="nav-text">Déconnexion</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-content">
+                    <!-- Mobile Menu Button -->
+                    <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <!-- Header Info -->
+                    <div class="header-info">
+                        <h1>Dashboard Personnel 👨‍🎓</h1>
+                        <p>Bienvenue PACOUSSTAR ! Voici votre espace d'apprentissage personnalisé avec ÉtudIA V4.1</p>
+                    </div>
+                    
+                    <!-- Header Actions -->
+                    <div class="header-actions">
+                        <!-- Quick Actions -->
+                        <div class="quick-actions">
+                            <button class="quick-action" onclick="showSection('chat-ia')" title="Chat IA Rapide">
+                                <i class="fas fa-robot"></i>
+                            </button>
+                            <button class="quick-action" onclick="showSection('documents')" title="Upload Document">
+                                <i class="fas fa-upload"></i>
+                            </button>
+                            <button class="quick-action notification-badge" onclick="showSection('notifications')" title="Notifications">
+                                <i class="fas fa-bell"></i>
+                            </button>
+                            <button class="quick-action" onclick="toggleTheme()" title="Changer de thème">
+                                <i class="fas fa-moon" id="themeIcon"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- User Dropdown -->
+                        <div class="user-dropdown" onclick="toggleUserDropdown()">
+                            <div class="user-avatar">P</div>
+                            <div class="dropdown-content" id="userDropdown">
+                                <a href="#" onclick="showSection('profil')">
+                                    <i class="fas fa-user"></i> Mon Profil
+                                </a>
+                                <a href="#" onclick="showSection('abonnement')">
+                                    <i class="fas fa-credit-card"></i> Abonnement
+                                </a>
+                                <a href="#" onclick="showSection('parametres')">
+                                    <i class="fas fa-cog"></i> Paramètres
+                                </a>
+                                <a href="/login.html">
+                                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Progress Bar (XP) -->
+                <div class="xp-progress">
+                    <div class="progress-info">
+                        <span class="xp-text">Level 12 - Expert Étudiant</span>
+                        <span class="xp-points">2,450 / 3,000 XP</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 82%"></div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- ===============================
+                 🔥 FIN PARTIE 2/6 : STRUCTURE BODY + SIDEBAR
+                 =============================== -->
