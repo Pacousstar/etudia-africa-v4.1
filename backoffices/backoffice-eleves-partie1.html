@@ -2100,3 +2100,1142 @@
     <!-- ===============================
          🔥 FIN PARTIE 4/6 : CSS HARMONISÉ + 4 CARDS ALIGNÉES
          =============================== -->
+
+
+<!-- ===============================
+                 🔥 DÉBUT PARTIE 5/6 : WIDGET IA FLOTTANT + JAVASCRIPT COMPLET
+                 =============================== -->
+            
+            <!-- Widget IA Flottant - OBLIGATOIRE DANS TOUS LES BACKOFFICES -->
+            <div id="aiFloatingWidget" class="ai-floating-widget">
+                <button class="ai-toggle-btn" id="aiToggleBtn" onclick="toggleAIWidget()">
+                    <i class="fas fa-robot"></i>
+                    <div class="ai-status-indicator"></div>
+                </button>
+                
+                <div class="ai-widget-container" id="aiWidgetContainer" style="display: none;">
+                    <!-- Widget Header -->
+                    <div class="ai-widget-header">
+                        <div class="ai-widget-title">
+                            <i class="fas fa-robot"></i>
+                            <span>DeepSeek R1</span>
+                        </div>
+                        <div class="ai-widget-actions">
+                            <button class="widget-action-btn" onclick="minimizeAIWidget()" title="Réduire">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button class="widget-action-btn" onclick="closeAIWidget()" title="Fermer">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Widget Modes -->
+                    <div class="ai-widget-modes">
+                        <button class="ai-mode-btn active" data-mode="normal" onclick="setWidgetMode('normal')">
+                            💬 <small>250t</small>
+                        </button>
+                        <button class="ai-mode-btn" data-mode="step_by_step" onclick="setWidgetMode('step_by_step')">
+                            📚 <small>180t</small>
+                        </button>
+                        <button class="ai-mode-btn" data-mode="direct_solution" onclick="setWidgetMode('direct_solution')">
+                            ⚡ <small>400t</small>
+                        </button>
+                        <button class="ai-mode-btn" data-mode="audio" onclick="setWidgetMode('audio')">
+                            🎤 <small>200t</small>
+                        </button>
+                    </div>
+                    
+                    <!-- Widget Messages -->
+                    <div class="ai-widget-messages" id="aiWidgetMessages">
+                        <div class="ai-widget-message ai">
+                            <div class="ai-message-avatar">🤖</div>
+                            <div class="ai-message-content">
+                                Salut PACOUSSTAR ! Widget IA prêt. Comment puis-je t'aider ?
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Widget Input -->
+                    <div class="ai-widget-input">
+                        <div class="ai-input-group">
+                            <textarea 
+                                id="aiWidgetTextarea" 
+                                placeholder="Pose ta question..."
+                                rows="2"
+                                onkeydown="handleWidgetKeyDown(event)"
+                                oninput="autoResizeWidget(this)"
+                            ></textarea>
+                            <button class="ai-send-btn" id="aiWidgetSendBtn" onclick="sendWidgetMessage()" disabled>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <div class="ai-widget-footer">
+                            <span class="tokens-left">Tokens: 2,450</span>
+                            <button class="expand-chat-btn" onclick="expandToFullChat()">
+                                <i class="fas fa-expand"></i> Chat complet
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Toast Container -->
+            <div class="toast-container" id="toastContainer"></div>
+        </main>
+    </div>
+    
+    <style>
+        /* ============================================
+           🤖 WIDGET IA FLOTTANT - STYLE TESLA
+           ============================================ */
+        .ai-floating-widget {
+            position: fixed !important;
+            bottom: 20px !important;
+            right: 20px !important;
+            z-index: 10000 !important;
+            font-family: 'Inter', sans-serif !important;
+        }
+        
+        .ai-toggle-btn {
+            width: 60px !important;
+            height: 60px !important;
+            background: var(--gradient-primary) !important;
+            border: none !important;
+            border-radius: 50% !important;
+            color: white !important;
+            font-size: 1.5rem !important;
+            cursor: pointer !important;
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4) !important;
+            transition: all 0.3s ease !important;
+            position: relative !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        
+        .ai-toggle-btn:hover {
+            transform: scale(1.1) !important;
+            box-shadow: 0 12px 30px rgba(255, 107, 53, 0.6) !important;
+        }
+        
+        .ai-status-indicator {
+            position: absolute !important;
+            top: 8px !important;
+            right: 8px !important;
+            width: 12px !important;
+            height: 12px !important;
+            background: #22c55e !important;
+            border: 2px solid white !important;
+            border-radius: 50% !important;
+            animation: pulse 2s infinite !important;
+        }
+        
+        .ai-widget-container {
+            position: absolute !important;
+            bottom: 80px !important;
+            right: 0 !important;
+            width: 350px !important;
+            height: 500px !important;
+            background: var(--glassmorphism) !important;
+            backdrop-filter: blur(20px) !important;
+            border: 1px solid var(--glassmorphism-border) !important;
+            border-radius: 16px !important;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            overflow: hidden !important;
+            animation: slideUp 0.3s ease !important;
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        .ai-widget-header {
+            background: var(--gradient-primary) !important;
+            color: white !important;
+            padding: 12px 16px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+        }
+        
+        .ai-widget-title {
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            font-weight: 600 !important;
+            font-size: 0.9rem !important;
+        }
+        
+        .ai-widget-actions {
+            display: flex !important;
+            gap: 4px !important;
+        }
+        
+        .widget-action-btn {
+            width: 24px !important;
+            height: 24px !important;
+            background: rgba(255, 255, 255, 0.2) !important;
+            border: none !important;
+            border-radius: 6px !important;
+            color: white !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 0.75rem !important;
+            transition: all 0.2s ease !important;
+        }
+        
+        .widget-action-btn:hover {
+            background: rgba(255, 255, 255, 0.3) !important;
+        }
+        
+        .ai-widget-modes {
+            padding: 8px 12px !important;
+            background: rgba(31, 41, 55, 0.8) !important;
+            border-bottom: 1px solid var(--glassmorphism-border) !important;
+            display: flex !important;
+            gap: 4px !important;
+        }
+        
+        .ai-mode-btn {
+            flex: 1 !important;
+            padding: 6px 4px !important;
+            border: 1px solid var(--glassmorphism-border) !important;
+            border-radius: 8px !important;
+            background: var(--glassmorphism) !important;
+            color: var(--etudia-white) !important;
+            font-size: 0.7rem !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 2px !important;
+        }
+        
+        .ai-mode-btn:hover {
+            border-color: var(--etudia-primary) !important;
+            background: rgba(255, 107, 53, 0.2) !important;
+        }
+        
+        .ai-mode-btn.active {
+            background: var(--gradient-primary) !important;
+            border-color: var(--etudia-primary) !important;
+            color: white !important;
+        }
+        
+        .ai-widget-messages {
+            flex: 1 !important;
+            overflow-y: auto !important;
+            padding: 12px !important;
+            background: rgba(15, 23, 42, 0.6) !important;
+        }
+        
+        .ai-widget-message {
+            margin-bottom: 12px !important;
+            display: flex !important;
+            align-items: flex-start !important;
+            gap: 8px !important;
+        }
+        
+        .ai-widget-message.user {
+            flex-direction: row-reverse !important;
+        }
+        
+        .ai-message-avatar {
+            width: 28px !important;
+            height: 28px !important;
+            border-radius: 50% !important;
+            background: var(--gradient-primary) !important;
+            color: white !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 0.75rem !important;
+            flex-shrink: 0 !important;
+        }
+        
+        .ai-widget-message.user .ai-message-avatar {
+            background: var(--gradient-secondary) !important;
+        }
+        
+        .ai-message-content {
+            background: var(--glassmorphism) !important;
+            border: 1px solid var(--glassmorphism-border) !important;
+            border-radius: 12px !important;
+            padding: 8px 12px !important;
+            font-size: 0.8rem !important;
+            line-height: 1.4 !important;
+            max-width: 80% !important;
+            color: var(--etudia-white) !important;
+            backdrop-filter: blur(10px) !important;
+        }
+        
+        .ai-widget-message.user .ai-message-content {
+            background: var(--gradient-primary) !important;
+            border-color: var(--etudia-primary) !important;
+            color: white !important;
+        }
+        
+        .ai-widget-input {
+            padding: 12px !important;
+            background: rgba(31, 41, 55, 0.9) !important;
+            border-top: 1px solid var(--glassmorphism-border) !important;
+        }
+        
+        .ai-input-group {
+            display: flex !important;
+            gap: 8px !important;
+            align-items: flex-end !important;
+            margin-bottom: 8px !important;
+        }
+        
+        #aiWidgetTextarea {
+            flex: 1 !important;
+            min-height: 36px !important;
+            max-height: 80px !important;
+            padding: 8px 12px !important;
+            border: 1px solid var(--glassmorphism-border) !important;
+            border-radius: 8px !important;
+            background: var(--glassmorphism) !important;
+            color: var(--etudia-white) !important;
+            font-size: 0.8rem !important;
+            font-family: inherit !important;
+            resize: none !important;
+            transition: all 0.2s ease !important;
+        }
+        
+        #aiWidgetTextarea:focus {
+            outline: none !important;
+            border-color: var(--etudia-primary) !important;
+            box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2) !important;
+        }
+        
+        #aiWidgetTextarea::placeholder {
+            color: rgba(255, 255, 255, 0.5) !important;
+        }
+        
+        .ai-send-btn {
+            width: 36px !important;
+            height: 36px !important;
+            background: var(--gradient-primary) !important;
+            border: none !important;
+            border-radius: 8px !important;
+            color: white !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            transition: all 0.2s ease !important;
+        }
+        
+        .ai-send-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #ff8c42, #ff6b35) !important;
+            transform: translateY(-1px) !important;
+        }
+        
+        .ai-send-btn:disabled {
+            background: rgba(255, 255, 255, 0.2) !important;
+            cursor: not-allowed !important;
+        }
+        
+        .ai-widget-footer {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            font-size: 0.7rem !important;
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+        
+        .expand-chat-btn {
+            background: none !important;
+            border: none !important;
+            color: var(--etudia-primary) !important;
+            cursor: pointer !important;
+            font-size: 0.7rem !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 4px !important;
+            transition: all 0.2s ease !important;
+        }
+        
+        .expand-chat-btn:hover {
+            color: #ff8c42 !important;
+        }
+        
+        /* ============================================
+           🔔 TOAST NOTIFICATIONS
+           ============================================ */
+        .toast-container {
+            position: fixed !important;
+            top: 20px !important;
+            right: 20px !important;
+            z-index: 10001 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 12px !important;
+        }
+        
+        .toast {
+            min-width: 320px !important;
+            padding: 16px !important;
+            background: var(--glassmorphism) !important;
+            backdrop-filter: blur(20px) !important;
+            border: 1px solid var(--glassmorphism-border) !important;
+            border-radius: 12px !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+            transform: translateX(100%) !important;
+            opacity: 0 !important;
+            transition: all 0.3s ease !important;
+            color: var(--etudia-white) !important;
+        }
+        
+        .toast.show {
+            transform: translateX(0) !important;
+            opacity: 1 !important;
+        }
+        
+        .toast.success {
+            border-left: 4px solid var(--etudia-success) !important;
+        }
+        
+        .toast.error {
+            border-left: 4px solid var(--etudia-danger) !important;
+        }
+        
+        .toast.warning {
+            border-left: 4px solid var(--etudia-warning) !important;
+        }
+        
+        .toast.info {
+            border-left: 4px solid var(--etudia-info) !important;
+        }
+        
+        /* ============================================
+           📱 RESPONSIVE WIDGET
+           ============================================ */
+        @media (max-width: 768px) {
+            .ai-widget-container {
+                width: 300px !important;
+                height: 400px !important;
+                bottom: 70px !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .ai-floating-widget {
+                bottom: 80px !important;
+                right: 15px !important;
+            }
+            
+            .ai-widget-container {
+                width: 280px !important;
+                height: 350px !important;
+                bottom: 60px !important;
+            }
+        }
+    </style>
+    
+    <script>
+        /* ============================================
+           🔥 VARIABLES GLOBALES - PRODUCTION
+           ============================================ */
+        const API_BASE_URL = 'https://etudia-v41-api.onrender.com';
+        let currentSection = 'dashboard';
+        let sidebarCollapsed = false;
+        let currentAIMode = 'normal';
+        let aiWidgetOpen = false;
+        let userTokens = 2450;
+        let chatSessions = {};
+        let currentSession = 1;
+        let sessionCounter = 1;
+        
+        /* ============================================
+           🧭 FONCTIONS DE NAVIGATION
+           ============================================ */
+        function showSection(sectionId) {
+            // Cacher toutes les sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Afficher la section demandée
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            
+            // Mettre à jour la navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            const activeLink = document.querySelector(`[data-section="${sectionId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            currentSection = sectionId;
+            
+            // Fermer le menu mobile si ouvert
+            closeMobileMenu();
+            
+            // Toast de notification
+            showToast(`Section ${getSectionName(sectionId)} ouverte`, 'success');
+        }
+        
+        function getSectionName(sectionId) {
+            const names = {
+                'dashboard': 'Dashboard',
+                'chat-ia': 'Chat IA',
+                'cours': 'Mes Cours',
+                'devoirs': 'Devoirs',
+                'notes': 'Notes & Résultats',
+                'planning': 'Planning',
+                'bibliotheque': 'Bibliothèque',
+                'documents': 'Mes Documents',
+                'gamification': 'Gamification',
+                'parrainage': 'Parrainage',
+                'liaison-parents': 'Liaison Parents',
+                'communaute': 'Communauté',
+                'profil': 'Mon Profil',
+                'abonnement': 'Abonnement',
+                'parametres': 'Paramètres',
+                'aide': 'Aide & Support'
+            };
+            return names[sectionId] || sectionId;
+        }
+        
+        /* ============================================
+           📱 FONCTIONS SIDEBAR
+           ============================================ */
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.getElementById('toggleSidebar');
+            
+            sidebar.classList.toggle('collapsed');
+            sidebarCollapsed = !sidebarCollapsed;
+            
+            // Changer l'icône
+            const icon = toggleBtn.querySelector('i');
+            icon.className = sidebarCollapsed ? 'fas fa-chevron-right' : 'fas fa-chevron-left';
+        }
+        
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileOverlay');
+            
+            sidebar.classList.toggle('mobile-open');
+            overlay.classList.toggle('active');
+        }
+        
+        function closeMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileOverlay');
+            
+            sidebar.classList.remove('mobile-open');
+            overlay.classList.remove('active');
+        }
+        
+        /* ============================================
+           🤖 WIDGET IA FLOTTANT - FONCTIONS PRINCIPALES
+           ============================================ */
+        function toggleAIWidget() {
+            const widget = document.getElementById('aiWidgetContainer');
+            const toggleBtn = document.getElementById('aiToggleBtn');
+            
+            if (aiWidgetOpen) {
+                widget.style.display = 'none';
+                toggleBtn.innerHTML = '<i class="fas fa-robot"></i><div class="ai-status-indicator"></div>';
+                aiWidgetOpen = false;
+                showToast('Widget IA fermé', 'info');
+            } else {
+                widget.style.display = 'flex';
+                toggleBtn.innerHTML = '<i class="fas fa-times"></i><div class="ai-status-indicator"></div>';
+                aiWidgetOpen = true;
+                showToast('Widget IA ouvert', 'success');
+                
+                // Focus sur l'input
+                setTimeout(() => {
+                    document.getElementById('aiWidgetTextarea').focus();
+                }, 100);
+            }
+        }
+        
+        function minimizeAIWidget() {
+            const widget = document.getElementById('aiWidgetContainer');
+            widget.style.display = 'none';
+            aiWidgetOpen = false;
+            
+            const toggleBtn = document.getElementById('aiToggleBtn');
+            toggleBtn.innerHTML = '<i class="fas fa-robot"></i><div class="ai-status-indicator"></div>';
+        }
+        
+        function closeAIWidget() {
+            minimizeAIWidget();
+        }
+        
+        function setWidgetMode(mode) {
+            currentAIMode = mode;
+            
+            // Mettre à jour les boutons
+            document.querySelectorAll('.ai-mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
+            
+            // Descriptions des modes
+            const descriptions = {
+                'normal': 'Mode Normal : Conversation équilibrée',
+                'step_by_step': 'Mode Étape par Étape : Résolution progressive',
+                'direct_solution': 'Mode Solution Directe : Réponse complète',
+                'audio': 'Mode Audio : Réponses pour synthèse vocale'
+            };
+            
+            showToast(`${descriptions[mode]} activé`, 'success');
+        }
+        
+        function handleWidgetKeyDown(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendWidgetMessage();
+            }
+        }
+        
+        function autoResizeWidget(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 80) + 'px';
+            
+            // Activer/désactiver le bouton d'envoi
+            const sendBtn = document.getElementById('aiWidgetSendBtn');
+            sendBtn.disabled = textarea.value.trim() === '';
+        }
+        
+        /* ============================================
+           🔌 FONCTIONS API - PRODUCTION RÉELLE
+           ============================================ */
+        async function sendWidgetMessage() {
+            const textarea = document.getElementById('aiWidgetTextarea');
+            const message = textarea.value.trim();
+            
+            if (!message) return;
+            
+            // Ajouter le message utilisateur
+            addWidgetMessage(message, 'user');
+            
+            // Vider et réinitialiser l'input
+            textarea.value = '';
+            textarea.style.height = 'auto';
+            document.getElementById('aiWidgetSendBtn').disabled = true;
+            
+            // Simuler la frappe de l'IA
+            addWidgetMessage('IA en train d\'écrire...', 'ai', true);
+            
+            try {
+                // 🔥 APPEL API RÉEL VERS NOTRE BACKEND
+                const response = await fetch(`${API_BASE_URL}/api/chat`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        mode: currentAIMode,
+                        userId: 'PACOUSSTAR',
+                        sessionId: currentSession
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const aiResponse = data.response || data.message || 'Réponse reçue !';
+                    
+                    // Remplacer le message de frappe par la vraie réponse
+                    replaceLastWidgetMessage(aiResponse);
+                    
+                    // Décompter les tokens
+                    const tokensUsed = getTokensForMode();
+                    userTokens -= tokensUsed;
+                    updateTokensDisplay();
+                    
+                    // Toast de succès
+                    showToast(`Réponse IA reçue (-${tokensUsed} tokens)`, 'success');
+                } else {
+                    throw new Error(`Erreur API: ${response.status}`);
+                }
+            } catch (error) {
+                console.error('Erreur API:', error);
+                
+                // Fallback avec réponse intelligente
+                const aiResponse = generateSmartResponse(message);
+                replaceLastWidgetMessage(aiResponse);
+                
+                // Décompter les tokens même en simulation
+                const tokensUsed = getTokensForMode();
+                userTokens -= tokensUsed;
+                updateTokensDisplay();
+                
+                showToast(`Mode offline - Réponse simulée (-${tokensUsed} tokens)`, 'warning');
+            }
+        }
+        
+        function addWidgetMessage(message, sender, isTyping = false) {
+            const messagesContainer = document.getElementById('aiWidgetMessages');
+            
+            const messageElement = document.createElement('div');
+            messageElement.className = `ai-widget-message ${sender}`;
+            
+            const avatar = sender === 'ai' ? '🤖' : 'P';
+            
+            messageElement.innerHTML = `
+                <div class="ai-message-avatar">${avatar}</div>
+                <div class="ai-message-content ${isTyping ? 'typing' : ''}">${message}</div>
+            `;
+            
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        function replaceLastWidgetMessage(newMessage) {
+            const messagesContainer = document.getElementById('aiWidgetMessages');
+            const lastMessage = messagesContainer.lastElementChild;
+            
+            if (lastMessage) {
+                const contentElement = lastMessage.querySelector('.ai-message-content');
+                contentElement.textContent = newMessage;
+                contentElement.classList.remove('typing');
+            }
+        }
+        
+        function expandToFullChat() {
+            showSection('chat-ia');
+            closeAIWidget();
+            showToast('Chat complet ouvert', 'info');
+        }
+        
+        /* ============================================
+           🔧 FONCTIONS UTILITAIRES
+           ============================================ */
+        function getTokensForMode() {
+            const tokens = {
+                'normal': 250,
+                'step_by_step': 180,
+                'direct_solution': 400,
+                'audio': 200
+            };
+            return tokens[currentAIMode] || 250;
+        }
+        
+        function generateSmartResponse(userMessage) {
+            const responses = [
+                `Excellente question sur "${userMessage.substring(0, 30)}..." ! En mode ${currentAIMode}, voici mon analyse détaillée. Cette question nécessite une approche méthodique pour bien comprendre les concepts clés...`,
+                `Pour répondre à "${userMessage.substring(0, 30)}...", je vais utiliser le mode ${currentAIMode}. Les éléments importants à retenir sont la logique, la structure et l'application pratique...`,
+                `Votre question "${userMessage.substring(0, 30)}..." est très pertinente ! En mode ${currentAIMode}, voici comment nous pouvons l'aborder de manière efficace...`,
+                `Intéressant ! Pour "${userMessage.substring(0, 30)}...", je recommande cette méthode d'analyse qui vous permettra de bien maîtriser le sujet...`
+            ];
+            
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+        
+        function updateTokensDisplay() {
+            // Mettre à jour tous les affichages de tokens
+            const displays = ['tokenDisplay', 'tokenCount'];
+            displays.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = userTokens;
+                }
+            });
+            
+            // Mettre à jour le widget footer
+            const tokensLeft = document.querySelector('.tokens-left');
+            if (tokensLeft) {
+                tokensLeft.textContent = `Tokens: ${userTokens}`;
+            }
+        }
+        
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            body.setAttribute('data-theme', newTheme);
+            
+            const themeIcon = document.getElementById('themeIcon');
+            if (themeIcon) {
+                themeIcon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            }
+            
+            showToast(`Thème ${newTheme === 'dark' ? 'sombre' : 'clair'} activé`, 'info');
+        }
+        
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('show');
+            }
+        }
+        
+        /* ============================================
+           🔔 SYSTÈME TOAST NOTIFICATIONS
+           ============================================ */
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <div class="toast-header">
+                    <h4 class="toast-title">${getToastTitle(type)}</h4>
+                    <button class="toast-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                </div>
+                <p class="toast-message">${message}</p>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Animer l'apparition
+            setTimeout(() => toast.classList.add('show'), 100);
+            
+            // Auto-suppression après 4 secondes
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+        
+        function getToastTitle(type) {
+            const titles = {
+                'success': '✅ Succès',
+                'error': '❌ Erreur',
+                'warning': '⚠️ Attention',
+                'info': 'ℹ️ Information'
+            };
+            return titles[type] || 'Notification';
+        }
+        
+        /* ============================================
+           🎮 FONCTIONS INTERACTIVES
+           ============================================ */
+        function attachDocument() {
+            showToast('Fonction upload document - Bientôt disponible !', 'info');
+        }
+        
+        function startVoiceInput() {
+            showToast('Saisie vocale - Bientôt disponible !', 'info');
+        }
+        
+        function sendMessage() {
+            const textarea = document.getElementById('chatInputFull');
+            if (textarea && textarea.value.trim()) {
+                const message = textarea.value.trim();
+                showToast(`Message envoyé: ${message.substring(0, 30)}...`, 'success');
+                textarea.value = '';
+            }
+        }
+        
+        function sendMessageFull() {
+            sendMessage();
+        }
+        
+        function insertQuickPrompt(prompt) {
+            const textarea = document.getElementById('chatInputFull');
+            if (textarea) {
+                textarea.value = prompt + ' ';
+                textarea.focus();
+            }
+        }
+        
+        function newChatSession() {
+            sessionCounter++;
+            showToast(`Nouvelle session ${sessionCounter} créée`, 'success');
+        }
+        
+        function clearChat() {
+            showToast('Chat effacé', 'info');
+        }
+        
+        function exportChat() {
+            showToast('Export du chat - Fonctionnalité bientôt disponible !', 'info');
+        }
+        
+        /* ============================================
+           📊 ANIMATIONS DES STATISTIQUES
+           ============================================ */
+        function animateStats() {
+            document.querySelectorAll('.stat-value').forEach(stat => {
+                const text = stat.textContent;
+                let numericValue;
+                
+                if (text.includes('F') || text.includes('FCFA')) {
+                    numericValue = parseFloat(text.replace(/[^0-9.]/g, ''));
+                } else if (text.includes('Level')) {
+                    numericValue = parseFloat(text.replace('Level ', ''));
+                } else {
+                    numericValue = parseFloat(text.replace(/[^0-9.]/g, ''));
+                }
+                
+                if (!isNaN(numericValue) && numericValue > 0) {
+                    let current = 0;
+                    const increment = numericValue / 50;
+                    
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= numericValue) {
+                            current = numericValue;
+                            clearInterval(timer);
+                            stat.textContent = text;
+                        } else {
+                            if (text.includes('F') || text.includes('FCFA')) {
+                                stat.textContent = Math.floor(current).toLocaleString() + 'F';
+                            } else if (text.includes('Level')) {
+                                stat.textContent = 'Level ' + Math.floor(current);
+                            } else {
+                                stat.textContent = Math.floor(current);
+                            }
+                        }
+                    }, 30);
+                }
+            });
+        }
+        
+        /* ============================================
+           🔄 FONCTIONS DE SAUVEGARDE ET PERSISTENCE
+           ============================================ */
+        function saveUserData() {
+            const userData = {
+                tokens: userTokens,
+                currentMode: currentAIMode,
+                sidebarCollapsed: sidebarCollapsed,
+                lastSection: currentSection,
+                timestamp: Date.now()
+            };
+            
+            try {
+                localStorage.setItem('etudia_user_data', JSON.stringify(userData));
+            } catch (error) {
+                console.log('Sauvegarde en mémoire uniquement');
+                window.etudiaUserData = userData;
+            }
+        }
+        
+        function loadUserData() {
+            try {
+                const saved = localStorage.getItem('etudia_user_data');
+                if (saved) {
+                    const userData = JSON.parse(saved);
+                    userTokens = userData.tokens || 2450;
+                    currentAIMode = userData.currentMode || 'normal';
+                    sidebarCollapsed = userData.sidebarCollapsed || false;
+                    currentSection = userData.lastSection || 'dashboard';
+                    updateTokensDisplay();
+                }
+            } catch (error) {
+                console.log('Chargement depuis mémoire');
+                if (window.etudiaUserData) {
+                    const userData = window.etudiaUserData;
+                    userTokens = userData.tokens || 2450;
+                    currentAIMode = userData.currentMode || 'normal';
+                }
+            }
+        }
+        
+        /* ============================================
+           📱 GESTION RESPONSIVE
+           ============================================ */
+        function handleResize() {
+            const isMobile = window.innerWidth <= 768;
+            const sidebar = document.getElementById('sidebar');
+            
+            if (isMobile && sidebar) {
+                sidebar.classList.remove('mobile-open');
+            }
+            
+            // Ajuster le widget IA selon la taille d'écran
+            const widget = document.getElementById('aiWidgetContainer');
+            if (widget && aiWidgetOpen) {
+                if (isMobile) {
+                    widget.style.width = '280px';
+                    widget.style.height = '350px';
+                } else {
+                    widget.style.width = '350px';
+                    widget.style.height = '500px';
+                }
+            }
+        }
+        
+        /* ============================================
+           🎯 FONCTIONS D'INITIALISATION
+           ============================================ */
+        function initializeBackoffice() {
+            // Charger les données utilisateur
+            loadUserData();
+            
+            // Afficher la section par défaut
+            showSection(currentSection);
+            
+            // Configurer les event listeners
+            setupEventListeners();
+            
+            // Animer les stats
+            setTimeout(animateStats, 500);
+            
+            // Notification de bienvenue
+            setTimeout(() => {
+                showToast('🎓 Bienvenue sur ÉtudIA V4.1 ! Assistant IA prêt.', 'success');
+            }, 1000);
+            
+            // Sauvegarde automatique toutes les 30 secondes
+            setInterval(saveUserData, 30000);
+            
+            console.log('🚀 ÉtudIA V4.1 Backoffice Élèves initialisé avec succès !');
+        }
+        
+        function setupEventListeners() {
+            // Mobile menu
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            }
+            
+            const mobileOverlay = document.getElementById('mobileOverlay');
+            if (mobileOverlay) {
+                mobileOverlay.addEventListener('click', closeMobileMenu);
+            }
+            
+            // Auto-resize pour les textareas
+            const chatInput = document.getElementById('chatInputFull');
+            if (chatInput) {
+                chatInput.addEventListener('input', function() {
+                    this.style.height = 'auto';
+                    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+                });
+                
+                chatInput.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter' && event.ctrlKey) {
+                        event.preventDefault();
+                        sendMessage();
+                    }
+                });
+            }
+            
+            // Fermer dropdown si clic ailleurs
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.user-dropdown')) {
+                    const dropdown = document.getElementById('userDropdown');
+                    if (dropdown) {
+                        dropdown.classList.remove('show');
+                    }
+                }
+            });
+            
+            // Responsive
+            window.addEventListener('resize', handleResize);
+            
+            // Raccourcis clavier
+            document.addEventListener('keydown', function(event) {
+                // Ctrl+K : Focus sur widget IA
+                if (event.ctrlKey && event.key === 'k') {
+                    event.preventDefault();
+                    if (!aiWidgetOpen) {
+                        toggleAIWidget();
+                    }
+                    document.getElementById('aiWidgetTextarea')?.focus();
+                }
+                
+                // Ctrl+1 à Ctrl+4 : Modes IA
+                if (event.ctrlKey && event.key >= '1' && event.key <= '4') {
+                    event.preventDefault();
+                    const modes = ['normal', 'step_by_step', 'direct_solution', 'audio'];
+                    setWidgetMode(modes[parseInt(event.key) - 1]);
+                }
+                
+                // Ctrl+D : Dashboard
+                if (event.ctrlKey && event.key === 'd') {
+                    event.preventDefault();
+                    showSection('dashboard');
+                }
+                
+                // Ctrl+Shift+C : Chat IA
+                if (event.ctrlKey && event.shiftKey && event.key === 'C') {
+                    event.preventDefault();
+                    showSection('chat-ia');
+                }
+                
+                // Escape : Fermer widget IA
+                if (event.key === 'Escape' && aiWidgetOpen) {
+                    closeAIWidget();
+                }
+            });
+        }
+        
+        /* ============================================
+           🎉 NOTIFICATIONS AUTOMATIQUES
+           ============================================ */
+        function startNotifications() {
+            // Notification de tokens
+            setTimeout(() => {
+                if (userTokens < 500) {
+                    showToast('⚠️ Attention : Il vous reste moins de 500 tokens !', 'warning');
+                }
+            }, 5000);
+            
+            // Notification de parrainage
+            setTimeout(() => {
+                showToast('💰 Nouveau gain de parrainage : +500 FCFA !', 'success');
+            }, 15000);
+            
+            // Notification de progression
+            setTimeout(() => {
+                showToast('🏆 Bravo ! Vous avez gagné 50 XP !', 'success');
+            }, 25000);
+        }
+        
+        /* ============================================
+           🚀 INITIALISATION AU CHARGEMENT
+           ============================================ */
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeBackoffice();
+            startNotifications();
+        });
+        
+        // Sauvegarde avant fermeture
+        window.addEventListener('beforeunload', function() {
+            saveUserData();
+        });
+        
+        /* ============================================
+           🔧 FONCTIONS PUBLIQUES EXPOSÉES
+           ============================================ */
+        window.EtudIA = {
+            showSection,
+            toggleAIWidget,
+            setWidgetMode,
+            sendWidgetMessage,
+            showToast,
+            updateTokensDisplay,
+            toggleTheme,
+            toggleSidebar,
+            version: '4.1.0',
+            mode: 'production'
+        };
+        
+        console.log('🎓 ÉtudIA V4.1 - Backoffice Élèves chargé !');
+        console.log('🤖 Widget IA DeepSeek R1 opérationnel !');
+        console.log('🔗 API Backend:', API_BASE_URL);
+    </script>
+    
+    <!-- ===============================
+         🔥 FIN PARTIE 5/6 : WIDGET IA FLOTTANT + JAVASCRIPT COMPLET
+         =============================== -->
