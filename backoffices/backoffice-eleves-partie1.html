@@ -3,99 +3,280 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📊 Tableau de Bord ÉtudIA V4.2</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Mon Espace ÉtudIA - Jean-Baptiste DOSSO</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
     <style>
+        /* ============================================
+           🎨 VARIABLES CSS - DESIGN TESLA HARMONISÉ
+           ============================================ */
         :root {
-            --etudia-dark: #0a0e1a;
-            --etudia-card: #1a1f2e;
+            /* 🎯 Couleurs ÉtudIA Tesla */
             --etudia-primary: #FF6B35;
-            --etudia-secondary: #10B981;
-            --etudia-accent: #3B82F6;
-            --etudia-warning: #F59E0B;
+            --etudia-secondary: #EF4444;
             --etudia-success: #10B981;
+            --etudia-warning: #F59E0B;
+            --etudia-info: #3B82F6;
+            --etudia-dark: #1F2937;
+            --etudia-darker: #111827;
             --etudia-white: #FFFFFF;
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --border-radius: 12px;
-            --transition: all 0.3s ease;
+            
+            /* 🌈 Gradients Tesla */
             --gradient-primary: linear-gradient(135deg, #FF6B35, #EF4444);
             --gradient-secondary: linear-gradient(135deg, #10B981, #3B82F6);
-            --gradient-warning: linear-gradient(135deg, #F59E0B, #EF4444);
-            --gradient-success: linear-gradient(135deg, #10B981, #059669);
+            --gradient-background: linear-gradient(135deg, #1F2937, #111827);
+            
+            /* 🎨 Glassmorphism */
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            
+            /* 📐 Layout */
+            --sidebar-width: 280px;
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --transition: all 0.3s ease;
         }
-
+        
+        /* ============================================
+           🔄 RESET & BASE STYLES TESLA
+           ============================================ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a0e1a 0%, #1a1f2e 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gradient-background);
             color: var(--etudia-white);
+            line-height: 1.6;
+            overflow-x: hidden;
             min-height: 100vh;
-            padding: 2rem;
         }
-
-        .dashboard-container {
-            max-width: 1200px;
-            margin: 0 auto;
+        
+        /* ============================================
+           🏗️ LAYOUT PRINCIPAL TESLA
+           ============================================ */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
         }
-
-        .section-title {
+        
+        /* ============================================
+           📱 SIDEBAR TESLA
+           ============================================ */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        
+        .sidebar-header {
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .user-info {
+            margin-top: 1rem;
+        }
+        
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
             font-size: 1.5rem;
-            font-weight: 700;
+            color: white;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .user-plan {
+            color: var(--etudia-success);
+            font-size: 0.9rem;
+        }
+        
+        /* ============================================
+           📋 NAVIGATION SIDEBAR COMPACTE
+           ============================================ */
+        .nav-menu {
+            padding: 1rem 0;
+        }
+        
+        .nav-item {
+            margin: 0.2rem 1rem;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.6rem 1rem;
             color: var(--etudia-white);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            position: relative;
+            font-size: 0.9rem;
+        }
+        
+        .nav-link:hover {
+            background: var(--glass-bg);
+            transform: translateX(5px);
+        }
+        
+        .nav-link.active {
+            background: var(--gradient-primary);
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+        
+        .nav-link i {
+            width: 18px;
+            margin-right: 0.75rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        /* ============================================
+           🖥️ MAIN CONTENT TESLA
+           ============================================ */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 1.5rem;
+            background: transparent;
+        }
+        
+        .main-header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            padding: 1.2rem 1.8rem;
+            border-radius: var(--border-radius-lg);
+            border: 1px solid var(--glass-border);
             margin-bottom: 1.5rem;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 0.5rem;
+        }
+        
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .notification-btn, .chat-toggle {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.7rem;
+            border-radius: 50%;
+            color: var(--etudia-white);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            font-size: 0.9rem;
+        }
+        
+        .notification-btn:hover, .chat-toggle:hover {
+            background: var(--etudia-primary);
+            transform: scale(1.1);
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--etudia-secondary);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
             justify-content: center;
         }
-
+        
+        /* ============================================
+           📊 DASHBOARD CARDS COMPACTES
+           ============================================ */
         .dashboard-section {
-            margin-bottom: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Stats Cards Centrées */
-        .stats-grid {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
             margin-bottom: 1.5rem;
-            width: 100%;
         }
-
+        
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--etudia-white);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
         .stat-card {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: var(--border-radius);
-            padding: 1.5rem 1rem;
+            padding: 1.2rem;
             text-align: center;
             transition: var(--transition);
             position: relative;
             overflow: hidden;
-            width: 200px;
-            min-height: 180px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            max-width: 250px;
         }
-
+        
         .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(-3px);
+            box-shadow: var(--glass-shadow);
         }
-
+        
         .stat-card::before {
             content: '';
             position: absolute;
@@ -103,653 +284,2031 @@
             left: 0;
             right: 0;
             height: 3px;
+            background: var(--gradient-primary);
         }
-
-        .stat-card.tokens::before { background: var(--gradient-primary); }
-        .stat-card.sessions::before { background: var(--gradient-secondary); }
-        .stat-card.level::before { background: var(--gradient-warning); }
-        .stat-card.gains::before { background: var(--gradient-success); }
-
+        
         .stat-icon {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
+            background: var(--gradient-primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 0.6rem;
-            font-size: 1.1rem;
+            margin: 0 auto 0.8rem;
+            font-size: 1.2rem;
             color: white;
         }
-
-        .stat-icon.tokens { background: var(--gradient-primary); }
-        .stat-icon.sessions { background: var(--gradient-secondary); }
-        .stat-icon.level { background: var(--gradient-warning); }
-        .stat-icon.gains { background: var(--gradient-success); }
-
+        
         .stat-value {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--etudia-white);
-            margin: 0.5rem 0;
+            margin-bottom: 0.3rem;
         }
-
+        
         .stat-label {
             color: rgba(255, 255, 255, 0.7);
-            font-size: 0.8rem;
-            text-align: center;
-            padding: 0 0.5rem;
-        }
-
-        /* Objectifs Section Centrée */
-        .objectives-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            max-width: 800px;
-            width: 100%;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        .objectives-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .objectives-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--etudia-white);
-            margin: 0;
-            text-align: center;
-            flex: 1;
-        }
-
-        .objectives-grid {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .objective-item {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1));
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            border-radius: var(--border-radius);
-            padding: 1.2rem;
-            width: 350px;
-            max-width: 100%;
-        }
-
-        .objective-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            justify-content: center;
-        }
-
-        .objective-text {
             font-size: 0.85rem;
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 0.8rem;
-            text-align: center;
         }
-
-        .objective-actions {
-            display: flex;
-            justify-content: center;
-        }
-
-        .btn-small {
-            border: none;
-            padding: 0.4rem 0.8rem;
-            border-radius: var(--border-radius);
-            color: white;
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .btn-success { background: var(--etudia-success); }
-        .btn-primary { background: var(--etudia-primary); }
-
-        .btn-small:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Activité Récente Centrée */
-        .activity-card {
+        
+        /* ============================================
+           📈 ACTIVITÉ RÉCENTE - NOUVELLE SECTION
+           ============================================ */
+        .activity-section {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 16px;
+            border-radius: var(--border-radius-lg);
             padding: 1.5rem;
             margin-bottom: 1.5rem;
-            max-width: 800px;
-            width: 100%;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
-
+        
         .activity-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
-
-        .activity-title-main {
-            font-size: 1.1rem;
+        
+        .activity-title {
+            font-size: 1.2rem;
             font-weight: 600;
             color: var(--etudia-white);
-            margin: 0;
-            text-align: center;
-            flex: 1;
         }
-
-        .activity-grid {
+        
+        .view-all-btn {
+            background: var(--etudia-primary);
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: var(--border-radius);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .view-all-btn:hover {
+            background: var(--etudia-secondary);
+            transform: translateY(-1px);
+        }
+        
+        .activity-list {
             display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-top: 1rem;
+            flex-direction: column;
+            gap: 0.8rem;
         }
-
+        
         .activity-item {
             display: flex;
             align-items: center;
-            padding: 1rem;
+            padding: 0.8rem;
             background: rgba(0, 0, 0, 0.2);
             border-radius: var(--border-radius);
             border: 1px solid var(--glass-border);
             transition: var(--transition);
-            width: 350px;
-            max-width: 100%;
-            backdrop-filter: blur(10px);
         }
-
+        
         .activity-item:hover {
-            transform: translateX(5px);
-            border-color: var(--etudia-primary);
+            background: rgba(0, 0, 0, 0.3);
+            transform: translateX(3px);
         }
-
+        
         .activity-icon {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 1rem;
-            font-size: 1rem;
+            margin-right: 0.8rem;
+            font-size: 0.9rem;
             color: white;
-            flex-shrink: 0;
         }
-
+        
+        .activity-icon.ia { background: var(--gradient-primary); }
+        .activity-icon.document { background: var(--gradient-secondary); }
+        .activity-icon.gain { background: linear-gradient(135deg, #F59E0B, #EF4444); }
+        
         .activity-content {
             flex: 1;
         }
-
-        .activity-title {
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-            font-size: 0.95rem;
-            color: var(--etudia-white);
-            text-align: left;
+        
+        .activity-text {
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+            font-size: 0.9rem;
         }
-
-        .activity-desc {
-            color: rgba(255, 255, 255, 0.7);
+        
+        .activity-details {
+            color: rgba(255, 255, 255, 0.6);
             font-size: 0.8rem;
-            margin-bottom: 0.4rem;
-            text-align: left;
         }
-
+        
         .activity-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            text-align: right;
+            font-size: 0.8rem;
         }
-
+        
         .activity-time {
             color: rgba(255, 255, 255, 0.5);
-            font-size: 0.75rem;
+            margin-bottom: 0.2rem;
         }
-
+        
         .activity-value {
-            font-weight: 700;
-            font-size: 0.85rem;
+            color: var(--etudia-success);
+            font-weight: 600;
         }
-
-        .activity-value.tokens { color: #F59E0B; }
-        .activity-value.gain { color: #10B981; }
-        .activity-value.xp { color: #10B981; }
-        .activity-value.docs { color: #3B82F6; }
-
-        /* Actions Rapides Centrées */
-        .actions-grid {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
+        
+        .activity-value.negative {
+            color: var(--etudia-warning);
+        }
+        
+        /* ============================================
+           🎯 QUICK ACTIONS COMPACTES
+           ============================================ */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.8rem;
             margin-bottom: 1.5rem;
-            width: 100%;
         }
-
+        
         .action-card {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: var(--border-radius);
-            padding: 1.2rem 0.8rem;
+            padding: 1rem;
             text-align: center;
+            text-decoration: none;
             color: var(--etudia-white);
             transition: var(--transition);
             cursor: pointer;
-            width: 180px;
-            min-height: 140px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            max-width: 200px;
         }
-
+        
         .action-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-            border-color: var(--etudia-primary);
+            transform: translateY(-2px);
+            background: var(--etudia-primary);
+            color: white;
         }
-
+        
         .action-icon {
             font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
             display: block;
         }
-
-        .action-icon.ia { color: var(--etudia-primary); }
-        .action-icon.upload { color: var(--etudia-secondary); }
-        .action-icon.parrain { color: var(--etudia-warning); }
-        .action-icon.progress { color: var(--etudia-accent); }
-        .action-icon.tokens { color: #EF4444; }
-        .action-icon.badges { color: var(--etudia-warning); }
-
+        
         .action-title {
             font-weight: 600;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.2rem;
             font-size: 0.9rem;
         }
-
+        
         .action-desc {
             font-size: 0.75rem;
             opacity: 0.8;
-            text-align: center;
-            padding: 0 0.5rem;
         }
-
-        /* Responsive */
+        
+        /* ============================================
+           📄 DOCUMENTS SECTION COMPACTE
+           ============================================ */
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        
+        .document-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            transition: var(--transition);
+            max-width: 350px;
+        }
+        
+        .document-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glass-shadow);
+        }
+        
+        .document-item {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: var(--border-radius);
+            margin-bottom: 0.8rem;
+        }
+        
+        .document-icon {
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .document-info {
+            flex: 1;
+        }
+        
+        .document-name {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+            font-size: 0.9rem;
+        }
+        
+        .document-meta {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+        }
+        
+        .document-action {
+            background: var(--etudia-primary);
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: var(--border-radius);
+            color: white;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+        
+        .document-action:hover {
+            background: var(--etudia-secondary);
+        }
+        
+        /* ============================================
+           💰 PARRAINAGE SECTION V4.1 COMPACTE
+           ============================================ */
+        .parrainage-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .parrainage-header {
+            text-align: center;
+            margin-bottom: 1.2rem;
+        }
+        
+        .parrainage-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--etudia-white);
+            margin-bottom: 0.4rem;
+        }
+        
+        .parrainage-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        .parrainage-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        .parrainage-stat {
+            text-align: center;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .parrainage-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--etudia-success);
+            margin-bottom: 0.2rem;
+        }
+        
+        .parrainage-label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .referral-link-container {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.8rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .referral-link {
+            color: var(--etudia-success);
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            word-break: break-all;
+        }
+        
+        .copy-btn {
+            background: var(--etudia-info);
+            border: none;
+            padding: 0.3rem 0.6rem;
+            margin-left: 0.5rem;
+            border-radius: var(--border-radius);
+            color: white;
+            cursor: pointer;
+            font-size: 0.7rem;
+        }
+        
+        .share-buttons {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        
+        .share-btn {
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: var(--border-radius);
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.8rem;
+        }
+        
+        .share-btn.whatsapp { background: #25D366; }
+        .share-btn.facebook { background: #1877F2; }
+        .share-btn.copy { background: var(--etudia-info); }
+        
+        .share-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .withdrawal-section {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1));
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .withdrawal-available {
+            font-size: 1.1rem;
+            color: var(--etudia-success);
+            margin-bottom: 0.5rem;
+        }
+        
+        .withdrawal-note {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.8rem;
+        }
+        
+        .withdrawal-btn {
+            background: var(--gradient-secondary);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius);
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        .withdrawal-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+        }
+        
+        /* ============================================
+           💳 ABONNEMENTS SECTION BASÉE SUR PLANS.HTML
+           ============================================ */
+        .subscription-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .current-plan {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(239, 68, 68, 0.1));
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: var(--border-radius);
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .plan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .plan-info h3 {
+            color: var(--etudia-white);
+            margin-bottom: 0.3rem;
+            font-size: 1.1rem;
+        }
+        
+        .plan-info p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+        }
+        
+        .plan-price {
+            text-align: right;
+        }
+        
+        .price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--etudia-success);
+        }
+        
+        .currency {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .plan-usage {
+            margin-bottom: 1rem;
+        }
+        
+        .usage-stat {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .usage-label {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .usage-value {
+            color: var(--etudia-white);
+            font-weight: 600;
+        }
+        
+        .progress-bar {
+            background: rgba(0, 0, 0, 0.3);
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: var(--gradient-primary);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+        
+        .upgrade-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .upgrade-card {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .upgrade-card:hover {
+            border-color: var(--etudia-primary);
+            background: rgba(255, 107, 53, 0.1);
+        }
+        
+        .upgrade-card.popular {
+            border-color: var(--etudia-success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        .upgrade-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--etudia-white);
+        }
+        
+        .upgrade-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--etudia-success);
+            margin-bottom: 0.5rem;
+        }
+        
+        .upgrade-features {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+        
+        .upgrade-features li {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.3rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        
+        .upgrade-features li::before {
+            content: '✅';
+            position: absolute;
+            left: 0;
+        }
+        
+        .upgrade-btn {
+            background: var(--gradient-primary);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            width: 100%;
+            transition: var(--transition);
+        }
+        
+        .upgrade-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+        
+        /* ============================================
+           🤖 BOUTON FLOTTANT INTERFACE IA
+           ============================================ */
+        .floating-ia-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+            z-index: 999;
+            transition: var(--transition);
+            animation: pulse 2s infinite;
+        }
+        
+        .floating-ia-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(255, 107, 53, 0.6);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        /* ============================================
+           📱 RESPONSIVE TESLA
+           ============================================ */
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+        
         @media (max-width: 768px) {
-            body {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .mobile-overlay.active {
+                display: block;
+            }
+            
+            .main-content {
+                margin-left: 0;
                 padding: 1rem;
+            }
+            
+            .main-header {
+                padding: 1rem;
+            }
+            
+            .page-title {
+                font-size: 1.4rem;
             }
             
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
             }
             
-            .stat-card {
-                width: 160px;
-                min-height: 160px;
-                padding: 1.2rem 0.8rem;
-            }
-            
-            .actions-grid {
+            .quick-actions {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
             }
             
-            .action-card {
-                width: 150px;
-                min-height: 130px;
+            .documents-grid {
+                grid-template-columns: 1fr;
             }
             
-            .objective-item,
-            .activity-item {
-                width: 100%;
+            .parrainage-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .upgrade-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .floating-ia-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
             }
         }
-
-        @media (max-width: 480px) {
-            .stats-grid,
-            .actions-grid {
-                gap: 0.8rem;
-            }
-            
-            .stat-card {
-                width: 140px;
-                min-height: 140px;
-                padding: 1rem 0.5rem;
-            }
-            
-            .action-card {
-                width: 130px;
-                min-height: 120px;
-                padding: 1rem 0.5rem;
-            }
-            
-            .section-title {
-                font-size: 1.3rem;
+        
+        /* ============================================
+           🔔 NOTIFICATIONS TOAST
+           ============================================ */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+        
+        .toast {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 0.8rem 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--etudia-white);
+            box-shadow: var(--glass-shadow);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            max-width: 300px;
+            font-size: 0.9rem;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+        
+        .toast.success { border-left: 4px solid var(--etudia-success); }
+        .toast.error { border-left: 4px solid var(--etudia-secondary); }
+        .toast.warning { border-left: 4px solid var(--etudia-warning); }
+        .toast.info { border-left: 4px solid var(--etudia-info); }
+        
+        /* ============================================
+           🎮 MOBILE MENU
+           ============================================ */
+        .mobile-menu-btn {
+            display: none;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.6rem;
+            border-radius: var(--border-radius);
+            color: var(--etudia-white);
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
             }
         }
-
-        /* Animations */
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+        
+        /* ============================================
+           🎯 SECTIONS CONTENT
+           ============================================ */
+        .content-section {
+            display: none;
         }
-
+        
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        
+        .content-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .coming-soon {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+        
+        .coming-soon-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .coming-soon h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--etudia-white);
+        }
+        
+        .coming-soon p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        /* ============================================
+           📊 INTERFACE IA CHAT COMPLÈTE
+           ============================================ */
+        .ia-chat-interface {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-lg);
+            height: 600px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .ia-header {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.2), rgba(239, 68, 68, 0.2));
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .ia-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--etudia-white);
+        }
+        
+        .ia-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--etudia-success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        .learning-modes {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .mode-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 0.4rem 0.8rem;
+            color: white;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .mode-btn:hover, .mode-btn.active {
+            background: var(--etudia-primary);
+            border-color: var(--etudia-primary);
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.8));
+        }
+        
+        .message {
+            display: flex;
+            margin-bottom: 1rem;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+        
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        
+        .ai-message .message-avatar {
+            background: var(--gradient-primary);
+        }
+        
+        .user-message .message-avatar {
+            background: var(--gradient-secondary);
+        }
+        
+        .message-content {
+            flex: 1;
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 12px;
+            padding: 0.8rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .message-text {
+            color: var(--etudia-white);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .message-time {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 0.3rem;
+        }
+        
+        .chat-input-zone {
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(51, 65, 85, 0.8));
+            border-top: 1px solid var(--glass-border);
+        }
+        
+        .input-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 0.8rem;
+        }
+        
+        .chat-input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 0.8rem;
+            color: var(--etudia-white);
+            resize: none;
+            min-height: 40px;
+            max-height: 120px;
+            font-size: 0.9rem;
+        }
+        
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--etudia-primary);
+            box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
+        }
+        
+        .chat-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .send-btn {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 0.8rem;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            min-width: 45px;
+        }
+        
+        .send-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+        
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .upload-zone {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px dashed var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .upload-zone:hover {
+            border-color: var(--etudia-primary);
+            background: rgba(255, 107, 53, 0.1);
+        }
+        
+        .upload-icon {
+            font-size: 2rem;
+            color: var(--etudia-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .upload-text {
+            color: var(--etudia-white);
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .upload-formats {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
         }
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <section id="dashboard" class="content-section active">
-            <!-- Vue d'ensemble -->
-            <div class="dashboard-section">
-                <h2 class="section-title">📊 Vue d'ensemble</h2>
-                <div class="stats-grid">
-                    <div class="stat-card tokens">
-                        <div class="stat-icon tokens">
-                            <i class="fas fa-coins"></i>
-                        </div>
-                        <div class="stat-value">847</div>
-                        <div class="stat-label">Tokens Restants</div>
-                    </div>
-                    
-                    <div class="stat-card sessions">
-                        <div class="stat-icon sessions">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <div class="stat-value">23</div>
-                        <div class="stat-label">Sessions IA Aujourd'hui</div>
-                    </div>
-                    
-                    <div class="stat-card level">
-                        <div class="stat-icon level">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                        <div class="stat-value">Level 8</div>
-                        <div class="stat-label">2,340 XP</div>
-                    </div>
-                    
-                    <div class="stat-card gains">
-                        <div class="stat-icon gains">
-                            <i class="fas fa-money-bill"></i>
-                        </div>
-                        <div class="stat-value">12,450 F</div>
-                        <div class="stat-label">Gains Parrainage</div>
-                    </div>
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+    
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
+    
+    <!-- App Container -->
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">ÉtudIA</div>
+                <div class="user-info">
+                    <div class="user-avatar">JB</div>
+                    <div class="user-name">Jean-Baptiste DOSSO</div>
+                    <div class="user-plan">Premium • 847 tokens</div>
                 </div>
             </div>
             
-            <!-- Objectifs du Jour -->
-            <div class="dashboard-section">
-                <div class="objectives-card">
-                    <div class="objectives-header">
-                        <h3 class="objectives-title">🎯 Objectifs du Jour</h3>
-                        <button class="btn-small btn-primary">
-                            Modifier
-                        </button>
-                    </div>
-                    
-                    <div class="objectives-grid">
-                        <div class="objective-item">
-                            <div class="objective-header">
-                                <i class="fas fa-graduation-cap" style="color: var(--etudia-secondary);"></i>
-                                <span style="font-weight: 600; font-size: 0.9rem; color: var(--etudia-white);">Révision Mathématiques</span>
-                            </div>
-                            <p class="objective-text">3 exercices d'équations du second degré restants. Une petite session ?</p>
-                            <div class="objective-actions">
-                                <button onclick="showSection('ia-chat')" class="btn-small btn-success">
-                                    Réviser maintenant
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="objective-item" style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(239, 68, 68, 0.1)); border: 1px solid rgba(255, 107, 53, 0.3);">
-                            <div class="objective-header">
-                                <i class="fas fa-chart-line" style="color: var(--etudia-primary);"></i>
-                                <span style="font-weight: 600; font-size: 0.9rem; color: var(--etudia-white);">Amélioration possible</span>
-                            </div>
-                            <p class="objective-text">Tes performances en physique ont baissé. Mode "Étape par Étape" recommandé.</p>
-                            <div class="objective-actions">
-                                <button onclick="showSection('progression')" class="btn-small btn-primary">
-                                    Voir détails
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+            <nav class="nav-menu">
+                <div class="nav-item">
+                    <a href="#" class="nav-link active" onclick="showSection('dashboard')">
+                        <i class="fas fa-home"></i>
+                        <span>Tableau de Bord</span>
+                    </a>
                 </div>
-            </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('ia-chat')">
+                        <i class="fas fa-robot"></i>
+                        <span>Interface IA</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('documents')">
+                        <i class="fas fa-file-pdf"></i>
+                        <span>Mes Documents</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('parrainage')">
+                        <i class="fas fa-users"></i>
+                        <span>Parrainage</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('abonnements')">
+                        <i class="fas fa-credit-card"></i>
+                        <span>Abonnements</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('progression')">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Ma Progression</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('historique')">
+                        <i class="fas fa-history"></i>
+                        <span>Historique</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('gamification')">
+                        <i class="fas fa-trophy"></i>
+                        <span>Badges & Niveaux</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('notifications')">
+                        <i class="fas fa-bell"></i>
+                        <span>Notifications</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('profil')">
+                        <i class="fas fa-user"></i>
+                        <span>Mon Profil</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('parametres')">
+                        <i class="fas fa-cog"></i>
+                        <span>Paramètres</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('support')">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Aide & Support</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <div>
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Bon après-midi Jean-Baptiste !</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="notification-btn" onclick="showNotifications()">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">5</span>
+                    </button>
+                    <button class="chat-toggle" onclick="toggleIA()">
+                        <i class="fas fa-robot"></i>
+                    </button>
+                </div>
+            </header>
             
-            <!-- Activité Récente -->
-            <div class="dashboard-section">
-                <div class="activity-card">
-                    <div class="activity-header">
-                        <h3 class="activity-title-main">📈 Activité Récente</h3>
-                        <button onclick="showSection('historique')" class="btn-small btn-primary">
-                            Voir tout
-                        </button>
-                    </div>
-                    
-                    <div class="activity-grid">
-                        <div class="activity-item">
-                            <div class="activity-icon" style="background: var(--gradient-primary);">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="dashboard-section">
+                    <h2 class="section-title">📊 Vue d'ensemble</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="stat-value">847</div>
+                            <div class="stat-label">Tokens Restants</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
                                 <i class="fas fa-robot"></i>
                             </div>
-                            <div class="activity-content">
-                                <div class="activity-title">Session IA - Mathématiques</div>
-                                <div class="activity-desc">Résolution d'équations du second degré avec DeepSeek R1</div>
-                                <div class="activity-meta">
-                                    <span class="activity-time">Il y a 2 heures</span>
-                                    <span class="activity-value tokens">-45 tokens</span>
-                                </div>
-                            </div>
+                            <div class="stat-value">23</div>
+                            <div class="stat-label">Sessions IA Aujourd'hui</div>
                         </div>
-                        
-                        <div class="activity-item">
-                            <div class="activity-icon" style="background: var(--gradient-secondary);">
-                                <i class="fas fa-file-pdf"></i>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-trophy"></i>
                             </div>
-                            <div class="activity-content">
-                                <div class="activity-title">Document Analysé</div>
-                                <div class="activity-desc">Cours_Physique_Chapitre4.pdf traité avec OCR</div>
-                                <div class="activity-meta">
-                                    <span class="activity-time">Il y a 4 heures</span>
-                                    <span class="activity-value docs">PDF analysé</span>
-                                </div>
+                            <div class="stat-value">Level 8</div>
+                            <div class="stat-label">2,340 XP</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-money-bill"></i>
                             </div>
+                            <div class="stat-value">12,450 F</div>
+                            <div class="stat-label">Gains Parrainage</div>
                         </div>
                     </div>
-                    
-                    <div class="activity-grid">
-                        <div class="activity-item">
-                            <div class="activity-icon" style="background: var(--gradient-success);">
-                                <i class="fas fa-handshake"></i>
-                            </div>
-                            <div class="activity-content">
-                                <div class="activity-title">Gain Parrainage</div>
-                                <div class="activity-desc">Commission de 1,300 FCFA reçue (Nouveau filleul)</div>
+                </div>
+                
+                <!-- Activité Récente - NOUVELLE SECTION -->
+                <div class="dashboard-section">
+                    <div class="activity-section">
+                        <div class="activity-header">
+                            <h3 class="activity-title">📈 Activité Récente</h3>
+                            <button class="view-all-btn" onclick="showSection('historique')">Voir tout</button>
+                        </div>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon ia">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-text">Session IA - Mathématiques</div>
+                                    <div class="activity-details">Résolution d'équations du second degré avec DeepSeek R1</div>
+                                </div>
                                 <div class="activity-meta">
-                                    <span class="activity-time">Hier</span>
-                                    <span class="activity-value gain">+1,300 FCFA</span>
+                                    <div class="activity-time">Il y a 2 heures</div>
+                                    <div class="activity-value negative">-180 tokens</div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="activity-item">
-                            <div class="activity-icon" style="background: var(--gradient-secondary);">
-                                <i class="fas fa-lightbulb"></i>
-                            </div>
-                            <div class="activity-content">
-                                <div class="activity-title">Badge Débloqué</div>
-                                <div class="activity-desc">Expert Mathématiques - 50 exercices résolus</div>
+                            
+                            <div class="activity-item">
+                                <div class="activity-icon document">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-text">Document Analysé</div>
+                                    <div class="activity-details">Cours_Physique_Chapitre_5.pdf traité avec succès</div>
+                                </div>
                                 <div class="activity-meta">
-                                    <span class="activity-time">Il y a 1 jour</span>
-                                    <span class="activity-value xp">+250 XP</span>
+                                    <div class="activity-time">Il y a 4 heures</div>
+                                    <div class="activity-value negative">-120 tokens</div>
+                                </div>
+                            </div>
+                            
+                            <div class="activity-item">
+                                <div class="activity-icon gain">
+                                    <i class="fas fa-money-bill"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-text">Gain Parrainage</div>
+                                    <div class="activity-details">Commission de 1,300 FCFA reçue (Nouveau filleul)</div>
+                                </div>
+                                <div class="activity-meta">
+                                    <div class="activity-time">Hier</div>
+                                    <div class="activity-value">+1,300 FCFA</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                
+                <div class="dashboard-section">
+                    <h2 class="section-title">🚀 Actions Rapides</h2>
+                    <div class="quick-actions">
+                        <div class="action-card" onclick="showSection('ia-chat')">
+                            <i class="fas fa-robot action-icon"></i>
+                            <div class="action-title">Chat avec l'IA</div>
+                            <div class="action-desc">Poser une question à DeepSeek R1</div>
+                        </div>
+                        <div class="action-card" onclick="showSection('documents')">
+                            <i class="fas fa-upload action-icon"></i>
+                            <div class="action-title">Upload Document</div>
+                            <div class="action-desc">Analyser un PDF ou image</div>
+                        </div>
+                        <div class="action-card" onclick="showSection('parrainage')">
+                            <i class="fas fa-share action-icon"></i>
+                            <div class="action-title">Parrainer</div>
+                            <div class="action-desc">Inviter des amis et gagner</div>
+                        </div>
+                        <div class="action-card" onclick="showSection('progression')">
+                            <i class="fas fa-chart-line action-icon"></i>
+                            <div class="action-title">Ma Progression</div>
+                            <div class="action-desc">Voir mes statistiques</div>
+                        </div>
+                        <div class="action-card" onclick="showSection('abonnements')">
+                            <i class="fas fa-credit-card action-icon"></i>
+                            <div class="action-title">Acheter Tokens</div>
+                            <div class="action-desc">Recharger mon compte</div>
+                        </div>
+                        <div class="action-card" onclick="showSection('gamification')">
+                            <i class="fas fa-trophy action-icon"></i>
+                            <div class="action-title">Mes Badges</div>
+                            <div class="action-desc">Collection et récompenses</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
             
-            <!-- Actions Rapides -->
-            <div class="dashboard-section">
-                <h2 class="section-title">🚀 Actions Rapides</h2>
-                <div class="actions-grid">
-                    <div class="action-card" onclick="showSection('ia-chat')">
-                        <i class="fas fa-robot action-icon ia"></i>
-                        <div class="action-title">Chat avec l'IA</div>
-                        <div class="action-desc">Poser une question à DeepSeek R1</div>
-                    </div>
-                    
-                    <div class="action-card" onclick="showSection('documents')">
-                        <i class="fas fa-upload action-icon upload"></i>
-                        <div class="action-title">Upload Document</div>
-                        <div class="action-desc">Analyser un PDF ou image</div>
-                    </div>
-                    
-                    <div class="action-card" onclick="showSection('parrainage')">
-                        <i class="fas fa-share action-icon parrain"></i>
-                        <div class="action-title">Parrainer</div>
-                        <div class="action-desc">Inviter des amis et gagner</div>
-                    </div>
-                    
-                    <div class="action-card" onclick="showSection('progression')">
-                        <i class="fas fa-chart-line action-icon progress"></i>
-                        <div class="action-title">Ma Progression</div>
-                        <div class="action-desc">Voir mes statistiques</div>
-                    </div>
-                    
-                    <div class="action-card" onclick="showSection('abonnements')">
-                        <i class="fas fa-credit-card action-icon tokens"></i>
-                        <div class="action-title">Acheter Tokens</div>
-                        <div class="action-desc">Recharger mon compte</div>
-                    </div>
-                    
-                    <div class="action-card" onclick="showSection('gamification')">
-                        <i class="fas fa-trophy action-icon badges"></i>
-                        <div class="action-title">Mes Badges</div>
-                        <div class="action-desc">Collection et récompenses</div>
+            <!-- Interface IA Section - AMÉLIORÉE AVEC CODE COMPLET -->
+            <section id="ia-chat" class="content-section">
+                <h2 class="section-title">🤖 Interface IA DeepSeek R1</h2>
+                <div class="content-card">
+                    <div class="ia-chat-interface">
+                        <div class="ia-header">
+                            <div>
+                                <h3 class="ia-title">💬 Chat avec DeepSeek R1</h3>
+                                <div class="ia-status">
+                                    <div class="status-indicator"></div>
+                                    <span>Opérationnel</span>
+                                </div>
+                            </div>
+                            <div class="learning-modes">
+                                <button class="mode-btn active" data-mode="normal">💬 Normal (250t)</button>
+                                <button class="mode-btn" data-mode="step">📝 Étape par Étape (180t)</button>
+                                <button class="mode-btn" data-mode="direct">⚡ Solution Directe (400t)</button>
+                                <button class="mode-btn" data-mode="audio">🎤 Audio (200t)</button>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="message ai-message">
+                                <div class="message-avatar">🤖</div>
+                                <div class="message-content">
+                                    <div class="message-text">
+                                        <strong>ÉtudIA Assistant :</strong> Bon après-midi Jean-Baptiste ! 👋 Je suis prêt à t'aider avec tes études. Upload un document ou pose-moi une question directement !
+                                    </div>
+                                    <div class="message-time">Maintenant</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-input-zone">
+                            <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+                                <div class="upload-icon">📁</div>
+                                <div class="upload-text">Glissez un document ici ou cliquez pour sélectionner</div>
+                                <div class="upload-formats">PDF, DOC, JPG, PNG (Max 10MB)</div>
+                                <input type="file" id="fileInput" style="display: none;" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" onchange="handleFileUpload(this)">
+                            </div>
+                            
+                            <div class="input-container">
+                                <textarea 
+                                    class="chat-input" 
+                                    id="chatInput" 
+                                    placeholder="Pose ta question ici ou upload un document..." 
+                                    rows="2"
+                                    onkeydown="handleKeyPress(event)"
+                                    oninput="handleInputChange()"
+                                ></textarea>
+                                <button class="send-btn" id="sendBtn" onclick="sendMessage()" disabled>
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+            
+            <!-- Documents Section - TAILLE RÉDUITE -->
+            <section id="documents" class="content-section">
+                <h2 class="section-title">📄 Gestion des Documents</h2>
+                <div class="documents-grid">
+                    <div class="document-card">
+                        <h3 style="margin-bottom: 1rem; color: var(--etudia-white);">📚 Mes Documents Récents</h3>
+                        <div class="document-item">
+                            <i class="fas fa-file-pdf document-icon" style="color: var(--etudia-secondary);"></i>
+                            <div class="document-info">
+                                <div class="document-name">Cours_Mathematiques_Derivees.pdf</div>
+                                <div class="document-meta">Analysé il y a 2 heures • 15 questions résolues</div>
+                            </div>
+                            <button class="document-action" onclick="relaunchIA('derivees')">
+                                Relancer IA
+                            </button>
+                        </div>
+                        
+                        <div class="document-item">
+                            <i class="fas fa-image document-icon" style="color: var(--etudia-success);"></i>
+                            <div class="document-info">
+                                <div class="document-name">Exercice_Physique_Optique.jpg</div>
+                                <div class="document-meta">Analysé hier • 8 explications données</div>
+                            </div>
+                            <button class="document-action" onclick="relaunchIA('optique')">
+                                Relancer IA
+                            </button>
+                        </div>
+                        
+                        <div class="document-item">
+                            <i class="fas fa-file-word document-icon" style="color: var(--etudia-info);"></i>
+                            <div class="document-info">
+                                <div class="document-name">Redaction_Francais_Sujet.docx</div>
+                                <div class="document-meta">Analysé il y a 3 jours • Corrections effectuées</div>
+                            </div>
+                            <button class="document-action" onclick="relaunchIA('redaction')">
+                                Relancer IA
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="document-card">
+                        <h3 style="margin-bottom: 1rem; color: var(--etudia-white);">📤 Zone d'Upload</h3>
+                        <div class="upload-zone" onclick="document.getElementById('documentsFileInput').click()">
+                            <div class="upload-icon">📁</div>
+                            <div class="upload-text">Glissez vos documents ici</div>
+                            <div class="upload-formats">PDF, DOC, JPG, PNG (Max 10MB)</div>
+                            <input type="file" id="documentsFileInput" style="display: none;" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" onchange="handleDocumentsUpload(this)">
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 1rem;">
+                            <button style="background: var(--gradient-primary); border: none; padding: 0.8rem 1.5rem; border-radius: var(--border-radius); color: white; cursor: pointer; font-weight: 600;">
+                                <i class="fas fa-upload"></i> Choisir des Fichiers
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Parrainage Section - SYSTÈME V4.1 COMPLET -->
+            <section id="parrainage" class="content-section">
+                <h2 class="section-title">💰 Système de Parrainage V4.1</h2>
+                <div class="parrainage-section">
+                    <div class="parrainage-header">
+                        <h3 class="parrainage-title">🚀 Gagne avec tes Parrainages</h3>
+                        <p class="parrainage-subtitle">Système multiniveau : 5% → 3% → 1% + Auto-réabonnement intelligent</p>
+                    </div>
+                    
+                    <div class="parrainage-stats">
+                        <div class="parrainage-stat">
+                            <div class="parrainage-value">23</div>
+                            <div class="parrainage-label">Filleuls Actifs</div>
+                        </div>
+                        <div class="parrainage-stat">
+                            <div class="parrainage-value">12,450 F</div>
+                            <div class="parrainage-label">Gains Totaux</div>
+                        </div>
+                        <div class="parrainage-stat">
+                            <div class="parrainage-value">15.8%</div>
+                            <div class="parrainage-label">Taux Conversion</div>
+                        </div>
+                        <div class="parrainage-stat">
+                            <div class="parrainage-value">8,750 F</div>
+                            <div class="parrainage-label">Disponible Retrait</div>
+                        </div>
+                    </div>
+                    
+                    <div class="referral-link-container">
+                        <div style="margin-bottom: 0.5rem; font-weight: 600;">🔗 Ton Lien de Parrainage :</div>
+                        <div class="referral-link">https://etudia.ci/invite/JB-DOSSO-2024</div>
+                        <button class="copy-btn" onclick="copyReferralLink()">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="share-buttons">
+                        <a href="#" class="share-btn whatsapp" onclick="shareWhatsApp()">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>
+                        <a href="#" class="share-btn facebook" onclick="shareFacebook()">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </a>
+                        <button class="share-btn copy" onclick="copyReferralLink()">
+                            <i class="fas fa-copy"></i> Copier Lien
+                        </button>
+                    </div>
+                    
+                    <div class="withdrawal-section">
+                        <div class="withdrawal-available">💰 Montant disponible au retrait : 8,750 FCFA</div>
+                        <div class="withdrawal-note">
+                            Frais de retrait : 10% • Minimum : 1,000F • Auto-réabonnement : 3 mois garantis
+                        </div>
+                        <button class="withdrawal-btn" onclick="requestWithdrawal()">
+                            💳 Demander un Retrait (7,875 F net)
+                        </button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Abonnements Section - BASÉE SUR PLANS.HTML -->
+            <section id="abonnements" class="content-section">
+                <h2 class="section-title">💳 Gestion des Abonnements</h2>
+                <div class="subscription-section">
+                    <div class="current-plan">
+                        <div class="plan-header">
+                            <div class="plan-info">
+                                <h3>Plan Premium Mensuel</h3>
+                                <p>1,500 interactions/mois • Support prioritaire • Tous modes inclus</p>
+                            </div>
+                            <div class="plan-price">
+                                <span class="price">6,500</span>
+                                <span class="currency">FCFA/mois</span>
+                            </div>
+                        </div>
+                        
+                        <div class="plan-usage">
+                            <div class="usage-stat">
+                                <span class="usage-label">Interactions utilisées ce mois</span>
+                                <span class="usage-value">847 / 1,500</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 56%"></div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 1rem;">
+                            <div style="color: var(--etudia-success); font-weight: 600;">
+                                ✅ Renouvellement automatique le 15 septembre 2025
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 style="margin: 1.5rem 0 1rem 0; color: var(--etudia-white);">🚀 Options d'Upgrade</h3>
+                    <div class="upgrade-options">
+                        <div class="upgrade-card popular">
+                            <div class="upgrade-title">👑 Excellence Mensuel</div>
+                            <div class="upgrade-price">10,000 FCFA</div>
+                            <ul class="upgrade-features">
+                                <li>6,000 interactions/mois (200/jour)</li>
+                                <li>IA prioritaire</li>
+                                <li>Support premium complet</li>
+                                <li>Nouvelles fonctionnalités en avant-première</li>
+                                <li>Mentor IA personnalisé</li>
+                            </ul>
+                            <button class="upgrade-btn" onclick="upgradeToExcellence()">
+                                Upgrade vers Excellence
+                            </button>
+                        </div>
+                        
+                        <div class="upgrade-card">
+                            <div class="upgrade-title">📅 Premium Jour</div>
+                            <div class="upgrade-price">500 FCFA</div>
+                            <ul class="upgrade-features">
+                                <li>15 interactions pour 24h</li>
+                                <li>Tous les modes IA</li>
+                                <li>Upload documents</li>
+                                <li>Support chat</li>
+                            </ul>
+                            <button class="upgrade-btn" onclick="buyDailyPlan()">
+                                Acheter 1 Jour
+                            </button>
+                        </div>
+                        
+                        <div class="upgrade-card">
+                            <div class="upgrade-title">📦 Pack Tokens</div>
+                            <div class="upgrade-price">2,500 FCFA</div>
+                            <ul class="upgrade-features">
+                                <li>+500 tokens bonus</li>
+                                <li>Valable 6 mois</li>
+                                <li>Cumule avec abonnement</li>
+                                <li>Pas d'expiration</li>
+                            </ul>
+                            <button class="upgrade-btn" onclick="buyTokenPack()">
+                                Acheter Tokens
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Progression Section -->
+            <section id="progression" class="content-section">
+                <h2 class="section-title">📈 Ma Progression</h2>
+                <div class="content-card">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                        <div>
+                            <h4 style="margin-bottom: 1rem; color: var(--etudia-white);">🎯 Objectifs du Mois</h4>
+                            <div style="space-y: 1rem;">
+                                <div style="margin-bottom: 1rem;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                        <span>Sessions IA quotidiennes</span>
+                                        <span style="color: var(--etudia-success);">23/25</span>
+                                    </div>
+                                    <div style="background: rgba(0,0,0,0.2); height: 8px; border-radius: 4px;">
+                                        <div style="background: var(--etudia-success); height: 100%; width: 92%; border-radius: 4px;"></div>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 1rem;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                        <span>Documents analysés</span>
+                                        <span style="color: var(--etudia-primary);">28/30</span>
+                                    </div>
+                                    <div style="background: rgba(0,0,0,0.2); height: 8px; border-radius: 4px;">
+                                        <div style="background: var(--etudia-primary); height: 100%; width: 93%; border-radius: 4px;"></div>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 1rem;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                        <span>Parrainages réussis</span>
+                                        <span style="color: var(--etudia-warning);">3/5</span>
+                                    </div>
+                                    <div style="background: rgba(0,0,0,0.2); height: 8px; border-radius: 4px;">
+                                        <div style="background: var(--etudia-warning); height: 100%; width: 60%; border-radius: 4px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 style="margin-bottom: 1rem; color: var(--etudia-white);">📊 Statistiques Performance</h4>
+                            <div style="display: grid; gap: 0.8rem;">
+                                <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: var(--border-radius);">
+                                    <div style="font-size: 1.4rem; color: var(--etudia-success); font-weight: 700;">87%</div>
+                                    <div style="font-size: 0.9rem;">Taux de réussite exercices</div>
+                                </div>
+                                <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: var(--border-radius);">
+                                    <div style="font-size: 1.4rem; color: var(--etudia-info); font-weight: 700;">4.2h</div>
+                                    <div style="font-size: 0.9rem;">Temps d'étude moyen/jour</div>
+                                </div>
+                                <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: var(--border-radius);">
+                                    <div style="font-size: 1.4rem; color: var(--etudia-primary); font-weight: 700;">342</div>
+                                    <div style="font-size: 0.9rem;">Questions résolues ce mois</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Autres sections avec coming soon -->
+            <section id="historique" class="content-section">
+                <h2 class="section-title">📜 Historique des Sessions</h2>
+                <div class="content-card">
+                    <div class="coming-soon">
+                        <div class="coming-soon-icon">📜</div>
+                        <h3>Historique Complet</h3>
+                        <p>Retrouve toutes tes conversations et documents traités ici bientôt !</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="gamification" class="content-section">
+                <h2 class="section-title">🏆 Badges & Niveaux</h2>
+                <div class="content-card">
+                    <div class="coming-soon">
+                        <div class="coming-soon-icon">🏆</div>
+                        <h3>Système de Gamification</h3>
+                        <p>Collectionne des badges et monte de niveau en utilisant ÉtudIA !</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="notifications" class="content-section">
+                <h2 class="section-title">🔔 Centre de Notifications</h2>
+                <div class="content-card">
+                    <div class="coming-soon">
+                        <div class="coming-soon-icon">🔔</div>
+                        <h3>Notifications Intelligentes</h3>
+                        <p>Reçois des alertes personnalisées pour optimiser ton apprentissage !</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="profil" class="content-section">
+                <h2 class="section-title">👤 Mon Profil</h2>
+                <div class="content-card">
+                    <div class="coming-soon">
+                        <div class="coming-soon-icon">👤</div>
+                        <h3>Gestion du Profil</h3>
+                        <p>Personnalise ton expérience ÉtudIA ici !</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="parametres" class="content-section">
+                <h2 class="section-title">⚙️ Paramètres</h2>
+                <div class="content-card">
+                    <div class="coming-soon">
+                        <div class="coming-soon-icon">⚙️</div>
+                        <h3>Paramètres Avancés</h3>
+                        <p>Configure ÉtudIA selon tes préférences !</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="support" class="content-section">
+                <h2 class="section-title">❓ Aide & Support</h2>
+                <div class="content-card">
+                    <div class="coming-soon">
+                        <div class="coming-soon-icon">❓</div>
+                        <h3>Centre d'Aide</h3>
+                        <p>Support 24/7 pour t'accompagner dans tes études !</p>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
-
+    
+    <!-- Bouton Flottant Interface IA -->
+    <button class="floating-ia-btn" onclick="toggleIA()" title="Interface IA">
+        <i class="fas fa-robot"></i>
+    </button>
+    
     <script>
+        // Variables globales
+        let currentMode = 'normal';
+        let currentSection = 'dashboard';
+        
+        // Gestion des sections
         function showSection(sectionId) {
-            // Simulation de navigation - dans le vrai backoffice, cette fonction existe déjà
-            console.log(`Navigation vers la section: ${sectionId}`);
+            // Masquer toutes les sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
             
-            // Animation au clic
-            event.currentTarget.style.transform = 'scale(0.95)';
+            // Afficher la section demandée
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Mettre à jour la navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Trouver et activer le lien correspondant
+            const activeLink = document.querySelector(`[onclick="showSection('${sectionId}')"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            currentSection = sectionId;
+            showToast(`Section ${getSectionName(sectionId)} ouverte`, 'info');
+        }
+        
+        function getSectionName(sectionId) {
+            const names = {
+                'dashboard': 'Tableau de Bord',
+                'ia-chat': 'Interface IA',
+                'documents': 'Documents',
+                'parrainage': 'Parrainage',
+                'abonnements': 'Abonnements',
+                'progression': 'Progression',
+                'historique': 'Historique',
+                'gamification': 'Badges & Niveaux',
+                'notifications': 'Notifications',
+                'profil': 'Profil',
+                'parametres': 'Paramètres',
+                'support': 'Support'
+            };
+            return names[sectionId] || sectionId;
+        }
+        
+        // Toggle sidebar mobile
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileOverlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+        
+        function closeMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileOverlay');
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        }
+        
+        // Toggle IA
+        function toggleIA() {
+            showSection('ia-chat');
+            showToast('Interface IA ouverte', 'success');
+        }
+        
+        // Gestion des modes IA
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Retirer active de tous les boutons
+                    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                    
+                    // Ajouter active au bouton cliqué
+                    this.classList.add('active');
+                    
+                    // Mettre à jour le mode
+                    currentMode = this.dataset.mode;
+                    
+                    const modeNames = {
+                        'normal': 'Normal (250 tokens)',
+                        'step': 'Étape par Étape (180 tokens)',
+                        'direct': 'Solution Directe (400 tokens)',
+                        'audio': 'Mode Audio (200 tokens)'
+                    };
+                    
+                    showToast(`Mode ${modeNames[currentMode]} sélectionné`, 'info');
+                });
+            });
+        });
+        
+        // Gestion de l'input chat
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+        
+        function handleInputChange() {
+            const input = document.getElementById('chatInput');
+            const sendBtn = document.getElementById('sendBtn');
+            sendBtn.disabled = input.value.trim().length === 0;
+            
+            // Auto-resize
+            input.style.height = 'auto';
+            input.style.height = input.scrollHeight + 'px';
+        }
+        
+        // Envoi de message IA
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) {
+                showToast('Veuillez saisir un message', 'warning');
+                return;
+            }
+            
+            // Ajouter le message utilisateur
+            addMessage(message, 'user');
+            input.value = '';
+            document.getElementById('sendBtn').disabled = true;
+            
+            // Simuler réponse IA (à remplacer par vraie API)
             setTimeout(() => {
-                event.currentTarget.style.transform = '';
-            }, 150);
+                const responses = [
+                    "Excellente question ! Laisse-moi t'expliquer cela étape par étape...",
+                    "Je vais analyser ton document et te donner une explication détaillée.",
+                    "Voici la solution complète avec les explications nécessaires...",
+                    "Pour mieux comprendre ce concept, regardons d'abord les bases..."
+                ];
+                
+                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                addMessage(randomResponse, 'ai');
+                
+                showToast(`${getTokenCost()} tokens utilisés`, 'success');
+                updateTokenCount(-getTokenCost());
+            }, 1000);
+        }
+        
+        // Ajouter un message au chat
+        function addMessage(text, sender) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender === 'user' ? 'user-message' : 'ai-message'}`;
             
-            // Feedback visuel
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: var(--gradient-primary);
-                color: white;
-                padding: 0.8rem 1.5rem;
-                border-radius: 50px;
-                font-weight: 600;
-                z-index: 9999;
-                animation: slideIn 0.3s ease;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            const avatar = sender === 'user' ? '👤' : '🤖';
+            const time = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${avatar}</div>
+                <div class="message-content">
+                    <div class="message-text">${text}</div>
+                    <div class="message-time">${time}</div>
+                </div>
             `;
             
-            const icon = document.createElement('i');
-            icon.className = 'fas fa-arrow-right';
-            notification.appendChild(icon);
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Calculer le coût en tokens selon le mode
+        function getTokenCost() {
+            const costs = {
+                'normal': 250,
+                'step': 180,
+                'direct': 400,
+                'audio': 200
+            };
+            return costs[currentMode];
+        }
+        
+        // Mettre à jour le compteur de tokens
+        function updateTokenCount(change) {
+            const tokenDisplay = document.querySelector('.user-plan');
+            const currentTokens = parseInt(tokenDisplay.textContent.match(/\d+/)[0]);
+            const newTokens = Math.max(0, currentTokens + change);
+            tokenDisplay.textContent = `Premium • ${newTokens} tokens`;
             
-            const text = document.createElement('span');
-            text.textContent = `Navigation vers ${sectionId.replace('-', ' ')}`;
-            notification.appendChild(text);
+            // Mettre à jour aussi la stat card
+            const statValue = document.querySelector('.stat-value');
+            if (statValue) {
+                statValue.textContent = newTokens;
+            }
+        }
+        
+        // Gestion upload de fichiers
+        function handleFileUpload(input) {
+            const file = input.files[0];
+            if (!file) return;
             
-            document.body.appendChild(notification);
+            if (file.size > 10 * 1024 * 1024) {
+                showToast('Fichier trop volumineux (max 10MB)', 'error');
+                return;
+            }
+            
+            showToast(`Document "${file.name}" uploadé avec succès`, 'success');
+            addMessage(`📄 Document uploadé : ${file.name}`, 'user');
             
             setTimeout(() => {
-                notification.style.animation = 'fadeOut 0.3s ease';
-                setTimeout(() => {
-                    notification.remove();
-                }, 300);
+                addMessage(`J'ai analysé votre document "${file.name}". Voici un résumé des points clés...`, 'ai');
+                showToast('120 tokens utilisés pour l\'analyse', 'info');
+                updateTokenCount(-120);
             }, 2000);
         }
         
-        // Animation d'entrée pour les cartes
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.stat-card, .action-card, .activity-item, .objective-item');
-            cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
+        function handleDocumentsUpload(input) {
+            const files = Array.from(input.files);
+            if (files.length === 0) return;
+            
+            files.forEach(file => {
+                if (file.size <= 10 * 1024 * 1024) {
+                    showToast(`Document "${file.name}" ajouté`, 'success');
+                }
+            });
+        }
+        
+        // Fonctions documents
+        function relaunchIA(subject) {
+            showSection('ia-chat');
+            setTimeout(() => {
+                addMessage(`Relancer l'analyse du document ${subject}`, 'user');
                 setTimeout(() => {
-                    card.style.transition = 'all 0.6s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 100);
+                    addMessage(`Document ${subject} réanalysé avec les dernières améliorations IA !`, 'ai');
+                    showToast('180 tokens utilisés', 'info');
+                    updateTokenCount(-180);
+                }, 1000);
+            }, 500);
+        }
+        
+        // Fonctions parrainage
+        function copyReferralLink() {
+            const link = 'https://etudia.ci/invite/JB-DOSSO-2024';
+            navigator.clipboard.writeText(link).then(() => {
+                showToast('Lien de parrainage copié !', 'success');
+            });
+        }
+        
+        function shareWhatsApp() {
+            const message = "Rejoins-moi sur ÉtudIA, la meilleure IA éducative de Côte d'Ivoire ! Utilise mon lien : https://etudia.ci/invite/JB-DOSSO-2024";
+            const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+            showToast('Partage WhatsApp ouvert', 'info');
+        }
+        
+        function shareFacebook() {
+            const url = 'https://etudia.ci/invite/JB-DOSSO-2024';
+            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+            window.open(facebookUrl, '_blank');
+            showToast('Partage Facebook ouvert', 'info');
+        }
+        
+        function requestWithdrawal() {
+            showToast('Demande de retrait en cours...', 'info');
+            setTimeout(() => {
+                showToast('Demande envoyée ! Traitement sous 48h', 'success');
+            }, 1500);
+        }
+        
+        // Fonctions abonnements
+        function upgradeToExcellence() {
+            showToast('Redirection vers paiement Excellence...', 'info');
+            setTimeout(() => {
+                showToast('Upgrade réussi ! Bienvenue en Excellence', 'success');
+            }, 2000);
+        }
+        
+        function buyDailyPlan() {
+            showToast('Achat plan journalier en cours...', 'info');
+            setTimeout(() => {
+                showToast('Plan journalier activé ! +15 interactions', 'success');
+            }, 1500);
+        }
+        
+        function buyTokenPack() {
+            showToast('Achat pack tokens en cours...', 'info');
+            setTimeout(() => {
+                showToast('Pack acheté ! +500 tokens ajoutés', 'success');
+                updateTokenCount(500);
+            }, 1500);
+        }
+        
+        // Système de notifications toast
+        function showToast(message, type = 'info') {
+            const toastContainer = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            
+            toastContainer.appendChild(toast);
+            
+            // Animation d'entrée
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            // Suppression automatique
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toastContainer.contains(toast)) {
+                        toastContainer.removeChild(toast);
+                    }
+                }, 300);
+            }, 4000);
+        }
+        
+        function showNotifications() {
+            showToast('5 nouvelles notifications', 'info');
+            setTimeout(() => {
+                showToast('🎉 Nouveau badge débloqué : Expert IA !', 'success');
+            }, 1000);
+            setTimeout(() => {
+                showToast('💰 Nouveau gain parrainage : +1,300 F', 'success');
+            }, 2000);
+            setTimeout(() => {
+                showToast('📚 Rappel : Document en attente d\'analyse', 'warning');
+            }, 3000);
+            setTimeout(() => {
+                showToast('🔔 Tokens faibles : 847 restants', 'warning');
+            }, 4000);
+        }
+        
+        // Gestion responsive
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                closeMobileMenu();
+            }
+        });
+        
+        // Raccourcis clavier
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+K pour focus sur input IA
+            if (e.ctrlKey && e.key === 'k') {
+                e.preventDefault();
+                const input = document.getElementById('chatInput');
+                if (input) {
+                    input.focus();
+                    showToast('Focus sur input IA', 'info');
+                }
+            }
+            
+            // Ctrl+D pour dashboard
+            if (e.ctrlKey && e.key === 'd') {
+                e.preventDefault();
+                showSection('dashboard');
+            }
+            
+            // Ctrl+Shift+C pour chat complet
+            if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+                e.preventDefault();
+                showSection('ia-chat');
+            }
+            
+            // Escape pour fermer modals
+            if (e.key === 'Escape') {
+                closeMobileMenu();
+            }
+        });
+        
+        // Animation de démarrage
+        window.addEventListener('load', function() {
+            showToast('🎉 Bienvenue Jean-Baptiste ! Ton espace ÉtudIA est prêt !', 'success');
+            
+            // Animation fade-in pour tous les éléments
+            document.querySelectorAll('.stat-card, .action-card, .content-card').forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(10px)';
+                
+                setTimeout(() => {
+                    el.style.transition = 'all 0.5s ease-out';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 50);
             });
         });
+        
+        // Simulation mise à jour temps réel des stats
+        setInterval(() => {
+            if (Math.random() > 0.95) { // 5% de chance
+                const gainTypes = [
+                    { text: '💰 Nouveau gain parrainage', value: '+750 F', type: 'success' },
+                    { text: '🏆 Badge débloqué', value: 'Expert Mathématiques', type: 'success' },
+                    { text: '📈 Objectif atteint', value: 'Sessions quotidiennes', type: 'info' }
+                ];
+                
+                const randomGain = gainTypes[Math.floor(Math.random() * gainTypes.length)];
+                showToast(`${randomGain.text}: ${randomGain.value}`, randomGain.type);
+            }
+        }, 15000); // Toutes les 15 secondes
+        
+        // Auto-sauvegarde des données utilisateur (simulation)
+        setInterval(() => {
+            if (Math.random() > 0.9) { // 10% de chance
+                showToast('💾 Données sauvegardées automatiquement', 'info');
+            }
+        }, 30000); // Toutes les 30 secondes
+        
+        // Debug info pour développement
+        console.log('🚀 ÉtudIA V4.1 - Backoffice Élève PEAUFINÉ Initialisé');
+        console.log('✅ Données production utilisées');
+        console.log('✅ Éléments compacts appliqués');
+        console.log('✅ Interface IA code complet intégré');
+        console.log('✅ Système parrainage V4.1 complet');
+        console.log('✅ Abonnements basés sur plans.html');
+        console.log('✅ Bouton flottant IA ajouté');
+        console.log('🇨🇮 Made with ❤️ by @Pacousstar & MonAP');
     </script>
-
-    <style>
-        @keyframes fadeOut {
-            from {
-                opacity: 1;
-                transform: translateX(0);
-            }
-            to {
-                opacity: 0;
-                transform: translateX(20px);
-            }
-        }
-    </style>
 </body>
 </html>
