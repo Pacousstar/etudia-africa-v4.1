@@ -1,237 +1,607 @@
-<!-- ===== DÉBUT SECTION TABLEAU DE BORD V4.1 PEAUFINÉE ===== -->
-<!-- 🎯 À INSÉRER : Remplacer le contenu de <section id="dashboard" class="content-section active"> -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Tableau de Bord ÉtudIA V4.1</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --etudia-dark: #0a0e1a;
+            --etudia-card: #1a1f2e;
+            --etudia-primary: #FF6B35;
+            --etudia-secondary: #10B981;
+            --etudia-accent: #3B82F6;
+            --etudia-warning: #F59E0B;
+            --etudia-success: #10B981;
+            --etudia-white: #FFFFFF;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+            --gradient-primary: linear-gradient(135deg, #FF6B35, #EF4444);
+            --gradient-secondary: linear-gradient(135deg, #10B981, #3B82F6);
+            --gradient-warning: linear-gradient(135deg, #F59E0B, #EF4444);
+            --gradient-success: linear-gradient(135deg, #10B981, #059669);
+        }
 
-<!-- Dashboard Section -->
-<section id="dashboard" class="content-section active">
-    <!-- Vue d'ensemble - Stats Cards Ultra-Compactes -->
-    <div class="dashboard-section">
-        <h2 class="section-title">📊 Vue d'ensemble</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.8rem; margin-bottom: 1.2rem;">
-            <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--border-radius); padding: 1rem; text-align: center; transition: var(--transition); position: relative; overflow: hidden; max-width: 280px; justify-self: start;">
-                <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradient-primary);"></div>
-                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gradient-primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.6rem; font-size: 1.1rem; color: white;">
-                    <i class="fas fa-coins"></i>
-                </div>
-                <div style="font-size: 1.4rem; font-weight: 700; color: var(--etudia-white); margin-bottom: 0.2rem;">847</div>
-                <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.8rem;">Tokens Restants</div>
-            </div>
-            
-            <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--border-radius); padding: 1rem; text-align: center; transition: var(--transition); position: relative; overflow: hidden; max-width: 280px; justify-self: start;">
-                <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradient-secondary);"></div>
-                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gradient-secondary); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.6rem; font-size: 1.1rem; color: white;">
-                    <i class="fas fa-robot"></i>
-                </div>
-                <div style="font-size: 1.4rem; font-weight: 700; color: var(--etudia-white); margin-bottom: 0.2rem;">23</div>
-                <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.8rem;">Sessions IA Aujourd'hui</div>
-            </div>
-            
-            <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--border-radius); padding: 1rem; text-align: center; transition: var(--transition); position: relative; overflow: hidden; max-width: 280px; justify-self: start;">
-                <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg, #F59E0B, #EF4444);"></div>
-                <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #F59E0B, #EF4444); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.6rem; font-size: 1.1rem; color: white;">
-                    <i class="fas fa-trophy"></i>
-                </div>
-                <div style="font-size: 1.4rem; font-weight: 700; color: var(--etudia-white); margin-bottom: 0.2rem;">Level 8</div>
-                <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.8rem;">2,340 XP</div>
-            </div>
-            
-            <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--border-radius); padding: 1rem; text-align: center; transition: var(--transition); position: relative; overflow: hidden; max-width: 280px; justify-self: start;">
-                <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradient-success);"></div>
-                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gradient-success); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.6rem; font-size: 1.1rem; color: white;">
-                    <i class="fas fa-money-bill"></i>
-                </div>
-                <div style="font-size: 1.4rem; font-weight: 700; color: var(--etudia-white); margin-bottom: 0.2rem;">12,450 F</div>
-                <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.8rem;">Gains Parrainage</div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Activité Récente - Section Compacte Améliorée -->
-    <div class="dashboard-section">
-        <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--border-radius-lg); padding: 1.2rem; margin-bottom: 1.2rem; max-width: 100%;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h3 style="font-size: 1.1rem; font-weight: 600; color: var(--etudia-white); margin: 0;">📈 Activité Récente</h3>
-                <button onclick="showSection('historique')" style="background: var(--etudia-primary); color: white; border: none; padding: 0.3rem 0.6rem; border-radius: var(--border-radius); font-size: 0.75rem; cursor: pointer; transition: var(--transition);">
-                    Voir tout
-                </button>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 0.6rem;">
-                <div style="display: flex; align-items: center; padding: 0.6rem; background: rgba(0, 0, 0, 0.2); border-radius: var(--border-radius); border: 1px solid var(--glass-border); transition: var(--transition);">
-                    <div style="width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 0.6rem; font-size: 0.8rem; color: white; background: var(--gradient-primary);">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div style="flex: 1;">
-                        <div style="font-weight: 500; margin-bottom: 0.1rem; font-size: 0.85rem;">Session IA - Mathématiques</div>
-                        <div style="color: rgba(255, 255, 255, 0.6); font-size: 0.75rem;">Résolution d'équations du second degré avec DeepSeek R1</div>
-                    </div>
-                    <div style="text-align: right; font-size: 0.75rem;">
-                        <div style="color: rgba(255, 255, 255, 0.5); margin-bottom: 0.1rem;">Il y a 2 heures</div>
-                        <div style="color: var(--etudia-warning); font-weight: 600;">-180 tokens</div>
-                    </div>
-                </div>
-                
-                <div style="display: flex; align-items: center; padding: 0.6rem; background: rgba(0, 0, 0, 0.2); border-radius: var(--border-radius); border: 1px solid var(--glass-border); transition: var(--transition);">
-                    <div style="width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 0.6rem; font-size: 0.8rem; color: white; background: var(--gradient-secondary);">
-                        <i class="fas fa-file-pdf"></i>
-                    </div>
-                    <div style="flex: 1;">
-                        <div style="font-weight: 500; margin-bottom: 0.1rem; font-size: 0.85rem;">Document Analysé</div>
-                        <div style="color: rgba(255, 255, 255, 0.6); font-size: 0.75rem;">Cours_Physique_Chapitre_5.pdf traité avec succès</div>
-                    </div>
-                    <div style="text-align: right; font-size: 0.75rem;">
-                        <div style="color: rgba(255, 255, 255, 0.5); margin-bottom: 0.1rem;">Il y a 4 heures</div>
-                        <div style="color: var(--etudia-warning); font-weight: 600;">-120 tokens</div>
-                    </div>
-                </div>
-                
-                <div style="display: flex; align-items: center; padding: 0.6rem; background: rgba(0, 0, 0, 0.2); border-radius: var(--border-radius); border: 1px solid var(--glass-border); transition: var(--transition);">
-                    <div style="width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 0.6rem; font-size: 0.8rem; color: white; background: linear-gradient(135deg, #F59E0B, #EF4444);">
-                        <i class="fas fa-money-bill"></i>
-                    </div>
-                    <div style="flex: 1;">
-                        <div style="font-weight: 500; margin-bottom: 0.1rem; font-size: 0.85rem;">Gain Parrainage</div>
-                        <div style="color: rgba(255, 255, 255, 0.6); font-size: 0.75rem;">Commission de 1,300 FCFA reçue (Nouveau filleul)</div>
-                    </div>
-                    <div style="text-align: right; font-size: 0.75rem;">
-                        <div style="color: rgba(255, 255, 255, 0.5); margin-bottom: 0.1rem;">Hier</div>
-                        <div style="color: var(--etudia-success); font-weight: 600;">+1,300 FCFA</div>
-                    </div>
-                </div>
-                
-                <!-- Nouvel élément ajouté -->
-                <div style="display: flex; align-items: center; padding: 0.6rem; background: rgba(0, 0, 0, 0.2); border-radius: var(--border-radius); border: 1px solid var(--glass-border); transition: var(--transition);">
-                    <div style="width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 0.6rem; font-size: 0.8rem; color: white; background: linear-gradient(135deg, #10B981, #3B82F6);">
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <div style="flex: 1;">
-                        <div style="font-weight: 500; margin-bottom: 0.1rem; font-size: 0.85rem;">Badge Débloqué</div>
-                        <div style="color: rgba(255, 255, 255, 0.6); font-size: 0.75rem;">Expert Mathématiques - 50 exercices résolus</div>
-                    </div>
-                    <div style="text-align: right; font-size: 0.75rem;">
-                        <div style="color: rgba(255, 255, 255, 0.5); margin-bottom: 0.1rem;">Il y a 1 jour</div>
-                        <div style="color: var(--etudia-success); font-weight: 600;">+250 XP</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Actions Rapides - Boutons Miniatures Compacts -->
-    <div class="dashboard-section">
-        <h2 class="section-title">🚀 Actions Rapides</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.6rem; margin-bottom: 1.2rem;">
-            <div onclick="showSection('ia-chat')" style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--border-radius); padding: 0.8rem; text-align: center; color: var(--etudia-white); transition: var(--transition); cursor: pointer; max-width: 280px; justify-self: start;">
-                <i class="fas fa-robot" style="font-size: 1.3rem; margin-bottom: 0.3rem; display: block; color: var(--etudia-primary);"></i>
-                <div style="font-weight: 600; margin-bottom: 0.1rem; font-size: 0.85rem;">Chat avec l'IA</div>
-                <div style="font-size: 0.7rem; opacity: 0.8;">Poser une question à DeepSeek R1</div>
-            </div>
-            
-            <div onclick="showSection('documents')" style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--border-radius); padding: 0.8rem; text-align: center; color: var(--etudia-white); transition: var(--transition); cursor: pointer; max-width: 280px; justify-self: start;">
-                <i class="fas fa-upload" style="font-size: 1.3rem; margin-bottom: 0.3rem; display: block; color: var(--etudia-success);"></i>
-                <div style="font-weight: 600; margin-bottom: 0.1rem; font-size: 0.85rem;">Upload Document</div>
-                <div style="font-size: 0.7rem; opacity: 0.8;">Analyser un PDF ou image</div>
-            </div>
-            
-            <div onclick="showSection('parrainage')" style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--border-radius); padding: 0.8rem; text-align: center; color: var(--etudia-white); transition: var(--transition); cursor: pointer; max-width: 280px; justify-self: start;">
-                <i class="fas fa-share" style="font-size: 1.3rem; margin-bottom: 0.3rem; display: block; color: var(--etudia-warning);"></i>
-                <div style="font-weight: 600; margin-bottom: 0.1rem; font-size: 0.85rem;">Parrainer</div>
-                <div style="font-size: 0.7rem; opacity: 0.8;">Inviter des amis et gagner</div>
-            </div>
-            
-            <div onclick="showSection('progression')" style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--border-radius); padding: 0.8rem; text-align: center; color: var(--etudia-white); transition: var(--transition); cursor: pointer; max-width: 280px; justify-self: start;">
-                <i class="fas fa-chart-line" style="font-size: 1.3rem; margin-bottom: 0.3rem; display: block; color: var(--etudia-info);"></i>
-                <div style="font-weight: 600; margin-bottom: 0.1rem; font-size: 0.85rem;">Ma Progression</div>
-                <div style="font-size: 0.7rem; opacity: 0.8;">Voir mes statistiques</div>
-            </div>
-            
-            <div onclick="showSection('abonnements')" style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--border-radius); padding: 0.8rem; text-align: center; color: var(--etudia-white); transition: var(--transition); cursor: pointer; max-width: 280px; justify-self: start;">
-                <i class="fas fa-credit-card" style="font-size: 1.3rem; margin-bottom: 0.3rem; display: block; color: var(--etudia-secondary);"></i>
-                <div style="font-weight: 600; margin-bottom: 0.1rem; font-size: 0.85rem;">Acheter Tokens</div>
-                <div style="font-size: 0.7rem; opacity: 0.8;">Recharger mon compte</div>
-            </div>
-            
-            <div onclick="showSection('gamification')" style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--border-radius); padding: 0.8rem; text-align: center; color: var(--etudia-white); transition: var(--transition); cursor: pointer; max-width: 280px; justify-self: start;">
-                <i class="fas fa-trophy" style="font-size: 1.3rem; margin-bottom: 0.3rem; display: block; color: var(--etudia-warning);"></i>
-                <div style="font-weight: 600; margin-bottom: 0.1rem; font-size: 0.85rem;">Mes Badges</div>
-                <div style="font-size: 0.7rem; opacity: 0.8;">Collection et récompenses</div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Objectifs du Jour - NOUVEL ÉLÉMENT AJOUTÉ -->
-    <div class="dashboard-section">
-        <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--border-radius-lg); padding: 1.2rem; margin-bottom: 1.2rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h3 style="font-size: 1.1rem; font-weight: 600; color: var(--etudia-white); margin: 0;">🎯 Objectifs du Jour</h3>
-                <button onclick="showSection('progression')" style="background: var(--etudia-info); color: white; border: none; padding: 0.3rem 0.6rem; border-radius: var(--border-radius); font-size: 0.75rem; cursor: pointer; transition: var(--transition);">
-                    Détails
-                </button>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem;">
-                <div style="background: rgba(0,0,0,0.2); padding: 0.8rem; border-radius: var(--border-radius); border: 1px solid var(--glass-border); max-width: 280px; justify-self: start;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
-                        <span style="font-size: 0.85rem; color: var(--etudia-white);">Sessions IA</span>
-                        <span style="color: var(--etudia-success); font-size: 0.85rem; font-weight: 600;">23/25</span>
-                    </div>
-                    <div style="background: rgba(0,0,0,0.3); height: 6px; border-radius: 3px;">
-                        <div style="background: var(--etudia-success); height: 100%; width: 92%; border-radius: 3px; transition: width 0.3s ease;"></div>
-                    </div>
-                </div>
-                
-                <div style="background: rgba(0,0,0,0.2); padding: 0.8rem; border-radius: var(--border-radius); border: 1px solid var(--glass-border); max-width: 280px; justify-self: start;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
-                        <span style="font-size: 0.85rem; color: var(--etudia-white);">Documents traités</span>
-                        <span style="color: var(--etudia-primary); font-size: 0.85rem; font-weight: 600;">8/10</span>
-                    </div>
-                    <div style="background: rgba(0,0,0,0.3); height: 6px; border-radius: 3px;">
-                        <div style="background: var(--etudia-primary); height: 100%; width: 80%; border-radius: 3px; transition: width 0.3s ease;"></div>
-                    </div>
-                </div>
-                
-                <div style="background: rgba(0,0,0,0.2); padding: 0.8rem; border-radius: var(--border-radius); border: 1px solid var(--glass-border); max-width: 280px; justify-self: start;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
-                        <span style="font-size: 0.85rem; color: var(--etudia-white);">Temps d'étude</span>
-                        <span style="color: var(--etudia-info); font-size: 0.85rem; font-weight: 600;">3.2h/4h</span>
-                    </div>
-                    <div style="background: rgba(0,0,0,0.3); height: 6px; border-radius: 3px;">
-                        <div style="background: var(--etudia-info); height: 100%; width: 80%; border-radius: 3px; transition: width 0.3s ease;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Recommandations IA - NOUVEL ÉLÉMENT AJOUTÉ AVEC BOUTONS MINIATURES -->
-    <div class="dashboard-section">
-        <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--border-radius-lg); padding: 1.2rem; margin-bottom: 1.2rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h3 style="font-size: 1.1rem; font-weight: 600; color: var(--etudia-white); margin: 0;">🤖 Recommandations IA</h3>
-                <span style="font-size: 0.75rem; color: rgba(255,255,255,0.6);">Basées sur ton activité</span>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 0.6rem;">
-                <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: var(--border-radius); padding: 0.8rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <i class="fas fa-lightbulb" style="color: var(--etudia-success);"></i>
-                        <span style="font-weight: 600; font-size: 0.85rem; color: var(--etudia-white);">Révision recommandée</span>
-                    </div>
-                    <p style="font-size: 0.8rem; color: rgba(255,255,255,0.8); margin-bottom: 0.4rem;">Tu n'as pas révisé les dérivées depuis 3 jours. Une petite session ?</p>
-                    <button onclick="showSection('ia-chat')" style="background: var(--etudia-success); border: none; padding: 0.3rem 0.6rem; border-radius: var(--border-radius); color: white; font-size: 0.75rem; cursor: pointer;">
-                        Réviser maintenant
-                    </button>
-                </div>
-                
-                <div style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(239, 68, 68, 0.1)); border: 1px solid rgba(255, 107, 53, 0.3); border-radius: var(--border-radius); padding: 0.8rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <i class="fas fa-chart-line" style="color: var(--etudia-primary);"></i>
-                        <span style="font-weight: 600; font-size: 0.85rem; color: var(--etudia-white);">Amélioration possible</span>
-                    </div>
-                    <p style="font-size: 0.8rem; color: rgba(255,255,255,0.8); margin-bottom: 0.4rem;">Tes performances en physique ont baissé. Mode "Étape par Étape" recommandé.</p>
-                    <button onclick="showSection('progression')" style="background: var(--etudia-primary); border: none; padding: 0.3rem 0.6rem; border-radius: var(--border-radius); color: white; font-size: 0.75rem; cursor: pointer;">
-                        Voir détails
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<!-- ===== FIN SECTION TABLEAU DE BORD V4.1 PEAUFINÉE ===== -->
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e1a 0%, #1a1f2e 100%);
+            color: var(--etudia-white);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--etudia-white);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dashboard-section {
+            margin-bottom: 2rem;
+        }
+
+        /* Stats Cards Ultra-Compactes */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            max-width: 280px;
+            justify-self: start;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .stat-card.tokens::before { background: var(--gradient-primary); }
+        .stat-card.sessions::before { background: var(--gradient-secondary); }
+        .stat-card.level::before { background: var(--gradient-warning); }
+        .stat-card.gains::before { background: var(--gradient-success); }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.6rem;
+            font-size: 1.1rem;
+            color: white;
+        }
+
+        .stat-icon.tokens { background: var(--gradient-primary); }
+        .stat-icon.sessions { background: var(--gradient-secondary); }
+        .stat-icon.level { background: var(--gradient-warning); }
+        .stat-icon.gains { background: var(--gradient-success); }
+
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--etudia-white);
+            margin-bottom: 0.2rem;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+        }
+
+        /* Objectifs Section */
+        .objectives-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.2rem;
+            margin-bottom: 1.2rem;
+            max-width: 800px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .objectives-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .objectives-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--etudia-white);
+            margin: 0;
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.8rem;
+        }
+
+        .objective-item {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1));
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: var(--border-radius);
+            padding: 0.8rem;
+        }
+
+        .objective-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .objective-text {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 0.4rem;
+        }
+
+        .btn-small {
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: var(--border-radius);
+            color: white;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-success { background: var(--etudia-success); }
+        .btn-primary { background: var(--etudia-primary); }
+
+        .btn-small:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Activité Récente */
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+            max-width: 380px;
+            backdrop-filter: blur(10px);
+        }
+
+        .activity-item:hover {
+            transform: translateX(5px);
+            border-color: var(--etudia-primary);
+        }
+
+        .activity-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.8rem;
+            font-size: 0.9rem;
+            color: white;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+            font-size: 0.9rem;
+            color: var(--etudia-white);
+        }
+
+        .activity-desc {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.75rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .activity-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .activity-time {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.7rem;
+        }
+
+        .activity-value {
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .activity-value.tokens { color: #F59E0B; }
+        .activity-value.gain { color: #10B981; }
+        .activity-value.xp { color: #10B981; }
+        .activity-value.docs { color: #3B82F6; }
+
+        /* Actions Rapides */
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.6rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .action-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 0.8rem;
+            text-align: center;
+            color: var(--etudia-white);
+            transition: var(--transition);
+            cursor: pointer;
+            max-width: 280px;
+            justify-self: start;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--etudia-primary);
+        }
+
+        .action-icon {
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+            display: block;
+        }
+
+        .action-icon.ia { color: var(--etudia-primary); }
+        .action-icon.upload { color: var(--etudia-secondary); }
+        .action-icon.parrain { color: var(--etudia-warning); }
+        .action-icon.progress { color: var(--etudia-accent); }
+        .action-icon.tokens { color: #EF4444; }
+        .action-icon.badges { color: var(--etudia-warning); }
+
+        .action-title {
+            font-weight: 600;
+            margin-bottom: 0.1rem;
+            font-size: 0.85rem;
+        }
+
+        .action-desc {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .actions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- ===== DÉBUT SECTION TABLEAU DE BORD V4.1 PEAUFINÉE ===== -->
+        <!-- 🎯 À INSÉRER : Remplacer le contenu de <section id="dashboard" class="content-section active"> -->
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="content-section active">
+            <!-- Vue d'ensemble - Stats Cards Ultra-Compactes Tesla -->
+            <div class="dashboard-section">
+                <h2 class="section-title">📊 Vue d'ensemble</h2>
+                <div class="stats-grid">
+                    <div class="stat-card tokens">
+                        <div class="stat-icon tokens">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="stat-value">847</div>
+                        <div class="stat-label">Tokens Restants</div>
+                    </div>
+                    
+                    <div class="stat-card sessions">
+                        <div class="stat-icon sessions">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="stat-value">23</div>
+                        <div class="stat-label">Sessions IA Aujourd'hui</div>
+                    </div>
+                    
+                    <div class="stat-card level">
+                        <div class="stat-icon level">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="stat-value">Level 8</div>
+                        <div class="stat-label">2,340 XP</div>
+                    </div>
+                    
+                    <div class="stat-card gains">
+                        <div class="stat-icon gains">
+                            <i class="fas fa-money-bill"></i>
+                        </div>
+                        <div class="stat-value">12,450 F</div>
+                        <div class="stat-label">Gains Parrainage</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Objectifs du Jour - Tesla Design -->
+            <div class="dashboard-section">
+                <div class="objectives-card">
+                    <div class="objectives-header">
+                        <h3 class="objectives-title">🎯 Objectifs du Jour</h3>
+                        <button class="btn-small btn-primary">
+                            Modifier
+                        </button>
+                    </div>
+                    
+                    <div class="objectives-grid">
+                        <div class="objective-item">
+                            <div class="objective-header">
+                                <i class="fas fa-graduation-cap" style="color: var(--etudia-secondary);"></i>
+                                <span style="font-weight: 600; font-size: 0.85rem; color: var(--etudia-white);">Révision Mathématiques</span>
+                            </div>
+                            <p class="objective-text">3 exercices d'équations du second degré restants. Une petite session ?</p>
+                            <button onclick="showSection('ia-chat')" class="btn-small btn-success">
+                                Réviser maintenant
+                            </button>
+                        </div>
+                        
+                        <div class="objective-item" style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(239, 68, 68, 0.1)); border: 1px solid rgba(255, 107, 53, 0.3);">
+                            <div class="objective-header">
+                                <i class="fas fa-chart-line" style="color: var(--etudia-primary);"></i>
+                                <span style="font-weight: 600; font-size: 0.85rem; color: var(--etudia-white);">Amélioration possible</span>
+                            </div>
+                            <p class="objective-text">Tes performances en physique ont baissé. Mode "Étape par Étape" recommandé.</p>
+                            <button onclick="showSection('progression')" class="btn-small btn-primary">
+                                Voir détails
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Activité Récente - Section Compacte NON-ÉTIRÉE avec 2x2 Layout -->
+            <div class="dashboard-section">
+                <div class="objectives-card">
+                    <div class="objectives-header">
+                        <h3 class="objectives-title">📈 Activité Récente</h3>
+                        <button onclick="showSection('historique')" class="btn-small btn-primary">
+                            Voir tout
+                        </button>
+                    </div>
+                    
+                    <!-- Ligne 1 : Session IA + Document Analysé -->
+                    <div class="activity-grid">
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background: var(--gradient-primary);">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Session IA - Mathématiques</div>
+                                <div class="activity-desc">Résolution d'équations du second degré avec DeepSeek R1</div>
+                                <div class="activity-meta">
+                                    <span class="activity-time">Il y a 2 heures</span>
+                                    <span class="activity-value tokens">-45 tokens</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background: var(--gradient-secondary);">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Document Analysé</div>
+                                <div class="activity-desc">Cours_Physique_Chapitre4.pdf traité avec OCR</div>
+                                <div class="activity-meta">
+                                    <span class="activity-time">Il y a 4 heures</span>
+                                    <span class="activity-value docs">PDF analysé</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Ligne 2 : Gain Parrainage + Badge Débloqué -->
+                    <div class="activity-grid">
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background: var(--gradient-success);">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Gain Parrainage</div>
+                                <div class="activity-desc">Commission de 1,300 FCFA reçue (Nouveau filleul)</div>
+                                <div class="activity-meta">
+                                    <span class="activity-time">Hier</span>
+                                    <span class="activity-value gain">+1,300 FCFA</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background: var(--gradient-secondary);">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Badge Débloqué</div>
+                                <div class="activity-desc">Expert Mathématiques - 50 exercices résolus</div>
+                                <div class="activity-meta">
+                                    <span class="activity-time">Il y a 1 jour</span>
+                                    <span class="activity-value xp">+250 XP</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Actions Rapides - Boutons Miniatures Tesla -->
+            <div class="dashboard-section">
+                <h2 class="section-title">🚀 Actions Rapides</h2>
+                <div class="actions-grid">
+                    <div class="action-card" onclick="showSection('ia-chat')">
+                        <i class="fas fa-robot action-icon ia"></i>
+                        <div class="action-title">Chat avec l'IA</div>
+                        <div class="action-desc">Poser une question à DeepSeek R1</div>
+                    </div>
+                    
+                    <div class="action-card" onclick="showSection('documents')">
+                        <i class="fas fa-upload action-icon upload"></i>
+                        <div class="action-title">Upload Document</div>
+                        <div class="action-desc">Analyser un PDF ou image</div>
+                    </div>
+                    
+                    <div class="action-card" onclick="showSection('parrainage')">
+                        <i class="fas fa-share action-icon parrain"></i>
+                        <div class="action-title">Parrainer</div>
+                        <div class="action-desc">Inviter des amis et gagner</div>
+                    </div>
+                    
+                    <div class="action-card" onclick="showSection('progression')">
+                        <i class="fas fa-chart-line action-icon progress"></i>
+                        <div class="action-title">Ma Progression</div>
+                        <div class="action-desc">Voir mes statistiques</div>
+                    </div>
+                    
+                    <div class="action-card" onclick="showSection('abonnements')">
+                        <i class="fas fa-credit-card action-icon tokens"></i>
+                        <div class="action-title">Acheter Tokens</div>
+                        <div class="action-desc">Recharger mon compte</div>
+                    </div>
+                    
+                    <div class="action-card" onclick="showSection('gamification')">
+                        <i class="fas fa-trophy action-icon badges"></i>
+                        <div class="action-title">Mes Badges</div>
+                        <div class="action-desc">Collection et récompenses</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== FIN SECTION TABLEAU DE BORD V4.1 PEAUFINÉE ===== -->
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Simulation de navigation - dans le vrai backoffice, cette fonction existe déjà
+            console.log(`Navigation vers la section: ${sectionId}`);
+            
+            // Animation au clic
+            event.target.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                event.target.style.transform = '';
+            }, 150);
+            
+            // Feedback visuel
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--gradient-primary);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                font-weight: 600;
+                z-index: 9999;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = `Navigation vers ${sectionId.replace('-', ' ')}`;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 2000);
+        }
+        
+        // Animation d'entrée pour les cartes
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.stat-card, .action-card, .activity-item');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+
+    <style>
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</body>
+</html>
