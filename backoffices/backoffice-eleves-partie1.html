@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📊 Tableau de Bord ÉtudIA V4.1</title>
+    <title>📊 Tableau de Bord ÉtudIA V4.2</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -37,11 +37,13 @@
             color: var(--etudia-white);
             min-height: 100vh;
             padding: 2rem;
+            line-height: 1.5;
         }
 
         .dashboard-container {
             max-width: 1200px;
             margin: 0 auto;
+            animation: fadeIn 0.5s ease;
         }
 
         .section-title {
@@ -52,18 +54,32 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            position: relative;
+            padding-left: 0.5rem;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--gradient-primary);
+            border-radius: 3px;
         }
 
         .dashboard-section {
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.6s ease;
         }
 
-        /* Stats Cards Ultra-Compactes */
+        /* Stats Cards */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 0.8rem;
-            margin-bottom: 1.2rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .stat-card {
@@ -71,7 +87,7 @@
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: var(--border-radius);
-            padding: 1rem;
+            padding: 1.2rem 1rem;
             text-align: center;
             transition: var(--transition);
             position: relative;
@@ -82,8 +98,9 @@
         }
 
         .stat-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-5px);
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255,255,255,0.3);
         }
 
         .stat-card::before {
@@ -92,7 +109,7 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
+            height: 4px;
         }
 
         .stat-card.tokens::before { background: var(--gradient-primary); }
@@ -101,15 +118,20 @@
         .stat-card.gains::before { background: var(--gradient-success); }
 
         .stat-icon {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 0.6rem;
-            font-size: 1.1rem;
+            margin: 0 auto 0.8rem;
+            font-size: 1.2rem;
             color: white;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover .stat-icon {
+            transform: scale(1.1);
         }
 
         .stat-icon.tokens { background: var(--gradient-primary); }
@@ -118,15 +140,20 @@
         .stat-icon.gains { background: var(--gradient-success); }
 
         .stat-value {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--etudia-white);
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.3rem;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover .stat-value {
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
         }
 
         .stat-label {
             color: rgba(255, 255, 255, 0.7);
-            font-size: 0.8rem;
+            font-size: 0.85rem;
         }
 
         /* Objectifs Section */
@@ -135,21 +162,26 @@
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
-            padding: 1.2rem;
-            margin-bottom: 1.2rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
             max-width: 800px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+        }
+
+        .objectives-card:hover {
+            border-color: rgba(255,255,255,0.3);
         }
 
         .objectives-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
 
         .objectives-title {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: var(--etudia-white);
             margin: 0;
@@ -157,60 +189,69 @@
 
         .objectives-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 0.8rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
         }
 
         .objective-item {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1));
             border: 1px solid rgba(16, 185, 129, 0.3);
             border-radius: var(--border-radius);
-            padding: 0.8rem;
+            padding: 1rem;
+            transition: var(--transition);
+        }
+
+        .objective-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
         .objective-header {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.3rem;
+            gap: 0.6rem;
+            margin-bottom: 0.5rem;
         }
 
         .objective-text {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: rgba(255,255,255,0.8);
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.6rem;
+            line-height: 1.5;
         }
 
         .btn-small {
             border: none;
-            padding: 0.3rem 0.6rem;
+            padding: 0.4rem 0.8rem;
             border-radius: var(--border-radius);
             color: white;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: var(--transition);
+            font-weight: 500;
         }
 
         .btn-success { background: var(--etudia-success); }
         .btn-primary { background: var(--etudia-primary); }
 
         .btn-small:hover {
-            transform: translateY(-1px);
+            transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0.9;
         }
 
         /* Activité Récente */
         .activity-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 0.8rem;
-            margin-bottom: 0.8rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
 
         .activity-item {
             display: flex;
             align-items: center;
-            padding: 0.8rem;
+            padding: 1rem;
             background: rgba(0, 0, 0, 0.2);
             border-radius: var(--border-radius);
             border: 1px solid var(--glass-border);
@@ -222,35 +263,49 @@
         .activity-item:hover {
             transform: translateX(5px);
             border-color: var(--etudia-primary);
+            background: rgba(0, 0, 0, 0.3);
         }
 
         .activity-icon {
-            width: 35px;
-            height: 35px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 0.8rem;
-            font-size: 0.9rem;
+            margin-right: 1rem;
+            font-size: 1rem;
             color: white;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .activity-item:hover .activity-icon {
+            transform: scale(1.1);
         }
 
         .activity-content {
             flex: 1;
+            min-width: 0;
         }
 
         .activity-title {
             font-weight: 600;
-            margin-bottom: 0.2rem;
-            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
             color: var(--etudia-white);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .activity-desc {
             color: rgba(255, 255, 255, 0.7);
-            font-size: 0.75rem;
-            margin-bottom: 0.3rem;
+            font-size: 0.8rem;
+            margin-bottom: 0.4rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .activity-meta {
@@ -261,12 +316,12 @@
 
         .activity-time {
             color: rgba(255, 255, 255, 0.5);
-            font-size: 0.7rem;
+            font-size: 0.75rem;
         }
 
         .activity-value {
             font-weight: 700;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
         }
 
         .activity-value.tokens { color: #F59E0B; }
@@ -277,9 +332,9 @@
         /* Actions Rapides */
         .actions-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 0.6rem;
-            margin-bottom: 1.2rem;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .action-card {
@@ -287,7 +342,7 @@
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: var(--border-radius);
-            padding: 0.8rem;
+            padding: 1rem;
             text-align: center;
             color: var(--etudia-white);
             transition: var(--transition);
@@ -298,15 +353,21 @@
         }
 
         .action-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px);
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
             border-color: var(--etudia-primary);
+            background: rgba(255,255,255,0.05);
         }
 
         .action-icon {
-            font-size: 1.3rem;
-            margin-bottom: 0.3rem;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
             display: block;
+            transition: var(--transition);
+        }
+
+        .action-card:hover .action-icon {
+            transform: scale(1.2);
         }
 
         .action-icon.ia { color: var(--etudia-primary); }
@@ -318,15 +379,44 @@
 
         .action-title {
             font-weight: 600;
-            margin-bottom: 0.1rem;
-            font-size: 0.85rem;
+            margin-bottom: 0.2rem;
+            font-size: 0.9rem;
         }
 
         .action-desc {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             opacity: 0.8;
         }
 
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
             body {
                 padding: 1rem;
@@ -338,18 +428,41 @@
             
             .actions-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+            
+            .objectives-grid,
+            .activity-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-card,
+            .action-card,
+            .activity-item {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="dashboard-container">
-        <!-- ===== DÉBUT SECTION TABLEAU DE BORD V4.1 PEAUFINÉE ===== -->
-        <!-- 🎯 À INSÉRER : Remplacer le contenu de <section id="dashboard" class="content-section active"> -->
-
-        <!-- Dashboard Section -->
+        <!-- ===== DÉBUT SECTION TABLEAU DE BORD V4.2 OPTIMISÉE ===== -->
         <section id="dashboard" class="content-section active">
-            <!-- Vue d'ensemble - Stats Cards Ultra-Compactes Tesla -->
+            <!-- Vue d'ensemble - Stats Cards -->
             <div class="dashboard-section">
                 <h2 class="section-title">📊 Vue d'ensemble</h2>
                 <div class="stats-grid">
@@ -387,7 +500,7 @@
                 </div>
             </div>
             
-            <!-- Objectifs du Jour - Tesla Design -->
+            <!-- Objectifs du Jour -->
             <div class="dashboard-section">
                 <div class="objectives-card">
                     <div class="objectives-header">
@@ -401,7 +514,7 @@
                         <div class="objective-item">
                             <div class="objective-header">
                                 <i class="fas fa-graduation-cap" style="color: var(--etudia-secondary);"></i>
-                                <span style="font-weight: 600; font-size: 0.85rem; color: var(--etudia-white);">Révision Mathématiques</span>
+                                <span style="font-weight: 600; font-size: 0.9rem; color: var(--etudia-white);">Révision Mathématiques</span>
                             </div>
                             <p class="objective-text">3 exercices d'équations du second degré restants. Une petite session ?</p>
                             <button onclick="showSection('ia-chat')" class="btn-small btn-success">
@@ -412,7 +525,7 @@
                         <div class="objective-item" style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(239, 68, 68, 0.1)); border: 1px solid rgba(255, 107, 53, 0.3);">
                             <div class="objective-header">
                                 <i class="fas fa-chart-line" style="color: var(--etudia-primary);"></i>
-                                <span style="font-weight: 600; font-size: 0.85rem; color: var(--etudia-white);">Amélioration possible</span>
+                                <span style="font-weight: 600; font-size: 0.9rem; color: var(--etudia-white);">Amélioration possible</span>
                             </div>
                             <p class="objective-text">Tes performances en physique ont baissé. Mode "Étape par Étape" recommandé.</p>
                             <button onclick="showSection('progression')" class="btn-small btn-primary">
@@ -423,7 +536,7 @@
                 </div>
             </div>
             
-            <!-- Activité Récente - Section Compacte NON-ÉTIRÉE avec 2x2 Layout -->
+            <!-- Activité Récente -->
             <div class="dashboard-section">
                 <div class="objectives-card">
                     <div class="objectives-header">
@@ -433,7 +546,6 @@
                         </button>
                     </div>
                     
-                    <!-- Ligne 1 : Session IA + Document Analysé -->
                     <div class="activity-grid">
                         <div class="activity-item">
                             <div class="activity-icon" style="background: var(--gradient-primary);">
@@ -464,7 +576,6 @@
                         </div>
                     </div>
                     
-                    <!-- Ligne 2 : Gain Parrainage + Badge Débloqué -->
                     <div class="activity-grid">
                         <div class="activity-item">
                             <div class="activity-icon" style="background: var(--gradient-success);">
@@ -497,7 +608,7 @@
                 </div>
             </div>
             
-            <!-- Actions Rapides - Boutons Miniatures Tesla -->
+            <!-- Actions Rapides -->
             <div class="dashboard-section">
                 <h2 class="section-title">🚀 Actions Rapides</h2>
                 <div class="actions-grid">
@@ -539,67 +650,91 @@
                 </div>
             </div>
         </section>
-
-        <!-- ===== FIN SECTION TABLEAU DE BORD V4.1 PEAUFINÉE ===== -->
+        <!-- ===== FIN SECTION TABLEAU DE BORD V4.2 OPTIMISÉE ===== -->
     </div>
 
     <script>
         function showSection(sectionId) {
-            // Simulation de navigation - dans le vrai backoffice, cette fonction existe déjà
+            // Simulation de navigation
             console.log(`Navigation vers la section: ${sectionId}`);
             
             // Animation au clic
-            event.target.style.transform = 'scale(0.95)';
+            const target = event.currentTarget;
+            target.style.transform = 'scale(0.95)';
             setTimeout(() => {
-                event.target.style.transform = '';
+                target.style.transform = '';
             }, 150);
             
-            // Feedback visuel
+            // Notification stylisée
             const notification = document.createElement('div');
             notification.style.cssText = `
                 position: fixed;
                 top: 20px;
                 right: 20px;
-                background: var(--gradient-primary);
+                background: linear-gradient(135deg, var(--etudia-primary), var(--etudia-accent));
                 color: white;
-                padding: 1rem 1.5rem;
-                border-radius: 12px;
+                padding: 0.8rem 1.5rem;
+                border-radius: 50px;
                 font-weight: 600;
                 z-index: 9999;
-                animation: slideIn 0.3s ease;
+                animation: slideIn 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
             `;
-            notification.textContent = `Navigation vers ${sectionId.replace('-', ' ')}`;
+            
+            const icon = document.createElement('i');
+            icon.className = 'fas fa-arrow-right';
+            notification.appendChild(icon);
+            
+            const text = document.createElement('span');
+            text.textContent = `Navigation vers ${sectionId.replace('-', ' ')}`;
+            notification.appendChild(text);
+            
             document.body.appendChild(notification);
             
             setTimeout(() => {
-                notification.remove();
+                notification.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
             }, 2000);
         }
         
-        // Animation d'entrée pour les cartes
+        // Animation d'entrée améliorée
         document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.stat-card, .action-card, .activity-item');
+            const sections = document.querySelectorAll('.dashboard-section');
+            sections.forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.animationDelay = `${index * 0.1}s`;
+                section.style.animationFillMode = 'forwards';
+            });
+            
+            // Animation pour les cartes à l'intérieur des sections
+            const cards = document.querySelectorAll('.stat-card, .action-card, .activity-item, .objective-item');
             cards.forEach((card, index) => {
                 card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
+                card.style.transform = 'translateY(10px)';
                 setTimeout(() => {
-                    card.style.transition = 'all 0.6s ease';
+                    card.style.transition = 'all 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
                     card.style.opacity = '1';
                     card.style.transform = 'translateY(0)';
-                }, index * 100);
+                }, 300 + index * 50);
             });
         });
     </script>
 
     <style>
-        @keyframes slideIn {
+        @keyframes fadeOut {
             from {
-                transform: translateX(100%);
-                opacity: 0;
+                opacity: 1;
+                transform: translateX(0);
             }
             to {
-                transform: translateX(0);
-                opacity: 1;
+                opacity: 0;
+                transform: translateX(20px);
             }
         }
     </style>
