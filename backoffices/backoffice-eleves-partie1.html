@@ -1,6 +1,8 @@
 <!-- ===== DÉBUT SECTION TABLEAU DE BORD V4.1 - DESIGN ORIGINAL + MODIFICATIONS PACOUSSTAR ===== -->
-<section id="dashboard" class="content-section active" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white;">
-    <!-- Vue d'ensemble - Version professionnelle -->
+<!-- 🎯 À INSÉRER : Remplacer le contenu de <section id="dashboard" class="content-section active"> -->
+
+<section id="dashboard" class="content-section active">
+    <!-- Vue d'ensemble - Stats Cards Compactes -->
     <div class="dashboard-section">
         <h2 class="section-title">📊 Vue d'ensemble</h2>
         <div class="stats-grid">
@@ -10,9 +12,6 @@
                 </div>
                 <div class="stat-value">847</div>
                 <div class="stat-label">Tokens Restants</div>
-                <div class="stat-progress">
-                    <div class="progress-bar" style="width: 65%"></div>
-                </div>
             </div>
             
             <div class="stat-card sessions">
@@ -21,9 +20,6 @@
                 </div>
                 <div class="stat-value">23</div>
                 <div class="stat-label">Sessions IA Aujourd'hui</div>
-                <div class="stat-tooltip" data-tooltip="+3 vs hier">
-                    <i class="fas fa-info-circle"></i>
-                </div>
             </div>
             
             <div class="stat-card level">
@@ -32,25 +28,19 @@
                 </div>
                 <div class="stat-value">Level 8</div>
                 <div class="stat-label">2,340 XP</div>
-                <div class="stat-badge">Top 15%</div>
             </div>
             
             <div class="stat-card gains">
                 <div class="stat-icon gains">
-                    <i class="fas fa-money-bill-wave"></i>
+                    <i class="fas fa-money-bill"></i>
                 </div>
                 <div class="stat-value">12,450 F</div>
                 <div class="stat-label">Gains Parrainage</div>
-                <div class="mini-chart">
-                    <div class="chart-bar" style="height: 30%"></div>
-                    <div class="chart-bar" style="height: 60%"></div>
-                    <div class="chart-bar" style="height: 90%"></div>
-                </div>
             </div>
         </div>
     </div>
     
-    <!-- Objectifs du Jour - Version améliorée -->
+    <!-- Objectifs du Jour - Taille Actions Rapides + Alignement 2 colonnes -->
     <div class="dashboard-section">
         <div class="objectives-card">
             <div class="objectives-header">
@@ -65,24 +55,18 @@
                     <i class="fas fa-graduation-cap objective-icon"></i>
                     <div class="objective-title">Révision Mathématiques</div>
                     <div class="objective-desc">3 exercices d'équations restants</div>
-                    <button onclick="showSection('ia-chat')" class="btn-micro btn-success">
-                        Commencer
-                    </button>
                 </div>
                 
                 <div class="objective-item warning">
                     <i class="fas fa-chart-line objective-icon"></i>
                     <div class="objective-title">Amélioration possible</div>
                     <div class="objective-desc">Performances physique en baisse</div>
-                    <button onclick="showSection('progression')" class="btn-micro btn-primary">
-                        Analyser
-                    </button>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- Activité Récente - Version améliorée -->
+    <!-- Activité Récente - Éléments 2 par 2 par ligne -->
     <div class="dashboard-section">
         <div class="activity-card">
             <div class="activity-header">
@@ -152,190 +136,459 @@
         </div>
     </div>
     
-    <!-- Actions Rapides - 3 par ligne comme demandé -->
+    <!-- Actions Rapides - Dimensions Originales -->
     <div class="dashboard-section">
         <h2 class="section-title">🚀 Actions Rapides</h2>
         <div class="actions-grid">
-            <!-- Ligne 1 -->
             <div class="action-card" onclick="showSection('ia-chat')">
-                <div class="action-icon-container">
-                    <i class="fas fa-robot action-icon"></i>
-                </div>
+                <i class="fas fa-robot action-icon ia"></i>
                 <div class="action-title">Chat avec l'IA</div>
                 <div class="action-desc">Poser une question à DeepSeek R1</div>
             </div>
             
             <div class="action-card" onclick="showSection('documents')">
-                <div class="action-icon-container">
-                    <i class="fas fa-upload action-icon"></i>
-                </div>
+                <i class="fas fa-upload action-icon upload"></i>
                 <div class="action-title">Upload Document</div>
                 <div class="action-desc">Analyser un PDF ou image</div>
             </div>
             
             <div class="action-card" onclick="showSection('parrainage')">
-                <div class="action-icon-container">
-                    <i class="fas fa-share-alt action-icon"></i>
-                </div>
+                <i class="fas fa-share action-icon parrain"></i>
                 <div class="action-title">Parrainer</div>
                 <div class="action-desc">Inviter des amis et gagner</div>
             </div>
             
-            <!-- Ligne 2 -->
             <div class="action-card" onclick="showSection('progression')">
-                <div class="action-icon-container">
-                    <i class="fas fa-chart-line action-icon"></i>
-                </div>
+                <i class="fas fa-chart-line action-icon progress"></i>
                 <div class="action-title">Ma Progression</div>
                 <div class="action-desc">Voir mes statistiques</div>
             </div>
             
             <div class="action-card" onclick="showSection('abonnements')">
-                <div class="action-icon-container">
-                    <i class="fas fa-credit-card action-icon"></i>
-                </div>
+                <i class="fas fa-credit-card action-icon tokens"></i>
                 <div class="action-title">Acheter Tokens</div>
                 <div class="action-desc">Recharger mon compte</div>
             </div>
             
             <div class="action-card" onclick="showSection('gamification')">
-                <div class="action-icon-container">
-                    <i class="fas fa-trophy action-icon"></i>
-                </div>
+                <i class="fas fa-trophy action-icon badges"></i>
                 <div class="action-title">Mes Badges</div>
                 <div class="action-desc">Collection et récompenses</div>
             </div>
         </div>
     </div>
 
-    <!-- CSS OPTIMISÉ -->
+    <!-- CSS AUTO-CONTENU - DESIGN ORIGINAL + MODIFICATIONS PACOUSSTAR -->
     <style>
-        /* FOND ET POLICES */
+        /* FOND BLEU NUIT COMME PROPOSÉ PAR PACOUSSTAR */
         #dashboard {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            padding: 1.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 1rem;
+            border-radius: 0;
         }
 
-        /* CARTES DE STATS */
-        #dashboard .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
+        /* Variables CSS Design Original */
+        #dashboard {
+            --etudia-primary: #FF6B35;
+            --etudia-secondary: #10B981;
+            --etudia-accent: #3B82F6;
+            --etudia-warning: #F59E0B;
+            --etudia-success: #10B981;
+            --etudia-white: #FFFFFF;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+            --gradient-primary: linear-gradient(135deg, #FF6B35, #EF4444);
+            --gradient-secondary: linear-gradient(135deg, #10B981, #3B82F6);
+            --gradient-warning: linear-gradient(135deg, #F59E0B, #EF4444);
+            --gradient-success: linear-gradient(135deg, #10B981, #059669);
+        }
+
+        #dashboard .dashboard-section {
             margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #dashboard .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--etudia-white);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        /* Stats Cards - TAILLES RÉDUITES */
+        #dashboard .stats-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            width: 100%;
         }
 
         #dashboard .stat-card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 1.2rem 0.8rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 1rem 0.8rem;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             position: relative;
             overflow: hidden;
+            width: 160px;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         #dashboard .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
         }
 
+        #dashboard .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        #dashboard .stat-card.tokens::before { background: var(--gradient-primary); }
+        #dashboard .stat-card.sessions::before { background: var(--gradient-secondary); }
+        #dashboard .stat-card.level::before { background: var(--gradient-warning); }
+        #dashboard .stat-card.gains::before { background: var(--gradient-success); }
+
         #dashboard .stat-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 0.8rem;
-            font-size: 1.1rem;
+            margin: 0 auto 0.5rem;
+            font-size: 1rem;
             color: white;
         }
 
-        #dashboard .stat-icon.tokens { background: linear-gradient(135deg, #FF6B35, #EF4444); }
-        #dashboard .stat-icon.sessions { background: linear-gradient(135deg, #10B981, #3B82F6); }
-        #dashboard .stat-icon.level { background: linear-gradient(135deg, #F59E0B, #EF4444); }
-        #dashboard .stat-icon.gains { background: linear-gradient(135deg, #10B981, #059669); }
+        #dashboard .stat-icon.tokens { background: var(--gradient-primary); }
+        #dashboard .stat-icon.sessions { background: var(--gradient-secondary); }
+        #dashboard .stat-icon.level { background: var(--gradient-warning); }
+        #dashboard .stat-icon.gains { background: var(--gradient-success); }
 
         #dashboard .stat-value {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            color: #FFFFFF;
-            margin-bottom: 0.3rem;
+            color: var(--etudia-white);
+            margin: 0.4rem 0;
         }
 
         #dashboard .stat-label {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.8rem;
-            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.75rem;
+            text-align: center;
+            padding: 0 0.3rem;
         }
 
-        /* ACTIONS RAPIDES - 3 PAR LIGNE */
+        /* Objectifs - TAILLE ACTIONS RAPIDES + ALIGNEMENT 2 COLONNES */
+        #dashboard .objectives-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.2rem;
+            margin-bottom: 1.2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        #dashboard .objectives-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        #dashboard .objectives-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--etudia-white);
+            margin: 0;
+            text-align: center;
+            flex: 1;
+        }
+
+        /* MODIFICATION PACOUSSTAR : Objectifs alignés 2 par ligne */
+        #dashboard .objectives-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* MODIFICATION PACOUSSTAR : Taille comme Actions Rapides */
+        #dashboard .objective-item {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: var(--border-radius);
+            padding: 0.8rem;
+            text-align: center;
+            color: var(--etudia-white);
+            transition: var(--transition);
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        #dashboard .objective-item.warning {
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+        }
+
+        #dashboard .objective-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        #dashboard .objective-icon {
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+            display: block;
+            color: #10B981;
+        }
+
+        #dashboard .objective-item.warning .objective-icon {
+            color: #FF6B35;
+        }
+
+        #dashboard .objective-title {
+            font-weight: 600;
+            margin-bottom: 0.1rem;
+            font-size: 0.85rem;
+        }
+
+        #dashboard .objective-desc {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        #dashboard .btn-small {
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: var(--border-radius);
+            color: white;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        #dashboard .btn-success { background: var(--etudia-success); }
+        #dashboard .btn-primary { background: var(--etudia-primary); }
+
+        #dashboard .btn-small:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Activité Récente - ÉLÉMENTS 2 PAR 2 PAR LIGNE */
+        #dashboard .activity-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.2rem;
+            margin-bottom: 1.2rem;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        #dashboard .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        #dashboard .activity-title-main {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--etudia-white);
+            margin: 0;
+            text-align: center;
+            flex: 1;
+        }
+
+        /* MODIFICATION PACOUSSTAR : 2 éléments par ligne */
+        #dashboard .activity-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        #dashboard .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        #dashboard .activity-item:hover {
+            transform: translateX(5px);
+            border-color: var(--etudia-primary);
+        }
+
+        #dashboard .activity-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.8rem;
+            font-size: 0.9rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        #dashboard .activity-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        #dashboard .activity-title {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+            font-size: 0.8rem;
+            color: var(--etudia-white);
+            text-align: left;
+        }
+
+        #dashboard .activity-desc {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.7rem;
+            margin-bottom: 0.3rem;
+            text-align: left;
+        }
+
+        #dashboard .activity-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #dashboard .activity-time {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.65rem;
+        }
+
+        #dashboard .activity-value {
+            font-weight: 700;
+            font-size: 0.7rem;
+        }
+
+        #dashboard .activity-value.tokens { color: #F59E0B; }
+        #dashboard .activity-value.gain { color: #10B981; }
+        #dashboard .activity-value.xp { color: #10B981; }
+        #dashboard .activity-value.docs { color: #3B82F6; }
+
+        /* Actions Rapides - TAILLES ORIGINALES */
         #dashboard .actions-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.6rem;
+            margin-bottom: 1.2rem;
         }
 
         #dashboard .action-card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 1.2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 0.8rem;
             text-align: center;
-            transition: all 0.3s ease;
+            color: var(--etudia-white);
+            transition: var(--transition);
             cursor: pointer;
+            max-width: 280px;
+            justify-self: start;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         #dashboard .action-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--etudia-primary);
         }
 
-        #dashboard .action-icon-container {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 0.8rem;
-            font-size: 1.2rem;
-            color: white;
-            background: rgba(255, 255, 255, 0.1);
+        #dashboard .action-icon {
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+            display: block;
         }
+
+        #dashboard .action-icon.ia { color: var(--etudia-primary); }
+        #dashboard .action-icon.upload { color: var(--etudia-secondary); }
+        #dashboard .action-icon.parrain { color: var(--etudia-warning); }
+        #dashboard .action-icon.progress { color: var(--etudia-accent); }
+        #dashboard .action-icon.tokens { color: #EF4444; }
+        #dashboard .action-icon.badges { color: var(--etudia-warning); }
 
         #dashboard .action-title {
             font-weight: 600;
-            margin-bottom: 0.3rem;
-            font-size: 0.9rem;
+            margin-bottom: 0.1rem;
+            font-size: 0.85rem;
         }
 
         #dashboard .action-desc {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             opacity: 0.8;
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 900px) {
+        /* Responsive */
+        @media (max-width: 768px) {
+            #dashboard .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            #dashboard .objectives-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            #dashboard .activity-grid {
+                grid-template-columns: 1fr;
+            }
+            
             #dashboard .actions-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        @media (max-width: 600px) {
-            #dashboard .stats-grid,
-            #dashboard .actions-grid {
+        @media (max-width: 480px) {
+            #dashboard .stats-grid {
                 grid-template-columns: 1fr;
             }
             
-            #dashboard {
-                padding: 1rem;
+            #dashboard .actions-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
