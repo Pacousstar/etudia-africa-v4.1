@@ -198,386 +198,140 @@
 
     <!-- CSS AUTO-CONTENU DANS LA SECTION -->
     <style>
-        /* Variables CSS spécifiques à la section Dashboard */
-        .dashboard-section {
-            margin-bottom: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        /* RESET POUR ÉVITER LES CONFLITS */
+        #dashboard,
+        #dashboard *,
+        #dashboard *::before,
+        #dashboard *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #FFFFFF;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            justify-content: center;
-        }
-
-        /* Stats Cards Centrées */
-        .stats-grid {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-            width: 100%;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
+        /* FOND PRINCIPAL */
+        #dashboard {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
             padding: 1.5rem;
+            min-height: 100vh;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        /* TITRE SECTION */
+        #dashboard .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            text-align: center;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        #dashboard .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(135deg, #FF6B35, #EF4444);
+            border-radius: 3px;
+        }
+
+        /* GRILLE DE STATISTIQUES */
+        #dashboard .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* CARTES DE STATS */
+        #dashboard .stat-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.2rem 0.8rem;
             text-align: center;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            width: 220px;
-            max-width: 100%;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        #dashboard .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-        }
-
-        .stat-card.tokens::before { background: linear-gradient(135deg, #FF6B35, #EF4444); }
-        .stat-card.sessions::before { background: linear-gradient(135deg, #10B981, #3B82F6); }
-        .stat-card.level::before { background: linear-gradient(135deg, #F59E0B, #EF4444); }
-        .stat-card.gains::before { background: linear-gradient(135deg, #10B981, #059669); }
-
-        .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            font-size: 1.3rem;
-            color: white;
-        }
-
-        .stat-icon.tokens { background: linear-gradient(135deg, #FF6B35, #EF4444); }
-        .stat-icon.sessions { background: linear-gradient(135deg, #10B981, #3B82F6); }
-        .stat-icon.level { background: linear-gradient(135deg, #F59E0B, #EF4444); }
-        .stat-icon.gains { background: linear-gradient(135deg, #10B981, #059669); }
-
-        .stat-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #FFFFFF;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
-        }
-
-        /* Objectifs Section */
-        .objectives-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            max-width: 800px;
-            width: 100%;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        .objectives-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .objectives-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #FFFFFF;
-            margin: 0;
-            text-align: center;
-            flex: 1;
-        }
-
-        .objectives-grid {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .objective-item {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1));
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            border-radius: 12px;
-            padding: 1.2rem;
-            width: 350px;
-            max-width: 100%;
-            transition: all 0.3s ease;
-        }
-
-        .objective-item.warning {
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(239, 68, 68, 0.1));
-            border: 1px solid rgba(255, 107, 53, 0.3);
-        }
-
-        .objective-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .objective-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            justify-content: center;
-        }
-
-        .objective-title {
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: #FFFFFF;
-        }
-
-        .objective-text {
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 0.8rem;
-            text-align: center;
-        }
-
-        .objective-actions {
-            display: flex;
-            justify-content: center;
-        }
-
-        .btn-small {
-            border: none;
-            padding: 0.4rem 0.8rem;
-            border-radius: 12px;
-            color: white;
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-success { background: #10B981; }
-        .btn-primary { background: #FF6B35; }
-
-        .btn-small:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Activité Récente Centrée */
-        .activity-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            max-width: 800px;
-            width: 100%;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        .activity-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .activity-title-main {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #FFFFFF;
-            margin: 0;
-            text-align: center;
-            flex: 1;
-        }
-
-        .activity-grid {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .activity-item {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            width: 350px;
-            max-width: 100%;
-            backdrop-filter: blur(10px);
-        }
-
-        .activity-item:hover {
-            transform: translateX(5px);
-            border-color: #FF6B35;
-        }
-
-        .activity-icon {
+        /* ICONES */
+        #dashboard .stat-icon {
             width: 40px;
             height: 40px;
-            border-radius: 50%;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 1rem;
-            font-size: 1rem;
+            margin: 0 auto 0.8rem;
+            font-size: 1.1rem;
             color: white;
-            flex-shrink: 0;
         }
 
-        .activity-content {
-            flex: 1;
-        }
+        #dashboard .stat-icon.tokens { background: linear-gradient(135deg, #FF6B35, #EF4444); }
+        #dashboard .stat-icon.sessions { background: linear-gradient(135deg, #10B981, #3B82F6); }
+        #dashboard .stat-icon.level { background: linear-gradient(135deg, #F59E0B, #EF4444); }
+        #dashboard .stat-icon.gains { background: linear-gradient(135deg, #10B981, #059669); }
 
-        .activity-title {
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-            font-size: 0.95rem;
-            color: #FFFFFF;
-            text-align: left;
-        }
-
-        .activity-desc {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.8rem;
-            margin-bottom: 0.4rem;
-            text-align: left;
-        }
-
-        .activity-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .activity-time {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.75rem;
-        }
-
-        .activity-value {
-            font-weight: 700;
-            font-size: 0.8rem;
-        }
-
-        .activity-value.tokens { color: #F59E0B; }
-        .activity-value.gain { color: #10B981; }
-        .activity-value.xp { color: #10B981; }
-        .activity-value.docs { color: #3B82F6; }
-
-        /* Actions Rapides */
-        .actions-grid {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1.2rem;
-            margin-bottom: 1.2rem;
-        }
-
-        .action-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            padding: 1rem;
-            text-align: center;
-            color: #FFFFFF;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            width: 180px;
-            max-width: 100%;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        .action-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-            border-color: #FF6B35;
-        }
-
-        .action-icon {
+        /* VALEURS */
+        #dashboard .stat-value {
             font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        .action-icon.ia { color: #FF6B35; }
-        .action-icon.upload { color: #10B981; }
-        .action-icon.parrain { color: #F59E0B; }
-        .action-icon.progress { color: #3B82F6; }
-        .action-icon.tokens { color: #EF4444; }
-        .action-icon.badges { color: #F59E0B; }
-
-        .action-title {
-            font-weight: 600;
+            font-weight: 700;
+            color: #FFFFFF;
             margin-bottom: 0.3rem;
-            font-size: 0.9rem;
+            line-height: 1.2;
         }
 
-        .action-desc {
-            font-size: 0.75rem;
-            opacity: 0.8;
+        /* LABELS */
+        #dashboard .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.8rem;
+            font-weight: 500;
         }
 
-        /* Responsive */
+        /* BADGE */
+        #dashboard .stat-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #3B82F6;
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            box-shadow: 0 3px 10px rgba(59, 130, 246, 0.4);
+        }
+
+        /* RESPONSIVE */
         @media (max-width: 768px) {
-            .stats-grid {
+            #dashboard .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-            }
-            
-            .actions-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-            }
-
-            .objective-item,
-            .activity-item {
-                width: 100%;
             }
         }
 
         @media (max-width: 480px) {
-            .stats-grid {
+            #dashboard {
+                padding: 1rem;
+            }
+            
+            #dashboard .stats-grid {
                 grid-template-columns: 1fr;
             }
             
-            .actions-grid {
-                grid-template-columns: 1fr;
+            #dashboard .stat-card {
+                padding: 1rem;
             }
         }
     </style>
