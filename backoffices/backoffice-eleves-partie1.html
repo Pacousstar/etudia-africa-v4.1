@@ -1,791 +1,709 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🤖 Interface IA - ÉtudIA V4.1</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<!-- ===== DÉBUT SECTION TABLEAU DE BORD V4.1 AUTO-CONTENUE ===== -->
+<!-- 🎯 À INSÉRER : Remplacer le contenu de <section id="dashboard" class="content-section active"> -->
+
+<section id="dashboard" class="content-section active">
+    <!-- Vue d'ensemble - Stats Cards Ultra-Compactes Tesla -->
+    <div class="dashboard-section">
+        <h2 class="section-title">📊 Vue d'ensemble</h2>
+        <div class="stats-grid">
+            <div class="stat-card tokens">
+                <div class="stat-icon tokens">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="stat-value">847</div>
+                <div class="stat-label">Tokens Restants</div>
+            </div>
+            
+            <div class="stat-card sessions">
+                <div class="stat-icon sessions">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="stat-value">23</div>
+                <div class="stat-label">Sessions IA Aujourd'hui</div>
+            </div>
+            
+            <div class="stat-card level">
+                <div class="stat-icon level">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="stat-value">Level 8</div>
+                <div class="stat-label">2,340 XP</div>
+            </div>
+            
+            <div class="stat-card gains">
+                <div class="stat-icon gains">
+                    <i class="fas fa-money-bill"></i>
+                </div>
+                <div class="stat-value">12,450 F</div>
+                <div class="stat-label">Gains Parrainage</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Objectifs du Jour - Tesla Design -->
+    <div class="dashboard-section">
+        <div class="objectives-card">
+            <div class="objectives-header">
+                <h3 class="objectives-title">🎯 Objectifs du Jour</h3>
+                <button class="btn-small btn-primary" onclick="showNotification('🔧 Fonction à développer plus tard : Modification des objectifs')">
+                    Modifier
+                </button>
+            </div>
+            
+            <div class="objectives-grid">
+                <div class="objective-item">
+                    <div class="objective-header">
+                        <i class="fas fa-graduation-cap" style="color: #10B981;"></i>
+                        <span class="objective-title">Révision Mathématiques</span>
+                    </div>
+                    <p class="objective-text">3 exercices d'équations du second degré restants. Une petite session ?</p>
+                    <div class="objective-actions">
+                        <button onclick="showSection('ia-chat')" class="btn-small btn-success">
+                            Réviser maintenant
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="objective-item warning">
+                    <div class="objective-header">
+                        <i class="fas fa-chart-line" style="color: #FF6B35;"></i>
+                        <span class="objective-title">Amélioration possible</span>
+                    </div>
+                    <p class="objective-text">Tes performances en physique ont baissé. Mode "Étape par Étape" recommandé.</p>
+                    <div class="objective-actions">
+                        <button onclick="showSection('progression')" class="btn-small btn-primary">
+                            Voir détails
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Activité Récente - Section Compacte NON-ÉTIRÉE avec 2x2 Layout -->
+    <div class="dashboard-section">
+        <div class="activity-card">
+            <div class="activity-header">
+                <h3 class="activity-title-main">📈 Activité Récente</h3>
+                <button onclick="showSection('historique')" class="btn-small btn-primary">
+                    Voir tout
+                </button>
+            </div>
+            
+            <!-- Ligne 1 : Session IA + Document Analysé -->
+            <div class="activity-grid">
+                <div class="activity-item">
+                    <div class="activity-icon" style="background: linear-gradient(135deg, #FF6B35, #EF4444);">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">Session IA - Mathématiques</div>
+                        <div class="activity-desc">Résolution d'équations du second degré avec DeepSeek R1</div>
+                        <div class="activity-meta">
+                            <span class="activity-time">Il y a 2 heures</span>
+                            <span class="activity-value tokens">-45 tokens</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon" style="background: linear-gradient(135deg, #10B981, #3B82F6);">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">Document Analysé</div>
+                        <div class="activity-desc">Cours_Physique_Chapitre4.pdf traité avec OCR</div>
+                        <div class="activity-meta">
+                            <span class="activity-time">Il y a 4 heures</span>
+                            <span class="activity-value docs">PDF analysé</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ligne 2 : Gain Parrainage + Badge Débloqué -->
+            <div class="activity-grid">
+                <div class="activity-item">
+                    <div class="activity-icon" style="background: linear-gradient(135deg, #10B981, #059669);">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">Gain Parrainage</div>
+                        <div class="activity-desc">Commission de 1,300 FCFA reçue (Nouveau filleul)</div>
+                        <div class="activity-meta">
+                            <span class="activity-time">Hier</span>
+                            <span class="activity-value gain">+1,300 FCFA</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon" style="background: linear-gradient(135deg, #10B981, #3B82F6);">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">Badge Débloqué</div>
+                        <div class="activity-desc">Expert Mathématiques - 50 exercices résolus</div>
+                        <div class="activity-meta">
+                            <span class="activity-time">Il y a 1 jour</span>
+                            <span class="activity-value xp">+250 XP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Actions Rapides - Boutons Miniatures Tesla -->
+    <div class="dashboard-section">
+        <h2 class="section-title">🚀 Actions Rapides</h2>
+        <div class="actions-grid">
+            <div class="action-card" onclick="showSection('ia-chat')">
+                <i class="fas fa-robot action-icon ia"></i>
+                <div class="action-title">Chat avec l'IA</div>
+                <div class="action-desc">Poser une question à DeepSeek R1</div>
+            </div>
+            
+            <div class="action-card" onclick="showSection('documents')">
+                <i class="fas fa-upload action-icon upload"></i>
+                <div class="action-title">Upload Document</div>
+                <div class="action-desc">Analyser un PDF ou image</div>
+            </div>
+            
+            <div class="action-card" onclick="showSection('parrainage')">
+                <i class="fas fa-share action-icon parrain"></i>
+                <div class="action-title">Parrainer</div>
+                <div class="action-desc">Inviter des amis et gagner</div>
+            </div>
+            
+            <div class="action-card" onclick="showSection('progression')">
+                <i class="fas fa-chart-line action-icon progress"></i>
+                <div class="action-title">Ma Progression</div>
+                <div class="action-desc">Voir mes statistiques</div>
+            </div>
+            
+            <div class="action-card" onclick="showSection('abonnements')">
+                <i class="fas fa-credit-card action-icon tokens"></i>
+                <div class="action-title">Acheter Tokens</div>
+                <div class="action-desc">Recharger mon compte</div>
+            </div>
+            
+            <div class="action-card" onclick="showSection('gamification')">
+                <i class="fas fa-trophy action-icon badges"></i>
+                <div class="action-title">Mes Badges</div>
+                <div class="action-desc">Collection et récompenses</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CSS AUTO-CONTENU DANS LA SECTION -->
     <style>
-        :root {
-            --etudia-dark: #0a0e1a;
-            --etudia-card: #1a1f2e;
-            --etudia-primary: #FF6B35;
-            --etudia-secondary: #10B981;
-            --etudia-accent: #3B82F6;
-            --etudia-warning: #F59E0B;
-            --etudia-success: #10B981;
-            --etudia-white: #FFFFFF;
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --border-radius: 12px;
-            --transition: all 0.3s ease;
-            --gradient-primary: linear-gradient(135deg, #FF6B35, #EF4444);
-            --gradient-secondary: linear-gradient(135deg, #10B981, #3B82F6);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a0e1a 0%, #1a1f2e 100%);
-            color: var(--etudia-white);
-            min-height: 100vh;
-            padding: 2rem;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        /* Variables CSS spécifiques à la section Dashboard */
+        .dashboard-section {
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .section-title {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--etudia-white);
+            color: #FFFFFF;
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-        }
-
-        /* Interface IA Container */
-        .ia-interface-container {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 1.5rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            position: relative;
-        }
-
-        /* Chat Header avec Stats */
-        .chat-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: var(--border-radius);
-            margin-bottom: 1rem;
-        }
-
-        .ia-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .ia-avatar {
-            width: 50px;
-            height: 50px;
-            background: var(--gradient-primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
-            animation: pulse 2s infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .ia-details h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.3rem;
-        }
-
-        .ia-status {
+        /* Stats Cards Centrées */
+        .stats-grid {
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--etudia-success);
-            border-radius: 50%;
-            animation: blink 2s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .tokens-display {
-            background: rgba(255, 107, 53, 0.1);
-            border: 1px solid rgba(255, 107, 53, 0.3);
-            border-radius: var(--border-radius);
-            padding: 0.8rem 1.2rem;
-            text-align: center;
-        }
-
-        .tokens-count {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--etudia-primary);
-            margin-bottom: 0.2rem;
-        }
-
-        .tokens-label {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        /* Modes d'apprentissage */
-        .learning-modes {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
             margin-bottom: 1.5rem;
+            width: 100%;
         }
 
-        .mode-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid transparent;
-            border-radius: var(--border-radius);
-            padding: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
             text-align: center;
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            width: 220px;
+            max-width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        .mode-card::before {
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .stat-card::before {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.5s;
+            left: 0;
+            right: 0;
+            height: 3px;
         }
 
-        .mode-card:hover::before {
-            left: 100%;
-        }
+        .stat-card.tokens::before { background: linear-gradient(135deg, #FF6B35, #EF4444); }
+        .stat-card.sessions::before { background: linear-gradient(135deg, #10B981, #3B82F6); }
+        .stat-card.level::before { background: linear-gradient(135deg, #F59E0B, #EF4444); }
+        .stat-card.gains::before { background: linear-gradient(135deg, #10B981, #059669); }
 
-        .mode-card.active {
-            border-color: var(--etudia-primary);
-            background: rgba(255, 107, 53, 0.1);
-            transform: scale(1.02);
-        }
-
-        .mode-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .mode-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        .mode-title {
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-            font-size: 0.9rem;
-        }
-
-        .mode-desc {
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 0.5rem;
-        }
-
-        .mode-tokens {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 0.2rem 0.5rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            color: var(--etudia-warning);
-            font-weight: 600;
-        }
-
-        /* Chat Messages Area */
-        .chat-area {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: var(--border-radius);
-            height: 400px;
-            margin-bottom: 1rem;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .messages-container {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .message {
-            display: flex;
-            gap: 0.8rem;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .message.user {
-            flex-direction: row-reverse;
-        }
-
-        .message-avatar {
-            width: 35px;
-            height: 35px;
+        .stat-icon {
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
-            flex-shrink: 0;
+            margin: 0 auto 1rem;
+            font-size: 1.3rem;
+            color: white;
         }
 
-        .message.ai .message-avatar {
-            background: var(--gradient-primary);
+        .stat-icon.tokens { background: linear-gradient(135deg, #FF6B35, #EF4444); }
+        .stat-icon.sessions { background: linear-gradient(135deg, #10B981, #3B82F6); }
+        .stat-icon.level { background: linear-gradient(135deg, #F59E0B, #EF4444); }
+        .stat-icon.gains { background: linear-gradient(135deg, #10B981, #059669); }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 0.5rem;
         }
 
-        .message.user .message-avatar {
-            background: var(--gradient-secondary);
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
         }
 
-        .message-content {
+        /* Objectifs Section */
+        .objectives-card {
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 0.8rem 1rem;
-            max-width: 80%;
-            word-wrap: break-word;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        .message.user .message-content {
-            background: rgba(255, 107, 53, 0.2);
+        .objectives-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .objectives-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            margin: 0;
+            text-align: center;
+            flex: 1;
+        }
+
+        .objectives-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .objective-item {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1));
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 1.2rem;
+            width: 350px;
+            max-width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .objective-item.warning {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(239, 68, 68, 0.1));
             border: 1px solid rgba(255, 107, 53, 0.3);
         }
 
-        .message-text {
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-
-        .message-time {
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.5);
-            margin-top: 0.3rem;
-        }
-
-        /* Input Area */
-        .input-area {
-            display: flex;
-            gap: 0.8rem;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 0 0 var(--border-radius) var(--border-radius);
-        }
-
-        .input-container {
-            flex: 1;
-            position: relative;
-        }
-
-        .message-input {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--glass-border);
-            border-radius: 25px;
-            padding: 0.8rem 1rem;
-            color: var(--etudia-white);
-            font-size: 0.9rem;
-            resize: none;
-            min-height: 45px;
-            max-height: 120px;
-        }
-
-        .message-input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .message-input:focus {
-            outline: none;
-            border-color: var(--etudia-primary);
-            box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
-        }
-
-        .send-button {
-            background: var(--gradient-primary);
-            border: none;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition);
-            color: white;
-            font-size: 1.1rem;
-        }
-
-        .send-button:hover {
-            transform: scale(1.1) rotate(10deg);
-            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.4);
-        }
-
-        .send-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Bouton Flottant IA */
-        .floating-ai-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background: var(--gradient-primary);
-            border: none;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
-            z-index: 1000;
-            transition: var(--transition);
-            font-size: 1.8rem;
-            animation: pulse 2s infinite;
-        }
-
-        .floating-ai-button:hover {
-            transform: scale(1.1) rotate(10deg);
-            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.6);
-        }
-
-        /* Actions Rapides */
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 0.8rem;
-            margin-top: 1.5rem;
-        }
-
-        .quick-action {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--border-radius);
-            padding: 1rem;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .quick-action:hover {
+        .objective-item:hover {
             transform: translateY(-2px);
-            border-color: var(--etudia-primary);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
 
-        .quick-action-icon {
+        .objective-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            justify-content: center;
+        }
+
+        .objective-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #FFFFFF;
+        }
+
+        .objective-text {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 0.8rem;
+            text-align: center;
+        }
+
+        .objective-actions {
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-small {
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 12px;
+            color: white;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-success { background: #10B981; }
+        .btn-primary { background: #FF6B35; }
+
+        .btn-small:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Activité Récente Centrée */
+        .activity-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .activity-title-main {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            margin: 0;
+            text-align: center;
+            flex: 1;
+        }
+
+        .activity-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            width: 350px;
+            max-width: 100%;
+            backdrop-filter: blur(10px);
+        }
+
+        .activity-item:hover {
+            transform: translateX(5px);
+            border-color: #FF6B35;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+            color: #FFFFFF;
+            text-align: left;
+        }
+
+        .activity-desc {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+            margin-bottom: 0.4rem;
+            text-align: left;
+        }
+
+        .activity-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .activity-time {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.75rem;
+        }
+
+        .activity-value {
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .activity-value.tokens { color: #F59E0B; }
+        .activity-value.gain { color: #10B981; }
+        .activity-value.xp { color: #10B981; }
+        .activity-value.docs { color: #3B82F6; }
+
+        /* Actions Rapides */
+        .actions-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .action-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            color: #FFFFFF;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            width: 180px;
+            max-width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            border-color: #FF6B35;
+        }
+
+        .action-icon {
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
             display: block;
         }
 
-        .quick-action-title {
+        .action-icon.ia { color: #FF6B35; }
+        .action-icon.upload { color: #10B981; }
+        .action-icon.parrain { color: #F59E0B; }
+        .action-icon.progress { color: #3B82F6; }
+        .action-icon.tokens { color: #EF4444; }
+        .action-icon.badges { color: #F59E0B; }
+
+        .action-title {
             font-weight: 600;
             margin-bottom: 0.3rem;
             font-size: 0.9rem;
         }
 
-        .quick-action-desc {
+        .action-desc {
             font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.7);
+            opacity: 0.8;
         }
 
+        /* Responsive */
         @media (max-width: 768px) {
-            body {
-                padding: 1rem;
-            }
-            
-            .learning-modes {
-                grid-template-columns: 1fr;
-            }
-            
-            .chat-header {
-                flex-direction: column;
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
             }
             
-            .quick-actions {
+            .actions-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .objective-item,
+            .activity-item {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .actions-grid {
                 grid-template-columns: 1fr;
             }
         }
     </style>
-</head>
-<body>
-    <div class="container">
-        <!-- ===== DÉBUT SECTION INTERFACE IA V4.1 ===== -->
-        <!-- 🎯 À INSÉRER : Remplacer le contenu de <section id="ia-chat" class="content-section"> -->
 
-        <section id="ia-chat" class="content-section">
-            <h2 class="section-title">🤖 Interface IA - DeepSeek R1</h2>
-            
-            <div class="ia-interface-container">
-                <!-- Chat Header avec informations -->
-                <div class="chat-header">
-                    <div class="ia-info">
-                        <div class="ia-avatar">🤖</div>
-                        <div class="ia-details">
-                            <h3>Assistant ÉtudIA DeepSeek R1</h3>
-                            <div class="ia-status">
-                                <div class="status-dot"></div>
-                                <span>En ligne • Multi-sessions • API Directe</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tokens-display">
-                        <div class="tokens-count">847</div>
-                        <div class="tokens-label">Tokens Restants</div>
-                    </div>
-                </div>
-
-                <!-- Modes d'apprentissage -->
-                <div class="learning-modes">
-                    <div class="mode-card active" data-mode="normal">
-                        <span class="mode-icon">💬</span>
-                        <div class="mode-title">Mode Normal</div>
-                        <div class="mode-desc">Conversation équilibrée et naturelle</div>
-                        <div class="mode-tokens">250 tokens</div>
-                    </div>
-                    
-                    <div class="mode-card" data-mode="step">
-                        <span class="mode-icon">📊</span>
-                        <div class="mode-title">Étape par Étape</div>
-                        <div class="mode-desc">Décomposition pédagogique progressive</div>
-                        <div class="mode-tokens">180 tokens</div>
-                    </div>
-                    
-                    <div class="mode-card" data-mode="direct">
-                        <span class="mode-icon">⚡</span>
-                        <div class="mode-title">Solution Directe</div>
-                        <div class="mode-desc">Réponse immédiate et efficace</div>
-                        <div class="mode-tokens">400 tokens</div>
-                    </div>
-                    
-                    <div class="mode-card" data-mode="audio">
-                        <span class="mode-icon">🎤</span>
-                        <div class="mode-title">Mode Audio</div>
-                        <div class="mode-desc">Optimisé pour synthèse vocale</div>
-                        <div class="mode-tokens">200 tokens</div>
-                    </div>
-                </div>
-
-                <!-- Zone de chat -->
-                <div class="chat-area">
-                    <div class="messages-container" id="messagesContainer">
-                        <!-- Message de bienvenue -->
-                        <div class="message ai">
-                            <div class="message-avatar">🤖</div>
-                            <div class="message-content">
-                                <div class="message-text">
-                                    <strong>Salut Aya ! 👋</strong><br><br>
-                                    Je suis ton assistant IA ÉtudIA avec DeepSeek R1 🚀<br><br>
-                                    <strong>Interface Multi-Sessions V4.1 maintenant active !</strong><br><br>
-                                    <strong>🆕 Nouvelles fonctionnalités :</strong>
-                                    <ul style="margin: 0.5rem 0; padding-left: 1rem;">
-                                        <li>💬 <strong>Multi-sessions</strong> : Organise tes conversations par matière</li>
-                                        <li>📁 <strong>Gestion documents</strong> : Upload et analyse tes fichiers</li>
-                                        <li>🔗 <strong>API directe</strong> : Connexion OpenRouter ultra-rapide</li>
-                                        <li>🎯 <strong>4 modes adaptatifs</strong> : IA qui s'adapte à ton apprentissage</li>
-                                    </ul>
-                                    <em>Commence par sélectionner un mode d'apprentissage ou pose-moi une question !</em>
-                                </div>
-                                <div class="message-time">Maintenant</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Zone de saisie -->
-                    <div class="input-area">
-                        <div class="input-container">
-                            <textarea 
-                                class="message-input" 
-                                id="messageInput"
-                                placeholder="Pose ta question à DeepSeek R1... (Ctrl+Entrée pour envoyer)"
-                                rows="1"
-                            ></textarea>
-                        </div>
-                        <button class="send-button" id="sendButton" onclick="sendMessage()">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Actions rapides -->
-                <div class="quick-actions">
-                    <div class="quick-action" onclick="quickQuestion('aide moi avec mes devoirs de mathématiques')">
-                        <span class="quick-action-icon">📐</span>
-                        <div class="quick-action-title">Aide Mathématiques</div>
-                        <div class="quick-action-desc">Résolution d'exercices et explications</div>
-                    </div>
-                    
-                    <div class="quick-action" onclick="quickQuestion('explique moi ce cours de physique')">
-                        <span class="quick-action-icon">⚗️</span>
-                        <div class="quick-action-title">Cours de Physique</div>
-                        <div class="quick-action-desc">Explication de concepts scientifiques</div>
-                    </div>
-                    
-                    <div class="quick-action" onclick="quickQuestion('corrige ma rédaction française')">
-                        <span class="quick-action-icon">✍️</span>
-                        <div class="quick-action-title">Aide Français</div>
-                        <div class="quick-action-desc">Correction et amélioration de textes</div>
-                    </div>
-                    
-                    <div class="quick-action" onclick="showSection('documents')">
-                        <span class="quick-action-icon">📄</span>
-                        <div class="quick-action-title">Upload Document</div>
-                        <div class="quick-action-desc">Analyser un PDF ou une image</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Bouton Flottant IA -->
-        <button class="floating-ai-button" onclick="scrollToChat()" title="Retour au Chat IA">
-            🤖
-        </button>
-
-        <!-- ===== FIN SECTION INTERFACE IA V4.1 ===== -->
-    </div>
-
+    <!-- JAVASCRIPT AUTO-CONTENU DANS LA SECTION -->
     <script>
-        let currentMode = 'normal';
-        let isLoading = false;
-
-        // Gestion des modes d'apprentissage
-        document.querySelectorAll('.mode-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const mode = this.dataset.mode;
-                switchMode(mode);
-            });
-        });
-
-        function switchMode(mode) {
-            currentMode = mode;
+        // 🔧 FONCTIONS À DÉVELOPPER PLUS TARD - MARQUÉES POUR RAPPEL
+        
+        function showSection(sectionId) {
+            // 🔧 TODO: Connecter à la navigation du backoffice principal
+            console.log(`Navigation vers section: ${sectionId}`);
             
-            // Mise à jour visuelle des modes
-            document.querySelectorAll('.mode-card').forEach(card => {
-                card.classList.remove('active');
-            });
-            document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
-            
-            // Feedback utilisateur
-            showNotification(`Mode ${getModeDisplayName(mode)} activé !`);
-        }
-
-        function getModeDisplayName(mode) {
-            const names = {
-                'normal': 'Normal',
-                'step': 'Étape par Étape',
-                'direct': 'Solution Directe',
-                'audio': 'Audio'
-            };
-            return names[mode] || 'Normal';
-        }
-
-        // Gestion des messages
-        function sendMessage() {
-            const input = document.getElementById('messageInput');
-            const message = input.value.trim();
-            
-            if (!message || isLoading) return;
-            
-            // Ajouter le message utilisateur
-            addMessage('user', message);
-            input.value = '';
-            
-            // Simuler la réponse IA
-            simulateAIResponse(message);
-        }
-
-        function addMessage(type, content) {
-            const container = document.getElementById('messagesContainer');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${type}`;
-            
-            const avatar = type === 'ai' ? '🤖' : '👨‍🎓';
-            const time = new Date().toLocaleTimeString('fr-FR', { 
-                hour: '2-digit', 
-                minute: '2-digit' 
-            });
-            
-            messageDiv.innerHTML = `
-                <div class="message-avatar">${avatar}</div>
-                <div class="message-content">
-                    <div class="message-text">${content}</div>
-                    <div class="message-time">${time}</div>
-                </div>
-            `;
-            
-            container.appendChild(messageDiv);
-            container.scrollTop = container.scrollHeight;
-        }
-
-        function simulateAIResponse(userMessage) {
-            isLoading = true;
-            document.getElementById('sendButton').disabled = true;
-            
-            // Ajouter indicateur de frappe
-            const typingDiv = document.createElement('div');
-            typingDiv.className = 'message ai typing';
-            typingDiv.innerHTML = `
-                <div class="message-avatar">🤖</div>
-                <div class="message-content">
-                    <div class="message-text">ÉtudIA réfléchit... 🤔</div>
-                </div>
-            `;
-            
-            const container = document.getElementById('messagesContainer');
-            container.appendChild(typingDiv);
-            container.scrollTop = container.scrollHeight;
-            
-            // Simuler le temps de réponse
-            setTimeout(() => {
-                container.removeChild(typingDiv);
-                
-                // Générer une réponse basée sur le mode actuel
-                let response = generateModeSpecificResponse(userMessage, currentMode);
-                addMessage('ai', response);
-                
-                // Décrémenter les tokens (simulation)
-                updateTokenCount();
-                
-                isLoading = false;
-                document.getElementById('sendButton').disabled = false;
-            }, 2000);
-        }
-
-        function generateModeSpecificResponse(message, mode) {
-            const responses = {
-                'normal': `Excellente question ! Voici ma réponse en mode conversationnel normal. Je vais t'expliquer cela de manière équilibrée et naturelle.`,
-                'step': `📊 **Étape 1 :** Analysons ton problème\n📊 **Étape 2 :** Identifions la méthode\n📊 **Étape 3 :** Appliquons la solution\n📊 **Étape 4 :** Vérifions le résultat`,
-                'direct': `⚡ **Réponse directe :** Voici la solution immédiate à ta question. La réponse est claire et sans détours.`,
-                'audio': `🎤 Voici ma réponse optimisée pour l'audio. Je parle clairement et distinctement pour que tu puisses bien comprendre.`
-            };
-            
-            return responses[mode] || responses['normal'];
-        }
-
-        function updateTokenCount() {
-            const tokenElement = document.querySelector('.tokens-count');
-            let currentTokens = parseInt(tokenElement.textContent);
-            
-            const tokenCosts = {
-                'normal': 25,
-                'step': 18,
-                'direct': 40,
-                'audio': 20
-            };
-            
-            currentTokens -= tokenCosts[currentMode] || 25;
-            tokenElement.textContent = Math.max(0, currentTokens);
-            
-            if (currentTokens < 100) {
-                tokenElement.style.color = '#EF4444';
-                showNotification('⚠️ Attention : Il te reste peu de tokens !');
+            // Animation au clic
+            if (event && event.target) {
+                event.target.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    event.target.style.transform = '';
+                }, 150);
             }
+            
+            // Notifications selon la section
+            const messages = {
+                'ia-chat': '🤖 Redirection vers Interface IA...',
+                'documents': '📁 Redirection vers Mes Documents...',
+                'parrainage': '🤝 Redirection vers Parrainage...',
+                'progression': '📊 Redirection vers Ma Progression...',
+                'abonnements': '💳 Redirection vers Abonnements...',
+                'gamification': '🏆 Redirection vers Badges & Niveaux...',
+                'historique': '📈 Redirection vers Historique...'
+            };
+            
+            showNotification(messages[sectionId] || `Navigation vers ${sectionId}`);
         }
-
-        function quickQuestion(question) {
-            document.getElementById('messageInput').value = question;
-            sendMessage();
-        }
-
-        function scrollToChat() {
-            document.querySelector('.chat-area').scrollIntoView({ 
-                behavior: 'smooth' 
-            });
-        }
-
+        
         function showNotification(message) {
+            // Créer notification toast
             const notification = document.createElement('div');
             notification.style.cssText = `
                 position: fixed;
                 top: 20px;
                 right: 20px;
-                background: var(--gradient-primary);
+                background: linear-gradient(135deg, #FF6B35, #EF4444);
                 color: white;
                 padding: 1rem 1.5rem;
                 border-radius: 12px;
                 font-weight: 600;
                 z-index: 9999;
                 animation: slideIn 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                box-shadow: 0 8px 32px rgba(255, 107, 53, 0.4);
                 max-width: 300px;
             `;
-            notification.textContent = message;
+            
+            notification.innerHTML = `
+                <i class="fas fa-arrow-right"></i>
+                <span>${message}</span>
+            `;
+            
             document.body.appendChild(notification);
             
             setTimeout(() => {
-                notification.remove();
+                notification.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
             }, 3000);
         }
-
-        function showSection(sectionId) {
-            console.log(`Navigation vers ${sectionId}`);
-            showNotification(`Redirection vers ${sectionId}...`);
+        
+        // 🔧 TODO: Fonction à développer plus tard - Rechargement stats temps réel
+        function updateStatsRealTime() {
+            // 🔧 À CONNECTER: API Supabase pour stats temps réel
+            console.log('🔧 Fonction à développer : Mise à jour stats temps réel depuis Supabase');
         }
-
-        // Gestion du clavier
-        document.getElementById('messageInput').addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.key === 'Enter') {
-                sendMessage();
-            }
-            
-            // Auto-resize
-            this.style.height = 'auto';
-            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
-        });
-
-        // Animation d'entrée
+        
+        // 🔧 TODO: Fonction à développer plus tard - Sauvegarde activité
+        function trackUserActivity(actionType, details) {
+            // 🔧 À CONNECTER: Tracking des actions utilisateur
+            console.log('🔧 Fonction à développer : Tracking activité utilisateur', actionType, details);
+        }
+        
+        // Animation d'entrée pour les cartes
         document.addEventListener('DOMContentLoaded', function() {
-            const elements = document.querySelectorAll('.mode-card, .quick-action');
-            elements.forEach((el, index) => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
+            const cards = document.querySelectorAll('#dashboard .stat-card, #dashboard .action-card, #dashboard .activity-item, #dashboard .objective-item');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
                 setTimeout(() => {
-                    el.style.transition = 'all 0.6s ease';
-                    el.style.opacity = '1';
-                    el.style.transform = 'translateY(0)';
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
                 }, index * 100);
             });
         });
+
+        // Ajouter animations CSS dans le head si pas déjà présentes
+        if (!document.querySelector('#dashboard-animations')) {
+            const style = document.createElement('style');
+            style.id = 'dashboard-animations';
+            style.textContent = `
+                @keyframes slideIn {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+                
+                @keyframes fadeOut {
+                    from {
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
+                    to {
+                        opacity: 0;
+                        transform: translateX(20px);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
     </script>
-</body>
-</html>
+</section>
+
+<!-- ===== FIN SECTION TABLEAU DE BORD V4.1 AUTO-CONTENUE ===== -->
