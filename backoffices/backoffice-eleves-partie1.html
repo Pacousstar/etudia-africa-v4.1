@@ -1,8 +1,8 @@
-<!-- ===== DÉBUT SECTION TABLEAU DE BORD V4.1 AUTO-CONTENUE FOND SOMBRE TESLA ===== -->
+<!-- ===== DÉBUT SECTION TABLEAU DE BORD V4.1 - DESIGN ORIGINAL + MODIFICATIONS PACOUSSTAR ===== -->
 <!-- 🎯 À INSÉRER : Remplacer le contenu de <section id="dashboard" class="content-section active"> -->
 
 <section id="dashboard" class="content-section active">
-    <!-- Vue d'ensemble - Stats Cards Ultra-Compactes Tesla -->
+    <!-- Vue d'ensemble - Stats Cards Compactes -->
     <div class="dashboard-section">
         <h2 class="section-title">📊 Vue d'ensemble</h2>
         <div class="stats-grid">
@@ -40,7 +40,7 @@
         </div>
     </div>
     
-    <!-- Objectifs du Jour - Tesla Design -->
+    <!-- Objectifs du Jour - Taille Actions Rapides + Alignement 2 colonnes -->
     <div class="dashboard-section">
         <div class="objectives-card">
             <div class="objectives-header">
@@ -52,35 +52,21 @@
             
             <div class="objectives-grid">
                 <div class="objective-item">
-                    <div class="objective-header">
-                        <i class="fas fa-graduation-cap" style="color: #10B981;"></i>
-                        <span class="objective-title">Révision Mathématiques</span>
-                    </div>
-                    <p class="objective-text">3 exercices d'équations du second degré restants. Une petite session ?</p>
-                    <div class="objective-actions">
-                        <button onclick="showSection('ia-chat')" class="btn-small btn-success">
-                            Réviser maintenant
-                        </button>
-                    </div>
+                    <i class="fas fa-graduation-cap objective-icon"></i>
+                    <div class="objective-title">Révision Mathématiques</div>
+                    <div class="objective-desc">3 exercices d'équations restants</div>
                 </div>
                 
                 <div class="objective-item warning">
-                    <div class="objective-header">
-                        <i class="fas fa-chart-line" style="color: #FF6B35;"></i>
-                        <span class="objective-title">Amélioration possible</span>
-                    </div>
-                    <p class="objective-text">Tes performances en physique ont baissé. Mode "Étape par Étape" recommandé.</p>
-                    <div class="objective-actions">
-                        <button onclick="showSection('progression')" class="btn-small btn-primary">
-                            Voir détails
-                        </button>
-                    </div>
+                    <i class="fas fa-chart-line objective-icon"></i>
+                    <div class="objective-title">Amélioration possible</div>
+                    <div class="objective-desc">Performances physique en baisse</div>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- Activité Récente - Section Compacte NON-ÉTIRÉE avec 2x2 Layout -->
+    <!-- Activité Récente - Éléments 2 par 2 par ligne -->
     <div class="dashboard-section">
         <div class="activity-card">
             <div class="activity-header">
@@ -90,7 +76,6 @@
                 </button>
             </div>
             
-            <!-- Ligne 1 : Session IA + Document Analysé -->
             <div class="activity-grid">
                 <div class="activity-item">
                     <div class="activity-icon" style="background: linear-gradient(135deg, #FF6B35, #EF4444);">
@@ -98,9 +83,9 @@
                     </div>
                     <div class="activity-content">
                         <div class="activity-title">Session IA - Mathématiques</div>
-                        <div class="activity-desc">Résolution d'équations du second degré avec DeepSeek R1</div>
+                        <div class="activity-desc">Résolution équations degré 2</div>
                         <div class="activity-meta">
-                            <span class="activity-time">Il y a 2 heures</span>
+                            <span class="activity-time">Il y a 2h</span>
                             <span class="activity-value tokens">-45 tokens</span>
                         </div>
                     </div>
@@ -112,27 +97,24 @@
                     </div>
                     <div class="activity-content">
                         <div class="activity-title">Document Analysé</div>
-                        <div class="activity-desc">Cours_Physique_Chapitre4.pdf traité avec OCR</div>
+                        <div class="activity-desc">Cours_Physique_Ch4.pdf traité</div>
                         <div class="activity-meta">
-                            <span class="activity-time">Il y a 4 heures</span>
+                            <span class="activity-time">Il y a 4h</span>
                             <span class="activity-value docs">PDF analysé</span>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Ligne 2 : Gain Parrainage + Badge Débloqué -->
-            <div class="activity-grid">
+                
                 <div class="activity-item">
                     <div class="activity-icon" style="background: linear-gradient(135deg, #10B981, #059669);">
                         <i class="fas fa-handshake"></i>
                     </div>
                     <div class="activity-content">
                         <div class="activity-title">Gain Parrainage</div>
-                        <div class="activity-desc">Commission de 1,300 FCFA reçue (Nouveau filleul)</div>
+                        <div class="activity-desc">Commission 1,300 FCFA reçue</div>
                         <div class="activity-meta">
                             <span class="activity-time">Hier</span>
-                            <span class="activity-value gain">+1,300 FCFA</span>
+                            <span class="activity-value gain">+1,300 F</span>
                         </div>
                     </div>
                 </div>
@@ -143,9 +125,9 @@
                     </div>
                     <div class="activity-content">
                         <div class="activity-title">Badge Débloqué</div>
-                        <div class="activity-desc">Expert Mathématiques - 50 exercices résolus</div>
+                        <div class="activity-desc">Expert Mathématiques</div>
                         <div class="activity-meta">
-                            <span class="activity-time">Il y a 1 jour</span>
+                            <span class="activity-time">Il y a 1j</span>
                             <span class="activity-value xp">+250 XP</span>
                         </div>
                     </div>
@@ -154,7 +136,7 @@
         </div>
     </div>
     
-    <!-- Actions Rapides - Boutons Miniatures Tesla -->
+    <!-- Actions Rapides - Dimensions Originales -->
     <div class="dashboard-section">
         <h2 class="section-title">🚀 Actions Rapides</h2>
         <div class="actions-grid">
@@ -196,63 +178,84 @@
         </div>
     </div>
 
-    <!-- CSS AUTO-CONTENU OPTIMISÉ POUR FOND SOMBRE TESLA RENFORCÉ -->
+    <!-- CSS AUTO-CONTENU - DESIGN ORIGINAL + MODIFICATIONS PACOUSSTAR -->
     <style>
-        /* DESIGN TESLA ULTRA-RENFORCÉ POUR FOND SOMBRE */
+        /* FOND BLEU NUIT COMME PROPOSÉ PAR PACOUSSTAR */
+        #dashboard {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 1rem;
+            border-radius: 0;
+        }
+
+        /* Variables CSS Design Original */
+        #dashboard {
+            --etudia-primary: #FF6B35;
+            --etudia-secondary: #10B981;
+            --etudia-accent: #3B82F6;
+            --etudia-warning: #F59E0B;
+            --etudia-success: #10B981;
+            --etudia-white: #FFFFFF;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+            --gradient-primary: linear-gradient(135deg, #FF6B35, #EF4444);
+            --gradient-secondary: linear-gradient(135deg, #10B981, #3B82F6);
+            --gradient-warning: linear-gradient(135deg, #F59E0B, #EF4444);
+            --gradient-success: linear-gradient(135deg, #10B981, #059669);
+        }
+
         #dashboard .dashboard-section {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
         #dashboard .section-title {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            color: #FFFFFF;
-            margin-bottom: 1.5rem;
+            color: var(--etudia-white);
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             justify-content: center;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
         }
 
-        /* Stats Cards TESLA GLASSMORPHISM ULTRA-RENFORCÉ */
+        /* Stats Cards - TAILLES RÉDUITES */
         #dashboard .stats-grid {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
+            gap: 1rem;
+            margin-bottom: 1rem;
             width: 100%;
         }
 
         #dashboard .stat-card {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(30px);
-            border: 3px solid rgba(255, 255, 255, 0.4);
-            border-radius: 20px;
-            padding: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 1rem 0.8rem;
             text-align: center;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: var(--transition);
             position: relative;
             overflow: hidden;
-            width: 220px;
-            max-width: 100%;
-            box-shadow: 
-                0 15px 40px rgba(0, 0, 0, 0.6),
-                0 0 0 1px rgba(255, 255, 255, 0.2),
-                inset 0 2px 0 rgba(255, 255, 255, 0.3);
+            width: 160px;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         #dashboard .stat-card:hover {
-            transform: translateY(-12px) scale(1.05);
-            box-shadow: 
-                0 25px 60px rgba(0, 0, 0, 0.7),
-                0 0 0 1px rgba(255, 255, 255, 0.3),
-                inset 0 2px 0 rgba(255, 255, 255, 0.4);
-            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
         }
 
         #dashboard .stat-card::before {
@@ -261,289 +264,229 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 5px;
-            border-radius: 20px 20px 0 0;
+            height: 3px;
         }
 
-        #dashboard .stat-card.tokens::before { 
-            background: linear-gradient(135deg, #FF6B35, #EF4444);
-            box-shadow: 0 0 25px rgba(255, 107, 53, 0.8);
-        }
-        #dashboard .stat-card.sessions::before { 
-            background: linear-gradient(135deg, #10B981, #3B82F6);
-            box-shadow: 0 0 25px rgba(16, 185, 129, 0.8);
-        }
-        #dashboard .stat-card.level::before { 
-            background: linear-gradient(135deg, #F59E0B, #EF4444);
-            box-shadow: 0 0 25px rgba(245, 158, 11, 0.8);
-        }
-        #dashboard .stat-card.gains::before { 
-            background: linear-gradient(135deg, #10B981, #059669);
-            box-shadow: 0 0 25px rgba(16, 185, 129, 0.8);
-        }
+        #dashboard .stat-card.tokens::before { background: var(--gradient-primary); }
+        #dashboard .stat-card.sessions::before { background: var(--gradient-secondary); }
+        #dashboard .stat-card.level::before { background: var(--gradient-warning); }
+        #dashboard .stat-card.gains::before { background: var(--gradient-success); }
 
         #dashboard .stat-icon {
-            width: 70px;
-            height: 70px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.2rem;
-            font-size: 1.8rem;
+            margin: 0 auto 0.5rem;
+            font-size: 1rem;
             color: white;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
 
-        #dashboard .stat-icon.tokens { 
-            background: linear-gradient(135deg, #FF6B35, #EF4444);
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.6);
-        }
-        #dashboard .stat-icon.sessions { 
-            background: linear-gradient(135deg, #10B981, #3B82F6);
-            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.6);
-        }
-        #dashboard .stat-icon.level { 
-            background: linear-gradient(135deg, #F59E0B, #EF4444);
-            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.6);
-        }
-        #dashboard .stat-icon.gains { 
-            background: linear-gradient(135deg, #10B981, #059669);
-            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.6);
-        }
+        #dashboard .stat-icon.tokens { background: var(--gradient-primary); }
+        #dashboard .stat-icon.sessions { background: var(--gradient-secondary); }
+        #dashboard .stat-icon.level { background: var(--gradient-warning); }
+        #dashboard .stat-icon.gains { background: var(--gradient-success); }
 
         #dashboard .stat-value {
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: #FFFFFF;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--etudia-white);
+            margin: 0.4rem 0;
         }
 
         #dashboard .stat-label {
-            color: rgba(255, 255, 255, 0.95);
-            font-size: 1rem;
-            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.75rem;
+            text-align: center;
+            padding: 0 0.3rem;
         }
 
-        /* Objectifs Section TESLA ULTRA-RENFORCÉ */
+        /* Objectifs - TAILLE ACTIONS RAPIDES + ALIGNEMENT 2 COLONNES */
         #dashboard .objectives-card {
-            background: rgba(255, 255, 255, 0.18);
-            backdrop-filter: blur(30px);
-            border: 3px solid rgba(255, 255, 255, 0.35);
-            border-radius: 25px;
-            padding: 2.5rem;
-            margin-bottom: 1.5rem;
-            max-width: 800px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.2rem;
+            margin-bottom: 1.2rem;
+            max-width: 600px;
             width: 100%;
-            box-shadow: 
-                0 20px 50px rgba(0, 0, 0, 0.6),
-                inset 0 2px 0 rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         #dashboard .objectives-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.8rem;
+            margin-bottom: 1rem;
         }
 
         #dashboard .objectives-title {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: #FFFFFF;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--etudia-white);
             margin: 0;
             text-align: center;
             flex: 1;
-            text-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
         }
 
+        /* MODIFICATION PACOUSSTAR : Objectifs alignés 2 par ligne */
         #dashboard .objectives-grid {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1.8rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
             margin-top: 1rem;
         }
 
+        /* MODIFICATION PACOUSSTAR : Taille comme Actions Rapides */
         #dashboard .objective-item {
-            background: rgba(16, 185, 129, 0.2);
-            border: 3px solid rgba(16, 185, 129, 0.5);
-            border-radius: 20px;
-            padding: 1.8rem;
-            width: 350px;
-            max-width: 100%;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            backdrop-filter: blur(20px);
-            box-shadow: 
-                0 12px 35px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: var(--border-radius);
+            padding: 0.8rem;
+            text-align: center;
+            color: var(--etudia-white);
+            transition: var(--transition);
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         #dashboard .objective-item.warning {
-            background: rgba(255, 107, 53, 0.2);
-            border: 3px solid rgba(255, 107, 53, 0.5);
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.3);
         }
 
         #dashboard .objective-item:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 
-                0 20px 45px rgba(0, 0, 0, 0.5),
-                inset 0 2px 0 rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.7);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
         }
 
-        #dashboard .objective-header {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 1rem;
-            justify-content: center;
+        #dashboard .objective-icon {
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+            display: block;
+            color: #10B981;
+        }
+
+        #dashboard .objective-item.warning .objective-icon {
+            color: #FF6B35;
         }
 
         #dashboard .objective-title {
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: #FFFFFF;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            font-weight: 600;
+            margin-bottom: 0.1rem;
+            font-size: 0.85rem;
         }
 
-        #dashboard .objective-text {
-            font-size: 0.95rem;
-            color: rgba(255,255,255,0.95);
-            margin-bottom: 1.2rem;
-            text-align: center;
-            line-height: 1.6;
-        }
-
-        #dashboard .objective-actions {
-            display: flex;
-            justify-content: center;
+        #dashboard .objective-desc {
+            font-size: 0.7rem;
+            opacity: 0.8;
         }
 
         #dashboard .btn-small {
             border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 15px;
+            padding: 0.3rem 0.6rem;
+            border-radius: var(--border-radius);
             color: white;
-            font-size: 0.85rem;
-            font-weight: 700;
+            font-size: 0.7rem;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
+            transition: var(--transition);
         }
 
-        #dashboard .btn-success { 
-            background: linear-gradient(135deg, #10B981, #059669);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
-        }
-        #dashboard .btn-primary { 
-            background: linear-gradient(135deg, #FF6B35, #EF4444);
-            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
-        }
+        #dashboard .btn-success { background: var(--etudia-success); }
+        #dashboard .btn-primary { background: var(--etudia-primary); }
 
         #dashboard .btn-small:hover {
-            transform: translateY(-3px) scale(1.08);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
-        /* Activité Récente TESLA ULTRA-RENFORCÉ */
+        /* Activité Récente - ÉLÉMENTS 2 PAR 2 PAR LIGNE */
         #dashboard .activity-card {
-            background: rgba(255, 255, 255, 0.18);
-            backdrop-filter: blur(30px);
-            border: 3px solid rgba(255, 255, 255, 0.35);
-            border-radius: 25px;
-            padding: 2.5rem;
-            margin-bottom: 1.5rem;
-            max-width: 800px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.2rem;
+            margin-bottom: 1.2rem;
+            max-width: 700px;
             width: 100%;
-            box-shadow: 
-                0 20px 50px rgba(0, 0, 0, 0.6),
-                inset 0 2px 0 rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         #dashboard .activity-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.8rem;
+            margin-bottom: 1rem;
         }
 
         #dashboard .activity-title-main {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: #FFFFFF;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--etudia-white);
             margin: 0;
             text-align: center;
             flex: 1;
-            text-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
         }
 
+        /* MODIFICATION PACOUSSTAR : 2 éléments par ligne */
         #dashboard .activity-grid {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1.8rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
             margin-top: 1rem;
         }
 
         #dashboard .activity-item {
             display: flex;
             align-items: center;
-            padding: 1.5rem;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            width: 350px;
-            max-width: 100%;
-            backdrop-filter: blur(20px);
-            box-shadow: 
-                0 12px 35px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
         }
 
         #dashboard .activity-item:hover {
-            transform: translateX(10px) translateY(-5px);
-            border-color: #FF6B35;
-            box-shadow: 
-                0 18px 40px rgba(0, 0, 0, 0.5),
-                0 0 25px rgba(255, 107, 53, 0.4);
+            transform: translateX(5px);
+            border-color: var(--etudia-primary);
         }
 
         #dashboard .activity-icon {
-            width: 50px;
-            height: 50px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 1.2rem;
-            font-size: 1.3rem;
+            margin-right: 0.8rem;
+            font-size: 0.9rem;
             color: white;
             flex-shrink: 0;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
 
         #dashboard .activity-content {
             flex: 1;
+            min-width: 0;
         }
 
         #dashboard .activity-title {
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            font-size: 1.05rem;
-            color: #FFFFFF;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+            font-size: 0.8rem;
+            color: var(--etudia-white);
             text-align: left;
         }
 
         #dashboard .activity-desc {
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 0.9rem;
-            margin-bottom: 0.6rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.7rem;
+            margin-bottom: 0.3rem;
             text-align: left;
-            line-height: 1.5;
         }
 
         #dashboard .activity-meta {
@@ -553,13 +496,13 @@
         }
 
         #dashboard .activity-time {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.65rem;
         }
 
         #dashboard .activity-value {
-            font-weight: 800;
-            font-size: 0.9rem;
+            font-weight: 700;
+            font-size: 0.7rem;
         }
 
         #dashboard .activity-value.tokens { color: #F59E0B; }
@@ -567,108 +510,101 @@
         #dashboard .activity-value.xp { color: #10B981; }
         #dashboard .activity-value.docs { color: #3B82F6; }
 
-        /* Actions Rapides TESLA GLASSMORPHISM ULTRA-RENFORCÉ */
+        /* Actions Rapides - TAILLES ORIGINALES */
         #dashboard .actions-grid {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.6rem;
             margin-bottom: 1.2rem;
         }
 
         #dashboard .action-card {
-            background: rgba(255, 255, 255, 0.18);
-            backdrop-filter: blur(30px);
-            border: 3px solid rgba(255, 255, 255, 0.35);
-            border-radius: 20px;
-            padding: 1.5rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 0.8rem;
             text-align: center;
-            color: #FFFFFF;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            color: var(--etudia-white);
+            transition: var(--transition);
             cursor: pointer;
-            width: 180px;
-            max-width: 100%;
-            box-shadow: 
-                0 12px 35px rgba(0, 0, 0, 0.4),
-                inset 0 2px 0 rgba(255, 255, 255, 0.3);
+            max-width: 280px;
+            justify-self: start;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         #dashboard .action-card:hover {
-            transform: translateY(-12px) scale(1.08);
-            box-shadow: 
-                0 25px 60px rgba(0, 0, 0, 0.6),
-                0 0 35px rgba(255, 107, 53, 0.4);
-            border-color: #FF6B35;
-            background: rgba(255, 107, 53, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--etudia-primary);
         }
 
         #dashboard .action-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
             display: block;
-            text-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
         }
 
-        #dashboard .action-icon.ia { color: #FF6B35; }
-        #dashboard .action-icon.upload { color: #10B981; }
-        #dashboard .action-icon.parrain { color: #F59E0B; }
-        #dashboard .action-icon.progress { color: #3B82F6; }
+        #dashboard .action-icon.ia { color: var(--etudia-primary); }
+        #dashboard .action-icon.upload { color: var(--etudia-secondary); }
+        #dashboard .action-icon.parrain { color: var(--etudia-warning); }
+        #dashboard .action-icon.progress { color: var(--etudia-accent); }
         #dashboard .action-icon.tokens { color: #EF4444; }
-        #dashboard .action-icon.badges { color: #F59E0B; }
+        #dashboard .action-icon.badges { color: var(--etudia-warning); }
 
         #dashboard .action-title {
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.1rem;
+            font-size: 0.85rem;
         }
 
         #dashboard .action-desc {
-            font-size: 0.85rem;
-            opacity: 0.95;
-            line-height: 1.4;
+            font-size: 0.7rem;
+            opacity: 0.8;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            #dashboard .stats-grid,
+            #dashboard .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            #dashboard .objectives-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            #dashboard .activity-grid {
+                grid-template-columns: 1fr;
+            }
+            
             #dashboard .actions-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-            }
-
-            #dashboard .objective-item,
-            #dashboard .activity-item {
-                width: 100%;
-            }
-
-            #dashboard .stat-card {
-                width: 100%;
-                padding: 1.5rem;
             }
         }
 
         @media (max-width: 480px) {
-            #dashboard .stats-grid,
+            #dashboard .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
             #dashboard .actions-grid {
                 grid-template-columns: 1fr;
             }
         }
     </style>
 
-    <!-- JAVASCRIPT AUTO-CONTENU COMPLET AVEC TOUTES LES FONCTIONNALITÉS -->
+    <!-- JAVASCRIPT AUTO-CONTENU -->
     <script>
-        // 🔧 FONCTIONS À DÉVELOPPER PLUS TARD - MARQUÉES POUR RAPPEL
-        
         function showSection(sectionId) {
             // 🔧 TODO: Connecter à la navigation du backoffice principal
             console.log(`Navigation vers section: ${sectionId}`);
             
-            // Animation au clic RENFORCÉE
+            // Animation au clic
             if (event && event.target) {
-                event.target.style.transform = 'scale(0.9)';
+                event.target.style.transform = 'scale(0.95)';
                 setTimeout(() => {
                     event.target.style.transform = '';
-                }, 200);
+                }, 150);
             }
             
             // Notifications selon la section
@@ -683,11 +619,9 @@
             };
             
             showNotification(messages[sectionId] || `Navigation vers ${sectionId}`);
-            trackUserActivity('navigation', sectionId);
         }
         
         function showNotification(message) {
-            // Créer notification toast ULTRA PREMIUM
             const notification = document.createElement('div');
             notification.style.cssText = `
                 position: fixed;
@@ -695,16 +629,77 @@
                 right: 20px;
                 background: linear-gradient(135deg, #FF6B35, #EF4444);
                 color: white;
-                padding: 1.2rem 1.8rem;
-                border-radius: 20px;
-                font-weight: 700;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                font-weight: 600;
                 z-index: 9999;
-                animation: slideInDashboard 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                animation: slideIn 0.3s ease;
                 display: flex;
                 align-items: center;
-                gap: 0.8rem;
-                box-shadow: 
-                    0 15px 40px rgba(255, 107, 53, 0.6),
-                    0 0 0 1px rgba(255, 255, 255, 0.3);
-                max-width: 350px;
-                backdrop-filter: blur(15px);
+                gap: 0.5rem;
+                box-shadow: 0 8px 32px rgba(255, 107, 53, 0.4);
+                max-width: 300px;
+            `;
+            
+            notification.innerHTML = `
+                <i class="fas fa-arrow-right"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 2000);
+        }
+        
+        // Animation d'entrée pour les cartes
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('#dashboard .stat-card, #dashboard .action-card, #dashboard .activity-item, #dashboard .objective-item');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+
+        // Ajouter animations CSS
+        if (!document.querySelector('#dashboard-animations')) {
+            const style = document.createElement('style');
+            style.id = 'dashboard-animations';
+            style.textContent = `
+                @keyframes slideIn {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+                
+                @keyframes fadeOut {
+                    from {
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
+                    to {
+                        opacity: 0;
+                        transform: translateX(20px);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    </script>
+</section>
+
+<!-- ===== FIN SECTION TABLEAU DE BORD V4.1 - DESIGN ORIGINAL + MODIFICATIONS PACOUSSTAR ===== -->
