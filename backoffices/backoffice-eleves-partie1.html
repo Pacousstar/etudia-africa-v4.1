@@ -1,4 +1,4 @@
-<!-- ===== DÉBUT SECTION TABLEAU DE BORD V4.1 AUTO-CONTENUE ===== -->
+<!-- ===== DÉBUT SECTION TABLEAU DE BORD V4.1 AUTO-CONTENUE FOND SOMBRE TESLA ===== -->
 <!-- 🎯 À INSÉRER : Remplacer le contenu de <section id="dashboard" class="content-section active"> -->
 
 <section id="dashboard" class="content-section active">
@@ -196,147 +196,466 @@
         </div>
     </div>
 
-    <!-- CSS AUTO-CONTENU DANS LA SECTION -->
+    <!-- CSS AUTO-CONTENU OPTIMISÉ POUR FOND SOMBRE TESLA RENFORCÉ -->
     <style>
-        /* RESET POUR ÉVITER LES CONFLITS */
-        #dashboard,
-        #dashboard *,
-        #dashboard *::before,
-        #dashboard *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* FOND PRINCIPAL */
-        #dashboard {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: white;
-            padding: 1.5rem;
-            min-height: 100vh;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-        }
-
-        /* TITRE SECTION */
-        #dashboard .section-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: #ffffff;
-            text-align: center;
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
-
-        #dashboard .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(135deg, #FF6B35, #EF4444);
-            border-radius: 3px;
-        }
-
-        /* GRILLE DE STATISTIQUES */
-        #dashboard .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 1rem;
+        /* DESIGN TESLA ULTRA-RENFORCÉ POUR FOND SOMBRE */
+        #dashboard .dashboard-section {
             margin-bottom: 2rem;
-        }
-
-        /* CARTES DE STATS */
-        #dashboard .stat-card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 1.2rem 0.8rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        #dashboard .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        /* ICONES */
-        #dashboard .stat-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            margin: 0 auto 0.8rem;
-            font-size: 1.1rem;
-            color: white;
         }
 
-        #dashboard .stat-icon.tokens { background: linear-gradient(135deg, #FF6B35, #EF4444); }
-        #dashboard .stat-icon.sessions { background: linear-gradient(135deg, #10B981, #3B82F6); }
-        #dashboard .stat-icon.level { background: linear-gradient(135deg, #F59E0B, #EF4444); }
-        #dashboard .stat-icon.gains { background: linear-gradient(135deg, #10B981, #059669); }
-
-        /* VALEURS */
-        #dashboard .stat-value {
+        #dashboard .section-title {
             font-size: 1.5rem;
             font-weight: 700;
             color: #FFFFFF;
-            margin-bottom: 0.3rem;
-            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: center;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
         }
 
-        /* LABELS */
-        #dashboard .stat-label {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.8rem;
-            font-weight: 500;
+        /* Stats Cards TESLA GLASSMORPHISM ULTRA-RENFORCÉ */
+        #dashboard .stats-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            width: 100%;
         }
 
-        /* BADGE */
-        #dashboard .stat-badge {
+        #dashboard .stat-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(30px);
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+            width: 220px;
+            max-width: 100%;
+            box-shadow: 
+                0 15px 40px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(255, 255, 255, 0.2),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        #dashboard .stat-card:hover {
+            transform: translateY(-12px) scale(1.05);
+            box-shadow: 
+                0 25px 60px rgba(0, 0, 0, 0.7),
+                0 0 0 1px rgba(255, 255, 255, 0.3),
+                inset 0 2px 0 rgba(255, 255, 255, 0.4);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        #dashboard .stat-card::before {
+            content: '';
             position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #3B82F6;
-            color: white;
-            padding: 0.2rem 0.6rem;
-            border-radius: 12px;
-            font-size: 0.65rem;
-            font-weight: 700;
-            box-shadow: 0 3px 10px rgba(59, 130, 246, 0.4);
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            border-radius: 20px 20px 0 0;
         }
 
-        /* RESPONSIVE */
+        #dashboard .stat-card.tokens::before { 
+            background: linear-gradient(135deg, #FF6B35, #EF4444);
+            box-shadow: 0 0 25px rgba(255, 107, 53, 0.8);
+        }
+        #dashboard .stat-card.sessions::before { 
+            background: linear-gradient(135deg, #10B981, #3B82F6);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.8);
+        }
+        #dashboard .stat-card.level::before { 
+            background: linear-gradient(135deg, #F59E0B, #EF4444);
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.8);
+        }
+        #dashboard .stat-card.gains::before { 
+            background: linear-gradient(135deg, #10B981, #059669);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.8);
+        }
+
+        #dashboard .stat-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.2rem;
+            font-size: 1.8rem;
+            color: white;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        #dashboard .stat-icon.tokens { 
+            background: linear-gradient(135deg, #FF6B35, #EF4444);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.6);
+        }
+        #dashboard .stat-icon.sessions { 
+            background: linear-gradient(135deg, #10B981, #3B82F6);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.6);
+        }
+        #dashboard .stat-icon.level { 
+            background: linear-gradient(135deg, #F59E0B, #EF4444);
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.6);
+        }
+        #dashboard .stat-icon.gains { 
+            background: linear-gradient(135deg, #10B981, #059669);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.6);
+        }
+
+        #dashboard .stat-value {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #FFFFFF;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        #dashboard .stat-label {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        /* Objectifs Section TESLA ULTRA-RENFORCÉ */
+        #dashboard .objectives-card {
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(30px);
+            border: 3px solid rgba(255, 255, 255, 0.35);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.6),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        #dashboard .objectives-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.8rem;
+        }
+
+        #dashboard .objectives-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            margin: 0;
+            text-align: center;
+            flex: 1;
+            text-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        #dashboard .objectives-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            margin-top: 1rem;
+        }
+
+        #dashboard .objective-item {
+            background: rgba(16, 185, 129, 0.2);
+            border: 3px solid rgba(16, 185, 129, 0.5);
+            border-radius: 20px;
+            padding: 1.8rem;
+            width: 350px;
+            max-width: 100%;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 12px 35px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        #dashboard .objective-item.warning {
+            background: rgba(255, 107, 53, 0.2);
+            border: 3px solid rgba(255, 107, 53, 0.5);
+        }
+
+        #dashboard .objective-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 20px 45px rgba(0, 0, 0, 0.5),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.7);
+        }
+
+        #dashboard .objective-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            justify-content: center;
+        }
+
+        #dashboard .objective-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #FFFFFF;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        #dashboard .objective-text {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.95);
+            margin-bottom: 1.2rem;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        #dashboard .objective-actions {
+            display: flex;
+            justify-content: center;
+        }
+
+        #dashboard .btn-small {
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 15px;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        #dashboard .btn-success { 
+            background: linear-gradient(135deg, #10B981, #059669);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+        #dashboard .btn-primary { 
+            background: linear-gradient(135deg, #FF6B35, #EF4444);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        #dashboard .btn-small:hover {
+            transform: translateY(-3px) scale(1.08);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Activité Récente TESLA ULTRA-RENFORCÉ */
+        #dashboard .activity-card {
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(30px);
+            border: 3px solid rgba(255, 255, 255, 0.35);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.6),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        #dashboard .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.8rem;
+        }
+
+        #dashboard .activity-title-main {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            margin: 0;
+            text-align: center;
+            flex: 1;
+            text-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        #dashboard .activity-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            margin-top: 1rem;
+        }
+
+        #dashboard .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            width: 350px;
+            max-width: 100%;
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 12px 35px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        #dashboard .activity-item:hover {
+            transform: translateX(10px) translateY(-5px);
+            border-color: #FF6B35;
+            box-shadow: 
+                0 18px 40px rgba(0, 0, 0, 0.5),
+                0 0 25px rgba(255, 107, 53, 0.4);
+        }
+
+        #dashboard .activity-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.2rem;
+            font-size: 1.3rem;
+            color: white;
+            flex-shrink: 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        #dashboard .activity-content {
+            flex: 1;
+        }
+
+        #dashboard .activity-title {
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+            color: #FFFFFF;
+            text-align: left;
+        }
+
+        #dashboard .activity-desc {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.9rem;
+            margin-bottom: 0.6rem;
+            text-align: left;
+            line-height: 1.5;
+        }
+
+        #dashboard .activity-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #dashboard .activity-time {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+        }
+
+        #dashboard .activity-value {
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+
+        #dashboard .activity-value.tokens { color: #F59E0B; }
+        #dashboard .activity-value.gain { color: #10B981; }
+        #dashboard .activity-value.xp { color: #10B981; }
+        #dashboard .activity-value.docs { color: #3B82F6; }
+
+        /* Actions Rapides TESLA GLASSMORPHISM ULTRA-RENFORCÉ */
+        #dashboard .actions-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        #dashboard .action-card {
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(30px);
+            border: 3px solid rgba(255, 255, 255, 0.35);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            color: #FFFFFF;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+            width: 180px;
+            max-width: 100%;
+            box-shadow: 
+                0 12px 35px rgba(0, 0, 0, 0.4),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        #dashboard .action-card:hover {
+            transform: translateY(-12px) scale(1.08);
+            box-shadow: 
+                0 25px 60px rgba(0, 0, 0, 0.6),
+                0 0 35px rgba(255, 107, 53, 0.4);
+            border-color: #FF6B35;
+            background: rgba(255, 107, 53, 0.15);
+        }
+
+        #dashboard .action-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+            text-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        #dashboard .action-icon.ia { color: #FF6B35; }
+        #dashboard .action-icon.upload { color: #10B981; }
+        #dashboard .action-icon.parrain { color: #F59E0B; }
+        #dashboard .action-icon.progress { color: #3B82F6; }
+        #dashboard .action-icon.tokens { color: #EF4444; }
+        #dashboard .action-icon.badges { color: #F59E0B; }
+
+        #dashboard .action-title {
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        #dashboard .action-desc {
+            font-size: 0.85rem;
+            opacity: 0.95;
+            line-height: 1.4;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            #dashboard .stats-grid {
+            #dashboard .stats-grid,
+            #dashboard .actions-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            #dashboard .objective-item,
+            #dashboard .activity-item {
+                width: 100%;
+            }
+
+            #dashboard .stat-card {
+                width: 100%;
+                padding: 1.5rem;
             }
         }
 
         @media (max-width: 480px) {
-            #dashboard {
-                padding: 1rem;
-            }
-            
-            #dashboard .stats-grid {
+            #dashboard .stats-grid,
+            #dashboard .actions-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            #dashboard .stat-card {
-                padding: 1rem;
             }
         }
     </style>
 
-    <!-- JAVASCRIPT AUTO-CONTENU DANS LA SECTION -->
+    <!-- JAVASCRIPT AUTO-CONTENU COMPLET AVEC TOUTES LES FONCTIONNALITÉS -->
     <script>
         // 🔧 FONCTIONS À DÉVELOPPER PLUS TARD - MARQUÉES POUR RAPPEL
         
@@ -344,12 +663,12 @@
             // 🔧 TODO: Connecter à la navigation du backoffice principal
             console.log(`Navigation vers section: ${sectionId}`);
             
-            // Animation au clic
+            // Animation au clic RENFORCÉE
             if (event && event.target) {
-                event.target.style.transform = 'scale(0.95)';
+                event.target.style.transform = 'scale(0.9)';
                 setTimeout(() => {
                     event.target.style.transform = '';
-                }, 150);
+                }, 200);
             }
             
             // Notifications selon la section
@@ -364,10 +683,11 @@
             };
             
             showNotification(messages[sectionId] || `Navigation vers ${sectionId}`);
+            trackUserActivity('navigation', sectionId);
         }
         
         function showNotification(message) {
-            // Créer notification toast
+            // Créer notification toast ULTRA PREMIUM
             const notification = document.createElement('div');
             notification.style.cssText = `
                 position: fixed;
@@ -375,89 +695,16 @@
                 right: 20px;
                 background: linear-gradient(135deg, #FF6B35, #EF4444);
                 color: white;
-                padding: 1rem 1.5rem;
-                border-radius: 12px;
-                font-weight: 600;
+                padding: 1.2rem 1.8rem;
+                border-radius: 20px;
+                font-weight: 700;
                 z-index: 9999;
-                animation: slideIn 0.3s ease;
+                animation: slideInDashboard 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
                 display: flex;
                 align-items: center;
-                gap: 0.5rem;
-                box-shadow: 0 8px 32px rgba(255, 107, 53, 0.4);
-                max-width: 300px;
-            `;
-            
-            notification.innerHTML = `
-                <i class="fas fa-arrow-right"></i>
-                <span>${message}</span>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.animation = 'fadeOut 0.3s ease';
-                setTimeout(() => {
-                    notification.remove();
-                }, 300);
-            }, 3000);
-        }
-        
-        // 🔧 TODO: Fonction à développer plus tard - Rechargement stats temps réel
-        function updateStatsRealTime() {
-            // 🔧 À CONNECTER: API Supabase pour stats temps réel
-            console.log('🔧 Fonction à développer : Mise à jour stats temps réel depuis Supabase');
-        }
-        
-        // 🔧 TODO: Fonction à développer plus tard - Sauvegarde activité
-        function trackUserActivity(actionType, details) {
-            // 🔧 À CONNECTER: Tracking des actions utilisateur
-            console.log('🔧 Fonction à développer : Tracking activité utilisateur', actionType, details);
-        }
-        
-        // Animation d'entrée pour les cartes
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('#dashboard .stat-card, #dashboard .action-card, #dashboard .activity-item, #dashboard .objective-item');
-            cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                setTimeout(() => {
-                    card.style.transition = 'all 0.6s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-        });
-
-        // Ajouter animations CSS dans le head si pas déjà présentes
-        if (!document.querySelector('#dashboard-animations')) {
-            const style = document.createElement('style');
-            style.id = 'dashboard-animations';
-            style.textContent = `
-                @keyframes slideIn {
-                    from {
-                        transform: translateX(100%);
-                        opacity: 0;
-                    }
-                    to {
-                        transform: translateX(0);
-                        opacity: 1;
-                    }
-                }
-                
-                @keyframes fadeOut {
-                    from {
-                        opacity: 1;
-                        transform: translateX(0);
-                    }
-                    to {
-                        opacity: 0;
-                        transform: translateX(20px);
-                    }
-                }
-            `;
-            document.head.appendChild(style);
-        }
-    </script>
-</section>
-
-<!-- ===== FIN SECTION TABLEAU DE BORD V4.1 AUTO-CONTENUE ===== -->
+                gap: 0.8rem;
+                box-shadow: 
+                    0 15px 40px rgba(255, 107, 53, 0.6),
+                    0 0 0 1px rgba(255, 255, 255, 0.3);
+                max-width: 350px;
+                backdrop-filter: blur(15px);
