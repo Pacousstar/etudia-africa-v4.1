@@ -322,6 +322,8 @@
             border-radius: var(--border-radius-lg);
             padding: 1.5rem;
             margin-bottom: 1.5rem;
+            max-width: 600px;        /* ← AJOUTE CETTE LIGNE */
+            margin: 0 auto 1.5rem;   /* ← ET CETTE LIGNE POUR CENTRER */
         }
         
         .activity-header {
@@ -1418,57 +1420,75 @@
                 </div>
                 
                 <!-- Activité Récente - NOUVELLE SECTION -->
-                <div class="dashboard-section">
-                    <div class="activity-section">
-                        <div class="activity-header">
-                            <h3 class="activity-title">📈 Activité Récente</h3>
-                            <button class="view-all-btn" onclick="showSection('historique')">Voir tout</button>
-                        </div>
-                        <div class="activity-list">
-                            <div class="activity-item">
-                                <div class="activity-icon ia">
-                                    <i class="fas fa-robot"></i>
-                                </div>
-                                <div class="activity-content">
-                                    <div class="activity-text">Session IA - Mathématiques</div>
-                                    <div class="activity-details">Résolution d'équations du second degré avec DeepSeek R1</div>
-                                </div>
-                                <div class="activity-meta">
-                                    <div class="activity-time">Il y a 2 heures</div>
-                                    <div class="activity-value negative">-180 tokens</div>
-                                </div>
-                            </div>
-                            
-                            <div class="activity-item">
-                                <div class="activity-icon document">
-                                    <i class="fas fa-file-pdf"></i>
-                                </div>
-                                <div class="activity-content">
-                                    <div class="activity-text">Document Analysé</div>
-                                    <div class="activity-details">Cours_Physique_Chapitre_5.pdf traité avec succès</div>
-                                </div>
-                                <div class="activity-meta">
-                                    <div class="activity-time">Il y a 4 heures</div>
-                                    <div class="activity-value negative">-120 tokens</div>
-                                </div>
-                            </div>
-                            
-                            <div class="activity-item">
-                                <div class="activity-icon gain">
-                                    <i class="fas fa-money-bill"></i>
-                                </div>
-                                <div class="activity-content">
-                                    <div class="activity-text">Gain Parrainage</div>
-                                    <div class="activity-details">Commission de 1,300 FCFA reçue (Nouveau filleul)</div>
-                                </div>
-                                <div class="activity-meta">
-                                    <div class="activity-time">Hier</div>
-                                    <div class="activity-value">+1,300 FCFA</div>
-                                </div>
-                            </div>
-                        </div>
+               <!-- Activité Récente - CENTRÉE -->
+<div class="dashboard-section">
+    <div class="activity-card">
+        <div class="activity-header">
+            <h3 class="activity-title-main">📈 Activité Récente</h3>
+            <button onclick="showSection('historique')" class="btn-small btn-primary">
+                Voir tout
+            </button>
+        </div>
+        
+        <div class="activity-grid">
+            <div class="activity-item">
+                <div class="activity-icon" style="background: linear-gradient(135deg, #FF6B35, #EF4444);">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="activity-content">
+                    <div class="activity-title">Session IA - Mathématiques</div>
+                    <div class="activity-desc">Résolution équations degré 2</div>
+                    <div class="activity-meta">
+                        <span class="activity-time">Il y a 2h</span>
+                        <span class="activity-value tokens">-45 tokens</span>
                     </div>
                 </div>
+            </div>
+            
+            <div class="activity-item">
+                <div class="activity-icon" style="background: linear-gradient(135deg, #10B981, #3B82F6);">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="activity-content">
+                    <div class="activity-title">Document Analysé</div>
+                    <div class="activity-desc">Cours_Physique_Ch4.pdf traité</div>
+                    <div class="activity-meta">
+                        <span class="activity-time">Il y a 4h</span>
+                        <span class="activity-value docs">PDF analysé</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="activity-item">
+                <div class="activity-icon" style="background: linear-gradient(135deg, #10B981, #059669);">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <div class="activity-content">
+                    <div class="activity-title">Gain Parrainage</div>
+                    <div class="activity-desc">Commission 1,300 FCFA reçue</div>
+                    <div class="activity-meta">
+                        <span class="activity-time">Hier</span>
+                        <span class="activity-value gain">+1,300 F</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="activity-item">
+                <div class="activity-icon" style="background: linear-gradient(135deg, #10B981, #3B82F6);">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="activity-content">
+                    <div class="activity-title">Badge Débloqué</div>
+                    <div class="activity-desc">Expert Mathématiques</div>
+                    <div class="activity-meta">
+                        <span class="activity-time">Il y a 1j</span>
+                        <span class="activity-value xp">+250 XP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
                 
                 <div class="dashboard-section">
                     <h2 class="section-title">🚀 Actions Rapides</h2>
