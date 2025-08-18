@@ -322,8 +322,7 @@
             border-radius: var(--border-radius-lg);
             padding: 1.5rem;
             margin-bottom: 1.5rem;
-            max-width: 100px;        /* ← AJOUTE CETTE LIGNE */
-            margin: 0 auto 0rem;   /* ← ET CETTE LIGNE POUR CENTRER */
+            
         }
         
         .activity-header {
@@ -1420,9 +1419,8 @@
                 </div>
                 
                 <!-- Activité Récente - NOUVELLE SECTION -->
-               <!-- Activité Récente - CENTRÉE -->
-<div class="dashboard-section">
-    <div class="activity-card">
+               <div class="dashboard-section">
+    <div class="activity-section" style="max-width: 800px; margin: 0 auto;">>
         <div class="activity-header">
             <h3 class="activity-title-main">📈 Activité Récente</h3>
             <button onclick="showSection('historique')" class="btn-small btn-primary">
