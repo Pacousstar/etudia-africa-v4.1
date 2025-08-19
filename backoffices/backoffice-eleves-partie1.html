@@ -1594,11 +1594,11 @@
             </section>
             
             <!-- Interface IA Section - AMÉLIORÉE AVEC CODE COMPLET -->
-           <section id="ia-chat" class="content-section">
-    <h2 class="section-title">🤖 Interface IA - DeepSeek R1</h2>
-    
-    <!-- Interface IA Complète -->
-    <div class="ia-interface-container">
+    <!-- Section Interface IA Complète -->
+            
+<section class="etudia-chat-ia-complete">
+    <div class="chat-container">
+        
         <!-- Header Chat IA avec sessions -->
         <div class="chat-header">
             <div class="header-left">
@@ -1863,6 +1863,21 @@
     font-weight: 500;
 }
 
+.content-section {
+    display: none;
+    padding: 20px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.content-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+    
 .close-tab {
     background: none;
     border: none;
@@ -2517,6 +2532,40 @@ function initializeChat() {
     loadFromLocalStorage();
 }
 
+// 🚀 Système de navigation entre sections
+function showSection(sectionId) {
+    // Masquer toutes les sections
+    document.querySelectorAll('.content-section').forEach(section => {
+        section.style.display = 'none';
+    });
+    
+    // Afficher la section demandée
+    const section = document.getElementById(sectionId);
+    if(section) section.style.display = 'block';
+    
+    // Mettre à jour les liens actifs
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        if(link.getAttribute('onclick')?.includes(sectionId)) {
+            link.classList.add('active');
+        }
+    });
+}
+
+// Initialisation - Afficher le dashboard par défaut
+document.addEventListener('DOMContentLoaded', function() {
+    showSection('dashboard'); // Affiche la section dashboard au chargement
+    
+    // Gestion des clics sur les liens de navigation
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const sectionId = this.getAttribute('onclick').match(/'([^']+)'/)[1];
+            showSection(sectionId);
+        });
+    });
+});
+    
 // 📡 Configuration des événements
 function setupEventListeners() {
     // Upload de fichiers
