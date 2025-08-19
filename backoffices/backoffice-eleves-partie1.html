@@ -2855,19 +2855,7 @@
             console.log(`📑 Section ${sectionId} affichée`);
         }
 
-        // ============================================================= //
-        // 🔄 SCROLL VERS LE CHAT (depuis bouton flottant)              //
-        // ============================================================= //
-        function scrollToChat() {
-            showSection('dashboard');  // Aller au dashboard
-            setTimeout(() => {
-                // Scroll smooth vers l'interface IA
-                document.querySelector('.etudia-chat-ia-complete').scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-            }, 100);
-        }
+       
 
         // ============================================================= //
         // 💬 GESTION DES SESSIONS MULTIPLES                            //
@@ -4094,7 +4082,10 @@ Je peux maintenant répondre à tes questions en me basant sur son contenu. Que 
         </main>
     </div>
     
-   
+    <!-- Bouton Flottant Interface IA -->
+    <button class="floating-ia-btn" onclick="toggleIA()" title="Interface IA">
+        <i class="fas fa-robot"></i>
+    </button>
     
     <script>
         // Variables globales
