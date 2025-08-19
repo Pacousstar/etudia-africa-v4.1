@@ -2855,7 +2855,19 @@
             console.log(`📑 Section ${sectionId} affichée`);
         }
 
-       
+        // ============================================================= //
+        // 🔄 SCROLL VERS LE CHAT (depuis bouton flottant)              //
+        // ============================================================= //
+        function scrollToChat() {
+            showSection('dashboard');  // Aller au dashboard
+            setTimeout(() => {
+                // Scroll smooth vers l'interface IA
+                document.querySelector('.etudia-chat-ia-complete').scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }, 100);
+        }
 
         // ============================================================= //
         // 💬 GESTION DES SESSIONS MULTIPLES                            //
