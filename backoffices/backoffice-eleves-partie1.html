@@ -2606,80 +2606,1475 @@
                 </div>
 
                 <!-- Panneau Documents -->
-                <div class="documents-panel" id="documentsPanel">
-                    <div class="documents-header">
-                        <h4>📁 Mes Documents</h4>
-                        <button class="close-panel" onclick="toggleDocumentsPanel()">✕</button>
-                    </div>
-                    <div class="upload-zone-panel" id="uploadZonePanel" onclick="document.getElementById('fileInputPanel').click()">
-                        <div class="upload-content">
-                            <div class="upload-icon">📄</div>
-                            <div class="upload-text">Glisse tes documents ici ou <span class="upload-link">clique pour parcourir</span></div>
-                            <div class="upload-formats">PDF, JPG, PNG, DOC (max 10MB)</div>
+<!-- ============================================== -->
+<!-- SECTION MES DOCUMENTS - UNIQUEMENT CETTE SECTION -->
+<!-- À coller EXACTEMENT à la place de l'ancienne section documents -->
+<!-- ============================================== -->
+
+<!-- Section Mes Documents -->
+<section id="documents" class="content-section">
+    <h2 class="section-title">📄 Mes Documents</h2>
+    
+    <!-- Styles CSS pour cette section uniquement -->
+    <style>
+        /* Styles uniquement pour la section documents */
+        #documents .documents-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        #documents .documents-main {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        #documents .documents-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        #documents .upload-zone {
+            border: 2px dashed #10B981;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1));
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        #documents .upload-zone:hover {
+            border-color: #FF6B35;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(16, 185, 129, 0.1));
+            transform: translateY(-2px);
+        }
+
+        #documents .upload-zone.dragover {
+            border-color: #F59E0B;
+            background: rgba(245, 158, 11, 0.2);
+            transform: scale(1.02);
+        }
+
+        #documents .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #10B981;
+        }
+
+        #documents .upload-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 0.5rem;
+        }
+
+        #documents .upload-formats {
+            font-size: 0.9rem;
+            color: #6B7280;
+        }
+
+        #documents .upload-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        #documents .upload-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #documents .upload-btn.primary {
+            background: linear-gradient(135deg, #FF6B35, #F59E0B);
+            color: white;
+        }
+
+        #documents .upload-btn.secondary {
+            background: #E5E7EB;
+            color: #374151;
+        }
+
+        #documents .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #documents .documents-list {
+            background: #F8FAFC;
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        #documents .documents-list-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #documents .document-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        #documents .document-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        #documents .document-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: white;
+        }
+
+        #documents .document-icon.pdf {
+            background: linear-gradient(135deg, #EF4444, #DC2626);
+        }
+
+        #documents .document-icon.image {
+            background: linear-gradient(135deg, #10B981, #059669);
+        }
+
+        #documents .document-icon.word {
+            background: linear-gradient(135deg, #3B82F6, #2563EB);
+        }
+
+        #documents .document-info {
+            flex: 1;
+        }
+
+        #documents .document-name {
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 0.25rem;
+        }
+
+        #documents .document-meta {
+            font-size: 0.875rem;
+            color: #6B7280;
+            display: flex;
+            gap: 1rem;
+        }
+
+        #documents .document-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        #documents .document-action {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 0.875rem;
+        }
+
+        #documents .document-action.view {
+            background: #3B82F6;
+        }
+
+        #documents .document-action.analyze {
+            background: #10B981;
+        }
+
+        #documents .document-action.delete {
+            background: #EF4444;
+        }
+
+        #documents .document-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #documents .stats-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        #documents .stats-panel-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #documents .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        #documents .stats-card {
+            text-align: center;
+            padding: 1rem;
+            background: #F8FAFC;
+            border-radius: 8px;
+        }
+
+        #documents .stats-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #FF6B35;
+            margin-bottom: 0.25rem;
+        }
+
+        #documents .stats-label {
+            font-size: 0.75rem;
+            color: #6B7280;
+            text-transform: uppercase;
+        }
+
+        #documents .quick-actions {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        #documents .action-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            background: #F8FAFC;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #documents .action-item:hover {
+            background: #FF6B35;
+            color: white;
+            transform: translateX(4px);
+        }
+
+        #documents .action-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #10B981, #059669);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            color: white;
+            font-size: 1rem;
+        }
+
+        #documents .action-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        #documents .action-desc {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* Modal styles */
+        .documents-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .documents-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .documents-modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .documents-modal-overlay.active .documents-modal-content {
+            transform: translateY(0);
+        }
+
+        .documents-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .documents-modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1F2937;
+            margin: 0;
+        }
+
+        .documents-modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6B7280;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .documents-modal-close:hover {
+            background: #F3F4F6;
+            color: #EF4444;
+        }
+
+        .documents-progress-container {
+            margin: 1.5rem 0;
+        }
+
+        .documents-progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #F3F4F6;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .documents-progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #FF6B35, #F59E0B);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .documents-progress-text {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: #6B7280;
+        }
+
+        /* Chat Modal Styles */
+        .documents-chat-modal {
+            max-width: 800px;
+            height: 80vh;
+        }
+
+        .documents-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            background: #F8FAFC;
+            border-radius: 8px;
+            margin: 1rem 0;
+            max-height: 400px;
+        }
+
+        .documents-chat-message {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .documents-chat-message.user {
+            background: linear-gradient(135deg, #FF6B35, #F59E0B);
+            color: white;
+            margin-left: 20%;
+            text-align: right;
+        }
+
+        .documents-chat-message.ai {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            margin-right: 20%;
+        }
+
+        .documents-chat-input-zone {
+            display: flex;
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .documents-chat-input {
+            flex: 1;
+            min-height: 50px;
+            max-height: 120px;
+            padding: 1rem;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            resize: none;
+            font-family: inherit;
+        }
+
+        .documents-chat-send {
+            padding: 1rem;
+            background: linear-gradient(135deg, #FF6B35, #F59E0B);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 50px;
+        }
+
+        .documents-chat-send:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+        }
+
+        .documents-chat-send:disabled {
+            background: #9CA3AF;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .documents-modes {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .documents-mode-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            background: #9CA3AF;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+
+        .documents-mode-btn.active {
+            background: #3B82F6;
+        }
+
+        .documents-mode-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            #documents .documents-container {
+                grid-template-columns: 1fr;
+            }
+            
+            #documents .documents-sidebar {
+                order: -1;
+            }
+            
+            #documents .upload-buttons {
+                flex-direction: column;
+            }
+            
+            #documents .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <!-- Contenu de la section -->
+    <div class="documents-container">
+        <!-- Zone principale -->
+        <div class="documents-main">
+            <!-- Zone d'upload -->
+            <div class="upload-zone" id="documentsUploadZone" onclick="triggerDocumentsFileInput()">
+                <div class="upload-icon">📁</div>
+                <div class="upload-text">Glissez vos documents ici ou cliquez pour sélectionner</div>
+                <div class="upload-formats">PDF, DOC, DOCX, JPG, PNG, TXT • Max 25MB • OCR automatique</div>
+                <input type="file" id="documentsFileInput" style="display: none;" 
+                       accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt" 
+                       multiple onchange="handleDocumentsFileUpload(this)">
+            </div>
+            
+            <div class="upload-buttons">
+                <button class="upload-btn primary" onclick="triggerDocumentsFileInput()">
+                    <i class="fas fa-upload"></i>
+                    Choisir Fichiers
+                </button>
+                <button class="upload-btn secondary" onclick="startDocumentsScanning()">
+                    <i class="fas fa-camera"></i>
+                    Scanner Document
+                </button>
+                <button class="upload-btn secondary" onclick="pasteDocumentsFromClipboard()">
+                    <i class="fas fa-clipboard"></i>
+                    Coller Texte
+                </button>
+            </div>
+
+            <!-- Liste des documents -->
+            <div class="documents-list">
+                <h3 class="documents-list-title">
+                    <i class="fas fa-folder-open"></i>
+                    Mes Documents (<span id="documentsCount">5</span>)
+                </h3>
+                
+                <div id="documentsContainer">
+                    <!-- Document 1 -->
+                    <div class="document-item" data-type="pdf" data-id="doc1">
+                        <div class="document-icon pdf">
+                            <i class="fas fa-file-pdf"></i>
                         </div>
-                        <input type="file" id="fileInputPanel" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" multiple hidden>
+                        <div class="document-info">
+                            <div class="document-name">Cours_Mathematiques_Derivees.pdf</div>
+                            <div class="document-meta">
+                                <span>📅 Il y a 2 heures</span>
+                                <span>💬 15 questions résolues</span>
+                                <span>📊 92% analysé</span>
+                            </div>
+                        </div>
+                        <div class="document-actions">
+                            <button class="document-action view" onclick="viewDocumentsDocument('doc1')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="document-action analyze" onclick="analyzeDocumentsDocument('doc1')">
+                                <i class="fas fa-brain"></i>
+                            </button>
+                            <button class="document-action delete" onclick="deleteDocumentsDocument('doc1')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
                     </div>
-                    <div class="documents-list" id="documentsList">
-                        <div class="empty-documents">
-                            <div class="empty-icon">📄</div>
-                            <div class="empty-text">Aucun document encore</div>
-                            <div class="empty-sub">Upload ton premier fichier pour commencer !</div>
+
+                    <!-- Document 2 -->
+                    <div class="document-item" data-type="image" data-id="doc2">
+                        <div class="document-icon image">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <div class="document-info">
+                            <div class="document-name">Exercice_Physique_Optique.jpg</div>
+                            <div class="document-meta">
+                                <span>📅 Hier</span>
+                                <span>💬 8 explications données</span>
+                                <span>🔍 OCR effectué</span>
+                            </div>
+                        </div>
+                        <div class="document-actions">
+                            <button class="document-action view" onclick="viewDocumentsDocument('doc2')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="document-action analyze" onclick="analyzeDocumentsDocument('doc2')">
+                                <i class="fas fa-brain"></i>
+                            </button>
+                            <button class="document-action delete" onclick="deleteDocumentsDocument('doc2')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Document 3 -->
+                    <div class="document-item" data-type="word" data-id="doc3">
+                        <div class="document-icon word">
+                            <i class="fas fa-file-word"></i>
+                        </div>
+                        <div class="document-info">
+                            <div class="document-name">Redaction_Francais_Sujet.docx</div>
+                            <div class="document-meta">
+                                <span>📅 Il y a 3 jours</span>
+                                <span>✏️ Corrections effectuées</span>
+                                <span>🎯 Structure améliorée</span>
+                            </div>
+                        </div>
+                        <div class="document-actions">
+                            <button class="document-action view" onclick="viewDocumentsDocument('doc3')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="document-action analyze" onclick="analyzeDocumentsDocument('doc3')">
+                                <i class="fas fa-brain"></i>
+                            </button>
+                            <button class="document-action delete" onclick="deleteDocumentsDocument('doc3')">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Zone de saisie -->
-            <div class="chat-input-zone">
-                <div class="input-header">
-                    <div class="active-document" id="activeDocument">
-                        <span class="doc-icon">📄</span>
-                        <span class="doc-name">Aucun document sélectionné</span>
-                        <button class="doc-clear" onclick="clearActiveDocument()" style="display: none;">✕</button>
+        <!-- Sidebar -->
+        <div class="documents-sidebar">
+            <!-- Statistiques -->
+            <div class="stats-panel">
+                <h3 class="stats-panel-title">
+                    <i class="fas fa-chart-bar"></i>
+                    Statistiques d'Usage
+                </h3>
+                <div class="stats-grid">
+                    <div class="stats-card">
+                        <div class="stats-number">2.5</div>
+                        <div class="stats-label">Docs/Jour</div>
                     </div>
-                    <div class="input-stats">
-                        <span class="session-info">
-                            Session <span id="currentSessionNum">1</span> • 
-                            Mode: <strong id="currentMode">Normal</strong>
-                        </span>
+                    <div class="stats-card">
+                        <div class="stats-number">89%</div>
+                        <div class="stats-label">Taux Analyse</div>
                     </div>
-                </div>
-                <div class="input-container">
-                    <button class="attach-btn" onclick="document.getElementById('fileInputPanel').click()">📎</button>
-                    <textarea id="messageInput" placeholder="Écris ton message ici..." rows="1" onkeydown="handleKeyDown(event)" oninput="handleInputChange()"></textarea>
-                    <button class="send-btn" id="sendBtn" disabled onclick="sendMessage()"><span class="send-icon">🚀</span></button>
-                </div>
-                <div class="input-info">
-                    <span class="char-count">0/2000</span>
-                    <span class="api-status">🟢 API OpenRouter Connectée</span>
+                    <div class="stats-card">
+                        <div class="stats-number">156</div>
+                        <div class="stats-label">Questions IA</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-number">94%</div>
+                        <div class="stats-label">Satisfaction</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Stats temps réel -->
-            <div class="chat-stats">
-                <div class="stat-item">
-                    <span class="stat-icon">💬</span>
-                    <span class="stat-value" id="conversationsCount">15623</span>
-                    <span class="stat-label">Conversations totales</span>
+            <!-- Actions rapides -->
+            <div class="quick-actions">
+                <h3 class="stats-panel-title">
+                    <i class="fas fa-bolt"></i>
+                    Actions Rapides
+                </h3>
+                <div class="action-item" onclick="createDocumentsStudyPlan()">
+                    <div class="action-icon">
+                        <i class="fas fa-calendar-plus"></i>
+                    </div>
+                    <div>
+                        <div class="action-title">Plan d'Étude</div>
+                        <div class="action-desc">Créer un planning basé sur vos docs</div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-icon">📄</span>
-                    <span class="stat-value" id="documentsCount">2156</span>
-                    <span class="stat-label">Documents analysés</span>
+                
+                <div class="action-item" onclick="generateDocumentsQuiz()">
+                    <div class="action-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div>
+                        <div class="action-title">Quiz Automatique</div>
+                        <div class="action-desc">Générer un quiz de révision</div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-icon">⚡</span>
-                    <span class="stat-value" id="responseTime">0</span>
-                    <span class="stat-label">Temps (s)</span>
+                
+                <div class="action-item" onclick="createDocumentsSummary()">
+                    <div class="action-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div>
+                        <div class="action-title">Résumé Global</div>
+                        <div class="action-desc">Résumer tous vos documents</div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-icon">🎯</span>
-                    <span class="stat-value" id="precisionOCR">94</span>
-                    <span class="stat-label">% Précision OCR</span>
+                
+                <div class="action-item" onclick="exportDocumentsFiles()">
+                    <div class="action-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <div>
+                        <div class="action-title">Export PDF</div>
+                        <div class="action-desc">Télécharger vos analyses</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- JavaScript pour cette section uniquement -->
+    <script>
+        // Variables globales pour la section documents
+        let documentsDataSection = [
+            {
+                id: 'doc1',
+                name: 'Cours_Mathematiques_Derivees.pdf',
+                type: 'pdf',
+                size: '2.3 MB',
+                uploadDate: new Date(Date.now() - 2 * 60 * 60 * 1000),
+                analyses: 15,
+                progress: 92
+            },
+            {
+                id: 'doc2',
+                name: 'Exercice_Physique_Optique.jpg',
+                type: 'image',
+                size: '1.8 MB',
+                uploadDate: new Date(Date.now() - 24 * 60 * 60 * 1000),
+                analyses: 8,
+                progress: 100
+            },
+            {
+                id: 'doc3',
+                name: 'Redaction_Francais_Sujet.docx',
+                type: 'word',
+                size: '456 KB',
+                uploadDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+                analyses: 12,
+                progress: 87
+            }
+        ];
+
+        let currentDocumentsChatDocument = null;
+        let currentDocumentsChatMode = 'normal';
+
+        // Initialisation de la section documents
+        function initializeDocumentsSection() {
+            console.log('📄 Initialisation section Documents');
+            setupDocumentsDragAndDrop();
+            updateDocumentsCount();
+        }
+
+        // Setup drag and drop
+        function setupDocumentsDragAndDrop() {
+            const uploadZone = document.getElementById('documentsUploadZone');
+            if (!uploadZone) return;
+            
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                uploadZone.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                uploadZone.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                uploadZone.addEventListener(eventName, unhighlight, false);
+            });
+
+            function highlight(e) {
+                uploadZone.classList.add('dragover');
+            }
+
+            function unhighlight(e) {
+                uploadZone.classList.remove('dragover');
+            }
+
+            uploadZone.addEventListener('drop', handleDocumentsDrop, false);
+
+            function handleDocumentsDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                handleDocumentsFiles(files);
+            }
+        }
+
+        // Gestion des fichiers
+        function triggerDocumentsFileInput() {
+            document.getElementById('documentsFileInput').click();
+        }
+
+        function handleDocumentsFileUpload(input) {
+            const files = input.files;
+            handleDocumentsFiles(files);
+        }
+
+        function handleDocumentsFiles(files) {
+            if (!files || files.length === 0) return;
+
+            Array.from(files).forEach(file => {
+                if (validateDocumentsFile(file)) {
+                    uploadDocumentsFile(file);
+                }
+            });
+        }
+
+        function validateDocumentsFile(file) {
+            const maxSize = 25 * 1024 * 1024; // 25MB
+            const allowedTypes = [
+                'application/pdf',
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'image/jpeg',
+                'image/png',
+                'text/plain'
+            ];
+
+            if (file.size > maxSize) {
+                showDocumentsNotification('❌ Fichier trop volumineux (max 25MB)', 'error');
+                return false;
+            }
+
+            if (!allowedTypes.includes(file.type)) {
+                showDocumentsNotification('❌ Format non supporté', 'error');
+                return false;
+            }
+
+            return true;
+        }
+
+        function uploadDocumentsFile(file) {
+            const docId = 'doc_' + Date.now();
+            
+            // Simulation upload avec progression
+            showDocumentsAnalysisModal();
+            simulateDocumentsAnalysis(file, docId);
+            
+            // Ajouter à la liste
+            const newDoc = {
+                id: docId,
+                name: file.name,
+                type: getDocumentsFileType(file.type),
+                size: formatDocumentsFileSize(file.size),
+                uploadDate: new Date(),
+                analyses: 0,
+                progress: 0
+            };
+            
+            documentsDataSection.unshift(newDoc);
+            updateDocumentsDisplay();
+            updateDocumentsCount();
+            
+            showDocumentsNotification('✅ Document uploadé avec succès !', 'success');
+        }
+
+        function getDocumentsFileType(mimeType) {
+            if (mimeType.includes('pdf')) return 'pdf';
+            if (mimeType.includes('image')) return 'image';
+            if (mimeType.includes('word')) return 'word';
+            return 'other';
+        }
+
+        function formatDocumentsFileSize(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+        }
+
+        // Actions sur les documents
+        function viewDocumentsDocument(docId) {
+            const doc = documentsDataSection.find(d => d.id === docId);
+            if (!doc) return;
+            
+            showDocumentsNotification(`👁️ Ouverture de ${doc.name}`, 'info');
+        }
+
+        function analyzeDocumentsDocument(docId) {
+            const doc = documentsDataSection.find(d => d.id === docId);
+            if (!doc) return;
+            
+            showDocumentsAnalysisModal();
+            simulateDocumentsAnalysis(null, docId, true);
+        }
+
+        function deleteDocumentsDocument(docId) {
+            if (!confirm('❓ Êtes-vous sûr de vouloir supprimer ce document ?')) return;
+            
+            documentsDataSection = documentsDataSection.filter(d => d.id !== docId);
+            updateDocumentsDisplay();
+            updateDocumentsCount();
+            
+            showDocumentsNotification('🗑️ Document supprimé', 'success');
+        }
+
+        // Modal d'analyse
+        function showDocumentsAnalysisModal() {
+            const modalHtml = `
+                <div class="documents-modal-overlay active" id="documentsAnalysisModal">
+                    <div class="documents-modal-content">
+                        <div class="documents-modal-header">
+                            <h3 class="documents-modal-title">🧠 Analyse IA en cours...</h3>
+                            <button class="documents-modal-close" onclick="closeDocumentsAnalysisModal()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="documents-modal-body">
+                            <div class="documents-progress-container">
+                                <div class="documents-progress-bar">
+                                    <div class="documents-progress-fill" id="documentsAnalysisProgress"></div>
+                                </div>
+                                <div class="documents-progress-text" id="documentsAnalysisText">
+                                    Initialisation de l'analyse...
+                                </div>
+                            </div>
+                            <div id="documentsAnalysisResults" style="display: none;">
+                                <h4>📊 Résultats de l'Analyse</h4>
+                                <div id="documentsAnalysisContent"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Supprimer modal existant s'il existe
+            const existingModal = document.getElementById('documentsAnalysisModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+            
+            // Ajouter nouveau modal
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+        }
+
+        function closeDocumentsAnalysisModal() {
+            const modal = document.getElementById('documentsAnalysisModal');
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(() => modal.remove(), 300);
+            }
+        }
+
+        function simulateDocumentsAnalysis(file, docId, isReanalysis = false) {
+            const progressBar = document.getElementById('documentsAnalysisProgress');
+            const progressText = document.getElementById('documentsAnalysisText');
+            
+            const steps = [
+                { progress: 20, text: '🔍 Lecture du document...' },
+                { progress: 40, text: '🧠 Analyse du contenu...' },
+                { progress: 60, text: '📝 Extraction des concepts clés...' },
+                { progress: 80, text: '💡 Génération de suggestions...' },
+                { progress: 100, text: '✅ Analyse terminée !' }
+            ];
+            
+            let currentStep = 0;
+            
+            const interval = setInterval(() => {
+                if (currentStep < steps.length) {
+                    const step = steps[currentStep];
+                    if (progressBar) progressBar.style.width = step.progress + '%';
+                    if (progressText) progressText.textContent = step.text;
+                    currentStep++;
+                } else {
+                    clearInterval(interval);
+                    showDocumentsAnalysisResults(docId, isReanalysis);
+                }
+            }, 1000);
+        }
+
+        function showDocumentsAnalysisResults(docId, isReanalysis) {
+            const resultsDiv = document.getElementById('documentsAnalysisResults');
+            const doc = documentsDataSection.find(d => d.id === docId);
+            
+            if (doc) {
+                doc.analyses += 1;
+                doc.progress = Math.min(100, doc.progress + (isReanalysis ? 5 : 15));
+            }
+            
+            if (resultsDiv) {
+                resultsDiv.innerHTML = `
+                    <div style="padding: 1rem; background: #F8FAFC; border-radius: 8px; margin: 1rem 0;">
+                        <h5>🎯 Concepts Identifiés</h5>
+                        <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                            <li>Dérivées et limites</li>
+                            <li>Fonctions exponentielles</li>
+                            <li>Applications géométriques</li>
+                        </ul>
+                    </div>
+                    <div style="padding: 1rem; background: rgba(16, 185, 129, 0.1); border-radius: 8px; margin: 1rem 0;">
+                        <h5>💡 Suggestions d'Étude</h5>
+                        <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                            <li>Réviser les règles de dérivation</li>
+                            <li>Pratiquer avec des exercices d'application</li>
+                            <li>Créer des fiches de formules</li>
+                        </ul>
+                    </div>
+                    <div style="text-align: center; margin-top: 1.5rem;">
+                        <button onclick="startDocumentsChatWithDocument('${docId}')" 
+                                style="background: linear-gradient(135deg, #FF6B35, #F59E0B); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;"
+                                onmouseover="this.style.transform='translateY(-2px)'"
+                                onmouseout="this.style.transform='translateY(0)'">
+                            💬 Discuter avec l'IA sur ce document
+                        </button>
+                    </div>
+                `;
+                
+                resultsDiv.style.display = 'block';
+                updateDocumentsDisplay();
+                
+                console.log('✅ Bouton chat créé pour document:', docId);
+                
+                setTimeout(() => {
+                    closeDocumentsAnalysisModal();
+                }, 5000);
+            }
+        }
+
+        // Chat avec document
+        function startDocumentsChatWithDocument(docId) {
+            console.log('🎯 startDocumentsChatWithDocument appelée avec docId:', docId);
+            
+            closeDocumentsAnalysisModal();
+            
+            const doc = documentsDataSection.find(d => d.id === docId);
+            console.log('📄 Document trouvé:', doc);
+            
+            if (!doc) {
+                console.error('❌ Document non trouvé pour ID:', docId);
+                showDocumentsNotification('❌ Document non trouvé', 'error');
+                return;
+            }
+            
+            currentDocumentsChatDocument = doc;
+            
+            console.log('💬 Ouverture du modal chat pour:', doc.name);
+            openDocumentsChatModal(doc);
+            
+            showDocumentsNotification(`💬 Chat ouvert pour "${doc.name}"`, 'success');
+        }
+
+        function openDocumentsChatModal(doc) {
+            console.log('🪟 Ouverture modal chat pour document:', doc.name);
+            
+            const welcomeMessages = {
+                pdf: `📄 J'ai analysé ton PDF "${doc.name}". Je peux t'expliquer son contenu, corriger tes exercices ou répondre à tes questions !`,
+                image: `🖼️ J'ai scanné ton image "${doc.name}" avec OCR. Dis-moi sur quoi tu veux que je t'aide !`,
+                word: `📝 J'ai lu ton document Word "${doc.name}". Je peux t'aider à l'améliorer ou répondre à tes questions !`
+            };
+            
+            const welcomeText = welcomeMessages[doc.type] || 
+                `📄 J'ai analysé ton document "${doc.name}". Comment puis-je t'aider ?`;
+            
+            const modalHtml = `
+                <div class="documents-modal-overlay active" id="documentsChatModal">
+                    <div class="documents-modal-content documents-chat-modal">
+                        <div class="documents-modal-header">
+                            <div>
+                                <h3 class="documents-modal-title">💬 Chat avec Document</h3>
+                                <p style="margin: 0.5rem 0 0 0; color: #6B7280; font-size: 0.9rem;">
+                                    Document: ${doc.name}
+                                </p>
+                            </div>
+                            <button class="documents-modal-close" onclick="closeDocumentsChatModal()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="documents-modal-body" style="display: flex; flex-direction: column; height: 60vh; padding: 0;">
+                            <!-- Messages -->
+                            <div class="documents-chat-messages" id="documentsChatMessages">
+                                <div class="documents-chat-message ai">
+                                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                        <div style="font-size: 1.5rem;">🤖</div>
+                                        <strong>ÉtudIA DeepSeek R1</strong>
+                                    </div>
+                                    <div>${welcomeText}</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Modes -->
+                            <div style="padding: 0 1.5rem;">
+                                <div class="documents-modes">
+                                    <button class="documents-mode-btn active" data-mode="normal">💬 Normal</button>
+                                    <button class="documents-mode-btn" data-mode="step">🔄 Étape par Étape</button>
+                                    <button class="documents-mode-btn" data-mode="direct">⚡ Solution Directe</button>
+                                    <button class="documents-mode-btn" data-mode="audio">🎤 Audio</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Input -->
+                            <div style="padding: 1.5rem;">
+                                <div class="documents-chat-input-zone">
+                                    <textarea 
+                                        id="documentsChatInput" 
+                                        class="documents-chat-input"
+                                        placeholder="Pose ta question sur ce document..."
+                                        onkeydown="handleDocumentsChatKeyPress(event)"
+                                        oninput="handleDocumentsChatInputChange()"
+                                    ></textarea>
+                                    <button 
+                                        id="documentsChatSendBtn" 
+                                        class="documents-chat-send"
+                                        onclick="sendDocumentsChatMessage()" 
+                                        disabled
+                                    >
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; font-size: 0.8rem; color: #6B7280;">
+                                    <span>Mode: <strong id="documentsCurrentChatMode">Normal (250 tokens)</strong></span>
+                                    <span>Tokens restants: <strong>1,247</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Supprimer modal existant
+            const existingModal = document.getElementById('documentsChatModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+            
+            // Ajouter nouveau modal
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            
+            // Setup mode buttons
+            document.querySelectorAll('#documentsChatModal .documents-mode-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('#documentsChatModal .documents-mode-btn').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    currentDocumentsChatMode = this.dataset.mode;
+                    
+                    const modeNames = {
+                        'normal': 'Normal (250 tokens)',
+                        'step': 'Étape par Étape (180 tokens)',
+                        'direct': 'Solution Directe (400 tokens)',
+                        'audio': 'Mode Audio (200 tokens)'
+                    };
+                    
+                    const modeEl = document.getElementById('documentsCurrentChatMode');
+                    if (modeEl) {
+                        modeEl.textContent = modeNames[currentDocumentsChatMode];
+                    }
+                    showDocumentsNotification(`Mode ${modeNames[currentDocumentsChatMode]} activé`, 'info');
+                });
+            });
+            
+            console.log('✅ Modal chat affiché');
+            
+            // Focus sur l'input
+            setTimeout(() => {
+                const inputEl = document.getElementById('documentsChatInput');
+                if (inputEl) {
+                    inputEl.focus();
+                    console.log('✅ Focus mis sur input');
+                }
+            }, 300);
+        }
+
+        function closeDocumentsChatModal() {
+            const modal = document.getElementById('documentsChatModal');
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(() => modal.remove(), 300);
+            }
+            currentDocumentsChatDocument = null;
+        }
+
+        function handleDocumentsChatKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendDocumentsChatMessage();
+            }
+        }
+
+        function handleDocumentsChatInputChange() {
+            const input = document.getElementById('documentsChatInput');
+            const sendBtn = document.getElementById('documentsChatSendBtn');
+            
+            if (input && sendBtn) {
+                sendBtn.disabled = input.value.trim().length === 0;
+                
+                // Auto-resize
+                input.style.height = 'auto';
+                input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+            }
+        }
+
+        function sendDocumentsChatMessage() {
+            const input = document.getElementById('documentsChatInput');
+            const message = input.value.trim();
+            
+            if (!message || !currentDocumentsChatDocument) return;
+            
+            // Ajouter message utilisateur
+            addDocumentsChatMessage(message, 'user');
+            
+            // Clear input
+            input.value = '';
+            document.getElementById('documentsChatSendBtn').disabled = true;
+            input.style.height = '50px';
+            
+            // Simuler réponse IA
+            addDocumentsTypingIndicator();
+            
+            setTimeout(() => {
+                removeDocumentsTypingIndicator();
+                generateDocumentsAIResponse(message);
+            }, 2000);
+        }
+
+        function addDocumentsChatMessage(text, sender) {
+            const container = document.getElementById('documentsChatMessages');
+            const messageDiv = document.createElement('div');
+            
+            if (sender === 'user') {
+                messageDiv.className = 'documents-chat-message user';
+                messageDiv.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; justify-content: flex-end;">
+                        <strong>Toi</strong>
+                        <div style="font-size: 1.5rem;">👨‍🎓</div>
+                    </div>
+                    <div>${text}</div>
+                `;
+            } else {
+                messageDiv.className = 'documents-chat-message ai';
+                messageDiv.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <div style="font-size: 1.5rem;">🤖</div>
+                        <strong>ÉtudIA DeepSeek R1</strong>
+                    </div>
+                    <div>${text}</div>
+                `;
+            }
+            
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function addDocumentsTypingIndicator() {
+            const container = document.getElementById('documentsChatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'documentsTypingIndicator';
+            typingDiv.className = 'documents-chat-message ai';
+            typingDiv.style.opacity = '0.7';
+            typingDiv.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <div style="font-size: 1.5rem;">🤖</div>
+                    <div style="font-style: italic;">ÉtudIA réfléchit...</div>
+                    <div style="margin-left: 0.5rem;">
+                        <div style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: white; margin: 0 2px; animation: pulse 1.5s infinite;"></div>
+                        <div style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: white; margin: 0 2px; animation: pulse 1.5s infinite 0.3s;"></div>
+                        <div style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: white; margin: 0 2px; animation: pulse 1.5s infinite 0.6s;"></div>
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(typingDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function removeDocumentsTypingIndicator() {
+            const indicator = document.getElementById('documentsTypingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+
+        function generateDocumentsAIResponse(userMessage) {
+            if (!currentDocumentsChatDocument) return;
+            
+            const doc = currentDocumentsChatDocument;
+            const responses = {
+                normal: [
+                    `D'après le document "${doc.name}", voici ce que je peux t'expliquer...`,
+                    `En analysant ton ${doc.type === 'pdf' ? 'PDF' : 'document'}, je vois que tu as des questions sur...`,
+                    `Basé sur le contenu de "${doc.name}", laisse-moi t'aider étape par étape...`
+                ],
+                step: [
+                    `🔄 Étape par étape pour "${doc.name}" :\n\n1️⃣ D'abord, identifions le problème...\n2️⃣ Ensuite, appliquons la méthode...\n3️⃣ Vérifions le résultat...`,
+                    `📚 Décomposons ensemble cet exercice de "${doc.name}" :\n\n**Étape 1:** Lecture et compréhension\n**Étape 2:** Application de la formule\n**Étape 3:** Vérification`
+                ],
+                direct: [
+                    `⚡ Solution directe basée sur "${doc.name}" :\n\n**Réponse:** Voici la solution complète avec tous les calculs détaillés...`,
+                    `🎯 Réponse immédiate pour ton exercice de "${doc.name}" :\n\n**Résultat final:** [Solution détaillée]`
+                ],
+                audio: [
+                    `🎤 Je vais t'expliquer le contenu de "${doc.name}" de manière claire et simple, parfait pour l'écoute...`,
+                    `📢 Explication audio du document "${doc.name}" : je vais parler lentement et clairement...`
+                ]
+            };
+            
+            const modeResponses = responses[currentDocumentsChatMode] || responses.normal;
+            const randomResponse = modeResponses[Math.floor(Math.random() * modeResponses.length)];
+            
+            const contextualResponse = `${randomResponse}
+
+📊 **Analyse du document :**
+- Type : ${doc.type.toUpperCase()}
+- Taille : ${doc.size}
+- Progression : ${doc.progress}% analysé
+- Mode actuel : ${currentDocumentsChatMode}
+
+💡 **Suggestion :** Je peux te créer un quiz basé sur ce document
+
+Que veux-tu que j'approfondisse ?`;
+            
+            addDocumentsChatMessage(contextualResponse, 'ai');
+        }
+
+        // Actions rapides
+        function createDocumentsStudyPlan() {
+            showDocumentsNotification('📅 Création du plan d\'étude en cours...', 'info');
+        }
+
+        function generateDocumentsQuiz() {
+            showDocumentsNotification('❓ Génération du quiz basé sur vos documents...', 'info');
+        }
+
+        function createDocumentsSummary() {
+            showDocumentsNotification('📝 Création du résumé global...', 'info');
+        }
+
+        function exportDocumentsFiles() {
+            showDocumentsNotification('📥 Export des analyses en cours...', 'info');
+        }
+
+        function startDocumentsScanning() {
+            showDocumentsNotification('📷 Fonction scanner en développement...', 'info');
+        }
+
+        function pasteDocumentsFromClipboard() {
+            if (navigator.clipboard && navigator.clipboard.readText) {
+                navigator.clipboard.readText().then(text => {
+                    if (text.trim()) {
+                        const blob = new Blob([text], { type: 'text/plain' });
+                        const file = new File([blob], 'texte_colle.txt', { type: 'text/plain' });
+                        uploadDocumentsFile(file);
+                    } else {
+                        showDocumentsNotification('📋 Aucun texte trouvé dans le presse-papier', 'warning');
+                    }
+                }).catch(() => {
+                    showDocumentsNotification('❌ Impossible d\'accéder au presse-papier', 'error');
+                });
+            } else {
+                showDocumentsNotification('❌ Fonction non supportée par votre navigateur', 'error');
+            }
+        }
+
+        // Mise à jour de l'affichage
+        function updateDocumentsDisplay() {
+            const container = document.getElementById('documentsContainer');
+            if (!container) return;
+            
+            documentsDataSection.forEach(doc => {
+                const item = container.querySelector(`[data-id="${doc.id}"]`);
+                if (item) {
+                    const metaDiv = item.querySelector('.document-meta');
+                    if (metaDiv) {
+                        const timeAgo = getDocumentsTimeAgo(doc.uploadDate);
+                        metaDiv.innerHTML = `
+                            <span>📅 ${timeAgo}</span>
+                            <span>💬 ${doc.analyses} ${doc.analyses > 1 ? 'analyses' : 'analyse'}</span>
+                            <span>📊 ${doc.progress}% analysé</span>
+                        `;
+                    }
+                }
+            });
+        }
+
+        function updateDocumentsCount() {
+            const countEl = document.getElementById('documentsCount');
+            if (countEl) {
+                countEl.textContent = documentsDataSection.length;
+            }
+        }
+
+        function getDocumentsTimeAgo(date) {
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / (1000 * 60));
+            const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            
+            if (diffMins < 60) {
+                return `Il y a ${diffMins} min`;
+            } else if (diffHours < 24) {
+                return `Il y a ${diffHours}h`;
+            } else if (diffDays === 1) {
+                return 'Hier';
+            } else if (diffDays < 7) {
+                return `Il y a ${diffDays} jours`;
+            } else {
+                return `Il y a ${Math.floor(diffDays / 7)} semaine${Math.floor(diffDays / 7) > 1 ? 's' : ''}`;
+            }
+        }
+
+        // Notifications
+        function showDocumentsNotification(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#10B981' : 
+                           type === 'error' ? '#EF4444' : 
+                           type === 'warning' ? '#F59E0B' : '#3B82F6'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+                z-index: 10000;
+                font-weight: 600;
+                transform: translateX(100%);
+                transition: all 0.3s ease;
+                max-width: 300px;
+            `;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.transform = 'translateX(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (document.body.contains(toast)) {
+                        document.body.removeChild(toast);
+                    }
+                }, 300);
+            }, 4000);
+        }
+
+        // Initialisation lors du chargement de la section
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialiser seulement si on est dans la section documents
+            if (document.getElementById('documents')) {
+                initializeDocumentsSection();
+                console.log('✅ Section Documents ÉtudIA initialisée avec succès !');
+            }
+        });
+
+        console.log('📄 Script Documents section chargé');
+    </script>
+</section>
+
+<!-- ============================================== -->
+<!-- FIN SECTION MES DOCUMENTS - UNIQUEMENT       -->
+<!-- ============================================== -->
+                
 
     <!-- 🚀 JavaScript intégré -->
     <script>
