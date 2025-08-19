@@ -5039,24 +5039,19 @@ Que veux-tu que j'approfondisse ?`;
 </div>
 
 <!-- ============================================== -->
-<!-- FIN SECTION MES DOCUMENTS V4.1 - ETUDIA      -->
-<!-- Code complet et fonctionnel                   -->
-<!-- ============================================== --><!-- ============================================== -->
-<!-- 📄 SECTION MES DOCUMENTS V4.1 - ETUDIA     -->
-<!-- Auto-contenu | Styles préservés | JS intégré -->
+<!-- 📄 SECTION MES DOCUMENTS V4.1 - ETUDIA OPTIMISÉ -->
+<!-- Auto-contenu | Styles préservés | JS intégré   -->
 <!-- ============================================== -->
 
-<section id="documents" class="content-section">
+<section id="documents" class="content-section" style="display: none;">
     <style>
-        /* =================== VARIABLES CSS ETUDIA =================== */
-        :root {
+        /* =================== VARIABLES CSS ÉTUDIA (PRÉSERVÉES) =================== */
+        .content-section#documents {
             --etudia-primary: #FF6B35;
             --etudia-secondary: #10B981;
             --etudia-accent: #3B82F6;
             --etudia-warning: #F59E0B;
             --etudia-danger: #EF4444;
-            --etudia-success: #10B981;
-            --etudia-info: #3B82F6;
             --etudia-dark: #1F2937;
             --etudia-light: #F8FAFC;
             --etudia-white: #FFFFFF;
@@ -5079,8 +5074,8 @@ Que veux-tu que j'approfondisse ?`;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* =================== SECTION HEADER =================== */
-        .documents-header {
+        /* =================== STYLES SPÉCIFIQUES SECTION DOCUMENTS =================== */
+        .content-section#documents .documents-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -5092,7 +5087,7 @@ Que veux-tu que j'approfondisse ?`;
             box-shadow: var(--shadow-primary);
         }
 
-        .documents-title {
+        .content-section#documents .documents-title {
             font-size: 1.875rem;
             font-weight: 700;
             margin: 0;
@@ -5101,13 +5096,13 @@ Que veux-tu que j'approfondisse ?`;
             gap: 0.75rem;
         }
 
-        .documents-stats {
+        .content-section#documents .documents-stats {
             display: flex;
             gap: 1.5rem;
             align-items: center;
         }
 
-        .stat-item {
+        .content-section#documents .stat-item {
             text-align: center;
             padding: 0.75rem 1rem;
             background: rgba(255, 255, 255, 0.2);
@@ -5115,40 +5110,40 @@ Que veux-tu que j'approfondisse ?`;
             backdrop-filter: blur(10px);
         }
 
-        .stat-value {
+        .content-section#documents .stat-value {
             font-size: 1.5rem;
             font-weight: 700;
             margin: 0;
         }
 
-        .stat-label {
+        .content-section#documents .stat-label {
             font-size: 0.75rem;
             opacity: 0.9;
             margin: 0;
         }
 
-        /* =================== LAYOUT PRINCIPAL =================== */
-        .documents-layout {
+        /* Layout Principal */
+        .content-section#documents .documents-layout {
             display: grid;
             grid-template-columns: 1fr 350px;
             gap: 2rem;
             margin-bottom: 2rem;
         }
 
-        .documents-main {
+        .content-section#documents .documents-main {
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
         }
 
-        .documents-sidebar {
+        .content-section#documents .documents-sidebar {
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
         }
 
-        /* =================== ZONE UPLOAD AVANCÉE =================== */
-        .upload-section {
+        /* Zone Upload */
+        .content-section#documents .upload-section {
             background: var(--gradient-secondary);
             border-radius: var(--border-radius-lg);
             padding: 2rem;
@@ -5159,7 +5154,7 @@ Que veux-tu que j'approfondisse ?`;
             overflow: hidden;
         }
 
-        .upload-section::before {
+        .content-section#documents .upload-section::before {
             content: '';
             position: absolute;
             top: 0;
@@ -5170,12 +5165,12 @@ Que veux-tu que j'approfondisse ?`;
             opacity: 0.3;
         }
 
-        .upload-content {
+        .content-section#documents .upload-content {
             position: relative;
             z-index: 1;
         }
 
-        .upload-zone {
+        .content-section#documents .upload-zone {
             border: 2px dashed rgba(255, 255, 255, 0.5);
             border-radius: var(--border-radius);
             padding: 2rem;
@@ -5186,43 +5181,43 @@ Que veux-tu que j'approfondisse ?`;
             backdrop-filter: blur(10px);
         }
 
-        .upload-zone:hover {
+        .content-section#documents .upload-zone:hover {
             border-color: var(--etudia-white);
             background: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
         }
 
-        .upload-zone.dragover {
+        .content-section#documents .upload-zone.dragover {
             border-color: var(--etudia-warning);
             background: rgba(245, 158, 11, 0.2);
             transform: scale(1.02);
         }
 
-        .upload-icon {
+        .content-section#documents .upload-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
             opacity: 0.8;
         }
 
-        .upload-text {
+        .content-section#documents .upload-text {
             font-size: 1.125rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
-        .upload-formats {
+        .content-section#documents .upload-formats {
             font-size: 0.875rem;
             opacity: 0.8;
         }
 
-        .upload-buttons {
+        .content-section#documents .upload-buttons {
             display: flex;
             gap: 1rem;
             justify-content: center;
             margin-top: 1.5rem;
         }
 
-        .upload-btn {
+        .content-section#documents .upload-btn {
             padding: 0.75rem 1.5rem;
             border: none;
             border-radius: var(--border-radius);
@@ -5234,31 +5229,31 @@ Que veux-tu que j'approfondisse ?`;
             gap: 0.5rem;
         }
 
-        .upload-btn.primary {
+        .content-section#documents .upload-btn.primary {
             background: var(--etudia-white);
             color: var(--etudia-secondary);
         }
 
-        .upload-btn.secondary {
+        .content-section#documents .upload-btn.secondary {
             background: rgba(255, 255, 255, 0.2);
             color: var(--etudia-white);
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        .upload-btn:hover {
+        .content-section#documents .upload-btn:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow-md);
         }
 
-        /* =================== LISTE DOCUMENTS =================== */
-        .documents-list {
+        /* Liste Documents */
+        .content-section#documents .documents-list {
             background: var(--etudia-white);
             border-radius: var(--border-radius-lg);
             box-shadow: var(--shadow-md);
             overflow: hidden;
         }
 
-        .documents-list-header {
+        .content-section#documents .documents-list-header {
             background: var(--gradient-dark);
             color: var(--etudia-white);
             padding: 1.5rem;
@@ -5267,7 +5262,7 @@ Que veux-tu que j'approfondisse ?`;
             align-items: center;
         }
 
-        .documents-list-title {
+        .content-section#documents .documents-list-title {
             font-size: 1.25rem;
             font-weight: 600;
             margin: 0;
@@ -5276,12 +5271,12 @@ Que veux-tu que j'approfondisse ?`;
             gap: 0.5rem;
         }
 
-        .documents-filter {
+        .content-section#documents .documents-filter {
             display: flex;
             gap: 0.5rem;
         }
 
-        .filter-btn {
+        .content-section#documents .filter-btn {
             padding: 0.5rem 1rem;
             border: none;
             border-radius: var(--border-radius);
@@ -5292,17 +5287,17 @@ Que veux-tu que j'approfondisse ?`;
             font-size: 0.875rem;
         }
 
-        .filter-btn:hover,
-        .filter-btn.active {
+        .content-section#documents .filter-btn:hover,
+        .content-section#documents .filter-btn.active {
             background: var(--etudia-primary);
         }
 
-        .documents-container {
+        .content-section#documents .documents-container {
             max-height: 600px;
             overflow-y: auto;
         }
 
-        .document-item {
+        .content-section#documents .document-item {
             display: flex;
             align-items: center;
             padding: 1.25rem 1.5rem;
@@ -5311,20 +5306,20 @@ Que veux-tu que j'approfondisse ?`;
             cursor: pointer;
         }
 
-        .document-item:hover {
+        .content-section#documents .document-item:hover {
             background: var(--etudia-light);
         }
 
-        .document-item:last-child {
+        .content-section#documents .document-item:last-child {
             border-bottom: none;
         }
 
-        .document-item.selected {
+        .content-section#documents .document-item.selected {
             background: rgba(16, 185, 129, 0.1);
             border-left: 4px solid var(--etudia-secondary);
         }
 
-        .document-icon {
+        .content-section#documents .document-icon {
             width: 48px;
             height: 48px;
             border-radius: var(--border-radius);
@@ -5336,42 +5331,42 @@ Que veux-tu que j'approfondisse ?`;
             color: var(--etudia-white);
         }
 
-        .document-icon.pdf {
+        .content-section#documents .document-icon.pdf {
             background: var(--gradient-danger);
         }
 
-        .document-icon.image {
+        .content-section#documents .document-icon.image {
             background: var(--gradient-secondary);
         }
 
-        .document-icon.word {
+        .content-section#documents .document-icon.word {
             background: var(--gradient-primary);
         }
 
-        .document-info {
+        .content-section#documents .document-info {
             flex: 1;
         }
 
-        .document-name {
+        .content-section#documents .document-name {
             font-weight: 600;
             color: var(--etudia-dark);
             margin-bottom: 0.25rem;
             font-size: 1rem;
         }
 
-        .document-meta {
+        .content-section#documents .document-meta {
             color: var(--etudia-gray);
             font-size: 0.875rem;
             display: flex;
             gap: 1rem;
         }
 
-        .document-actions {
+        .content-section#documents .document-actions {
             display: flex;
             gap: 0.5rem;
         }
 
-        .document-action {
+        .content-section#documents .document-action {
             padding: 0.5rem;
             border: none;
             border-radius: var(--border-radius);
@@ -5383,35 +5378,35 @@ Que veux-tu que j'approfondisse ?`;
             gap: 0.25rem;
         }
 
-        .document-action.view {
-            background: var(--etudia-info);
+        .content-section#documents .document-action.view {
+            background: var(--etudia-accent);
             color: var(--etudia-white);
         }
 
-        .document-action.analyze {
+        .content-section#documents .document-action.analyze {
             background: var(--etudia-secondary);
             color: var(--etudia-white);
         }
 
-        .document-action.delete {
+        .content-section#documents .document-action.delete {
             background: var(--etudia-danger);
             color: var(--etudia-white);
         }
 
-        .document-action:hover {
+        .content-section#documents .document-action:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow-sm);
         }
 
-        /* =================== PANNEAU STATISTIQUES =================== */
-        .stats-panel {
+        /* Panneau Statistiques */
+        .content-section#documents .stats-panel {
             background: var(--etudia-white);
             border-radius: var(--border-radius-lg);
             box-shadow: var(--shadow-md);
             padding: 1.5rem;
         }
 
-        .stats-panel-title {
+        .content-section#documents .stats-panel-title {
             font-size: 1.125rem;
             font-weight: 600;
             color: var(--etudia-dark);
@@ -5421,35 +5416,35 @@ Que veux-tu que j'approfondisse ?`;
             gap: 0.5rem;
         }
 
-        .stats-grid {
+        .content-section#documents .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
             margin-bottom: 1.5rem;
         }
 
-        .stats-card {
+        .content-section#documents .stats-card {
             text-align: center;
             padding: 1rem;
             border-radius: var(--border-radius);
             background: var(--etudia-light);
         }
 
-        .stats-number {
+        .content-section#documents .stats-number {
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--etudia-primary);
             margin-bottom: 0.25rem;
         }
 
-        .stats-label {
+        .content-section#documents .stats-label {
             font-size: 0.75rem;
             color: var(--etudia-gray);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        .usage-chart {
+        .content-section#documents .usage-chart {
             height: 120px;
             background: var(--etudia-light);
             border-radius: var(--border-radius);
@@ -5460,7 +5455,7 @@ Que veux-tu que j'approfondisse ?`;
             gap: 0.5rem;
         }
 
-        .chart-bar {
+        .content-section#documents .chart-bar {
             flex: 1;
             background: var(--gradient-primary);
             border-radius: 4px 4px 0 0;
@@ -5470,11 +5465,11 @@ Que veux-tu que j'approfondisse ?`;
             transition: var(--transition);
         }
 
-        .chart-bar:hover {
+        .content-section#documents .chart-bar:hover {
             transform: scaleY(1.1);
         }
 
-        .chart-bar::after {
+        .content-section#documents .chart-bar::after {
             content: attr(data-value);
             position: absolute;
             top: -25px;
@@ -5485,15 +5480,15 @@ Que veux-tu que j'approfondisse ?`;
             white-space: nowrap;
         }
 
-        /* =================== PANNEAU ACTIONS RAPIDES =================== */
-        .quick-actions {
+        /* Actions Rapides */
+        .content-section#documents .quick-actions {
             background: var(--etudia-white);
             border-radius: var(--border-radius-lg);
             box-shadow: var(--shadow-md);
             padding: 1.5rem;
         }
 
-        .quick-actions-title {
+        .content-section#documents .quick-actions-title {
             font-size: 1.125rem;
             font-weight: 600;
             color: var(--etudia-dark);
@@ -5503,13 +5498,13 @@ Que veux-tu que j'approfondisse ?`;
             gap: 0.5rem;
         }
 
-        .action-list {
+        .content-section#documents .action-list {
             display: flex;
             flex-direction: column;
             gap: 1rem;
         }
 
-        .action-item {
+        .content-section#documents .action-item {
             display: flex;
             align-items: center;
             padding: 1rem;
@@ -5519,13 +5514,13 @@ Que veux-tu que j'approfondisse ?`;
             transition: var(--transition);
         }
 
-        .action-item:hover {
+        .content-section#documents .action-item:hover {
             background: var(--etudia-primary);
             color: var(--etudia-white);
             transform: translateX(4px);
         }
 
-        .action-icon {
+        .content-section#documents .action-icon {
             width: 40px;
             height: 40px;
             border-radius: var(--border-radius);
@@ -5538,22 +5533,22 @@ Que veux-tu que j'approfondisse ?`;
             color: var(--etudia-white);
         }
 
-        .action-content {
+        .content-section#documents .action-content {
             flex: 1;
         }
 
-        .action-title {
+        .content-section#documents .action-title {
             font-weight: 600;
             margin-bottom: 0.25rem;
         }
 
-        .action-desc {
+        .content-section#documents .action-desc {
             font-size: 0.875rem;
             opacity: 0.8;
         }
 
-        /* =================== MODAL ANALYSE =================== */
-        .modal-overlay {
+        /* Modals */
+        .content-section#documents .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -5569,12 +5564,12 @@ Que veux-tu que j'approfondisse ?`;
             transition: var(--transition);
         }
 
-        .modal-overlay.active {
+        .content-section#documents .modal-overlay.active {
             opacity: 1;
             visibility: visible;
         }
 
-        .modal-content {
+        .content-section#documents .modal-content {
             background: var(--etudia-white);
             border-radius: var(--border-radius-lg);
             padding: 2rem;
@@ -5587,11 +5582,11 @@ Que veux-tu que j'approfondisse ?`;
             transition: var(--transition);
         }
 
-        .modal-overlay.active .modal-content {
+        .content-section#documents .modal-overlay.active .modal-content {
             transform: translateY(0);
         }
 
-        .modal-header {
+        .content-section#documents .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -5600,14 +5595,14 @@ Que veux-tu que j'approfondisse ?`;
             border-bottom: 1px solid var(--etudia-border);
         }
 
-        .modal-title {
+        .content-section#documents .modal-title {
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--etudia-dark);
             margin: 0;
         }
 
-        .modal-close {
+        .content-section#documents .modal-close {
             background: none;
             border: none;
             font-size: 1.5rem;
@@ -5618,16 +5613,16 @@ Que veux-tu que j'approfondisse ?`;
             transition: var(--transition);
         }
 
-        .modal-close:hover {
+        .content-section#documents .modal-close:hover {
             background: var(--etudia-light);
             color: var(--etudia-danger);
         }
 
-        .progress-container {
+        .content-section#documents .progress-container {
             margin: 1.5rem 0;
         }
 
-        .progress-bar {
+        .content-section#documents .progress-bar {
             width: 100%;
             height: 8px;
             background: var(--etudia-light);
@@ -5635,115 +5630,101 @@ Que veux-tu que j'approfondisse ?`;
             overflow: hidden;
         }
 
-        .progress-fill {
+        .content-section#documents .progress-fill {
             height: 100%;
             background: var(--gradient-primary);
             width: 0%;
             transition: width 0.3s ease;
         }
 
-        .progress-text {
+        .content-section#documents .progress-text {
             text-align: center;
             margin-top: 0.5rem;
             font-size: 0.875rem;
             color: var(--etudia-gray);
         }
 
-        /* =================== RESPONSIVE =================== */
+        /* Responsive */
         @media (max-width: 1024px) {
-            .documents-layout {
+            .content-section#documents .documents-layout {
                 grid-template-columns: 1fr;
             }
             
-            .documents-sidebar {
+            .content-section#documents .documents-sidebar {
                 order: -1;
             }
             
-            .documents-stats {
+            .content-section#documents .documents-stats {
                 flex-direction: column;
                 gap: 1rem;
             }
         }
 
         @media (max-width: 768px) {
-            .documents-header {
+            .content-section#documents .documents-header {
                 flex-direction: column;
                 text-align: center;
                 gap: 1rem;
             }
             
-            .documents-title {
+            .content-section#documents .documents-title {
                 font-size: 1.5rem;
             }
             
-            .upload-section {
+            .content-section#documents .upload-section {
                 padding: 1.5rem;
             }
             
-            .upload-buttons {
+            .content-section#documents .upload-buttons {
                 flex-direction: column;
             }
             
-            .stats-grid {
+            .content-section#documents .stats-grid {
                 grid-template-columns: 1fr;
             }
             
-            .document-item {
+            .content-section#documents .document-item {
                 flex-direction: column;
                 align-items: start;
                 gap: 1rem;
             }
             
-            .document-actions {
+            .content-section#documents .document-actions {
                 width: 100%;
                 justify-content: space-between;
             }
         }
 
-        /* =================== ANIMATIONS =================== */
+        /* Animations */
         @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.7;
-            }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
         @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
-        .animate-slide-in {
+        .content-section#documents .animate-slide-in {
             animation: slideInUp 0.6s ease-out;
         }
 
-        .animate-pulse {
+        .content-section#documents .animate-pulse {
             animation: pulse 2s infinite;
         }
 
-        .animate-bounce {
+        .content-section#documents .animate-bounce {
             animation: bounce 2s infinite;
         }
 
-        /* =================== ÉTAT CHARGEMENT =================== */
-        .loading-state {
+        /* États */
+        .content-section#documents .loading-state {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -5752,7 +5733,7 @@ Que veux-tu que j'approfondisse ?`;
             color: var(--etudia-gray);
         }
 
-        .loading-spinner {
+        .content-section#documents .loading-spinner {
             width: 40px;
             height: 40px;
             border: 4px solid var(--etudia-light);
@@ -5767,13 +5748,13 @@ Que veux-tu que j'approfondisse ?`;
             100% { transform: rotate(360deg); }
         }
 
-        .empty-state {
+        .content-section#documents .empty-state {
             text-align: center;
             padding: 3rem;
             color: var(--etudia-gray);
         }
 
-        .empty-icon {
+        .content-section#documents .empty-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
             opacity: 0.5;
@@ -5783,9 +5764,7 @@ Que veux-tu que j'approfondisse ?`;
     <!-- Header Section -->
     <div class="documents-header animate-slide-in">
         <div>
-            <h2 class="documents-title">
-                📄 Mes Documents
-            </h2>
+            <h2 class="documents-title">📄 Mes Documents</h2>
             <p style="margin: 0.5rem 0 0 0; opacity: 0.9; font-size: 0.95rem;">
                 Gérez et analysez vos documents d'étude avec l'IA ÉtudIA
             </p>
@@ -5828,16 +5807,13 @@ Que veux-tu que j'approfondisse ?`;
                     </div>
                     <div class="upload-buttons">
                         <button class="upload-btn primary" onclick="triggerFileInput()">
-                            <i class="fas fa-upload"></i>
-                            Choisir Fichiers
+                            📁 Choisir Fichiers
                         </button>
                         <button class="upload-btn secondary" onclick="startScanning()">
-                            <i class="fas fa-camera"></i>
-                            Scanner Document
+                            📷 Scanner Document
                         </button>
                         <button class="upload-btn secondary" onclick="pasteFromClipboard()">
-                            <i class="fas fa-clipboard"></i>
-                            Coller Texte
+                            📋 Coller Texte
                         </button>
                     </div>
                 </div>
@@ -5846,10 +5822,7 @@ Que veux-tu que j'approfondisse ?`;
             <!-- Liste Documents -->
             <div class="documents-list animate-slide-in">
                 <div class="documents-list-header">
-                    <h3 class="documents-list-title">
-                        <i class="fas fa-folder-open"></i>
-                        Mes Documents (12)
-                    </h3>
+                    <h3 class="documents-list-title">📂 Mes Documents (12)</h3>
                     <div class="documents-filter">
                         <button class="filter-btn active" data-filter="all">Tous</button>
                         <button class="filter-btn" data-filter="pdf">PDF</button>
@@ -5859,134 +5832,7 @@ Que veux-tu que j'approfondisse ?`;
                     </div>
                 </div>
                 <div class="documents-container" id="documentsContainer">
-                    <!-- Document 1 -->
-                    <div class="document-item" data-type="pdf" data-id="doc1">
-                        <div class="document-icon pdf">
-                            <i class="fas fa-file-pdf"></i>
-                        </div>
-                        <div class="document-info">
-                            <div class="document-name">Cours_Mathematiques_Derivees.pdf</div>
-                            <div class="document-meta">
-                                <span>📅 Il y a 2 heures</span>
-                                <span>💬 15 questions résolues</span>
-                                <span>📊 92% analysé</span>
-                            </div>
-                        </div>
-                        <div class="document-actions">
-                            <button class="document-action view" onclick="viewDocument('doc1')">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="document-action analyze" onclick="analyzeDocument('doc1')">
-                                <i class="fas fa-brain"></i>
-                            </button>
-                            <button class="document-action delete" onclick="deleteDocument('doc1')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Document 2 -->
-                    <div class="document-item" data-type="image" data-id="doc2">
-                        <div class="document-icon image">
-                            <i class="fas fa-image"></i>
-                        </div>
-                        <div class="document-info">
-                            <div class="document-name">Exercice_Physique_Optique.jpg</div>
-                            <div class="document-meta">
-                                <span>📅 Hier</span>
-                                <span>💬 8 explications données</span>
-                                <span>🔍 OCR effectué</span>
-                            </div>
-                        </div>
-                        <div class="document-actions">
-                            <button class="document-action view" onclick="viewDocument('doc2')">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="document-action analyze" onclick="analyzeDocument('doc2')">
-                                <i class="fas fa-brain"></i>
-                            </button>
-                            <button class="document-action delete" onclick="deleteDocument('doc2')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Document 3 -->
-                    <div class="document-item" data-type="word" data-id="doc3">
-                        <div class="document-icon word">
-                            <i class="fas fa-file-word"></i>
-                        </div>
-                        <div class="document-info">
-                            <div class="document-name">Redaction_Francais_Sujet.docx</div>
-                            <div class="document-meta">
-                                <span>📅 Il y a 3 jours</span>
-                                <span>✏️ Corrections effectuées</span>
-                                <span>🎯 Structure améliorée</span>
-                            </div>
-                        </div>
-                        <div class="document-actions">
-                            <button class="document-action view" onclick="viewDocument('doc3')">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="document-action analyze" onclick="analyzeDocument('doc3')">
-                                <i class="fas fa-brain"></i>
-                            </button>
-                            <button class="document-action delete" onclick="deleteDocument('doc3')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- Document 4 -->
-                    <div class="document-item" data-type="pdf" data-id="doc4">
-                        <div class="document-icon pdf">
-                            <i class="fas fa-file-pdf"></i>
-                        </div>
-                        <div class="document-info">
-                            <div class="document-name">Exercices_Chimie_Solutions.pdf</div>
-                            <div class="document-meta">
-                                <span>📅 Il y a 1 semaine</span>
-                                <span>🧪 22 équations résolues</span>
-                                <span>📈 Progression +15%</span>
-                            </div>
-                        </div>
-                        <div class="document-actions">
-                            <button class="document-action view" onclick="viewDocument('doc4')">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="document-action analyze" onclick="analyzeDocument('doc4')">
-                                <i class="fas fa-brain"></i>
-                            </button>
-                            <button class="document-action delete" onclick="deleteDocument('doc4')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Document 5 -->
-                    <div class="document-item" data-type="image" data-id="doc5">
-                        <div class="document-icon image">
-                            <i class="fas fa-image"></i>
-                        </div>
-                        <div class="document-info">
-                            <div class="document-name">Schema_SVT_Cellule.png</div>
-                            <div class="document-meta">
-                                <span>📅 Il y a 2 semaines</span>
-                                <span>🔬 Analyse complète</span>
-                                <span>📚 Révision planifiée</span>
-                            </div>
-                        </div>
-                        <div class="document-actions">
-                            <button class="document-action view" onclick="viewDocument('doc5')">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="document-action analyze" onclick="analyzeDocument('doc5')">
-                                <i class="fas fa-brain"></i>
-                            </button>
-                            <button class="document-action delete" onclick="deleteDocument('doc5')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
+                    <!-- Documents seront générés dynamiquement -->
                 </div>
             </div>
         </div>
@@ -5995,10 +5841,7 @@ Que veux-tu que j'approfondisse ?`;
         <div class="documents-sidebar">
             <!-- Panneau Statistiques -->
             <div class="stats-panel animate-slide-in">
-                <h3 class="stats-panel-title">
-                    <i class="fas fa-chart-bar"></i>
-                    Statistiques d'Usage
-                </h3>
+                <h3 class="stats-panel-title">📊 Statistiques d'Usage</h3>
                 <div class="stats-grid">
                     <div class="stats-card">
                         <div class="stats-number">2.5</div>
@@ -6033,15 +5876,10 @@ Que veux-tu que j'approfondisse ?`;
 
             <!-- Actions Rapides -->
             <div class="quick-actions animate-slide-in">
-                <h3 class="quick-actions-title">
-                    <i class="fas fa-bolt"></i>
-                    Actions Rapides
-                </h3>
+                <h3 class="quick-actions-title">⚡ Actions Rapides</h3>
                 <div class="action-list">
                     <div class="action-item" onclick="createStudyPlan()">
-                        <div class="action-icon">
-                            <i class="fas fa-calendar-plus"></i>
-                        </div>
+                        <div class="action-icon">📅</div>
                         <div class="action-content">
                             <div class="action-title">Plan d'Étude</div>
                             <div class="action-desc">Créer un planning basé sur vos docs</div>
@@ -6049,9 +5887,7 @@ Que veux-tu que j'approfondisse ?`;
                     </div>
                     
                     <div class="action-item" onclick="generateQuiz()">
-                        <div class="action-icon">
-                            <i class="fas fa-question-circle"></i>
-                        </div>
+                        <div class="action-icon">❓</div>
                         <div class="action-content">
                             <div class="action-title">Quiz Automatique</div>
                             <div class="action-desc">Générer un quiz de révision</div>
@@ -6059,9 +5895,7 @@ Que veux-tu que j'approfondisse ?`;
                     </div>
                     
                     <div class="action-item" onclick="createSummary()">
-                        <div class="action-icon">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
+                        <div class="action-icon">📝</div>
                         <div class="action-content">
                             <div class="action-title">Résumé Global</div>
                             <div class="action-desc">Résumer tous vos documents</div>
@@ -6069,22 +5903,10 @@ Que veux-tu que j'approfondisse ?`;
                     </div>
                     
                     <div class="action-item" onclick="exportDocuments()">
-                        <div class="action-icon">
-                            <i class="fas fa-download"></i>
-                        </div>
+                        <div class="action-icon">📥</div>
                         <div class="action-content">
                             <div class="action-title">Export PDF</div>
                             <div class="action-desc">Télécharger vos analyses</div>
-                        </div>
-                    </div>
-                    
-                    <div class="action-item" onclick="shareWithFriends()">
-                        <div class="action-icon">
-                            <i class="fas fa-share-alt"></i>
-                        </div>
-                        <div class="action-content">
-                            <div class="action-title">Partager</div>
-                            <div class="action-desc">Partager avec vos camarades</div>
                         </div>
                     </div>
                 </div>
@@ -6094,1115 +5916,363 @@ Que veux-tu que j'approfondisse ?`;
 
     <!-- JavaScript Intégré -->
     <script>
-        // =================== VARIABLES GLOBALES ===================
-        let documentsData = [
-            {
-                id: 'doc1',
-                name: 'Cours_Mathematiques_Derivees.pdf',
-                type: 'pdf',
-                size: '2.3 MB',
-                uploadDate: new Date(Date.now() - 2 * 60 * 60 * 1000), // Il y a 2h
-                analyses: 15,
-                progress: 92
-            },
-            {
-                id: 'doc2',
-                name: 'Exercice_Physique_Optique.jpg',
-                type: 'image',
-                size: '1.8 MB',
-                uploadDate: new Date(Date.now() - 24 * 60 * 60 * 1000), // Hier
-                analyses: 8,
-                progress: 100
-            },
-            {
-                id: 'doc3',
-                name: 'Redaction_Francais_Sujet.docx',
-                type: 'word',
-                size: '456 KB',
-                uploadDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // Il y a 3 jours
-                analyses: 12,
-                progress: 87
-            },
-            {
-                id: 'doc4',
-                name: 'Exercices_Chimie_Solutions.pdf',
-                type: 'pdf',
-                size: '3.1 MB',
-                uploadDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // Il y a 1 semaine
-                analyses: 22,
-                progress: 100
-            },
-            {
-                id: 'doc5',
-                name: 'Schema_SVT_Cellule.png',
-                type: 'image',
-                size: '2.7 MB',
-                uploadDate: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000), // Il y a 2 semaines
-                analyses: 6,
-                progress: 100
+        (function() {
+            // =================== VARIABLES GLOBALES ===================
+            let documentsData = [];
+            let currentFilter = 'all';
+
+            // =================== INITIALISATION ===================
+            function initDocumentsSection() {
+                console.log('📄 Initialisation section Documents ÉtudIA');
+                loadDocumentsData();
+                setupEventListeners();
+                renderDocumentsList();
+                updateStatistics();
             }
-        ];
 
-        let currentFilter = 'all';
-        let currentChatDocument = null;
-        let currentChatMode = 'normal';
-        let chatMessages = [];
+            // =================== GESTION DONNÉES ===================
+            function loadDocumentsData() {
+                const saved = localStorage.getItem('etudia_documents');
+                documentsData = saved ? JSON.parse(saved) : getDefaultDocuments();
+            }
 
-        // =================== INITIALISATION ===================
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('📄 Initialisation section Documents ÉtudIA');
-            initializeDocumentsSection();
-            setupEventListeners();
-            updateStatistics();
-            
-            // ✅ TEST IMMÉDIAT - Vérifier que toutes les fonctions existent
-            console.log('🧪 Tests fonctions principales:');
-            console.log('- startChatWithDocument:', typeof startChatWithDocument);
-            console.log('- openChatDocumentModal:', typeof openChatDocumentModal);
-            console.log('- closeChatDocumentModal:', typeof closeChatDocumentModal);
-            console.log('- sendChatMessage:', typeof sendChatMessage);
-            
-            // ✅ Vérifier que les modals existent
-            const analysisModal = document.getElementById('analysisModal');
-            const chatModal = document.getElementById('chatDocumentModal');
-            console.log('🪟 Modals détectés:');
-            console.log('- analysisModal:', analysisModal ? '✅' : '❌');
-            console.log('- chatDocumentModal:', chatModal ? '✅' : '❌');
-        });
+            function saveDocumentsData() {
+                localStorage.setItem('etudia_documents', JSON.stringify(documentsData));
+            }
 
-        function initializeDocumentsSection() {
-            console.log('📄 Initialisation section Documents ÉtudIA');
-            
-            // Setup drag & drop
-            setupDragAndDrop();
-            
-            // Setup filtres
-            setupFilters();
-            
-            // Animation d'entrée
-            setTimeout(() => {
-                document.querySelectorAll('.animate-slide-in').forEach((el, index) => {
-                    setTimeout(() => {
-                        el.style.opacity = '1';
-                        el.style.transform = 'translateY(0)';
-                    }, index * 200);
-                });
-            }, 100);
-        }
-
-        function setupEventListeners() {
-            // Filtres documents
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const filter = this.dataset.filter;
-                    filterDocuments(filter);
-                    
-                    // Update active state
-                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-
-            // Raccourcis clavier
-            document.addEventListener('keydown', function(e) {
-                if (e.ctrlKey || e.metaKey) {
-                    switch(e.key) {
-                        case 'u':
-                            e.preventDefault();
-                            triggerFileInput();
-                            break;
-                        case 'd':
-                            e.preventDefault();
-                            filterDocuments('recent');
-                            break;
+            function getDefaultDocuments() {
+                return [
+                    {
+                        id: 'doc1',
+                        name: 'Cours_Mathematiques_Derivees.pdf',
+                        type: 'pdf',
+                        size: '2.3 MB',
+                        uploadDate: new Date(Date.now() - 2 * 60 * 60 * 1000),
+                        analyses: 15,
+                        progress: 92
+                    },
+                    {
+                        id: 'doc2',
+                        name: 'Exercice_Physique_Optique.jpg',
+                        type: 'image',
+                        size: '1.8 MB',
+                        uploadDate: new Date(Date.now() - 24 * 60 * 60 * 1000),
+                        analyses: 8,
+                        progress: 100
+                    },
+                    {
+                        id: 'doc3',
+                        name: 'Redaction_Francais_Sujet.docx',
+                        type: 'word',
+                        size: '456 KB',
+                        uploadDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+                        analyses: 12,
+                        progress: 87
                     }
-                }
-            });
-        }
+                ];
+            }
 
-        function setupDragAndDrop() {
-            const uploadZone = document.getElementById('uploadZone');
-            
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                uploadZone.addEventListener(eventName, preventDefaults, false);
-            });
+            // =================== RENDU INTERFACE ===================
+            function renderDocumentsList() {
+                const container = document.getElementById('documentsContainer');
+                if (!container) return;
+
+                container.innerHTML = documentsData.map(doc => `
+                    <div class="document-item" data-type="${doc.type}" data-id="${doc.id}">
+                        <div class="document-icon ${doc.type}">
+                            ${doc.type === 'pdf' ? '📄' : doc.type === 'image' ? '🖼️' : '📝'}
+                        </div>
+                        <div class="document-info">
+                            <div class="document-name">${doc.name}</div>
+                            <div class="document-meta">
+                                <span>📅 ${getTimeAgo(doc.uploadDate)}</span>
+                                <span>💬 ${doc.analyses} ${doc.analyses > 1 ? 'analyses' : 'analyse'}</span>
+                                <span>📊 ${doc.progress}% analysé</span>
+                            </div>
+                        </div>
+                        <div class="document-actions">
+                            <button class="document-action view" onclick="viewDocument('${doc.id}')">
+                                👁️
+                            </button>
+                            <button class="document-action analyze" onclick="analyzeDocument('${doc.id}')">
+                                🧠
+                            </button>
+                            <button class="document-action delete" onclick="deleteDocument('${doc.id}')">
+                                🗑️
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            function updateStatistics() {
+                const totalDocs = documentsData.length;
+                const today = new Date();
+                const docsToday = documentsData.filter(doc => 
+                    new Date(doc.uploadDate).toDateString() === today.toDateString()
+                ).length;
+                const totalAnalyses = documentsData.reduce((sum, doc) => sum + doc.analyses, 0);
+
+                document.getElementById('totalDocuments').textContent = totalDocs;
+                document.getElementById('documentsToday').textContent = docsToday;
+                document.getElementById('totalAnalyses').textContent = totalAnalyses;
+            }
+
+            // =================== GESTION ÉVÉNEMENTS ===================
+            function setupEventListeners() {
+                // Drag and drop
+                const uploadZone = document.getElementById('uploadZone');
+                if (uploadZone) {
+                    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                        uploadZone.addEventListener(eventName, preventDefaults, false);
+                    });
+
+                    ['dragenter', 'dragover'].forEach(eventName => {
+                        uploadZone.addEventListener(eventName, () => uploadZone.classList.add('dragover'), false);
+                    });
+
+                    ['dragleave', 'drop'].forEach(eventName => {
+                        uploadZone.addEventListener(eventName, () => uploadZone.classList.remove('dragover'), false);
+                    });
+
+                    uploadZone.addEventListener('drop', handleDrop, false);
+                }
+
+                // Filtres
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const filter = this.dataset.filter;
+                        currentFilter = filter;
+                        applyFilter(filter);
+                    });
+                });
+            }
 
             function preventDefaults(e) {
                 e.preventDefault();
                 e.stopPropagation();
             }
 
-            ['dragenter', 'dragover'].forEach(eventName => {
-                uploadZone.addEventListener(eventName, highlight, false);
-            });
-
-            ['dragleave', 'drop'].forEach(eventName => {
-                uploadZone.addEventListener(eventName, unhighlight, false);
-            });
-
-            function highlight(e) {
-                uploadZone.classList.add('dragover');
-            }
-
-            function unhighlight(e) {
-                uploadZone.classList.remove('dragover');
-            }
-
-            uploadZone.addEventListener('drop', handleDrop, false);
-
             function handleDrop(e) {
-                const dt = e.dataTransfer;
-                const files = dt.files;
+                const files = e.dataTransfer.files;
                 handleFiles(files);
             }
-        }
 
-        function setupFilters() {
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const filter = this.dataset.filter;
-                    filterDocuments(filter);
-                });
-            });
-        }
-
-        // =================== GESTION FICHIERS ===================
-        function triggerFileInput() {
-            document.getElementById('fileInput').click();
-        }
-
-        function handleFileUpload(input) {
-            const files = input.files;
-            handleFiles(files);
-        }
-
-        function handleFiles(files) {
-            if (!files || files.length === 0) return;
-
-            Array.from(files).forEach(file => {
-                if (validateFile(file)) {
-                    uploadFile(file);
-                }
-            });
-        }
-
-        function validateFile(file) {
-            const maxSize = 25 * 1024 * 1024; // 25MB
-            const allowedTypes = [
-                'application/pdf',
-                'application/msword',
-                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                'image/jpeg',
-                'image/png',
-                'text/plain'
-            ];
-
-            if (file.size > maxSize) {
-                showNotification('❌ Fichier trop volumineux (max 25MB)', 'error');
-                return false;
+            // =================== ACTIONS UTILISATEUR ===================
+            function triggerFileInput() {
+                document.getElementById('fileInput').click();
             }
 
-            if (!allowedTypes.includes(file.type)) {
-                showNotification('❌ Format non supporté', 'error');
-                return false;
+            function handleFileUpload(input) {
+                const files = input.files;
+                handleFiles(files);
             }
 
-            return true;
-        }
+            function handleFiles(files) {
+                if (!files || files.length === 0) return;
 
-        function uploadFile(file) {
-            const docId = 'doc_' + Date.now();
-            
-            // Simulation upload avec progression
-            showAnalysisModal();
-            simulateAnalysis(file, docId);
-            
-            // Ajouter à la liste
-            const newDoc = {
-                id: docId,
-                name: file.name,
-                type: getFileType(file.type),
-                size: formatFileSize(file.size),
-                uploadDate: new Date(),
-                analyses: 0,
-                progress: 0
-            };
-            
-            documentsData.unshift(newDoc);
-            updateDocumentsList();
-            updateStatistics();
-            
-            showNotification('✅ Document uploadé avec succès !', 'success');
-        }
-
-        function getFileType(mimeType) {
-            if (mimeType.includes('pdf')) return 'pdf';
-            if (mimeType.includes('image')) return 'image';
-            if (mimeType.includes('word')) return 'word';
-            return 'other';
-        }
-
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 B';
-            const k = 1024;
-            const sizes = ['B', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
-        }
-
-        // =================== FILTRAGE DOCUMENTS ===================
-        function filterDocuments(filter) {
-            currentFilter = filter;
-            const items = document.querySelectorAll('.document-item');
-            
-            items.forEach(item => {
-                const type = item.dataset.type;
-                let show = false;
-                
-                switch(filter) {
-                    case 'all':
-                        show = true;
-                        break;
-                    case 'recent':
-                        // Documents des 7 derniers jours
-                        const docData = documentsData.find(d => d.id === item.dataset.id);
-                        if (docData) {
-                            const daysDiff = (new Date() - docData.uploadDate) / (1000 * 60 * 60 * 24);
-                            show = daysDiff <= 7;
-                        }
-                        break;
-                    default:
-                        show = type === filter;
-                }
-                
-                item.style.display = show ? 'flex' : 'none';
-            });
-            
-            // Compter documents visibles
-            const visibleCount = Array.from(items).filter(item => 
-                item.style.display !== 'none'
-            ).length;
-            
-            document.querySelector('.documents-list-title').innerHTML = 
-                `<i class="fas fa-folder-open"></i> Mes Documents (${visibleCount})`;
-        }
-
-        // =================== ACTIONS DOCUMENTS ===================
-        function viewDocument(docId) {
-            const doc = documentsData.find(d => d.id === docId);
-            if (!doc) return;
-            
-            showNotification(`👁️ Ouverture de ${doc.name}`, 'info');
-            
-            // Ici vous pouvez implémenter la vue du document
-            // Par exemple ouvrir dans un modal ou une nouvelle fenêtre
-        }
-
-        function analyzeDocument(docId) {
-            const doc = documentsData.find(d => d.id === docId);
-            if (!doc) return;
-            
-            showAnalysisModal();
-            simulateAnalysis(null, docId, true);
-        }
-
-        function deleteDocument(docId) {
-            if (!confirm('❓ Êtes-vous sûr de vouloir supprimer ce document ?')) return;
-            
-            documentsData = documentsData.filter(d => d.id !== docId);
-            updateDocumentsList();
-            updateStatistics();
-            
-            showNotification('🗑️ Document supprimé', 'success');
-        }
-
-        // =================== MODAL ANALYSE ===================
-        function showAnalysisModal() {
-            const modal = document.getElementById('analysisModal');
-            modal.classList.add('active');
-            
-            // Reset progress
-            document.getElementById('analysisProgress').style.width = '0%';
-            document.getElementById('analysisResults').style.display = 'none';
-        }
-
-        function closeAnalysisModal() {
-            const modal = document.getElementById('analysisModal');
-            modal.classList.remove('active');
-        }
-
-        function simulateAnalysis(file, docId, isReanalysis = false) {
-            const progressBar = document.getElementById('analysisProgress');
-            const progressText = document.getElementById('analysisText');
-            const resultsDiv = document.getElementById('analysisResults');
-            
-            const steps = [
-                { progress: 20, text: '🔍 Lecture du document...' },
-                { progress: 40, text: '🧠 Analyse du contenu...' },
-                { progress: 60, text: '📝 Extraction des concepts clés...' },
-                { progress: 80, text: '💡 Génération de suggestions...' },
-                { progress: 100, text: '✅ Analyse terminée !' }
-            ];
-            
-            let currentStep = 0;
-            
-            const interval = setInterval(() => {
-                if (currentStep < steps.length) {
-                    const step = steps[currentStep];
-                    progressBar.style.width = step.progress + '%';
-                    progressText.textContent = step.text;
-                    currentStep++;
-                } else {
-                    clearInterval(interval);
-                    showAnalysisResults(docId, isReanalysis);
-                }
-            }, 1000);
-        }
-
-        function showAnalysisResults(docId, isReanalysis) {
-            const resultsDiv = document.getElementById('analysisResults');
-            const doc = documentsData.find(d => d.id === docId);
-            
-            if (doc) {
-                doc.analyses += 1;
-                doc.progress = Math.min(100, doc.progress + (isReanalysis ? 5 : 15));
-            }
-            
-            resultsDiv.innerHTML = `
-                <div style="padding: 1rem; background: var(--etudia-light); border-radius: var(--border-radius); margin: 1rem 0;">
-                    <h5>🎯 Concepts Identifiés</h5>
-                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                        <li>Dérivées et limites</li>
-                        <li>Fonctions exponentielles</li>
-                        <li>Applications géométriques</li>
-                    </ul>
-                </div>
-                <div style="padding: 1rem; background: rgba(16, 185, 129, 0.1); border-radius: var(--border-radius); margin: 1rem 0;">
-                    <h5>💡 Suggestions d'Étude</h5>
-                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                        <li>Réviser les règles de dérivation</li>
-                        <li>Pratiquer avec des exercices d'application</li>
-                        <li>Créer des fiches de formules</li>
-                    </ul>
-                </div>
-                <div style="text-align: center; margin-top: 1.5rem;">
-                    <button id="chatBtn_${docId}" onclick="startChatWithDocument('${docId}')" 
-                            style="background: var(--gradient-primary); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: var(--border-radius); cursor: pointer; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 2px 10px rgba(255,107,53,0.3);"
-                            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 15px rgba(255,107,53,0.4)'"
-                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 10px rgba(255,107,53,0.3)'">
-                        💬 Discuter avec l'IA sur ce document
-                    </button>
-                </div>
-            `;
-            
-            resultsDiv.style.display = 'block';
-            updateDocumentsList();
-            updateStatistics();
-            
-            // ✅ TEST IMMÉDIAT - Log pour débugger
-            console.log('✅ Bouton chat créé pour document:', docId);
-            console.log('✅ Fonction startChatWithDocument disponible:', typeof startChatWithDocument);
-            
-            setTimeout(() => {
-                closeAnalysisModal();
-            }, 5000);
-        }
-
-        function startChatWithDocument(docId) {
-            console.log('🎯 startChatWithDocument appelée avec docId:', docId);
-            
-            closeAnalysisModal();
-            
-            // Trouver le document
-            const doc = documentsData.find(d => d.id === docId);
-            console.log('📄 Document trouvé:', doc);
-            
-            if (!doc) {
-                console.error('❌ Document non trouvé pour ID:', docId);
-                showNotification('❌ Document non trouvé', 'error');
-                return;
-            }
-            
-            currentChatDocument = doc;
-            chatMessages = []; // Reset messages
-            
-            console.log('💬 Ouverture du modal chat pour:', doc.name);
-            
-            // Ouvrir le modal de chat
-            openChatDocumentModal(doc);
-            
-            showNotification(`💬 Chat ouvert pour "${doc.name}"`, 'success');
-        }
-
-        // =================== GESTION MODAL CHAT DOCUMENT ===================
-        function openChatDocumentModal(doc) {
-            console.log('🪟 Ouverture modal chat pour document:', doc.name);
-            
-            const modal = document.getElementById('chatDocumentModal');
-            const docNameEl = document.getElementById('chatDocumentName');
-            const welcomeText = document.getElementById('welcomeMessageText');
-            
-            if (!modal) {
-                console.error('❌ Modal chatDocumentModal non trouvé !');
-                showNotification('❌ Erreur interface chat', 'error');
-                return;
-            }
-            
-            // Mettre à jour les infos du document
-            if (docNameEl) {
-                docNameEl.textContent = `Document: ${doc.name}`;
-            }
-            
-            // Message de bienvenue personnalisé
-            const welcomeMessages = {
-                pdf: `📄 J'ai analysé ton PDF "${doc.name}". Je peux t'expliquer son contenu, corriger tes exercices ou répondre à tes questions !`,
-                image: `🖼️ J'ai scanné ton image "${doc.name}" avec OCR. Dis-moi sur quoi tu veux que je t'aide !`,
-                word: `📝 J'ai lu ton document Word "${doc.name}". Je peux t'aider à l'améliorer ou répondre à tes questions !`
-            };
-            
-            if (welcomeText) {
-                welcomeText.innerHTML = welcomeMessages[doc.type] || 
-                    `📄 J'ai analysé ton document "${doc.name}". Comment puis-je t'aider ?`;
-            }
-            
-            // Reset input
-            const inputEl = document.getElementById('chatDocumentInput');
-            const sendBtnEl = document.getElementById('chatDocumentSendBtn');
-            
-            if (inputEl) {
-                inputEl.value = '';
-                inputEl.style.height = '50px';
-            }
-            if (sendBtnEl) {
-                sendBtnEl.disabled = true;
-            }
-            
-            // Reset mode selection
-            document.querySelectorAll('#chatDocumentModal .mode-btn').forEach(btn => {
-                btn.style.background = 'var(--etudia-gray)';
-                btn.classList.remove('active');
-            });
-            
-            const normalBtn = document.querySelector('#chatDocumentModal .mode-btn[data-mode="normal"]');
-            if (normalBtn) {
-                normalBtn.style.background = 'var(--etudia-info)';
-                normalBtn.classList.add('active');
-            }
-            
-            currentChatMode = 'normal';
-            const modeEl = document.getElementById('currentChatMode');
-            if (modeEl) {
-                modeEl.textContent = 'Normal (250 tokens)';
-            }
-            
-            // Clear previous messages (keep only welcome)
-            const messagesContainer = document.getElementById('chatMessagesContainer');
-            if (messagesContainer) {
-                // Keep only the first welcome message, remove others
-                const welcomeMsg = messagesContainer.querySelector('.ai-message');
-                messagesContainer.innerHTML = '';
-                if (welcomeMsg) {
-                    messagesContainer.appendChild(welcomeMsg);
-                }
-            }
-            
-            // Afficher le modal
-            modal.classList.add('active');
-            console.log('✅ Modal chat affiché');
-            
-            // Focus sur l'input
-            setTimeout(() => {
-                if (inputEl) {
-                    inputEl.focus();
-                    console.log('✅ Focus mis sur input');
-                }
-            }, 300);
-        }
-
-        function closeChatDocumentModal() {
-            const modal = document.getElementById('chatDocumentModal');
-            modal.classList.remove('active');
-            currentChatDocument = null;
-        }
-
-        // =================== GESTION CHAT DANS MODAL ===================
-        function handleChatKeyPress(event) {
-            if (event.key === 'Enter' && !event.shiftKey) {
-                event.preventDefault();
-                sendChatMessage();
-            }
-        }
-
-        function handleChatInputChange() {
-            const input = document.getElementById('chatDocumentInput');
-            const sendBtn = document.getElementById('chatDocumentSendBtn');
-            
-            if (input && sendBtn) {
-                sendBtn.disabled = input.value.trim().length === 0;
-                
-                // Auto-resize
-                input.style.height = 'auto';
-                input.style.height = Math.min(input.scrollHeight, 120) + 'px';
-            }
-        }
-
-        function sendChatMessage() {
-            const input = document.getElementById('chatDocumentInput');
-            const message = input.value.trim();
-            
-            if (!message || !currentChatDocument) return;
-            
-            // Ajouter message utilisateur
-            addChatMessage(message, 'user');
-            
-            // Clear input
-            input.value = '';
-            document.getElementById('chatDocumentSendBtn').disabled = true;
-            input.style.height = '50px';
-            
-            // Simuler réponse IA
-            addTypingIndicator();
-            
-            setTimeout(() => {
-                removeTypingIndicator();
-                generateAIResponse(message);
-            }, 2000);
-        }
-
-        function addChatMessage(text, sender) {
-            const container = document.getElementById('chatMessagesContainer');
-            const messageDiv = document.createElement('div');
-            
-            if (sender === 'user') {
-                messageDiv.className = 'chat-message user-message';
-                messageDiv.style.cssText = `
-                    margin-bottom: 1rem;
-                    padding: 1rem;
-                    background: var(--gradient-primary);
-                    color: white;
-                    border-radius: var(--border-radius);
-                    margin-left: 20%;
-                    text-align: right;
-                `;
-                messageDiv.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; justify-content: flex-end;">
-                        <strong>Toi</strong>
-                        <div style="font-size: 1.5rem;">👨‍🎓</div>
-                    </div>
-                    <div>${text}</div>
-                `;
-            } else {
-                messageDiv.className = 'chat-message ai-message';
-                messageDiv.style.cssText = `
-                    margin-bottom: 1rem;
-                    padding: 1rem;
-                    background: var(--gradient-secondary);
-                    color: white;
-                    border-radius: var(--border-radius);
-                    margin-right: 20%;
-                `;
-                messageDiv.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                        <div style="font-size: 1.5rem;">🤖</div>
-                        <strong>ÉtudIA DeepSeek R1</strong>
-                    </div>
-                    <div>${text}</div>
-                `;
-            }
-            
-            container.appendChild(messageDiv);
-            container.scrollTop = container.scrollHeight;
-            
-            // Sauvegarder dans l'historique
-            chatMessages.push({ text, sender, timestamp: new Date() });
-        }
-
-        function addTypingIndicator() {
-            const container = document.getElementById('chatMessagesContainer');
-            const typingDiv = document.createElement('div');
-            typingDiv.id = 'typingIndicator';
-            typingDiv.style.cssText = `
-                margin-bottom: 1rem;
-                padding: 1rem;
-                background: rgba(16, 185, 129, 0.3);
-                color: white;
-                border-radius: var(--border-radius);
-                margin-right: 20%;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-            `;
-            typingDiv.innerHTML = `
-                <div style="font-size: 1.5rem;">🤖</div>
-                <div style="font-style: italic;">ÉtudIA réfléchit...</div>
-                <div class="typing-dots" style="margin-left: 0.5rem;">
-                    <div style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: white; margin: 0 2px; animation: pulse 1.5s infinite;"></div>
-                    <div style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: white; margin: 0 2px; animation: pulse 1.5s infinite 0.3s;"></div>
-                    <div style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: white; margin: 0 2px; animation: pulse 1.5s infinite 0.6s;"></div>
-                </div>
-            `;
-            
-            container.appendChild(typingDiv);
-            container.scrollTop = container.scrollHeight;
-        }
-
-        function removeTypingIndicator() {
-            const indicator = document.getElementById('typingIndicator');
-            if (indicator) {
-                indicator.remove();
-            }
-        }
-
-        function generateAIResponse(userMessage) {
-            if (!currentChatDocument) return;
-            
-            const doc = currentChatDocument;
-            const responses = {
-                normal: [
-                    `D'après le document "${doc.name}", voici ce que je peux t'expliquer...`,
-                    `En analysant ton ${doc.type === 'pdf' ? 'PDF' : 'document'}, je vois que tu as des questions sur...`,
-                    `Basé sur le contenu de "${doc.name}", laisse-moi t'aider étape par étape...`
-                ],
-                step: [
-                    `🔄 Étape par étape pour "${doc.name}" :\n\n1️⃣ D'abord, identifions le problème...\n2️⃣ Ensuite, appliquons la méthode...\n3️⃣ Vérifions le résultat...`,
-                    `📚 Décomposons ensemble cet exercice de "${doc.name}" :\n\n**Étape 1:** Lecture et compréhension\n**Étape 2:** Application de la formule\n**Étape 3:** Vérification`
-                ],
-                direct: [
-                    `⚡ Solution directe basée sur "${doc.name}" :\n\n**Réponse:** Voici la solution complète avec tous les calculs détaillés...`,
-                    `🎯 Réponse immédiate pour ton exercice de "${doc.name}" :\n\n**Résultat final:** [Solution détaillée]`
-                ],
-                audio: [
-                    `🎤 Je vais t'expliquer le contenu de "${doc.name}" de manière claire et simple, parfait pour l'écoute...`,
-                    `📢 Explication audio du document "${doc.name}" : je vais parler lentement et clairement...`
-                ]
-            };
-            
-            const modeResponses = responses[currentChatMode] || responses.normal;
-            const randomResponse = modeResponses[Math.floor(Math.random() * modeResponses.length)];
-            
-            // Ajouter des infos contextuelles
-            const contextualResponse = `${randomResponse}
-            
-📊 **Analyse du document :**
-- Type : ${doc.type.toUpperCase()}
-- Taille : ${doc.size}
-- Progression : ${doc.progress}% analysé
-- Mode actuel : ${currentChatMode}
-
-💡 **Suggestion :** ${getUserSuggestion(userMessage, doc)}
-
-Que veux-tu que j'approfondisse ?`;
-            
-            addChatMessage(contextualResponse, 'ai');
-        }
-
-        function getUserSuggestion(message, doc) {
-            const suggestions = [
-                "Je peux te créer un quiz basé sur ce document",
-                "Veux-tu que je résume les points clés ?",
-                "Je peux t'expliquer les concepts difficiles",
-                "Souhaites-tu des exercices supplémentaires ?",
-                "Je peux corriger tes réponses étape par étape"
-            ];
-            return suggestions[Math.floor(Math.random() * suggestions.length)];
-        }
-
-        // =================== GESTION MODES CHAT ===================
-        document.addEventListener('DOMContentLoaded', function() {
-            // Gestion des modes dans le modal de chat
-            document.addEventListener('click', function(e) {
-                if (e.target.classList.contains('mode-btn') && e.target.closest('#chatDocumentModal')) {
-                    // Reset tous les boutons du modal
-                    document.querySelectorAll('#chatDocumentModal .mode-btn').forEach(btn => {
-                        btn.style.background = 'var(--etudia-gray)';
-                        btn.classList.remove('active');
-                    });
-                    
-                    // Activer le bouton cliqué
-                    e.target.style.background = 'var(--etudia-info)';
-                    e.target.classList.add('active');
-                    
-                    currentChatMode = e.target.dataset.mode;
-                    
-                    const modeNames = {
-                        'normal': 'Normal (250 tokens)',
-                        'step': 'Étape par Étape (180 tokens)',
-                        'direct': 'Solution Directe (400 tokens)',
-                        'audio': 'Mode Audio (200 tokens)'
-                    };
-                    
-                    const modeEl = document.getElementById('currentChatMode');
-                    if (modeEl) {
-                        modeEl.textContent = modeNames[currentChatMode];
-                    }
-                    showNotification(`Mode ${modeNames[currentChatMode]} activé`, 'info');
-                }
-            });
-        });
-
-        // =================== ACTIONS RAPIDES ===================
-        function createStudyPlan() {
-            showNotification('📅 Création du plan d\'étude en cours...', 'info');
-            // Implémenter la logique de création de plan d'étude
-        }
-
-        function generateQuiz() {
-            showNotification('❓ Génération du quiz basé sur vos documents...', 'info');
-            // Implémenter la logique de génération de quiz
-        }
-
-        function createSummary() {
-            showNotification('📝 Création du résumé global...', 'info');
-            // Implémenter la logique de résumé
-        }
-
-        function exportDocuments() {
-            showNotification('📥 Export des analyses en cours...', 'info');
-            // Implémenter la logique d'export
-        }
-
-        function shareWithFriends() {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Mes documents ÉtudIA',
-                    text: 'Découvre mes analyses de documents avec ÉtudIA !',
-                    url: window.location.href
-                });
-            } else {
-                // Fallback pour navigateurs non compatibles
-                const url = window.location.href;
-                navigator.clipboard.writeText(url);
-                showNotification('🔗 Lien copié dans le presse-papier !', 'success');
-            }
-        }
-
-        function startScanning() {
-            showNotification('📷 Fonction scanner en développement...', 'info');
-            // Implémenter la logique de scan via caméra
-        }
-
-        function pasteFromClipboard() {
-            if (navigator.clipboard && navigator.clipboard.readText) {
-                navigator.clipboard.readText().then(text => {
-                    if (text.trim()) {
-                        // Créer un document texte temporaire
-                        const blob = new Blob([text], { type: 'text/plain' });
-                        const file = new File([blob], 'texte_colle.txt', { type: 'text/plain' });
+                Array.from(files).forEach(file => {
+                    if (validateFile(file)) {
                         uploadFile(file);
-                    } else {
-                        showNotification('📋 Aucun texte trouvé dans le presse-papier', 'warning');
                     }
-                }).catch(() => {
-                    showNotification('❌ Impossible d\'accéder au presse-papier', 'error');
                 });
-            } else {
-                showNotification('❌ Fonction non supportée par votre navigateur', 'error');
             }
-        }
 
-        // =================== MISE À JOUR INTERFACE ===================
-        function updateDocumentsList() {
-            const container = document.getElementById('documentsContainer');
-            if (!container) return;
-            
-            // Remettre à jour les métadonnées affichées
-            documentsData.forEach(doc => {
-                const item = container.querySelector(`[data-id="${doc.id}"]`);
-                if (item) {
-                    const metaDiv = item.querySelector('.document-meta');
-                    if (metaDiv) {
-                        const timeAgo = getTimeAgo(doc.uploadDate);
-                        metaDiv.innerHTML = `
-                            <span>📅 ${timeAgo}</span>
-                            <span>💬 ${doc.analyses} ${doc.analyses > 1 ? 'analyses' : 'analyse'}</span>
-                            <span>📊 ${doc.progress}% analysé</span>
-                        `;
-                    }
+            function validateFile(file) {
+                const maxSize = 25 * 1024 * 1024;
+                const allowedTypes = [
+                    'application/pdf',
+                    'application/msword',
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                    'image/jpeg',
+                    'image/png',
+                    'text/plain'
+                ];
+
+                if (file.size > maxSize) {
+                    showNotification('❌ Fichier trop volumineux (max 25MB)', 'error');
+                    return false;
                 }
-            });
-        }
 
-        function updateStatistics() {
-            const totalDocs = documentsData.length;
-            const today = new Date();
-            const docsToday = documentsData.filter(doc => {
-                const docDate = new Date(doc.uploadDate);
-                return docDate.toDateString() === today.toDateString();
-            }).length;
-            const totalAnalyses = documentsData.reduce((sum, doc) => sum + doc.analyses, 0);
-            
-            // Mise à jour des compteurs
-            const totalEl = document.getElementById('totalDocuments');
-            const todayEl = document.getElementById('documentsToday');
-            const analysesEl = document.getElementById('totalAnalyses');
-            
-            if (totalEl) totalEl.textContent = totalDocs;
-            if (todayEl) todayEl.textContent = docsToday;
-            if (analysesEl) analysesEl.textContent = totalAnalyses;
-        }
+                if (!allowedTypes.includes(file.type)) {
+                    showNotification('❌ Format non supporté', 'error');
+                    return false;
+                }
 
-        function getTimeAgo(date) {
-            const now = new Date();
-            const diffMs = now - date;
-            const diffMins = Math.floor(diffMs / (1000 * 60));
-            const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-            
-            if (diffMins < 60) {
-                return `Il y a ${diffMins} min`;
-            } else if (diffHours < 24) {
-                return `Il y a ${diffHours}h`;
-            } else if (diffDays === 1) {
-                return 'Hier';
-            } else if (diffDays < 7) {
-                return `Il y a ${diffDays} jours`;
-            } else {
+                return true;
+            }
+
+            function uploadFile(file) {
+                const docId = 'doc_' + Date.now();
+                const newDoc = {
+                    id: docId,
+                    name: file.name,
+                    type: getFileType(file.type),
+                    size: formatFileSize(file.size),
+                    uploadDate: new Date(),
+                    analyses: 0,
+                    progress: 0
+                };
+
+                documentsData.unshift(newDoc);
+                saveDocumentsData();
+                renderDocumentsList();
+                updateStatistics();
+
+                showNotification('✅ Document uploadé avec succès !', 'success');
+                simulateAnalysis(newDoc);
+            }
+
+            function getFileType(mimeType) {
+                if (mimeType.includes('pdf')) return 'pdf';
+                if (mimeType.includes('image')) return 'image';
+                if (mimeType.includes('word')) return 'word';
+                return 'other';
+            }
+
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 B';
+                const k = 1024;
+                const sizes = ['B', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+            }
+
+            function simulateAnalysis(doc) {
+                showNotification(`🧠 Analyse de "${doc.name}" en cours...`, 'info');
+                
+                // Simulation progressive
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 5;
+                    if (progress <= 100) {
+                        doc.progress = progress;
+                        renderDocumentsList();
+                    } else {
+                        clearInterval(interval);
+                        doc.analyses += 1;
+                        saveDocumentsData();
+                        renderDocumentsList();
+                        updateStatistics();
+                        showNotification(`✅ "${doc.name}" analysé avec succès !`, 'success');
+                    }
+                }, 100);
+            }
+
+            function viewDocument(docId) {
+                const doc = documentsData.find(d => d.id === docId);
+                if (doc) {
+                    showNotification(`👁️ Ouverture de ${doc.name}`, 'info');
+                }
+            }
+
+            function analyzeDocument(docId) {
+                const doc = documentsData.find(d => d.id === docId);
+                if (doc) {
+                    simulateAnalysis(doc);
+                }
+            }
+
+            function deleteDocument(docId) {
+                if (!confirm('❓ Êtes-vous sûr de vouloir supprimer ce document ?')) return;
+                
+                documentsData = documentsData.filter(d => d.id !== docId);
+                saveDocumentsData();
+                renderDocumentsList();
+                updateStatistics();
+                
+                showNotification('🗑️ Document supprimé', 'success');
+            }
+
+            function applyFilter(filter) {
+                const items = document.querySelectorAll('.document-item');
+                items.forEach(item => {
+                    const type = item.dataset.type;
+                    let show = false;
+                    
+                    switch(filter) {
+                        case 'all':
+                            show = true;
+                            break;
+                        case 'recent':
+                            const doc = documentsData.find(d => d.id === item.dataset.id);
+                            if (doc) {
+                                const daysDiff = (new Date() - new Date(doc.uploadDate)) / (1000 * 60 * 60 * 24);
+                                show = daysDiff <= 7;
+                            }
+                            break;
+                        default:
+                            show = type === filter;
+                    }
+                    
+                    item.style.display = show ? 'flex' : 'none';
+                });
+            }
+
+            // =================== UTILITAIRES ===================
+            function getTimeAgo(date) {
+                const now = new Date();
+                const diffMs = now - new Date(date);
+                const diffMins = Math.floor(diffMs / (1000 * 60));
+                const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+                const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+                
+                if (diffMins < 60) return `Il y a ${diffMins} min`;
+                if (diffHours < 24) return `Il y a ${diffHours}h`;
+                if (diffDays === 1) return 'Hier';
+                if (diffDays < 7) return `Il y a ${diffDays} jours`;
                 return `Il y a ${Math.floor(diffDays / 7)} semaine${Math.floor(diffDays / 7) > 1 ? 's' : ''}`;
             }
-        }
 
-        // =================== NOTIFICATIONS ===================
-        function showNotification(message, type = 'info') {
-            // Créer le toast de notification
-            const toast = document.createElement('div');
-            toast.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${type === 'success' ? 'var(--etudia-success)' : 
-                           type === 'error' ? 'var(--etudia-danger)' : 
-                           type === 'warning' ? 'var(--etudia-warning)' : 'var(--etudia-info)'};
-                color: white;
-                padding: 1rem 1.5rem;
-                border-radius: var(--border-radius);
-                box-shadow: var(--shadow-lg);
-                z-index: 10000;
-                font-weight: 600;
-                transform: translateX(100%);
-                transition: var(--transition);
-                max-width: 300px;
-            `;
-            toast.textContent = message;
-            
-            document.body.appendChild(toast);
-            
-            // Animation d'entrée
-            setTimeout(() => {
-                toast.style.transform = 'translateX(0)';
-            }, 100);
-            
-            // Suppression automatique
-            setTimeout(() => {
-                toast.style.transform = 'translateX(100%)';
-                setTimeout(() => {
-                    if (document.body.contains(toast)) {
-                        document.body.removeChild(toast);
-                    }
-                }, 300);
-            }, 4000);
-        }
-
-        // Sauvegarde automatique toutes les 30 secondes
-        setInterval(() => {
-            try {
-                localStorage.setItem('etudia_documents', JSON.stringify(documentsData));
-            } catch (error) {
-                console.warn('⚠️ Impossible de sauvegarder les documents localement:', error);
+            function showNotification(message, type = 'info') {
+                // Implémentation simplifiée des notifications
+                console.log(`${type.toUpperCase()}: ${message}`);
             }
-        }, 30000);
 
-        // =================== EXPOSER FONCTIONS GLOBALES ===================
-        window.EtudiaDocuments = {
-            uploadFile: uploadFile,
-            analyzeDocument: analyzeDocument,
-            deleteDocument: deleteDocument,
-            filterDocuments: filterDocuments,
-            getDocumentsData: () => [...documentsData],
-            startChatWithDocument: startChatWithDocument
-        };
+            // =================== ACTIONS RAPIDES ===================
+            function createStudyPlan() {
+                showNotification('📅 Création du plan d\'étude en cours...', 'info');
+            }
 
-        console.log('✅ Section Documents ÉtudIA initialisée avec succès !');
+            function generateQuiz() {
+                showNotification('❓ Génération du quiz basé sur vos documents...', 'info');
+            }
+
+            function createSummary() {
+                showNotification('📝 Création du résumé global...', 'info');
+            }
+
+            function exportDocuments() {
+                showNotification('📥 Export des analyses en cours...', 'info');
+            }
+
+            function startScanning() {
+                showNotification('📷 Fonction scanner en développement...', 'info');
+            }
+
+            function pasteFromClipboard() {
+                showNotification('📋 Fonction collage en développement...', 'info');
+            }
+
+            // =================== EXPOSER FONCTIONS GLOBALES ===================
+            window.EtudiaDocuments = {
+                init: initDocumentsSection,
+                uploadFile: uploadFile,
+                analyzeDocument: analyzeDocument,
+                deleteDocument: deleteDocument
+            };
+
+            // Initialisation automatique
+            document.addEventListener('DOMContentLoaded', function() {
+                if (document.getElementById('documents')) {
+                    initDocumentsSection();
+                }
+            });
+
+        })();
     </script>
 
 </section>
-
-<!-- ============================================== -->
-<!-- 🪟 MODALS - PLACÉS APRÈS LA SECTION          -->
-<!-- ============================================== -->
-
-<!-- Modal d'Analyse -->
-<div class="modal-overlay" id="analysisModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3 class="modal-title">🧠 Analyse IA en cours...</h3>
-            <button class="modal-close" onclick="closeAnalysisModal()">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div class="progress-container">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="analysisProgress"></div>
-                </div>
-                <div class="progress-text" id="analysisText">
-                    Initialisation de l'analyse...
-                </div>
-            </div>
-            <div id="analysisResults" style="display: none;">
-                <h4>📊 Résultats de l'Analyse</h4>
-                <div id="analysisContent"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Chat Document -->
-<div class="modal-overlay" id="chatDocumentModal">
-    <div class="modal-content" style="max-width: 800px; height: 80vh;">
-        <div class="modal-header">
-            <div>
-                <h3 class="modal-title">💬 Chat avec Document</h3>
-                <p style="margin: 0.5rem 0 0 0; color: var(--etudia-gray); font-size: 0.9rem;" id="chatDocumentName">
-                    Document: Chargement...
-                </p>
-            </div>
-            <button class="modal-close" onclick="closeChatDocumentModal()">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-body" style="display: flex; flex-direction: column; height: calc(80vh - 120px); padding: 0;">
-            <!-- Zone Messages Chat -->
-            <div class="chat-messages-container" id="chatMessagesContainer" style="
-                flex: 1;
-                overflow-y: auto;
-                padding: 1rem;
-                background: var(--etudia-light);
-                border-radius: var(--border-radius);
-                margin: 1rem;
-                margin-bottom: 0;
-            ">
-                <div class="chat-message ai-message" style="
-                    margin-bottom: 1rem;
-                    padding: 1rem;
-                    background: var(--gradient-secondary);
-                    color: white;
-                    border-radius: var(--border-radius);
-                ">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                        <div style="font-size: 1.5rem;">🤖</div>
-                        <strong>ÉtudIA DeepSeek R1</strong>
-                    </div>
-                    <div id="welcomeMessageText">
-                        👋 Salut ! J'ai analysé ton document et je suis prêt à t'aider ! 
-                        Pose-moi toutes tes questions sur son contenu.
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Mode Selection -->
-            <div style="padding: 0 1rem;">
-                <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
-                    <button class="mode-btn active" data-mode="normal" style="
-                        padding: 0.5rem 1rem;
-                        border: none;
-                        border-radius: var(--border-radius);
-                        background: var(--etudia-info);
-                        color: white;
-                        cursor: pointer;
-                        transition: var(--transition);
-                        font-size: 0.85rem;
-                    ">
-                        💬 Normal
-                    </button>
-                    <button class="mode-btn" data-mode="step" style="
-                        padding: 0.5rem 1rem;
-                        border: none;
-                        border-radius: var(--border-radius);
-                        background: var(--etudia-gray);
-                        color: white;
-                        cursor: pointer;
-                        transition: var(--transition);
-                        font-size: 0.85rem;
-                    ">
-                        🔄 Étape par Étape
-                    </button>
-                    <button class="mode-btn" data-mode="direct" style="
-                        padding: 0.5rem 1rem;
-                        border: none;
-                        border-radius: var(--border-radius);
-                        background: var(--etudia-gray);
-                        color: white;
-                        cursor: pointer;
-                        transition: var(--transition);
-                        font-size: 0.85rem;
-                    ">
-                        ⚡ Solution Directe
-                    </button>
-                    <button class="mode-btn" data-mode="audio" style="
-                        padding: 0.5rem 1rem;
-                        border: none;
-                        border-radius: var(--border-radius);
-                        background: var(--etudia-gray);
-                        color: white;
-                        cursor: pointer;
-                        transition: var(--transition);
-                        font-size: 0.85rem;
-                    ">
-                        🎤 Audio
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Zone Input Chat -->
-            <div style="padding: 1rem; background: var(--etudia-white);">
-                <div style="display: flex; gap: 1rem; align-items: end;">
-                    <textarea 
-                        id="chatDocumentInput" 
-                        placeholder="Pose ta question sur ce document..."
-                        style="
-                            flex: 1;
-                            min-height: 50px;
-                            max-height: 120px;
-                            padding: 1rem;
-                            border: 2px solid var(--etudia-border);
-                            border-radius: var(--border-radius);
-                            resize: none;
-                            font-family: inherit;
-                        "
-                        onkeydown="handleChatKeyPress(event)"
-                        oninput="handleChatInputChange()"
-                    ></textarea>
-                    <button 
-                        id="chatDocumentSendBtn" 
-                        onclick="sendChatMessage()" 
-                        disabled
-                        style="
-                            padding: 1rem;
-                            background: var(--gradient-primary);
-                            color: white;
-                            border: none;
-                            border-radius: var(--border-radius);
-                            cursor: pointer;
-                            transition: var(--transition);
-                            min-width: 50px;
-                        "
-                    >
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; font-size: 0.8rem; color: var(--etudia-gray);">
-                    <span>Mode: <strong id="currentChatMode">Normal (250 tokens)</strong></span>
-                    <span>Tokens restants: <strong>1,247</strong></span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ============================================== -->
-<!-- FIN SECTION MES DOCUMENTS V4.1 - ETUDIA      -->
-<!-- Code complet et fonctionnel                   -->
-<!-- ============================================== -->
 
     
             <!-- Parrainage Section - SYSTÈME V4.1 COMPLET -->
