@@ -1595,7 +1595,7 @@
             
             <!-- Interface IA Section - AMÉLIORÉE AVEC CODE COMPLET -->
     <!-- Section Interface IA Complète -->
-            
+ <div id="ia-chat" class="content-section">           
 <section class="etudia-chat-ia-complete">
     <div class="chat-container">
         
@@ -3352,6 +3352,7 @@ document.addEventListener('keydown', function(e) {
 
 console.log('🔥 Interface IA ÉtudIA V4.1 prête !');
 </script>
+</div>
             
             <!-- Documents Section - TAILLE RÉDUITE -->
             <section id="documents" class="content-section">
@@ -3686,6 +3687,28 @@ console.log('🔥 Interface IA ÉtudIA V4.1 prête !');
     </button>
     
     <script>
+// 🚀 Gestionnaire de navigation
+function showSection(sectionId) {
+    // Masquer toutes les sections
+    document.querySelectorAll('.content-section').forEach(section => {
+        section.style.display = 'none';
+    });
+    
+    // Afficher la section demandée
+    document.getElementById(sectionId).style.display = 'block';
+    
+    // Mettre à jour le menu actif
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+    });
+    document.querySelector(`.nav-link[onclick="showSection('${sectionId}')`).classList.add('active');
+}
+
+// Initialisation au chargement
+document.addEventListener('DOMContentLoaded', function() {
+    showSection('dashboard'); // Afficher le dashboard par défaut
+});
+        
         // Variables globales
         let currentMode = 'normal';
         let currentSection = 'dashboard';
