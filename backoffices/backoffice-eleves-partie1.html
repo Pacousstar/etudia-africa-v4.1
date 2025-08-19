@@ -2606,80 +2606,1237 @@
                 </div>
 
                 <!-- Panneau Documents -->
-                <div class="documents-panel" id="documentsPanel">
-                    <div class="documents-header">
-                        <h4>📁 Mes Documents</h4>
-                        <button class="close-panel" onclick="toggleDocumentsPanel()">✕</button>
-                    </div>
-                    <div class="upload-zone-panel" id="uploadZonePanel" onclick="document.getElementById('fileInputPanel').click()">
-                        <div class="upload-content">
-                            <div class="upload-icon">📄</div>
-                            <div class="upload-text">Glisse tes documents ici ou <span class="upload-link">clique pour parcourir</span></div>
-                            <div class="upload-formats">PDF, JPG, PNG, DOC (max 10MB)</div>
+<!-- ============================================== -->
+<!-- 📄 SECTION MES DOCUMENTS V4.1 - ETUDIA        -->
+<!-- Code COMPLET et ISOLÉ - Uniquement cette section -->
+<!-- ============================================== -->
+
+<section id="documents" class="content-section" style="display: none;">
+    <!-- STYLES ISOLÉS - Uniquement pour cette section -->
+    <style>
+        /* 🔒 STYLES UNIQUEMENT POUR LA SECTION DOCUMENTS */
+        #documents {
+            --etudia-primary: #FF6B35;
+            --etudia-secondary: #10B981;
+            --etudia-accent: #3B82F6;
+            --etudia-warning: #F59E0B;
+            --etudia-danger: #EF4444;
+            --etudia-dark: #1F2937;
+            --etudia-light: #F8FAFC;
+            --etudia-white: #FFFFFF;
+            --etudia-gray: #6B7280;
+            --etudia-border: #E5E7EB;
+            
+            --gradient-primary: linear-gradient(135deg, #FF6B35 0%, #F59E0B 100%);
+            --gradient-secondary: linear-gradient(135deg, #10B981 0%, #3B82F6 100%);
+            --gradient-dark: linear-gradient(135deg, #1F2937 0%, #374151 100%);
+            --gradient-danger: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+            
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.2);
+            --shadow-primary: 0 4px 20px rgba(255, 107, 53, 0.3);
+            --shadow-secondary: 0 4px 20px rgba(16, 185, 129, 0.3);
+            
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* 🎨 STYLES SPÉCIFIQUES - Isolation totale */
+        #documents .documents-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--gradient-primary);
+            border-radius: var(--border-radius-lg);
+            color: var(--etudia-white);
+            box-shadow: var(--shadow-primary);
+        }
+
+        #documents .documents-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        #documents .documents-stats {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        #documents .stat-item {
+            text-align: center;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(10px);
+        }
+
+        #documents .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        #documents .stat-label {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        /* Layout Principal */
+        #documents .documents-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        #documents .documents-main {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        #documents .documents-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Zone Upload */
+        #documents .upload-section {
+            background: var(--gradient-secondary);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            text-align: center;
+            color: var(--etudia-white);
+            box-shadow: var(--shadow-secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #documents .upload-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        #documents .upload-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        #documents .upload-zone {
+            border: 2px dashed rgba(255, 255, 255, 0.5);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        #documents .upload-zone:hover {
+            border-color: var(--etudia-white);
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        #documents .upload-zone.dragover {
+            border-color: var(--etudia-warning);
+            background: rgba(245, 158, 11, 0.2);
+            transform: scale(1.02);
+        }
+
+        #documents .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        #documents .upload-text {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        #documents .upload-formats {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        #documents .upload-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        #documents .upload-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #documents .upload-btn.primary {
+            background: var(--etudia-white);
+            color: var(--etudia-secondary);
+        }
+
+        #documents .upload-btn.secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--etudia-white);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        #documents .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Liste Documents */
+        #documents .documents-list {
+            background: var(--etudia-white);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+
+        #documents .documents-list-header {
+            background: var(--gradient-dark);
+            color: var(--etudia-white);
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #documents .documents-list-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #documents .documents-filter {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        #documents .filter-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: var(--border-radius);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--etudia-white);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.875rem;
+        }
+
+        #documents .filter-btn:hover,
+        #documents .filter-btn.active {
+            background: var(--etudia-primary);
+        }
+
+        #documents .documents-container {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        #documents .document-item {
+            display: flex;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--etudia-border);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        #documents .document-item:hover {
+            background: var(--etudia-light);
+        }
+
+        #documents .document-item:last-child {
+            border-bottom: none;
+        }
+
+        #documents .document-item.selected {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--etudia-secondary);
+        }
+
+        #documents .document-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: var(--etudia-white);
+        }
+
+        #documents .document-icon.pdf {
+            background: var(--gradient-danger);
+        }
+
+        #documents .document-icon.image {
+            background: var(--gradient-secondary);
+        }
+
+        #documents .document-icon.word {
+            background: var(--gradient-primary);
+        }
+
+        #documents .document-info {
+            flex: 1;
+        }
+
+        #documents .document-name {
+            font-weight: 600;
+            color: var(--etudia-dark);
+            margin-bottom: 0.25rem;
+            font-size: 1rem;
+        }
+
+        #documents .document-meta {
+            color: var(--etudia-gray);
+            font-size: 0.875rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        #documents .document-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        #documents .document-action {
+            padding: 0.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        #documents .document-action.view {
+            background: var(--etudia-accent);
+            color: var(--etudia-white);
+        }
+
+        #documents .document-action.analyze {
+            background: var(--etudia-secondary);
+            color: var(--etudia-white);
+        }
+
+        #documents .document-action.delete {
+            background: var(--etudia-danger);
+            color: var(--etudia-white);
+        }
+
+        #documents .document-action:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Panneau Statistiques */
+        #documents .stats-panel {
+            background: var(--etudia-white);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 1.5rem;
+        }
+
+        #documents .stats-panel-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--etudia-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #documents .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        #documents .stats-card {
+            text-align: center;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            background: var(--etudia-light);
+        }
+
+        #documents .stats-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--etudia-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        #documents .stats-label {
+            font-size: 0.75rem;
+            color: var(--etudia-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        #documents .usage-chart {
+            height: 120px;
+            background: var(--etudia-light);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: end;
+            justify-content: space-around;
+            padding: 1rem;
+            gap: 0.5rem;
+        }
+
+        #documents .chart-bar {
+            flex: 1;
+            background: var(--gradient-primary);
+            border-radius: 4px 4px 0 0;
+            min-height: 10px;
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        #documents .chart-bar:hover {
+            transform: scaleY(1.1);
+        }
+
+        #documents .chart-bar::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            color: var(--etudia-gray);
+            white-space: nowrap;
+        }
+
+        /* Actions Rapides */
+        #documents .quick-actions {
+            background: var(--etudia-white);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 1.5rem;
+        }
+
+        #documents .quick-actions-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--etudia-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #documents .action-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        #documents .action-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            background: var(--etudia-light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        #documents .action-item:hover {
+            background: var(--etudia-primary);
+            color: var(--etudia-white);
+            transform: translateX(4px);
+        }
+
+        #documents .action-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--border-radius);
+            background: var(--gradient-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.25rem;
+            color: var(--etudia-white);
+        }
+
+        #documents .action-content {
+            flex: 1;
+        }
+
+        #documents .action-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        #documents .action-desc {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        /* Modals */
+        #documents .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        #documents .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #documents .modal-content {
+            background: var(--etudia-white);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+
+        #documents .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        #documents .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--etudia-border);
+        }
+
+        #documents .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--etudia-dark);
+            margin: 0;
+        }
+
+        #documents .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--etudia-gray);
+            padding: 0.5rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        #documents .modal-close:hover {
+            background: var(--etudia-light);
+            color: var(--etudia-danger);
+        }
+
+        #documents .progress-container {
+            margin: 1.5rem 0;
+        }
+
+        #documents .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--etudia-light);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        #documents .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        #documents .progress-text {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--etudia-gray);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            #documents .documents-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            #documents .documents-sidebar {
+                order: -1;
+            }
+            
+            #documents .documents-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #documents .documents-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            #documents .documents-title {
+                font-size: 1.5rem;
+            }
+            
+            #documents .upload-section {
+                padding: 1.5rem;
+            }
+            
+            #documents .upload-buttons {
+                flex-direction: column;
+            }
+            
+            #documents .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            #documents .document-item {
+                flex-direction: column;
+                align-items: start;
+                gap: 1rem;
+            }
+            
+            #documents .document-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        #documents .animate-slide-in {
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        #documents .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        #documents .animate-bounce {
+            animation: bounce 2s infinite;
+        }
+
+        /* États */
+        #documents .loading-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            color: var(--etudia-gray);
+        }
+
+        #documents .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--etudia-light);
+            border-top: 4px solid var(--etudia-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #documents .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--etudia-gray);
+        }
+
+        #documents .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
+
+    <!-- =================== HTML DE LA SECTION =================== -->
+    <!-- Header Section -->
+    <div class="documents-header animate-slide-in">
+        <div>
+            <h2 class="documents-title">📄 Mes Documents</h2>
+            <p style="margin: 0.5rem 0 0 0; opacity: 0.9; font-size: 0.95rem;">
+                Gérez et analysez vos documents d'étude avec l'IA ÉtudIA
+            </p>
+        </div>
+        <div class="documents-stats">
+            <div class="stat-item">
+                <div class="stat-value" id="totalDocuments">0</div>
+                <div class="stat-label">Documents</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="documentsToday">0</div>
+                <div class="stat-label">Aujourd'hui</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="totalAnalyses">0</div>
+                <div class="stat-label">Analyses IA</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Layout Principal -->
+    <div class="documents-layout">
+        <!-- Zone Principale -->
+        <div class="documents-main">
+            <!-- Zone Upload -->
+            <div class="upload-section animate-slide-in">
+                <div class="upload-content">
+                    <h3 style="margin: 0 0 1rem 0; font-size: 1.25rem; font-weight: 600;">
+                        📤 Zone d'Upload Intelligente
+                    </h3>
+                    <div class="upload-zone" id="uploadZone">
+                        <div class="upload-icon animate-bounce">📁</div>
+                        <div class="upload-text">Glissez vos documents ici ou cliquez pour sélectionner</div>
+                        <div class="upload-formats">
+                            PDF, DOC, DOCX, JPG, PNG, TXT • Max 25MB • OCR automatique
                         </div>
-                        <input type="file" id="fileInputPanel" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" multiple hidden>
+                        <input type="file" id="fileInput" style="display: none;" 
+                               accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt" multiple>
                     </div>
-                    <div class="documents-list" id="documentsList">
-                        <div class="empty-documents">
-                            <div class="empty-icon">📄</div>
-                            <div class="empty-text">Aucun document encore</div>
-                            <div class="empty-sub">Upload ton premier fichier pour commencer !</div>
-                        </div>
+                    <div class="upload-buttons">
+                        <button class="upload-btn primary" id="selectFilesBtn">
+                            📁 Choisir Fichiers
+                        </button>
+                        <button class="upload-btn secondary" id="scanBtn">
+                            📷 Scanner
+                        </button>
+                        <button class="upload-btn secondary" id="pasteBtn">
+                            📋 Coller
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Zone de saisie -->
-            <div class="chat-input-zone">
-                <div class="input-header">
-                    <div class="active-document" id="activeDocument">
-                        <span class="doc-icon">📄</span>
-                        <span class="doc-name">Aucun document sélectionné</span>
-                        <button class="doc-clear" onclick="clearActiveDocument()" style="display: none;">✕</button>
-                    </div>
-                    <div class="input-stats">
-                        <span class="session-info">
-                            Session <span id="currentSessionNum">1</span> • 
-                            Mode: <strong id="currentMode">Normal</strong>
-                        </span>
+            <!-- Liste Documents -->
+            <div class="documents-list animate-slide-in">
+                <div class="documents-list-header">
+                    <h3 class="documents-list-title">📂 Mes Documents (<span id="documentsCount">0</span>)</h3>
+                    <div class="documents-filter">
+                        <button class="filter-btn active" data-filter="all">Tous</button>
+                        <button class="filter-btn" data-filter="pdf">PDF</button>
+                        <button class="filter-btn" data-filter="image">Images</button>
+                        <button class="filter-btn" data-filter="word">Word</button>
+                        <button class="filter-btn" data-filter="recent">Récents</button>
                     </div>
                 </div>
-                <div class="input-container">
-                    <button class="attach-btn" onclick="document.getElementById('fileInputPanel').click()">📎</button>
-                    <textarea id="messageInput" placeholder="Écris ton message ici..." rows="1" onkeydown="handleKeyDown(event)" oninput="handleInputChange()"></textarea>
-                    <button class="send-btn" id="sendBtn" disabled onclick="sendMessage()"><span class="send-icon">🚀</span></button>
-                </div>
-                <div class="input-info">
-                    <span class="char-count">0/2000</span>
-                    <span class="api-status">🟢 API OpenRouter Connectée</span>
+                <div class="documents-container" id="documentsContainer">
+                    <div class="empty-state">
+                        <div class="empty-icon">📄</div>
+                        <div class="empty-text">Aucun document uploadé</div>
+                        <div class="empty-sub">Commencez par uploader vos premiers fichiers !</div>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Stats temps réel -->
-            <div class="chat-stats">
-                <div class="stat-item">
-                    <span class="stat-icon">💬</span>
-                    <span class="stat-value" id="conversationsCount">15623</span>
-                    <span class="stat-label">Conversations totales</span>
+        <!-- Sidebar -->
+        <div class="documents-sidebar">
+            <!-- Panneau Statistiques -->
+            <div class="stats-panel animate-slide-in">
+                <h3 class="stats-panel-title">📊 Statistiques d'Usage</h3>
+                <div class="stats-grid">
+                    <div class="stats-card">
+                        <div class="stats-number" id="statsDaily">0</div>
+                        <div class="stats-label">Docs/Jour</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-number" id="statsRate">0%</div>
+                        <div class="stats-label">Taux Analyse</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-number" id="statsQuestions">0</div>
+                        <div class="stats-label">Questions IA</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-number" id="statsSatisfaction">0%</div>
+                        <div class="stats-label">Satisfaction</div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-icon">📄</span>
-                    <span class="stat-value" id="documentsCount">2156</span>
-                    <span class="stat-label">Documents analysés</span>
+                <div class="usage-chart" id="usageChart">
+                    <!-- Chart will be generated dynamically -->
                 </div>
-                <div class="stat-item">
-                    <span class="stat-icon">⚡</span>
-                    <span class="stat-value" id="responseTime">0</span>
-                    <span class="stat-label">Temps (s)</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-icon">🎯</span>
-                    <span class="stat-value" id="precisionOCR">94</span>
-                    <span class="stat-label">% Précision OCR</span>
+                <p style="text-align: center; font-size: 0.75rem; color: var(--etudia-gray); margin: 1rem 0 0 0;">
+                    Activité cette semaine
+                </p>
+            </div>
+
+            <!-- Actions Rapides -->
+            <div class="quick-actions animate-slide-in">
+                <h3 class="quick-actions-title">⚡ Actions Rapides</h3>
+                <div class="action-list">
+                    <div class="action-item" id="studyPlanBtn">
+                        <div class="action-icon">📅</div>
+                        <div class="action-content">
+                            <div class="action-title">Plan d'Étude</div>
+                            <div class="action-desc">Créer un planning personnalisé</div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-item" id="quizBtn">
+                        <div class="action-icon">❓</div>
+                        <div class="action-content">
+                            <div class="action-title">Quiz Auto</div>
+                            <div class="action-desc">Générer un quiz de révision</div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-item" id="summaryBtn">
+                        <div class="action-icon">📝</div>
+                        <div class="action-content">
+                            <div class="action-title">Résumé Global</div>
+                            <div class="action-desc">Résumer tous les documents</div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-item" id="exportBtn">
+                        <div class="action-icon">📥</div>
+                        <div class="action-content">
+                            <div class="action-title">Export PDF</div>
+                            <div class="action-desc">Télécharger les analyses</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- =================== JAVASCRIPT ISOLÉ =================== -->
+    <script>
+        (function() {
+            'use strict';
+
+            // 🔒 VARIABLES PRIVÉES - Pas de pollution globale
+            let documentsData = [];
+            let currentFilter = 'all';
+
+            // 🎯 INITIALISATION
+            function init() {
+                console.log('📄 Initialisation section Documents');
+                loadDocuments();
+                setupEventListeners();
+                updateUI();
+            }
+
+            // 💾 GESTION DONNÉES
+            function loadDocuments() {
+                const saved = localStorage.getItem('etudia_documents');
+                documentsData = saved ? JSON.parse(saved) : [];
+            }
+
+            function saveDocuments() {
+                localStorage.setItem('etudia_documents', JSON.stringify(documentsData));
+            }
+
+            // 🎨 MISE À JOUR INTERFACE
+            function updateUI() {
+                renderDocumentsList();
+                updateStatistics();
+                updateChart();
+            }
+
+            function renderDocumentsList() {
+                const container = document.getElementById('documentsContainer');
+                const countElement = document.getElementById('documentsCount');
+                
+                if (documentsData.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">📄</div>
+                            <div class="empty-text">Aucun document uploadé</div>
+                            <div class="empty-sub">Commencez par uploader vos premiers fichiers !</div>
+                        </div>
+                    `;
+                    countElement.textContent = '0';
+                    return;
+                }
+
+                const filteredDocs = filterDocuments(documentsData, currentFilter);
+                countElement.textContent = filteredDocs.length;
+
+                container.innerHTML = filteredDocs.map(doc => `
+                    <div class="document-item" data-type="${doc.type}" data-id="${doc.id}">
+                        <div class="document-icon ${doc.type}">
+                            ${getDocIcon(doc.type)}
+                        </div>
+                        <div class="document-info">
+                            <div class="document-name">${doc.name}</div>
+                            <div class="document-meta">
+                                <span>📅 ${formatTimeAgo(doc.uploadDate)}</span>
+                                <span>💬 ${doc.analyses} analyses</span>
+                                <span>📊 ${doc.progress}% analysé</span>
+                            </div>
+                        </div>
+                        <div class="document-actions">
+                            <button class="document-action view" onclick="documentsApp.viewDocument('${doc.id}')">
+                                👁️
+                            </button>
+                            <button class="document-action analyze" onclick="documentsApp.analyzeDocument('${doc.id}')">
+                                🧠
+                            </button>
+                            <button class="document-action delete" onclick="documentsApp.deleteDocument('${doc.id}')">
+                                🗑️
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            function updateStatistics() {
+                document.getElementById('totalDocuments').textContent = documentsData.length;
+                
+                const today = new Date().toDateString();
+                const todayCount = documentsData.filter(doc => 
+                    new Date(doc.uploadDate).toDateString() === today
+                ).length;
+                document.getElementById('documentsToday').textContent = todayCount;
+
+                const totalAnalyses = documentsData.reduce((sum, doc) => sum + doc.analyses, 0);
+                document.getElementById('totalAnalyses').textContent = totalAnalyses;
+            }
+
+            function updateChart() {
+                const chart = document.getElementById('usageChart');
+                // Simulation de données pour le chart
+                chart.innerHTML = `
+                    <div class="chart-bar" style="height: 60%;" data-value="6"></div>
+                    <div class="chart-bar" style="height: 80%;" data-value="8"></div>
+                    <div class="chart-bar" style="height: 45%;" data-value="4"></div>
+                    <div class="chart-bar" style="height: 90%;" data-value="9"></div>
+                    <div class="chart-bar" style="height: 70%;" data-value="7"></div>
+                    <div class="chart-bar" style="height: 100%;" data-value="12"></div>
+                    <div class="chart-bar" style="height: 30%;" data-value="3"></div>
+                `;
+            }
+
+            // 🎮 GESTION INTERACTION
+            function setupEventListeners() {
+                // Upload de fichiers
+                document.getElementById('selectFilesBtn').addEventListener('click', triggerFileInput);
+                document.getElementById('fileInput').addEventListener('change', handleFileUpload);
+                
+                // Drag and drop
+                const uploadZone = document.getElementById('uploadZone');
+                uploadZone.addEventListener('dragover', handleDragOver);
+                uploadZone.addEventListener('dragleave', handleDragLeave);
+                uploadZone.addEventListener('drop', handleFileDrop);
+                uploadZone.addEventListener('click', triggerFileInput);
+
+                // Filtres
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        currentFilter = this.dataset.filter;
+                        renderDocumentsList();
+                    });
+                });
+
+                // Actions rapides
+                document.getElementById('studyPlanBtn').addEventListener('click', createStudyPlan);
+                document.getElementById('quizBtn').addEventListener('click', generateQuiz);
+                document.getElementById('summaryBtn').addEventListener('click', createSummary);
+                document.getElementById('exportBtn').addEventListener('click', exportDocuments);
+                document.getElementById('scanBtn').addEventListener('click', startScanning);
+                document.getElementById('pasteBtn').addEventListener('click', pasteFromClipboard);
+            }
+
+            // 📁 GESTION FICHIERS
+            function triggerFileInput() {
+                document.getElementById('fileInput').click();
+            }
+
+            function handleFileUpload(event) {
+                const files = event.target.files;
+                processFiles(files);
+            }
+
+            function handleDragOver(event) {
+                event.preventDefault();
+                document.getElementById('uploadZone').classList.add('dragover');
+            }
+
+            function handleDragLeave(event) {
+                event.preventDefault();
+                document.getElementById('uploadZone').classList.remove('dragover');
+            }
+
+            function handleFileDrop(event) {
+                event.preventDefault();
+                document.getElementById('uploadZone').classList.remove('dragover');
+                const files = event.dataTransfer.files;
+                processFiles(files);
+            }
+
+            function processFiles(files) {
+                if (!files.length) return;
+
+                Array.from(files).forEach(file => {
+                    if (validateFile(file)) {
+                        uploadFile(file);
+                    }
+                });
+            }
+
+            function validateFile(file) {
+                const maxSize = 25 * 1024 * 1024;
+                const allowedTypes = [
+                    'application/pdf',
+                    'application/msword',
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                    'image/jpeg',
+                    'image/png',
+                    'text/plain'
+                ];
+
+                if (file.size > maxSize) {
+                    showNotification('❌ Fichier trop volumineux (max 25MB)', 'error');
+                    return false;
+                }
+
+                if (!allowedTypes.includes(file.type)) {
+                    showNotification('❌ Format non supporté', 'error');
+                    return false;
+                }
+
+                return true;
+            }
+
+            function uploadFile(file) {
+                const newDoc = {
+                    id: 'doc_' + Date.now(),
+                    name: file.name,
+                    type: getFileType(file.type),
+                    size: formatFileSize(file.size),
+                    uploadDate: new Date(),
+                    analyses: 0,
+                    progress: 0
+                };
+
+                documentsData.unshift(newDoc);
+                saveDocuments();
+                updateUI();
+                showNotification('✅ Document uploadé avec succès !', 'success');
+
+                // Simulation analyse
+                simulateAnalysis(newDoc);
+            }
+
+            function simulateAnalysis(doc) {
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 5;
+                    doc.progress = progress;
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        doc.analyses++;
+                        doc.progress = 100;
+                        saveDocuments();
+                        updateUI();
+                        showNotification(`✅ "${doc.name}" analysé avec succès !`, 'success');
+                    } else {
+                        updateUI();
+                    }
+                }, 100);
+            }
+
+            // 🛠️ FONCTIONS UTILITAIRES
+            function getFileType(mimeType) {
+                if (mimeType.includes('pdf')) return 'pdf';
+                if (mimeType.includes('image')) return 'image';
+                if (mimeType.includes('word')) return 'word';
+                return 'other';
+            }
+
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 B';
+                const k = 1024;
+                const sizes = ['B', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+            }
+
+            function formatTimeAgo(date) {
+                const now = new Date();
+                const diff = now - new Date(date);
+                const minutes = Math.floor(diff / 60000);
+                const hours = Math.floor(diff / 3600000);
+                const days = Math.floor(diff / 86400000);
+
+                if (minutes < 60) return `il y a ${minutes} min`;
+                if (hours < 24) return `il y a ${hours} h`;
+                if (days === 1) return 'hier';
+                if (days < 7) return `il y a ${days} j`;
+                return `il y a ${Math.floor(days / 7)} sem`;
+            }
+
+            function getDocIcon(type) {
+                const icons = {
+                    'pdf': '📄',
+                    'image': '🖼️',
+                    'word': '📝',
+                    'other': '📁'
+                };
+                return icons[type] || '📁';
+            }
+
+            function filterDocuments(docs, filter) {
+                switch (filter) {
+                    case 'pdf': return docs.filter(d => d.type === 'pdf');
+                    case 'image': return docs.filter(d => d.type === 'image');
+                    case 'word': return docs.filter(d => d.type === 'word');
+                    case 'recent':
+                        const weekAgo = new Date(Date.now() - 7 * 86400000);
+                        return docs.filter(d => new Date(d.uploadDate) > weekAgo);
+                    default: return docs;
+                }
+            }
+
+            function showNotification(message, type = 'info') {
+                // Implémentation basique - à remplacer par votre système de notifications
+                console.log(`${type.toUpperCase()}: ${message}`);
+            }
+
+            // 🎯 FONCTIONS D'ACTION
+            function createStudyPlan() {
+                showNotification('📅 Création du plan d\'étude...', 'info');
+            }
+
+            function generateQuiz() {
+                showNotification('❓ Génération du quiz...', 'info');
+            }
+
+            function createSummary() {
+                showNotification('📝 Création du résumé...', 'info');
+            }
+
+            function exportDocuments() {
+                showNotification('📥 Export des documents...', 'info');
+            }
+
+            function startScanning() {
+                showNotification('📷 Fonction scanner...', 'info');
+            }
+
+            function pasteFromClipboard() {
+                showNotification('📋 Collage depuis presse-papier...', 'info');
+            }
+
+            // 📋 API PUBLIQUE - Fonctions accessibles globalement
+            const documentsApp = {
+                init: init,
+                viewDocument: function(docId) {
+                    const doc = documentsData.find(d => d.id === docId);
+                    if (doc) showNotification(`👁️ Affichage de ${doc.name}`, 'info');
+                },
+                analyzeDocument: function(docId) {
+                    const doc = documentsData.find(d => d.id === docId);
+                    if (doc) simulateAnalysis(doc);
+                },
+                deleteDocument: function(docId) {
+                    if (!confirm('❓ Supprimer ce document ?')) return;
+                    documentsData = documentsData.filter(d => d.id !== docId);
+                    saveDocuments();
+                    updateUI();
+                    showNotification('🗑️ Document supprimé', 'success');
+                },
+                getDocuments: () => [...documentsData]
+            };
+
+            // 🌍 EXPOSITION LIMITÉE
+            window.EtudiaDocuments = documentsApp;
+
+            // 🚀 INITIALISATION AUTOMATIQUE
+            if (document.getElementById('documents')) {
+                init();
+            }
+
+        })();
+    </script>
+
+</section>
+                
 
     <!-- 🚀 JavaScript intégré -->
     <script>
