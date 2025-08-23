@@ -4500,65 +4500,1081 @@ Je peux t'expliquer les concepts, corriger tes exercices, ou créer un quiz pers
     </script>
 </section>
             
-            <!-- Parrainage Section - SYSTÈME V4.1 COMPLET -->
-            <section id="parrainage" class="content-section">
-                <h2 class="section-title">💰 Système de Parrainage V4.1</h2>
-                <div class="parrainage-section">
-                    <div class="parrainage-header">
-                        <h3 class="parrainage-title">🚀 Gagne avec tes Parrainages</h3>
-                        <p class="parrainage-subtitle">Système multiniveau : 5% → 3% → 1% + Auto-réabonnement intelligent</p>
+<!-- ============================================== -->
+<!-- 💰 SECTION PARRAINAGE V4.1 - RÉVOLUTIONNAIRE -->
+<!-- Système multiniveau avec gamification intégrée -->
+<!-- ============================================== -->
+
+<!-- Section Parrainage -->
+<section id="parrainage" class="content-section">
+    <h2 class="section-title">💰 Système de Parrainage</h2>
+    
+    <!-- Styles CSS pour cette section uniquement -->
+    <style>
+        /* Variables couleurs parrainage */
+        #parrainage {
+            --parrainage-primary: #FF6B35;
+            --parrainage-secondary: #10B981;
+            --parrainage-gold: #F59E0B;
+            --parrainage-success: #059669;
+            --parrainage-info: #3B82F6;
+            --parrainage-dark: #1F2937;
+            --parrainage-light: #F8FAFC;
+            --parrainage-white: #FFFFFF;
+            --parrainage-gray: #6B7280;
+            --gradient-money: linear-gradient(135deg, #F59E0B 0%, #FF6B35 100%);
+            --gradient-success: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            --gradient-premium: linear-gradient(135deg, #FF6B35 0%, #EF4444 100%);
+            --shadow-glow: 0 0 20px rgba(255, 107, 53, 0.3);
+        }
+
+        /* Header section parrainage */
+        #parrainage .parrainage-hero {
+            background: var(--gradient-money);
+            color: white;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #parrainage .parrainage-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.3;
+        }
+
+        #parrainage .parrainage-hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        #parrainage .parrainage-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        #parrainage .parrainage-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        #parrainage .parrainage-cta {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        #parrainage .parrainage-cta:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Statistiques */
+        #parrainage .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        #parrainage .stat-card {
+            background: var(--parrainage-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        #parrainage .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        #parrainage .stat-value {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--parrainage-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        #parrainage .stat-value span:first-child {
+            font-size: 2rem;
+        }
+
+        #parrainage .stat-label {
+            font-size: 0.9rem;
+            color: var(--parrainage-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        #parrainage .stat-trend {
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        #parrainage .stat-trend.up {
+            color: var(--parrainage-success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        #parrainage .stat-trend.down {
+            color: #EF4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Layout principal */
+        #parrainage .parrainage-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            #parrainage .parrainage-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Section lien de parrainage */
+        #parrainage .referral-section {
+            background: var(--parrainage-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        #parrainage .referral-title {
+            color: var(--parrainage-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #parrainage .referral-link-container {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--parrainage-light);
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid #E5E7EB;
+        }
+
+        #parrainage .referral-link {
+            flex: 1;
+            padding: 0.8rem;
+            background: white;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--parrainage-dark);
+            border: 1px solid #D1D5DB;
+        }
+
+        #parrainage .copy-btn {
+            background: var(--gradient-money);
+            color: white;
+            border: none;
+            padding: 0.8rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        #parrainage .copy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-glow);
+        }
+
+        #parrainage .share-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        #parrainage .share-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        #parrainage .share-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        #parrainage .share-btn.whatsapp { background: #25D366; }
+        #parrainage .share-btn.facebook { background: #1877F2; }
+        #parrainage .share-btn.twitter { background: #1DA1F2; }
+        #parrainage .share-btn.instagram { background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF); }
+
+        /* Programme de niveaux */
+        #parrainage .levels-program {
+            background: var(--parrainage-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        #parrainage .levels-title {
+            color: var(--parrainage-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #parrainage .level-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        #parrainage .level-item:hover {
+            background: var(--parrainage-light);
+            transform: translateX(4px);
+        }
+
+        #parrainage .level-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        #parrainage .level-badge.level-1 { background: var(--gradient-success); }
+        #parrainage .level-badge.level-2 { background: var(--gradient-money); }
+        #parrainage .level-badge.level-3 { background: var(--gradient-premium); }
+
+        #parrainage .level-details h4 {
+            margin: 0 0 0.2rem 0;
+            color: var(--parrainage-dark);
+        }
+
+        #parrainage .level-details p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--parrainage-gray);
+        }
+
+        #parrainage .level-reward {
+            margin-left: auto;
+            font-weight: 700;
+            color: var(--parrainage-success);
+            font-size: 1.1rem;
+        }
+
+        /* Sidebar informations */
+        #parrainage .parrainage-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        #parrainage .info-card {
+            background: var(--parrainage-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        #parrainage .info-card h3 {
+            color: var(--parrainage-dark);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #parrainage .progress-bar {
+            background: #E5E7EB;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        #parrainage .progress-fill {
+            background: var(--gradient-success);
+            height: 100%;
+            transition: width 1s ease;
+        }
+
+        #parrainage .milestone-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            background: var(--parrainage-light);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+        }
+
+        #parrainage .milestone-target {
+            font-weight: 600;
+            color: var(--parrainage-dark);
+        }
+
+        #parrainage .milestone-reward {
+            font-size: 0.9rem;
+            color: var(--parrainage-success);
+        }
+
+        #parrainage .withdraw-btn {
+            width: 100%;
+            background: var(--gradient-success);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #parrainage .withdraw-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px -5px rgba(16, 185, 129, 0.3);
+        }
+
+        #parrainage .withdraw-btn:disabled {
+            background: #D1D5DB;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Historique des gains */
+        #parrainage .earnings-history {
+            background: var(--parrainage-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        #parrainage .earnings-title {
+            color: var(--parrainage-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #parrainage .earnings-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        #parrainage .earning-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid #F3F4F6;
+        }
+
+        #parrainage .earning-item:hover {
+            background: var(--parrainage-light);
+            transform: translateX(4px);
+        }
+
+        #parrainage .earning-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        #parrainage .earning-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-money);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        #parrainage .earning-details h5 {
+            margin: 0 0 0.2rem 0;
+            color: var(--parrainage-dark);
+        }
+
+        #parrainage .earning-details p {
+            margin: 0;
+            font-size: 0.8rem;
+            color: var(--parrainage-gray);
+        }
+
+        #parrainage .earning-amount {
+            font-weight: 700;
+            color: var(--parrainage-success);
+            font-size: 1.1rem;
+        }
+
+        /* Animations */
+        #parrainage .animate-slide-in {
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        #parrainage .animate-fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Notifications */
+        #parrainage .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        #parrainage .notification.show {
+            transform: translateX(0);
+        }
+
+        #parrainage .notification.success { background: var(--parrainage-success); }
+        #parrainage .notification.error { background: #EF4444; }
+        #parrainage .notification.info { background: var(--parrainage-info); }
+    </style>
+
+    <!-- Header Hero -->
+    <div class="parrainage-hero animate-fade-in">
+        <div class="parrainage-hero-content">
+            <h1 class="parrainage-title">💰 Gagne avec ÉtudIA !</h1>
+            <p class="parrainage-subtitle">
+                Transforme tes amis en gains ! Plus de famille ÉtudIA = Plus de gains partagés ! 🚀
+            </p>
+            <button class="parrainage-cta" onclick="shareWhatsApp()">
+                🚀 Commencer à Gagner
+            </button>
+        </div>
+    </div>
+
+    <!-- Statistiques principales -->
+    <div class="stats-grid animate-slide-in">
+        <div class="stat-card">
+            <div class="stat-value">
+                <span>💰</span>
+                <span id="totalEarnings">12,450</span> F
+            </div>
+            <div class="stat-label">Gains Totaux</div>
+            <div class="stat-trend up">+15% ce mois</div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-value">
+                <span>👥</span>
+                <span id="activeReferrals">23</span>
+            </div>
+            <div class="stat-label">Parrainages Actifs</div>
+            <div class="stat-trend up">+5 nouveaux</div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-value">
+                <span>📈</span>
+                <span id="conversionRate">15.8</span>%
+            </div>
+            <div class="stat-label">Taux de Conversion</div>
+            <div class="stat-trend up">+2.3% vs mois dernier</div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-value">
+                <span>💳</span>
+                <span id="availableBalance">8,750</span> F
+            </div>
+            <div class="stat-label">Disponible Retrait</div>
+            <div class="stat-trend up">Prêt à retirer</div>
+        </div>
+    </div>
+
+    <!-- Layout principal -->
+    <div class="parrainage-grid">
+        <!-- Section principale -->
+        <div class="parrainage-main">
+            <!-- Section lien de parrainage -->
+            <div class="referral-section animate-slide-in">
+                <h3 class="referral-title">
+                    <i class="fas fa-link"></i>
+                    Ton Lien de Parrainage Personnel
+                </h3>
+                
+                <div class="referral-link-container">
+                    <div class="referral-link" id="referralLink">
+                        https://etudia.ci/invite/JB-DOSSO-2024
+                    </div>
+                    <button class="copy-btn" onclick="copyReferralLink()">
+                        <i class="fas fa-copy"></i>
+                        Copier
+                    </button>
+                </div>
+                
+                <div class="share-buttons">
+                    <button class="share-btn whatsapp" onclick="shareWhatsApp()">
+                        <i class="fab fa-whatsapp"></i>
+                        WhatsApp
+                    </button>
+                    <button class="share-btn facebook" onclick="shareFacebook()">
+                        <i class="fab fa-facebook"></i>
+                        Facebook
+                    </button>
+                    <button class="share-btn twitter" onclick="shareTwitter()">
+                        <i class="fab fa-twitter"></i>
+                        Twitter
+                    </button>
+                    <button class="share-btn instagram" onclick="shareInstagram()">
+                        <i class="fab fa-instagram"></i>
+                        Instagram
+                    </button>
+                </div>
+                
+                <div style="background: rgba(16, 185, 129, 0.1); padding: 1rem; border-radius: 8px; border-left: 4px solid #10B981;">
+                    <h4 style="margin: 0 0 0.5rem 0; color: #059669;">💡 Conseil Pro :</h4>
+                    <p style="margin: 0; font-size: 0.9rem; color: #374151;">
+                        Partage ton lien avec tes amis qui étudient ! Plus ils utilisent ÉtudIA, plus tu gagnes. 
+                        Système WIN-WIN pour tous !
+                    </p>
+                </div>
+            </div>
+
+            <!-- Programme de niveaux -->
+            <div class="levels-program animate-slide-in">
+                <h3 class="levels-title">
+                    <i class="fas fa-trophy"></i>
+                    Programme Multi-Niveaux
+                </h3>
+                
+                <div class="level-item">
+                    <div class="level-badge level-1">1</div>
+                    <div class="level-details">
+                        <h4>Niveau 1 - Filleuls Directs</h4>
+                        <p>Tes invités directs qui s'abonnent</p>
+                    </div>
+                    <div class="level-reward">50% de commission</div>
+                </div>
+                
+                <div class="level-item">
+                    <div class="level-badge level-2">2</div>
+                    <div class="level-details">
+                        <h4>Niveau 2 - Petits-filleuls</h4>
+                        <p>Les invités de tes filleuls</p>
+                    </div>
+                    <div class="level-reward">30% de commission</div>
+                </div>
+                
+                <div class="level-item">
+                    <div class="level-badge level-3">3</div>
+                    <div class="level-details">
+                        <h4>Niveau 3 - Arrière-petits-filleuls</h4>
+                        <p>Les invités des petits-filleuls</p>
+                    </div>
+                    <div class="level-reward">10% de commission</div>
+                </div>
+            </div>
+
+            <!-- Historique des gains -->
+            <div class="earnings-history animate-slide-in">
+                <h3 class="earnings-title">
+                    <i class="fas fa-history"></i>
+                    Historique des Gains Récents
+                </h3>
+                
+                <div class="earnings-list" id="earningsList">
+                    <div class="earning-item">
+                        <div class="earning-info">
+                            <div class="earning-avatar">KD</div>
+                            <div class="earning-details">
+                                <h5>Kouame David</h5>
+                                <p>Abonnement Premium - Niveau 1</p>
+                            </div>
+                        </div>
+                        <div class="earning-amount">+500 F</div>
                     </div>
                     
-                    <div class="parrainage-stats">
-                        <div class="parrainage-stat">
-                            <div class="parrainage-value">23</div>
-                            <div class="parrainage-label">Filleuls Actifs</div>
+                    <div class="earning-item">
+                        <div class="earning-info">
+                            <div class="earning-avatar">AM</div>
+                            <div class="earning-details">
+                                <h5>Aya Mariam</h5>
+                                <p>Abonnement Standard - Niveau 1</p>
+                            </div>
                         </div>
-                        <div class="parrainage-stat">
-                            <div class="parrainage-value">12,450 F</div>
-                            <div class="parrainage-label">Gains Totaux</div>
-                        </div>
-                        <div class="parrainage-stat">
-                            <div class="parrainage-value">15.8%</div>
-                            <div class="parrainage-label">Taux Conversion</div>
-                        </div>
-                        <div class="parrainage-stat">
-                            <div class="parrainage-value">8,750 F</div>
-                            <div class="parrainage-label">Disponible Retrait</div>
-                        </div>
+                        <div class="earning-amount">+325 F</div>
                     </div>
                     
-                    <div class="referral-link-container">
-                        <div style="margin-bottom: 0.5rem; font-weight: 600;">🔗 Ton Lien de Parrainage :</div>
-                        <div class="referral-link">https://etudia.ci/invite/JB-DOSSO-2024</div>
-                        <button class="copy-btn" onclick="copyReferralLink()">
+                    <div class="earning-item">
+                        <div class="earning-info">
+                            <div class="earning-avatar">YC</div>
+                            <div class="earning-details">
+                                <h5>Yao Claude</h5>
+                                <p>Renouvellement - Niveau 2</p>
+                            </div>
+                        </div>
+                        <div class="earning-amount">+195 F</div>
+                    </div>
+                    
+                    <div class="earning-item">
+                        <div class="earning-info">
+                            <div class="earning-avatar">FK</div>
+                            <div class="earning-details">
+                                <h5>Fanta Kone</h5>
+                                <p>Abonnement Premium - Niveau 2</p>
+                            </div>
+                        </div>
+                        <div class="earning-amount">+300 F</div>
+                    </div>
+                    
+                    <div class="earning-item">
+                        <div class="earning-info">
+                            <div class="earning-avatar">IB</div>
+                            <div class="earning-details">
+                                <h5>Ibrahim Bakayoko</h5>
+                                <p>Abonnement Standard - Niveau 3</p>
+                            </div>
+                        </div>
+                        <div class="earning-amount">+65 F</div>
+                    </div>
+                    
+                    <div class="earning-item">
+                        <div class="earning-info">
+                            <div class="earning-avatar">SA</div>
+                            <div class="earning-details">
+                                <h5>Salimata Adama</h5>
+                                <p>Liaison Parent-Enfant Activée</p>
+                            </div>
+                        </div>
+                        <div class="earning-amount">+150 F</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar informations -->
+        <div class="parrainage-sidebar">
+            <!-- Progression vers objectif -->
+            <div class="info-card animate-slide-in">
+                <h3>
+                    <i class="fas fa-target"></i>
+                    Objectif du Mois
+                </h3>
+                
+                <div class="milestone-item">
+                    <span class="milestone-target">30 parrainages</span>
+                    <span class="milestone-reward">🎁 Bonus 500F</span>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 76.7%"></div>
+                </div>
+                
+                <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; color: #6B7280;">
+                    23/30 parrainages - Plus que 7 pour débloquer ton bonus ! 🚀
+                </p>
+            </div>
+
+            <!-- Prochains paliers -->
+            <div class="info-card animate-slide-in">
+                <h3>
+                    <i class="fas fa-gift"></i>
+                    Prochains Paliers
+                </h3>
+                
+                <div class="milestone-item">
+                    <span class="milestone-target">50 parrainages</span>
+                    <span class="milestone-reward">🏆 Badge Gold</span>
+                </div>
+                
+                <div class="milestone-item">
+                    <span class="milestone-target">100 parrainages</span>
+                    <span class="milestone-reward">💎 Badge Diamond</span>
+                </div>
+                
+                <div class="milestone-item">
+                    <span class="milestone-target">200 parrainages</span>
+                    <span class="milestone-reward">👑 Badge VIP</span>
+                </div>
+            </div>
+
+            <!-- Bouton retrait -->
+            <div class="info-card animate-slide-in">
+                <h3>
+                    <i class="fas fa-wallet"></i>
+                    Retirer tes Gains
+                </h3>
+                
+                <p style="margin: 0 0 1rem 0; font-size: 0.9rem; color: #6B7280;">
+                    Minimum de retrait : 5,000 F
+                </p>
+                
+                <button class="withdraw-btn" onclick="requestWithdrawal()">
+                    💳 Retirer 8,750 F
+                </button>
+                
+                <p style="margin: 1rem 0 0 0; font-size: 0.8rem; color: #9CA3AF; text-align: center;">
+                    Délai de traitement : 24-48h
+                </p>
+            </div>
+
+            <!-- Code parent -->
+            <div class="info-card animate-slide-in">
+                <h3>
+                    <i class="fas fa-users"></i>
+                    Liaison Parent-Enfant
+                </h3>
+                
+                <div style="background: rgba(59, 130, 246, 0.1); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                    <div class="referral-link-container" style="margin-bottom: 0.5rem;">
+                        <div class="referral-link" id="parentCode">
+                            JB-PARENT-2024
+                        </div>
+                        <button class="copy-btn" onclick="copyParentCode()">
                             <i class="fas fa-copy"></i>
                         </button>
                     </div>
-                    
-                    <div class="share-buttons">
-                        <a href="#" class="share-btn whatsapp" onclick="shareWhatsApp()">
-                            <i class="fab fa-whatsapp"></i> WhatsApp
-                        </a>
-                        <a href="#" class="share-btn facebook" onclick="shareFacebook()">
-                            <i class="fab fa-facebook"></i> Facebook
-                        </a>
-                        <button class="share-btn copy" onclick="copyReferralLink()">
-                            <i class="fas fa-copy"></i> Copier Lien
-                        </button>
-                    </div>
-                    
-                    <div class="withdrawal-section">
-                        <div class="withdrawal-available">💰 Montant disponible au retrait : 8,750 FCFA</div>
-                        <div class="withdrawal-note">
-                            Frais de retrait : 10% • Minimum : 1,000F • Auto-réabonnement : 3 mois garantis
-                        </div>
-                        <button class="withdrawal-btn" onclick="requestWithdrawal()">
-                            💳 Demander un Retrait (7,875 F net)
-                        </button>
-                    </div>
+                    <p style="margin: 0; font-size: 0.8rem; color: #6B7280;">
+                        Donne ce code à tes parents pour doubler tes gains de parrainage !
+                    </p>
                 </div>
-            </section>
+                
+                <div style="background: rgba(16, 185, 129, 0.1); padding: 0.8rem; border-radius: 6px;">
+                    <p style="margin: 0; font-size: 0.8rem; color: #059669; font-weight: 500;">
+                        💡 Astuce : Gains × 2 quand parents et enfant sont liés !
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript pour cette section uniquement -->
+    <script>
+        // Variables globales pour la section parrainage
+        let parrainageData = {
+            totalEarnings: 12450,
+            activeReferrals: 23,
+            conversionRate: 15.8,
+            availableBalance: 8750,
+            referralLink: 'https://etudia.ci/invite/JB-DOSSO-2024',
+            parentCode: 'JB-PARENT-2024',
+            earnings: [
+                { name: 'Kouame David', action: 'Abonnement Premium - Niveau 1', amount: 500, avatar: 'KD' },
+                { name: 'Aya Mariam', action: 'Abonnement Standard - Niveau 1', amount: 325, avatar: 'AM' },
+                { name: 'Yao Claude', action: 'Renouvellement - Niveau 2', amount: 195, avatar: 'YC' },
+                { name: 'Fanta Kone', action: 'Abonnement Premium - Niveau 2', amount: 300, avatar: 'FK' },
+                { name: 'Ibrahim Bakayoko', action: 'Abonnement Standard - Niveau 3', amount: 65, avatar: 'IB' },
+                { name: 'Salimata Adama', action: 'Liaison Parent-Enfant Activée', amount: 150, avatar: 'SA' }
+            ]
+        };
+
+        // Initialisation de la section parrainage
+        function initializeParrainageSection() {
+            console.log('💰 Initialisation section Parrainage');
+            updateParrainageStats();
+            setupParrainageAnimations();
+        }
+
+        // Mise à jour des statistiques
+        function updateParrainageStats() {
+            const totalEarningsEl = document.getElementById('totalEarnings');
+            const activeReferralsEl = document.getElementById('activeReferrals');
+            const conversionRateEl = document.getElementById('conversionRate');
+            const availableBalanceEl = document.getElementById('availableBalance');
+
+            if (totalEarningsEl) totalEarningsEl.textContent = parrainageData.totalEarnings.toLocaleString();
+            if (activeReferralsEl) activeReferralsEl.textContent = parrainageData.activeReferrals;
+            if (conversionRateEl) conversionRateEl.textContent = parrainageData.conversionRate;
+            if (availableBalanceEl) availableBalanceEl.textContent = parrainageData.availableBalance.toLocaleString();
+
+            // Mise à jour du lien de parrainage
+            const referralLinkEl = document.getElementById('referralLink');
+            if (referralLinkEl) referralLinkEl.textContent = parrainageData.referralLink;
+
+            // Mise à jour du code parent
+            const parentCodeEl = document.getElementById('parentCode');
+            if (parentCodeEl) parentCodeEl.textContent = parrainageData.parentCode;
+        }
+
+        // Fonctions de partage
+        function copyReferralLink() {
+            const link = parrainageData.referralLink;
+            navigator.clipboard.writeText(link).then(() => {
+                showParrainageNotification('Lien copié ! 🎉 Partage-le avec tes amis', 'success');
+            }).catch(() => {
+                showParrainageNotification('Erreur de copie. Essaie de sélectionner manuellement', 'error');
+            });
+        }
+
+        function copyParentCode() {
+            const code = parrainageData.parentCode;
+            navigator.clipboard.writeText(code).then(() => {
+                showParrainageNotification('Code parent copié ! 👨‍👩‍👧‍👦 Donne-le à tes parents', 'success');
+            }).catch(() => {
+                showParrainageNotification('Erreur de copie. Essaie de sélectionner manuellement', 'error');
+            });
+        }
+
+        function shareWhatsApp() {
+            const message = `🎓 Salut ! J'utilise ÉtudIA, la révolution éducative pour l'Afrique ! 
+            
+✨ Une IA qui comprend nos langues et cultures
+📚 Cours adaptés au système éducatif ivoirien  
+🤝 Communauté d'étudiants qui s'entraident
+💰 En plus, on gagne ensemble grâce au parrainage !
+
+Rejoins-moi avec ce lien : ${parrainageData.referralLink}
+
+#ÉtudIA #ÉducationAfricaine #IntelligenceArtificielle`;
+            
+            const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+            trackShare('whatsapp');
+        }
+
+        function shareFacebook() {
+            const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(parrainageData.referralLink)}`;
+            window.open(url, '_blank', 'width=600,height=400');
+            trackShare('facebook');
+        }
+
+        function shareTwitter() {
+            const message = `🎓 Découvre ÉtudIA, l'IA révolutionnaire pour l'éducation africaine ! Rejoins-moi : ${parrainageData.referralLink} #ÉtudIA #ÉducationAfricaine #IA`;
+            const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank', 'width=600,height=400');
+            trackShare('twitter');
+        }
+
+        function shareInstagram() {
+            // Instagram ne permet pas de partage direct par URL, on copie le message
+            const message = `🎓 ÉtudIA - L'IA pour l'Afrique !
+            
+Lien dans ma bio ou DM moi pour le lien : ${parrainageData.referralLink}
+            
+#ÉtudIA #ÉducationAfricaine #IA #Côte d'Ivoire`;
+            
+            navigator.clipboard.writeText(message).then(() => {
+                showParrainageNotification('Message copié ! 📱 Colle-le dans ton post Instagram', 'info');
+                window.open('https://www.instagram.com/', '_blank');
+            });
+            trackShare('instagram');
+        }
+
+        // Suivi des partages
+        function trackShare(platform) {
+            console.log(`📊 Partage via ${platform}`);
+            // Ici tu peux ajouter l'envoi à ton analytics
+            showParrainageNotification(`Merci pour le partage via ${platform} ! 🚀`, 'success');
+        }
+
+        // Demande de retrait
+        function requestWithdrawal() {
+            if (parrainageData.availableBalance < 5000) {
+                showParrainageNotification('Minimum de retrait : 5,000 F. Continue à parrainer ! 💪', 'error');
+                return;
+            }
+
+            // Simulation d'une demande de retrait
+            const confirmWithdrawal = confirm(`Confirmer le retrait de ${parrainageData.availableBalance.toLocaleString()} F ?\n\nDélai de traitement : 24-48h`);
+            
+            if (confirmWithdrawal) {
+                showParrainageNotification('🎉 Demande de retrait envoyée ! Tu recevras un SMS de confirmation', 'success');
+                
+                // Simulation de la réinitialisation du solde disponible
+                setTimeout(() => {
+                    parrainageData.availableBalance = 0;
+                    updateParrainageStats();
+                    showParrainageNotification('💳 Retrait traité ! Vérife ton compte mobile money', 'success');
+                }, 3000);
+            }
+        }
+
+        // Système de notifications
+        function showParrainageNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Affichage
+            setTimeout(() => notification.classList.add('show'), 100);
+            
+            // Masquage automatique après 4 secondes
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 4000);
+        }
+
+        // Animations au scroll
+        function setupParrainageAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationDelay = '0.1s';
+                        entry.target.classList.add('animate-slide-in');
+                    }
+                });
+            });
+
+            // Observer tous les éléments à animer
+            document.querySelectorAll('#parrainage .stat-card, #parrainage .info-card').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Calcul des prochains paliers
+        function getNextMilestone() {
+            const nextMilestones = [
+                { target: 30, current: parrainageData.activeReferrals, reward: '🎁 Bonus 500F' },
+                { target: 50, current: parrainageData.activeReferrals, reward: '🏆 Badge Gold' },
+                { target: 100, current: parrainageData.activeReferrals, reward: '💎 Badge Diamond' }
+            ];
+            
+            return nextMilestones.find(milestone => milestone.current < milestone.target);
+        }
+
+        // Conseils et tips pour optimiser les gains
+        function showParrainageTips() {
+            const tips = [
+                "💡 Partage ton lien dans les groupes WhatsApp d'étudiants",
+                "🎯 Explique les bénéfices concrets d'ÉtudIA à tes amis", 
+                "📱 Utilise le QR code pour les rencontres en personne",
+                "🏆 Montre tes gains pour prouver que ça marche",
+                "💬 Utilise les templates personnalisés pour chaque réseau social",
+                "👨‍👩‍👧‍👦 N'oublie pas la liaison parent-enfant pour doubler tes gains",
+                "📊 Suis tes statistiques pour optimiser ta stratégie"
+            ];
+            
+            const randomTip = tips[Math.floor(Math.random() * tips.length)];
+            showParrainageNotification(randomTip, 'info');
+        }
+
+        // Auto-affichage d'un tip au chargement
+        setTimeout(() => {
+            showParrainageTips();
+        }, 5000);
+
+        // Sauvegarde locale des données
+        function saveParrainageData() {
+            try {
+                localStorage.setItem('etudia_parrainage_data', JSON.stringify(parrainageData));
+                localStorage.setItem('etudia_parrainage_last_save', new Date().toISOString());
+            } catch (error) {
+                console.warn('⚠️ Impossible de sauvegarder les données de parrainage:', error);
+            }
+        }
+
+        function loadParrainageData() {
+            try {
+                const saved = localStorage.getItem('etudia_parrainage_data');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    parrainageData = { ...parrainageData, ...parsed };
+                    updateParrainageStats();
+                }
+            } catch (error) {
+                console.warn('⚠️ Impossible de charger les données de parrainage:', error);
+            }
+        }
+
+        // Sauvegarde automatique toutes les 30 secondes
+        setInterval(saveParrainageData, 30000);
+
+        // Charger les données au démarrage
+        document.addEventListener('DOMContentLoaded', loadParrainageData);
+
+        // Sauvegarde avant fermeture de page
+        window.addEventListener('beforeunload', saveParrainageData);
+
+        // Exposer certaines fonctions pour utilisation externe
+        window.EtudiaParrainage = {
+            copyReferralLink: copyReferralLink,
+            shareWhatsApp: shareWhatsApp,
+            requestWithdrawal: requestWithdrawal,
+            showParrainageTips: showParrainageTips,
+            getParrainageData: () => ({ ...parrainageData }),
+            updateStats: updateParrainageStats
+        };
+
+        console.log('💰 Script Parrainage section chargé et prêt !');
+    </script>
+</section>
+
+<!-- ============================================== -->
+<!-- FIN SECTION PARRAINAGE V4.1 - RÉVOLUTIONNAIRE -->
+<!-- Code complet et fonctionnel                   -->
+<!-- ============================================== -->
             
             <!-- Abonnements Section - BASÉE SUR PLANS.HTML -->
             <section id="abonnements" class="content-section">
