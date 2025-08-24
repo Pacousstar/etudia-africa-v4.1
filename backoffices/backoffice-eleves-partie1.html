@@ -5576,86 +5576,838 @@ Lien dans ma bio ou DM moi pour le lien : ${parrainageData.referralLink}
 <!-- Code complet et fonctionnel                   -->
 <!-- ============================================== -->
             
-            <!-- Abonnements Section - BASÉE SUR PLANS.HTML -->
-            <section id="abonnements" class="content-section">
-                <h2 class="section-title">💳 Gestion des Abonnements</h2>
-                <div class="subscription-section">
-                    <div class="current-plan">
-                        <div class="plan-header">
-                            <div class="plan-info">
-                                <h3>Plan Premium Mensuel</h3>
-                                <p>1,500 interactions/mois • Support prioritaire • Tous modes inclus</p>
-                            </div>
-                            <div class="plan-price">
-                                <span class="price">6,500</span>
-                                <span class="currency">FCFA/mois</span>
-                            </div>
-                        </div>
-                        
-                        <div class="plan-usage">
-                            <div class="usage-stat">
-                                <span class="usage-label">Interactions utilisées ce mois</span>
-                                <span class="usage-value">847 / 1,500</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 56%"></div>
-                            </div>
-                        </div>
-                        
-                        <div style="text-align: center; margin-top: 1rem;">
-                            <div style="color: var(--etudia-success); font-weight: 600;">
-                                ✅ Renouvellement automatique le 15 septembre 2025
-                            </div>
-                        </div>
+<!-- ============================================== -->
+<!-- 💳 SECTION ABONNEMENTS V4.1 - RÉVOLUTIONNAIRE -->
+<!-- Gestion complète abonnements - Style ÉtudIA -->
+<!-- ============================================== -->
+
+<!-- Section Abonnements -->
+<section id="abonnements" class="content-section">
+    <h2 class="section-title">💳 Gestion des Abonnements</h2>
+    
+    <!-- Styles CSS pour cette section uniquement -->
+    <style>
+        /* Variables couleurs abonnements - Style ÉtudIA */
+        #abonnements {
+            --abonnements-primary: #FF6B35;
+            --abonnements-secondary: #10B981;
+            --abonnements-gold: #F59E0B;
+            --abonnements-success: #059669;
+            --abonnements-info: #3B82F6;
+            --abonnements-dark: #1F2937;
+            --abonnements-light: #F8FAFC;
+            --abonnements-white: #FFFFFF;
+            --abonnements-gray: #6B7280;
+            --gradient-money: linear-gradient(135deg, #F59E0B 0%, #FF6B35 100%);
+            --gradient-success: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            --gradient-premium: linear-gradient(135deg, #FF6B35 0%, #EF4444 100%);
+            --shadow-glow: 0 0 20px rgba(255, 107, 53, 0.3);
+        }
+
+        /* Header section abonnements */
+        #abonnements .abonnements-hero {
+            background: var(--gradient-money);
+            color: white;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #abonnements .abonnements-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.3;
+        }
+
+        #abonnements .abonnements-hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        #abonnements .abonnements-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        #abonnements .abonnements-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Statistiques principales */
+        #abonnements .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        #abonnements .stat-card {
+            background: var(--abonnements-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        #abonnements .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        #abonnements .stat-value {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--abonnements-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        #abonnements .stat-value span:first-child {
+            font-size: 2rem;
+        }
+
+        #abonnements .stat-label {
+            font-size: 0.9rem;
+            color: var(--abonnements-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        #abonnements .stat-trend {
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        #abonnements .stat-trend.up {
+            color: var(--abonnements-success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        #abonnements .stat-trend.down {
+            color: #EF4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Layout principal */
+        #abonnements .abonnements-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            #abonnements .abonnements-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Section plan actuel */
+        #abonnements .current-plan-section {
+            background: var(--abonnements-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        #abonnements .current-plan-title {
+            color: var(--abonnements-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #abonnements .plan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        #abonnements .plan-info h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--abonnements-dark);
+        }
+
+        #abonnements .plan-info p {
+            color: var(--abonnements-gray);
+            margin: 0;
+        }
+
+        #abonnements .plan-price {
+            text-align: right;
+        }
+
+        #abonnements .plan-price .price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--abonnements-gold);
+        }
+
+        #abonnements .plan-price .currency {
+            font-size: 0.9rem;
+            color: var(--abonnements-gray);
+        }
+
+        /* Usage stats */
+        #abonnements .plan-usage {
+            margin-bottom: 1rem;
+        }
+
+        #abonnements .usage-stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        #abonnements .usage-label {
+            color: var(--abonnements-gray);
+        }
+
+        #abonnements .usage-value {
+            font-weight: 600;
+            color: var(--abonnements-dark);
+        }
+
+        #abonnements .progress-bar {
+            background: #E5E7EB;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        #abonnements .progress-fill {
+            background: var(--gradient-success);
+            height: 100%;
+            transition: width 1s ease;
+        }
+
+        #abonnements .progress-fill.medium {
+            background: var(--gradient-money);
+        }
+
+        #abonnements .progress-fill.high {
+            background: var(--gradient-premium);
+        }
+
+        #abonnements .renewal-status {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        #abonnements .status-active {
+            color: var(--abonnements-success);
+            font-weight: 600;
+        }
+
+        #abonnements .status-warning {
+            color: var(--abonnements-gold);
+            font-weight: 600;
+        }
+
+        #abonnements .status-expired {
+            color: #EF4444;
+            font-weight: 600;
+        }
+
+        /* Options d'upgrade */
+        #abonnements .upgrade-section {
+            background: var(--abonnements-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        #abonnements .upgrade-title {
+            color: var(--abonnements-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #abonnements .upgrade-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        #abonnements .upgrade-card {
+            background: var(--abonnements-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #E5E7EB;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        #abonnements .upgrade-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        #abonnements .upgrade-card.popular {
+            border-color: var(--abonnements-primary);
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
+        }
+
+        #abonnements .popular-badge {
+            position: absolute;
+            top: -8px;
+            right: 1rem;
+            background: var(--gradient-premium);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 0 0 8px 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        #abonnements .upgrade-header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        #abonnements .upgrade-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--abonnements-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        #abonnements .upgrade-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--abonnements-gold);
+            margin-bottom: 0.3rem;
+        }
+
+        #abonnements .upgrade-duration {
+            font-size: 0.8rem;
+            color: var(--abonnements-gray);
+        }
+
+        #abonnements .upgrade-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        #abonnements .upgrade-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.3rem 0;
+            font-size: 0.9rem;
+        }
+
+        #abonnements .upgrade-features li::before {
+            content: '✅';
+            font-size: 0.8rem;
+        }
+
+        #abonnements .upgrade-button {
+            width: 100%;
+            background: var(--gradient-money);
+            color: white;
+            border: none;
+            padding: 0.6rem 0.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        #abonnements .upgrade-button:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        #abonnements .upgrade-button.popular {
+            background: var(--gradient-premium);
+        }
+
+        /* Sidebar informations */
+        #abonnements .abonnements-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        #abonnements .info-card {
+            background: var(--abonnements-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        #abonnements .info-card h3 {
+            color: var(--abonnements-dark);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Historique des transactions */
+        #abonnements .transaction-history {
+            background: var(--abonnements-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        #abonnements .transactions-title {
+            color: var(--abonnements-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #abonnements .transactions-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        #abonnements .transaction-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid #F3F4F6;
+        }
+
+        #abonnements .transaction-item:hover {
+            background: var(--abonnements-light);
+            transform: translateX(4px);
+        }
+
+        #abonnements .transaction-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        #abonnements .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-money);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        #abonnements .transaction-details h5 {
+            margin: 0 0 0.2rem 0;
+            color: var(--abonnements-dark);
+        }
+
+        #abonnements .transaction-details p {
+            margin: 0;
+            font-size: 0.8rem;
+            color: var(--abonnements-gray);
+        }
+
+        #abonnements .transaction-amount {
+            font-weight: 700;
+            color: var(--abonnements-success);
+            font-size: 1.1rem;
+        }
+
+        /* Actions rapides */
+        #abonnements .quick-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        #abonnements .quick-btn {
+            background: var(--gradient-success);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #abonnements .quick-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Animations */
+        #abonnements .animate-slide-in {
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        #abonnements .animate-fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Notifications */
+        #abonnements .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        #abonnements .notification.show {
+            transform: translateX(0);
+        }
+
+        #abonnements .notification.success { background: var(--abonnements-success); }
+        #abonnements .notification.error { background: #EF4444; }
+        #abonnements .notification.info { background: var(--abonnements-info); }
+
+        /* Toggle switch */
+        #abonnements .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        #abonnements .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        #abonnements .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #ccc;
+            transition: 0.4s;
+            border-radius: 24px;
+        }
+
+        #abonnements .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        #abonnements input:checked + .slider {
+            background: var(--abonnements-success);
+        }
+
+        #abonnements input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            #abonnements .plan-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            #abonnements .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            #abonnements .upgrade-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <!-- Header Hero -->
+    <div class="abonnements-hero animate-fade-in">
+        <div class="abonnements-hero-content">
+            <h1 class="abonnements-title">💳 Gestion de votre Abonnement</h1>
+            <p class="abonnements-subtitle">
+                Suivez votre utilisation, gérez vos plans et optimisez votre apprentissage avec ÉtudIA ! 🚀
+            </p>
+        </div>
+    </div>
+
+    <!-- Statistiques principales -->
+    <div class="stats-grid animate-slide-in">
+        <div class="stat-card">
+            <div class="stat-value">
+                <span>💬</span>
+                <span id="totalInteractions">847</span>
+            </div>
+            <div class="stat-label">Interactions ce mois</div>
+            <div class="stat-trend up">+156 vs mois dernier</div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-value">
+                <span>⚡</span>
+                <span id="remainingInteractions">653</span>
+            </div>
+            <div class="stat-label">Interactions restantes</div>
+            <div class="stat-trend up">Recharge dans 12 jours</div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-value">
+                <span>📊</span>
+                <span id="usagePercentage">56</span>%
+            </div>
+            <div class="stat-label">Taux d'utilisation</div>
+            <div class="stat-trend up">Usage optimal</div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-value">
+                <span>💰</span>
+                <span id="monthlySpend">6,500</span> F
+            </div>
+            <div class="stat-label">Dépense mensuelle</div>
+            <div class="stat-trend up">Plan actif</div>
+        </div>
+    </div>
+
+    <!-- Layout principal -->
+    <div class="abonnements-grid">
+        <!-- Section principale -->
+        <div class="abonnements-main">
+            <!-- Plan actuel -->
+            <div class="current-plan-section animate-slide-in">
+                <h3 class="current-plan-title">
+                    <i class="fas fa-crown"></i>
+                    Votre Plan Actuel
+                </h3>
+                
+                <div class="plan-header">
+                    <div class="plan-info">
+                        <h3 id="currentPlanName">Premium Mensuel</h3>
+                        <p id="currentPlanDescription">50 interactions/jour (1,500/mois) • IA ÉtudIA optimisé • Support prioritaire</p>
                     </div>
-                    
-                    <h3 style="margin: 1.5rem 0 1rem 0; color: var(--etudia-white);">🚀 Options d'Upgrade</h3>
-                    <div class="upgrade-options">
-                        <div class="upgrade-card popular">
-                            <div class="upgrade-title">👑 Excellence Mensuel</div>
-                            <div class="upgrade-price">10,000 FCFA</div>
-                            <ul class="upgrade-features">
-                                <li>6,000 interactions/mois (200/jour)</li>
-                                <li>IA prioritaire</li>
-                                <li>Support premium complet</li>
-                                <li>Nouvelles fonctionnalités en avant-première</li>
-                                <li>Mentor IA personnalisé</li>
-                            </ul>
-                            <button class="upgrade-btn" onclick="upgradeToExcellence()">
-                                Upgrade vers Excellence
-                            </button>
-                        </div>
-                        
-                        <div class="upgrade-card">
-                            <div class="upgrade-title">📅 Premium Jour</div>
-                            <div class="upgrade-price">500 FCFA</div>
-                            <ul class="upgrade-features">
-                                <li>15 interactions pour 24h</li>
-                                <li>Tous les modes IA</li>
-                                <li>Upload documents</li>
-                                <li>Support chat</li>
-                            </ul>
-                            <button class="upgrade-btn" onclick="buyDailyPlan()">
-                                Acheter 1 Jour
-                            </button>
-                        </div>
-                        
-                        <div class="upgrade-card">
-                            <div class="upgrade-title">📦 Pack Tokens</div>
-                            <div class="upgrade-price">2,500 FCFA</div>
-                            <ul class="upgrade-features">
-                                <li>+500 tokens bonus</li>
-                                <li>Valable 6 mois</li>
-                                <li>Cumule avec abonnement</li>
-                                <li>Pas d'expiration</li>
-                            </ul>
-                            <button class="upgrade-btn" onclick="buyTokenPack()">
-                                Acheter Tokens
-                            </button>
-                        </div>
+                    <div class="plan-price">
+                        <span class="price" id="currentPlanPrice">6,500</span>
+                        <span class="currency">FCFA/mois</span>
                     </div>
                 </div>
-            </section>
+                
+                <div class="plan-usage">
+                    <div class="usage-stat">
+                        <span class="usage-label">Interactions utilisées ce mois</span>
+                        <span class="usage-value" id="usedInteractions">847 / 1,500</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill medium" id="usageProgressBar" style="width: 56%"></div>
+                    </div>
+                </div>
+                
+                <div class="renewal-status">
+                    <div class="status-active" id="renewalStatus">
+                        ✅ Renouvellement automatique le 15 septembre 2025
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions rapides -->
+            <div class="quick-actions animate-slide-in">
+                <button class="quick-btn" onclick="downloadInvoice()">
+                    <i class="fas fa-download"></i>
+                    Télécharger Facture
+                </button>
+                <button class="quick-btn" onclick="changePaymentMethod()">
+                    <i class="fas fa-credit-card"></i>
+                    Changer Paiement
+                </button>
+                <button class="quick-btn" onclick="viewDetailedStats()">
+                    <i class="fas fa-chart-bar"></i>
+                    Stats Détaillées
+                </button>
+            </div>
+
+            <!-- Options d'upgrade -->
+            <div class="upgrade-section animate-slide-in">
+                <h3 class="upgrade-title">
+                    <i class="fas fa-rocket"></i>
+                    Plans Disponibles & Upgrades
+                </h3>
+                
+                <div class="upgrade-grid">
+                    <!-- Excellence Mensuel -->
+                    <div class="upgrade-card popular">
+                        <div class="popular-badge">🏆 POPULAIRE</div>
+                        <div class="upgrade-header">
+                            <div class="upgrade-name">Excellence Mensuel</div>
+                            <div class="upgrade-price">10,000 FCFA</div>
+                            <div class="upgrade-duration">30 jours</div>
+                        </div>
+                        <ul class="upgrade-features">
+                            <li>120 interactions/jour (3,600/mois)</li>
+                            <li>IA ÉtudIA prioritaire</li>
+                            <li>Support premium complet</li>
+                            <li>Export PDF illimité</li>
+                            <li>Audio haute qualité</li>
+                        </ul>
+                        <button class="upgrade-button popular" onclick="upgradeToPlan('excellence-mensuel')">
+                            <i class="fas fa-crown"></i>
+                            Upgrader Excellence
+                        </button>
+                    </div>
+
+                    <!-- Excellence Week-end -->
+                    <div class="upgrade-card">
+                        <div class="upgrade-header">
+                            <div class="upgrade-name">Excellence Week-end</div>
+                            <div class="upgrade-price">4,000 FCFA</div>
+                            <div class="upgrade-duration">Samedi-Dimanche</div>
+                        </div>
+                        <ul class="upgrade-features">
+                            <li>400 interactions total week-end</li>
+                            <li>IA ÉtudIA prioritaire</li>
+                            <li>Support chat WhatsApp</li>
+                            <li>PDF export solutions</li>
+                            <li>Audio illimité</li>
+                        </ul>
+                        <button class="upgrade-button" onclick="upgradeToPlan('excellence-weekend')">
+                            <i class="fas fa-calendar-week"></i>
+                            Ajouter Week-end
+                        </button>
+                    </div>
+
+                    <!-- Premium Week-end -->
+                    <div class="upgrade-card">
+                        <div class="upgrade-header">
+                            <div class="upgrade-name">Premium Week-end</div>
+                            <div class="upgrade-price">2,000 FCFA</div>
+                            <div class="upgrade-duration">Samedi-Dimanche</div>
+                        </div>
+                        <ul class="upgrade-features">
+                            <li>160 interactions total week-end</li>
+                            <li>IA ÉtudIA payant</li>
+                            <li>Tous modes disponibles</li>
+                            <li>Audio illimité week-end</li>
+                        </ul>
+                        <button class="upgrade-button" onclick="upgradeToPlan('premium-weekend')">
+                            <i class="fas fa-calendar-alt"></i>
+                            Ajouter Week-end
+                        </button>
+                    </div>
+
+                    <!-- Excellence Jour -->
+                    <div class="upgrade-card">
+                        <div class="upgrade-header">
+                            <div class="upgrade-name">Excellence Jour</div>
+                            <div class="upgrade-price">750 FCFA</div>
+                            <div class="upgrade-duration">24 heures</div>
+                        </div>
+                        <ul class="upgrade-features">
+                            <li>50 interactions maximum</li>
+                            <li>IA ÉtudIA prioritaire</li>
+                            <li>Support chat 24h</li>
+                            <li>Audio illimité</li>
+                        </ul>
+                        <button class="upgrade-button" onclick="upgradeToPlan('excellence-jour')">
+                            <i class="fas fa-bolt"></i>
+                            Ajouter Journée
+                        </button>
+                    </div>
+
+                    <!-- Premium Jour -->
+                    <div class="upgrade-card">
+                        <div class="upgrade-header">
+                            <div class="upgrade-name">Premium Jour</div>
+                            <div class="upgrade-price">500 FCFA</div>
+                            <div class="upgrade-duration">24 heures</div>
+                        </div>
+                        <ul class="upgrade-features">
+                            <li>20 interactions maximum</li>
+                            <li>IA ÉtudIA payant</li>
+                            <li>Tous modes + audio illimité</li>
+                            <li>Parfait révisions veille examen</li>
+                        </ul>
+                        <button class="upgrade-button" onclick="upgradeToPlan('premium-jour')">
+                            <i class="fas fa-zap"></i>
+                            Ajouter Journée
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historique des transactions -->
+            <div class="transaction-history animate-slide-in">
+                <h3 class="transactions-title">
+                    <i class="fas fa-history"></i>
+                    Historique des Transactions
+                </h3>
+                
+                <div class="transactions-list" id="transactionsList">
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-icon">PM</div>
+                            <div class="transaction-details">
+                                <h5>Premium Mensuel</h
             
             <!-- Progression Section -->
             <section id="progression" class="content-section">
