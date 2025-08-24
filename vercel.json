@@ -28,38 +28,6 @@
       "dest": "/login.html"
     },
     {
-      "src": "/backoffices/eleves",
-      "dest": "/backoffices/eleves/index.html"
-    },
-    {
-      "src": "/backoffices/enseignants",
-      "dest": "/backoffices/enseignants/index.html"
-    },
-    {
-      "src": "/backoffices/parents",
-      "dest": "/backoffices/parents/index.html"
-    },
-    {
-      "src": "/backoffices/etablissements",
-      "dest": "/backoffices/etablissements/index.html"
-    },
-    {
-      "src": "/backoffices/dren",
-      "dest": "/backoffices/dren/index.html"
-    },
-    {
-      "src": "/backoffices/partenaires",
-      "dest": "/backoffices/partenaires/index.html"
-    },
-    {
-      "src": "/backoffices/administrateurs",
-      "dest": "/backoffices/administrateurs/index.html"
-    },
-    {
-      "src": "/backoffices/analytics",
-      "dest": "/backoffices/analytics/index.html"
-    },
-    {
       "src": "/pages/(.*)",
       "dest": "/pages/$1"
     }

@@ -270,6 +270,15 @@ const deepseek = new OpenRouterDeepSeek(); // ✅ NOUVEAU : Instance DeepSeek Op
 // 📱 INITIALISATION EXPRESS APP
 const app = express();
 
+// Integrate security and logging middleware
+const { buildHelmet, buildCors, morganRedactor } = require('./middleware/security');
+const { metricsMiddleware } = require('./middleware/metrics');
+
+app.use(buildHelmet());
+app.use(buildCors());
+app.use(morganRedactor);
+app.use(metricsMiddleware);
+
 // 💾 CACHE EN MÉMOIRE SIMPLE POUR OPTIMISATION
 const cache = new Map();
 
@@ -338,64 +347,8 @@ app.use((req, res, next) => {
 // 🌍 CONFIGURATION CORS ÉTENDUE V4.1
 // ===================================================================
 
-// 🔧 DOMAINES AUTORISÉS - ÉTENDU POUR V4.1
-const allowedOrigins = [
-  // 🏠 Domaines existants V4.0
-  'http://localhost:3000',
-  'https://etudia-africa.vercel.app',
-  'https://etudia-v4.gsnexpertises.com',
-  'https://etudia-africa-v4-frontend.vercel.app',
-  
-  // 🆕 NOUVEAUX DOMAINES V4.1 BACKOFFICES
-  'https://etudia-v4-1.vercel.app',
-  'https://backoffice.etudia-africa.com',
-  'https://parents.etudia-africa.com',
-  'https://enseignants.etudia-africa.com',
-  'https://etablissements.etudia-africa.com',
-  'https://dren.etudia-africa.com',
-  'https://partenaires.etudia-africa.com',
-  
-  // 🧪 Domaines développement
-  'http://localhost:3001',
-  'http://localhost:3002',
-  'http://127.0.0.1:3000'
-];
+// [Remplacé par le middleware centralisé ./middleware/security]
 
-// 🔧 Configuration CORS dynamique intelligente
-app.use(cors({
-  origin: (origin, callback) => {
-    // ✅ Autoriser requêtes sans origin (Postman, apps mobiles)
-    if (!origin) return callback(null, true);
-    
-    // ✅ Vérifier si origin est autorisée
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-    
-    // 🔍 Logging tentatives d'accès non autorisées
-    console.log(`🚨 Tentative accès non autorisée depuis: ${origin}`);
-    
-    // ❌ Bloquer origin non autorisée
-    const msg = `Accès bloqué par CORS pour origin: ${origin}`;
-    return callback(new Error(msg), false);
-  },
-  credentials: true,                    // ✅ Cookies et auth headers autorisés
-  optionsSuccessStatus: 200,           // ✅ Support ancien navigateurs
-  allowedHeaders: [                    // ✅ Headers autorisés
-    'Content-Type',
-    'Authorization',
-    'Accept',
-    'Origin',
-    'X-Requested-With',
-    'X-API-Key',                       // 🆕 Pour authentification API
-    'X-Client-Version'                 // 🆕 Pour versionning client
-  ],
-  exposedHeaders: [                    // ✅ Headers exposés au client
-    'X-Total-Count',                   // 📊 Pour pagination
-    'X-Rate-Limit-Remaining',          // ⏱️ Pour rate limiting
-    'X-OpenRouter-Model-Used'          // 🤖 Pour tracking modèle utilisé
-  ]
-}));
 
 // ===================================================================
 // ⏱️ RATE LIMITING SPÉCIALISÉ OPENROUTER V4.1
@@ -998,7 +951,7 @@ app.post('/api/students', async (req, res) => {
 app.post('/api/students/login', async (req, res) => {
   try {
     console.log('🔐 Tentative connexion élève ÉtudIA V4.1');
-    console.log('📧 Données reçues:', req.body);
+console.log('📧 Données reçues:', safeLog(req.body));
     
     const { email } = req.body;
     console.log('📧 Email extrait:', email);
@@ -1220,7 +1173,7 @@ function updateStudentProfile(studentId) {
 // 📊 ROUTE STATISTIQUES GÉNÉRALES - ENRICHIE V4.1
 // ===================================================================
 
-app.get('/api/stats', async (req, res) => {
+app.get('/api/stats', authRequired, async (req, res) => {
   try {
     console.log('📊 Récupération statistiques ÉtudIA V4.1...');
 
@@ -1360,7 +1313,7 @@ module.exports = {
 // ✅ NOUVELLE ROUTE : 100% OpenRouter DeepSeek R1
 // ===================================================================
 
-app.post('/api/chat', limiter, async (req, res) => { 
+app.post('/api/chat', authRequired, limiter, async (req, res) => { 
   console.log('\n🚀 =============== CHAT ÉtudIA V4.1 OPENROUTER DEEPSEEK R1 ===============');
   console.log('📅 Timestamp:', new Date().toLocaleString('fr-FR'));
   console.log('🤖 Modèle IA: OpenRouter DeepSeek R1');
@@ -2361,7 +2314,9 @@ function detectAfricanContext(text) {
 // 📤 ROUTE UPLOAD PRINCIPAL - ENRICHIE IA V4.1
 // ===================================================================
 
-app.post('/api/upload', uploadlimiter, upload.single('document'), async (req, res) => {
+const { authRequired } = require('./middleware/auth');
+
+app.post('/api/upload', authRequired, uploadlimiter, upload.single('document'), async (req, res) => {
   console.log('\n📤 =============== UPLOAD DOCUMENT ÉtudIA V4.1 ===============');
   
   try {
@@ -2659,7 +2614,7 @@ app.post('/api/upload', uploadlimiter, upload.single('document'), async (req, re
 // 📚 ROUTE RÉCUPÉRATION DOCUMENTS ÉLÈVE
 // ===================================================================
 
-app.get('/api/documents/:user_id', async (req, res) => {
+app.get('/api/documents/:user_id', authRequired, async (req, res) => {
   try {
     const { user_id } = req.params;
     console.log(`📚 Récupération documents pour élève ${user_id}`);
@@ -3524,3 +3479,26 @@ module.exports = {
 //
 // 🇨🇮 PRÊT POUR CONQUÉRIR L'AFRIQUE ! 🌍🚀
 // ===================================================================
+
+// ROUTES REGISTRATION
+const authRoutes = require('./routes/auth');
+const secureRoutes = require('./routes/secure');
+const { metricsHandler } = require('./middleware/metrics');
+
+app.use('/api/auth', authRoutes);
+app.use('/api/secure', secureRoutes);
+app.get('/metrics', metricsHandler);
+
+// Mask sensitive logs helper
+function safeLog(obj) {
+  try {
+    const clone = JSON.parse(JSON.stringify(obj || {}));
+    if (clone.email) clone.email = '***redacted***';
+    if (clone.token) clone.token = '***redacted***';
+    if (clone.access_token) clone.access_token = '***redacted***';
+    if (clone.refresh_token) clone.refresh_token = '***redacted***';
+    return clone;
+  } catch (_) {
+    return {};
+  }
+}

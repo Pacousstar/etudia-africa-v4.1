@@ -66,12 +66,14 @@ class OpenRouterService {
     };
     
     // 📊 LOGS INITIALISATION
-    console.log('🤖 OpenRouter Service ÉtudIA V4.1 initialisé');
-    console.log('- Backend URL:', this.baseUrl);
-    console.log('- Free Model:', this.models.free);
-    console.log('- Paid Model:', this.models.paid);
-    console.log('- API Key configurée:', !!this.openRouterKey);
-    console.log('- Stats chargées:', this.stats);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🤖 OpenRouter Service ÉtudIA V4.1 initialisé');
+      console.log('- Backend URL:', this.baseUrl);
+      console.log('- Free Model:', this.models.free);
+      console.log('- Paid Model:', this.models.paid);
+      console.log('- API Key configurée:', !!this.openRouterKey);
+      console.log('- Stats chargées:', this.stats);
+    }
   }
 
   // ===================================================================

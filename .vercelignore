@@ -4,6 +4,7 @@ frontend/public/
 frontend/build/
 frontend/node_modules/
 backend/
+backoffices/
 *.log
 node_modules/
 .env

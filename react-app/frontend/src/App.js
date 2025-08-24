@@ -16,11 +16,13 @@ const DEEPSEEK_MODEL_FREE = process.env.REACT_APP_DEEPSEEK_MODEL_FREE || 'deepse
 const DEEPSEEK_MODEL_PAID = process.env.REACT_APP_DEEPSEEK_MODEL_PAID || 'deepseek/deepseek-r1';       // 🆕
 
 // 📊 LOGS CONFIGURATION V4.1
-console.log('🤖 ÉtudIA V4.1 avec OpenRouter DeepSeek R1 initialisé !');
-console.log('- API URL:', API_URL);
-console.log('- OpenRouter configuré:', !!OPENROUTER_API_KEY);
-console.log('- Modèle gratuit:', DEEPSEEK_MODEL_FREE);
-console.log('- Modèle payant:', DEEPSEEK_MODEL_PAID);
+if (process.env.NODE_ENV === 'development') {
+  console.log('🤖 ÉtudIA V4.1 avec OpenRouter DeepSeek R1 initialisé !');
+  console.log('- API URL:', API_URL);
+  console.log('- OpenRouter configuré:', !!OPENROUTER_API_KEY);
+  console.log('- Modèle gratuit:', DEEPSEEK_MODEL_FREE);
+  console.log('- Modèle payant:', DEEPSEEK_MODEL_PAID);
+}
 
 // 🎨 THÈME COLORS - Design révolutionnaire ÉtudIA
 const THEME = {
