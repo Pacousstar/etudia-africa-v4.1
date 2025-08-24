@@ -471,12 +471,12 @@ const ChatIA = ({
   useEffect(() => {
     const initializeChat = async () => {
       try {
-        console.log('🚀 Initialisation ChatIA V4.1 OpenRouter...');
+        if (process.env.NODE_ENV === 'development') console.log('🚀 Initialisation ChatIA V4.1 OpenRouter...');
         
         // Vérifier support audio
         if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
           setAudioSupported(true);
-          console.log('🎤 Support audio détecté');
+          if (process.env.NODE_ENV === 'development') console.log('🎤 Support audio détecté');
         }
         
         // Charger préférences utilisateur
@@ -504,7 +504,7 @@ const ChatIA = ({
           setTimeout(() => sendWelcomeMessage(), 1000);
         }
         
-        console.log('✅ ChatIA V4.1 initialisé avec succès');
+        if (process.env.NODE_ENV === 'development') console.log('✅ ChatIA V4.1 initialisé avec succès');
         
       } catch (error) {
         console.error('❌ Erreur initialisation ChatIA:', error);
@@ -518,7 +518,7 @@ const ChatIA = ({
   // 📊 EFFECT SURVEILLANCE MODÈLE - Changement modèle
   useEffect(() => {
     if (currentModel !== deepSeekStats.last_model_used) {
-      console.log(`🔄 Changement modèle: ${deepSeekStats.last_model_used} → ${currentModel}`);
+      if (process.env.NODE_ENV === 'development') console.log(`🔄 Changement modèle: ${deepSeekStats.last_model_used} → ${currentModel}`);
       
       setDeepSeekStats(prev => ({
         ...prev,
@@ -551,7 +551,7 @@ const ChatIA = ({
         reason: 'external_change'
       }]);
       
-      console.log(`🎯 Mode d'apprentissage changé: ${chatMode} → ${learningMode}`);
+      if (process.env.NODE_ENV === 'development') console.log(`🎯 Mode d'apprentissage changé: ${chatMode} → ${learningMode}`);
     }
   }, [learningMode]);
 
@@ -567,7 +567,7 @@ const ChatIA = ({
           analyzeDocument(document);
         }
         
-        console.log('📄 Document actif changé:', document.nom_original);
+        if (process.env.NODE_ENV === 'development') console.log('📄 Document actif changé:', document.nom_original);
         addNotification(`Document "${document.nom_original}" chargé`, 'success');
       }
     } else if (!selectedDocumentId) {
@@ -662,7 +662,7 @@ const ChatIA = ({
       setDocumentAnalysis(analysis);
       setDocumentSummary(analysis.summary);
       
-      console.log('📊 Document analysé:', analysis);
+      if (process.env.NODE_ENV === 'development') console.log('📊 Document analysé:', analysis);
       
     } catch (error) {
       console.error('❌ Erreur analyse document:', error);
@@ -799,7 +799,7 @@ const ChatIA = ({
     setWelcomeMessageSent(true);
     setUnreadCount(1);
     
-    console.log('🎉 Message de bienvenue envoyé pour', paysEleve);
+    if (process.env.NODE_ENV === 'development') console.log('🎉 Message de bienvenue envoyé pour', paysEleve);
   };
 
   // ===================================================================
@@ -844,18 +844,18 @@ const ChatIA = ({
       try {
         if (selectedDocumentId && allDocuments.length > 0) {
           activeDocument = allDocuments.find(doc => doc.id === selectedDocumentId);
-          console.log('🎯 Document sélectionné:', activeDocument?.nom_original);
+          if (process.env.NODE_ENV === 'development') console.log('🎯 Document sélectionné:', activeDocument?.nom_original);
         }
         
         if (!activeDocument && allDocuments.length > 0) {
           activeDocument = allDocuments[0];
-          console.log('🎯 Premier document utilisé:', activeDocument?.nom_original);
+          if (process.env.NODE_ENV === 'development') console.log('🎯 Premier document utilisé:', activeDocument?.nom_original);
         }
         
         finalDocumentContext = activeDocument?.texte_extrait || documentContext || '';
         hasValidContext = finalDocumentContext && finalDocumentContext.length > 50;
         
-        console.log('📤 Contexte final:', {
+        if (process.env.NODE_ENV === 'development') console.log('📤 Contexte final:', {
           document: activeDocument?.nom_original || 'Aucun',
           context_length: finalDocumentContext?.length || 0,
           has_valid_context: hasValidContext,
@@ -891,7 +891,7 @@ const ChatIA = ({
         mode_config: currentModeConfig
       };
 
-      console.log('🚀 Envoi vers OpenRouter DeepSeek R1:', {
+      if (process.env.NODE_ENV === 'development') console.log('🚀 Envoi vers OpenRouter DeepSeek R1:', {
         mode: mode,
         model: currentModel,
         context: hasValidContext,
