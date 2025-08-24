@@ -5834,16 +5834,17 @@ Lien dans ma bio ou DM moi pour le lien : ${parrainageData.referralLink}
 
         /* Options d'upgrade */
         #abonnements .upgrade-section {
-            background: var(--abonnements-white);
-            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
             border-radius: 16px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
         }
 
         #abonnements .upgrade-title {
             color: var(--abonnements-dark);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -5853,15 +5854,18 @@ Lien dans ma bio ou DM moi pour le lien : ${parrainageData.referralLink}
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1rem;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         #abonnements .upgrade-card {
-            background: var(--abonnements-light);
-            padding: 1.5rem;
+            background: rgba(248, 250, 252, 0.95);
+            padding: 1.3rem;
             border-radius: 12px;
-            border: 1px solid #E5E7EB;
+            border: 1px solid rgba(229, 231, 235, 0.8);
             transition: all 0.3s ease;
             position: relative;
+            backdrop-filter: blur(10px);
         }
 
         #abonnements .upgrade-card:hover {
@@ -5892,35 +5896,36 @@ Lien dans ma bio ou DM moi pour le lien : ${parrainageData.referralLink}
         }
 
         #abonnements .upgrade-name {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: var(--abonnements-dark);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
         }
 
         #abonnements .upgrade-price {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 800;
             color: var(--abonnements-gold);
             margin-bottom: 0.3rem;
         }
 
         #abonnements .upgrade-duration {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--abonnements-gray);
         }
 
         #abonnements .upgrade-features {
             list-style: none;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         #abonnements .upgrade-features li {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.3rem 0;
-            font-size: 0.9rem;
+            padding: 0.25rem 0;
+            font-size: 0.85rem;
+            color: var(--abonnements-dark);
         }
 
         #abonnements .upgrade-features li::before {
@@ -6049,16 +6054,17 @@ Lien dans ma bio ou DM moi pour le lien : ${parrainageData.referralLink}
         /* Actions rapides */
         #abonnements .quick-actions {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
             flex-wrap: wrap;
+            justify-content: center;
         }
 
         #abonnements .quick-btn {
             background: var(--gradient-success);
             color: white;
             border: none;
-            padding: 0.8rem 1.2rem;
+            padding: 0.7rem 1rem;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
@@ -6066,6 +6072,7 @@ Lien dans ma bio ou DM moi pour le lien : ${parrainageData.referralLink}
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-size: 0.85rem;
         }
 
         #abonnements .quick-btn:hover {
